@@ -1,0 +1,35 @@
+---
+// コードブロック：ハイライトはビルド時、コピーは src/scripts/code.ts
+import Icon from './Icon.astro';
+import { highlight } from '../lib/highlight';
+import { CONFIG } from '../config';
+
+interface Props {
+  lang: 'HTML' | 'CSS';
+  code: string;
+  small?: boolean;
+}
+const { lang, code, small = false } = Astro.props;
+const lines = highlight(lang, code);
+---
+<div class:list={['code', { 'code--sm': small, 'code--no-ln': !CONFIG.lineNumbers }]} data-code>
+  <div class="code__head">
+    <span class="code__lang">{lang}</span>
+    <button type="button" class="btn btn-ghost code__copy" data-copy>
+      <span class="code__copy-idle"><Icon name="copy" /><span>コピー</span></span>
+      <span class="code__copy-done" hidden><Icon name="check" /><span>コピーしました</span></span>
+    </button>
+  </div>
+  <div class="code__body" tabindex="0" role="region" aria-label={`${lang}のサンプルコード`}>
+    <div class="code__lines">
+      {lines.map((toks, i) => (
+        <div class="code__line"><span class="code__ln">{i + 1}</span><span class="code__src">{toks.map((tk) => <span class={`t-${tk.c}`}>{tk.t}</span>)}</span></div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  import { initCopyButtons } from '../scripts/code';
+  initCopyButtons();
+</script>

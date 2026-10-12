@@ -1,0 +1,74 @@
+{
+  "html": [
+    {
+      "id": "base",
+      "name": "基本構造"
+    },
+    {
+      "id": "text",
+      "name": "見出し・文章"
+    },
+    {
+      "id": "linkimg",
+      "name": "リンク・画像"
+    },
+    {
+      "id": "listtable",
+      "name": "リスト・テーブル"
+    },
+    {
+      "id": "form",
+      "name": "フォーム"
+    },
+    {
+      "id": "structure",
+      "name": "ページ構造"
+    },
+    {
+      "id": "media",
+      "name": "メディア"
+    },
+    {
+      "id": "other",
+      "name": "その他"
+    }
+  ],
+  "css": [
+    {
+      "id": "font",
+      "name": "文字・フォント"
+    },
+    {
+      "id": "color",
+      "name": "色・背景"
+    },
+    {
+      "id": "box",
+      "name": "余白・サイズ"
+    },
+    {
+      "id": "layout",
+      "name": "レイアウト"
+    },
+    {
+      "id": "flexgrid",
+      "name": "Flexbox・Grid"
+    },
+    {
+      "id": "deco",
+      "name": "枠線・装飾"
+    },
+    {
+      "id": "anim",
+      "name": "アニメーション"
+    },
+    {
+      "id": "resp",
+      "name": "レスポンシブ"
+    },
+    {
+      "id": "other",
+      "name": "その他"
+    }
+  ]
+}

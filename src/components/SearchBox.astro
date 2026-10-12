@@ -1,0 +1,38 @@
+---
+// 検索ボックス。候補の絞り込みは src/scripts/search.ts（検索用データは初回フォーカス時に読み込む）
+import Icon from './Icon.astro';
+import { url } from '../lib/url';
+import { CONFIG } from '../config';
+
+interface Props {
+  placeholder: string;
+  emptyText: string;
+  class?: string;
+}
+const { placeholder, emptyText, class: cls } = Astro.props;
+---
+<div
+  class:list={['search', cls]}
+  data-search
+  data-index-url={url.searchIndex()}
+  data-empty-text={emptyText}
+  data-limit={CONFIG.searchLimit}
+>
+  <Icon name="search" class="search__icon" />
+  <input
+    class="input"
+    type="search"
+    placeholder={placeholder}
+    aria-label="検索"
+    role="combobox"
+    aria-autocomplete="list"
+    aria-expanded="false"
+    autocomplete="off"
+  />
+  <div class="search__dropdown" hidden></div>
+</div>
+
+<script>
+  import { initSearchBoxes } from '../scripts/search';
+  initSearchBoxes();
+</script>

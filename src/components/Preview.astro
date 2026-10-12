@@ -1,0 +1,28 @@
+---
+// 実行結果プレビュー：sandbox 付き iframe（srcdoc）。高さは中身に合わせて src/scripts/preview.ts が調整する
+// iframe は allow-scripts のみ許可（allow-same-origin は付けない）ので、親ページとは別オリジン扱いで隔離される
+import { buildSrcdoc } from '../lib/preview';
+import type { CodeSet, Detail } from '../lib/data';
+
+interface Props {
+  code: CodeSet;
+  preview: Detail['preview'];
+}
+const { code, preview } = Astro.props;
+---
+<div class="preview">
+  <div class="preview__head"><span class="preview__label">ブラウザでの表示</span><span>{preview.note ?? ''}</span></div>
+  <iframe
+    class="preview__frame"
+    title="実行結果のプレビュー"
+    sandbox="allow-scripts"
+    srcdoc={buildSrcdoc(code, preview.fullDocument)}
+    style={`height:${preview.height || 160}px`}
+    data-preview
+  ></iframe>
+</div>
+
+<script>
+  import { initPreviewResize } from '../scripts/preview';
+  initPreviewResize();
+</script>

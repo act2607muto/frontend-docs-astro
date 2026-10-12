@@ -1,0 +1,119 @@
+---
+// ④ / ⑤ 詳細ページ（HTML・CSS共通）。items.json の全項目をビルド時に生成する
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Sidebar from '../../components/Sidebar.astro';
+import CodeBlocks from '../../components/CodeBlocks.astro';
+import Preview from '../../components/Preview.astro';
+import InlineText from '../../components/InlineText.astro';
+import SecHead from '../../components/SecHead.astro';
+import { getDetail, index, items, order, pad2, relatedOf, titleOf, type Item } from '../../lib/data';
+import { url } from '../../lib/url';
+
+export function getStaticPaths() {
+  return items.map((item) => ({ params: { type: item.type, slug: item.slug }, props: { item } }));
+}
+
+interface Props {
+  item: Item;
+}
+const { item } = Astro.props;
+const d = getDetail(item.id);
+const isHtml = item.type === 'html';
+const dictName = isHtml ? 'HTML辞典' : 'CSS辞典';
+const title = d?.title || titleOf(item);
+const ja = d ? d.ja : item.summary;
+const lead = d ? d.lead : `${item.summary}を指定・表現するための${isHtml ? 'タグ' : 'プロパティ'}です。`;
+
+const ord = order[item.type];
+const pos = ord.indexOf(item.id);
+const prev = index[ord[pos - 1] ?? ''];
+const next = index[ord[pos + 1] ?? ''];
+const related = relatedOf(item);
+---
+<BaseLayout title={`${title} ${ja} | HTML & CSS GUIDE`} description={d ? d.lead : item.summary}>
+  <Header current={item.type} menu />
+  <div class="detail">
+    <Sidebar item={item} />
+    <article class="article">
+      <nav class="crumbs" aria-label="パンくず">
+        <a href={url.dict(item.type)}>{dictName}</a><span>/</span>
+        <span>{item.categoryName}</span><span>/</span>
+        <code>{item.name}</code>
+      </nav>
+      <div class="kicker article__kicker">{isHtml ? 'HTML要素' : 'CSS'} ・ {item.categoryName}</div>
+      <h1 class="article__title">{title}</h1>
+      <p class="article__ja">{ja}</p>
+      <p class="article__lead">{lead}</p>
+      {d && (
+        <dl class="meta">
+          {d.meta.map((m) => <div><dt>{m.label}</dt><dd>{m.value}</dd></div>)}
+        </dl>
+      )}
+
+      {d ? (
+        <>
+          <section class="sec sec--code">
+            <SecHead num="01" title="サンプルコード" />
+            <CodeBlocks code={d.code} />
+          </section>
+          <section class="sec sec--preview">
+            <SecHead num="02" title="実行結果" />
+            <Preview code={d.code} preview={d.preview} />
+          </section>
+          <section class="sec prose">
+            <SecHead num="03" title="解説" />
+            {d.explain.map((p) => <p><InlineText text={p} /></p>)}
+          </section>
+          <section class="sec">
+            <SecHead num="04" title="応用例・注意点" />
+            <h3 class="sub-title">{d.values.label}</h3>
+            <div class="values">
+              <table class="table">
+                <thead><tr><th>{d.values.head}</th><th>説明</th></tr></thead>
+                <tbody>
+                  {d.values.rows.map((r) => <tr><td><code>{r.key}</code></td><td>{r.desc}</td></tr>)}
+                </tbody>
+              </table>
+            </div>
+            {d.usages.map((u) => (
+              <div class="usage">
+                <h3 class="sub-title">{u.title}</h3>
+                <p><InlineText text={u.desc} /></p>
+                <CodeBlocks code={u} small />
+              </div>
+            ))}
+            <h3 class="sub-title">注意点</h3>
+            <ol class="notes">
+              {d.notes.map((note, i) => <li><span class="num">{pad2(i + 1)}</span><span><InlineText text={note} /></span></li>)}
+            </ol>
+          </section>
+        </>
+      ) : (
+        <div class="pending">
+          <div class="pending__kicker">準備中</div>
+          <div class="pending__title">サンプルコードと解説を準備しています</div>
+          <p class="pending__body">この項目の詳細ページは、辞典データの追加にあわせて公開されます。下の関連項目から、同じカテゴリの解説済みページをご覧いただけます。</p>
+        </div>
+      )}
+
+      <section class="sec sec--related">
+        <SecHead num={d ? '05' : '01'} title="関連項目" />
+        <ul class="related">
+          {related.map((r) => (
+            <li>
+              <a href={url.item(r)}><span class="tag">{r.type.toUpperCase()}</span><code>{r.name}</code><span>{r.summary}</span></a>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <nav class="pager" aria-label="前後の項目">
+        {prev && <a href={url.item(prev)} rel="prev"><span class="pager__label">← 前の項目</span><code>{prev.name}</code></a>}
+        {next && <a class="pager__next" href={url.item(next)} rel="next"><span class="pager__label">次の項目 →</span><code>{next.name}</code></a>}
+      </nav>
+    </article>
+  </div>
+  <Footer />
+</BaseLayout>

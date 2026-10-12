@@ -1,0 +1,211 @@
+[
+  {
+    "num": "01",
+    "name": "初心者",
+    "en": "BEGINNER",
+    "desc": "HTMLで文書の骨組みをつくり、CSSで色・文字・余白を整えるところまで。Webページの仕組みを理解する段階です。",
+    "steps": [
+      {
+        "title": "HTML・CSSの基本",
+        "desc": "HTMLは構造、CSSは見た目を担当します。両者の役割の違いを知りましょう。",
+        "links": [
+          "html-html",
+          "html-link"
+        ]
+      },
+      {
+        "title": "HTMLの基本構造",
+        "desc": "すべてのページに共通する骨組みと、head・bodyの役割。",
+        "links": [
+          "html-html",
+          "html-head",
+          "html-body",
+          "html-meta"
+        ]
+      },
+      {
+        "title": "見出し・文章",
+        "desc": "見出しの階層と段落で、読みやすい文書をつくります。",
+        "links": [
+          "html-h1",
+          "html-p",
+          "html-strong"
+        ]
+      },
+      {
+        "title": "画像・リンク",
+        "desc": "ページに画像を置き、他のページとつなげます。",
+        "links": [
+          "html-a",
+          "html-img"
+        ]
+      },
+      {
+        "title": "CSSの基本的な書き方",
+        "desc": "セレクタ・プロパティ・値の関係を覚えます。",
+        "links": [
+          "css-color",
+          "css-font-size"
+        ]
+      },
+      {
+        "title": "色・文字・余白",
+        "desc": "文字色や背景色、余白で見た目を整えます。",
+        "links": [
+          "css-color",
+          "css-background-color",
+          "css-margin",
+          "css-padding"
+        ]
+      },
+      {
+        "title": "ボックスモデル",
+        "desc": "すべての要素は箱。内容・padding・border・marginの関係を理解します。",
+        "links": [
+          "css-margin",
+          "css-padding",
+          "css-border",
+          "css-box-sizing"
+        ]
+      }
+    ]
+  },
+  {
+    "num": "02",
+    "name": "中級者",
+    "en": "INTERMEDIATE",
+    "desc": "Flexbox・Gridでレイアウトを組み、スマートフォンにも対応させる段階。実際のサイト制作に必要な技術がそろいます。",
+    "steps": [
+      {
+        "title": "Flexbox",
+        "desc": "要素を横に並べ、配置や間隔を自在に調整します。",
+        "links": [
+          "css-display",
+          "css-justify-content",
+          "css-align-items",
+          "css-gap"
+        ]
+      },
+      {
+        "title": "CSS Grid",
+        "desc": "行と列による2次元のレイアウトをつくります。",
+        "links": [
+          "css-grid-template-columns",
+          "css-gap",
+          "css-place-items"
+        ]
+      },
+      {
+        "title": "レスポンシブデザイン",
+        "desc": "画面幅に応じてレイアウトを切り替えます。",
+        "links": [
+          "css-media",
+          "css-max-width",
+          "css-clamp"
+        ]
+      },
+      {
+        "title": "フォーム",
+        "desc": "入力欄やボタンを使った、送信フォームの組み立て方。",
+        "links": [
+          "html-form",
+          "html-input",
+          "html-label",
+          "html-button"
+        ]
+      },
+      {
+        "title": "疑似クラス・疑似要素",
+        "desc": "ホバー時の変化や、装飾用の要素の追加。",
+        "links": [
+          "css-hover",
+          "css-before"
+        ]
+      },
+      {
+        "title": "CSSアニメーションの基本",
+        "desc": "状態の変化をなめらかに見せる方法。",
+        "links": [
+          "css-transition",
+          "css-transform"
+        ]
+      },
+      {
+        "title": "実践的なレイアウト制作",
+        "desc": "ヘッダー・メイン・フッターからなるページを組み立てます。",
+        "links": [
+          "html-header",
+          "html-main",
+          "html-footer",
+          "css-position"
+        ]
+      }
+    ]
+  },
+  {
+    "num": "03",
+    "name": "上級者",
+    "en": "ADVANCED",
+    "desc": "保守しやすいCSS設計、アクセシビリティ、パフォーマンスまで。品質の高いサイトを長く運用するための知識です。",
+    "steps": [
+      {
+        "title": "高度なCSSレイアウト",
+        "desc": "重なりや複雑なグリッドを組み合わせたレイアウト。",
+        "links": [
+          "css-grid-template-columns",
+          "css-position",
+          "css-z-index"
+        ]
+      },
+      {
+        "title": "複雑なアニメーション",
+        "desc": "キーフレームを使った連続的な動き。",
+        "links": [
+          "css-animation",
+          "css-keyframes"
+        ]
+      },
+      {
+        "title": "CSS設計",
+        "desc": "命名規則とファイル構成で、崩れにくいCSSを書きます。",
+        "links": [
+          "css-var",
+          "html-div"
+        ]
+      },
+      {
+        "title": "CSS変数",
+        "desc": "色や余白を変数にまとめ、一括で管理します。",
+        "links": [
+          "css-var"
+        ]
+      },
+      {
+        "title": "Container Queries",
+        "desc": "親要素の幅に応じて、部品ごとにレイアウトを切り替えます。",
+        "links": [
+          "css-container"
+        ]
+      },
+      {
+        "title": "アクセシビリティ",
+        "desc": "すべての人が使えるページにするための書き方。",
+        "links": [
+          "html-img",
+          "html-label",
+          "html-button",
+          "css-outline"
+        ]
+      },
+      {
+        "title": "パフォーマンス最適化",
+        "desc": "表示を速く、動きを軽くするための工夫。",
+        "links": [
+          "css-transform",
+          "css-opacity",
+          "html-img"
+        ]
+      }
+    ]
+  }
+]

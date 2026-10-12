@@ -1,0 +1,80 @@
+---
+// ② / ③ HTML辞典・CSS辞典一覧（同一UI）
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import Icon from './Icon.astro';
+import { cats, order, pad2, type ItemType } from '../lib/data';
+import { url } from '../lib/url';
+import { CONFIG } from '../config';
+
+interface Props {
+  type: ItemType;
+}
+const { type } = Astro.props;
+
+const TEXT = {
+  html: {
+    kicker: 'DICTIONARY — HTML', title: 'HTML辞典',
+    lead: 'HTMLタグをカテゴリ別にまとめた一覧です。カテゴリを開いてタグを選ぶと、サンプルコードと実際の表示結果、詳しい解説を確認できます。',
+  },
+  css: {
+    kicker: 'DICTIONARY — CSS', title: 'CSS辞典',
+    lead: 'CSSプロパティをカテゴリ別にまとめた一覧です。カテゴリを開いてプロパティを選ぶと、サンプルコードと実際の表示結果、詳しい解説を確認できます。',
+  },
+}[type];
+const initial = CONFIG.dictInitialOpen[type];
+---
+<BaseLayout title={`${TEXT.title} | HTML & CSS GUIDE`}>
+  <Header current={type} />
+  <main class="page">
+    <div class="kicker">{TEXT.kicker}</div>
+    <h1 class="page-title">{TEXT.title}</h1>
+    <p class="page-lead">{TEXT.lead}</p>
+    <div class="dict__toolbar">
+      <span class="dict__count">{cats[type].length}カテゴリ ・ {order[type].length}項目</span>
+      <div class="dict__tools">
+        <button type="button" class="btn btn-ghost" data-acc-all="open">すべて開く</button>
+        <button type="button" class="btn btn-ghost" data-acc-all="close">すべて閉じる</button>
+      </div>
+    </div>
+    <div class="dict__cats" data-accordion data-single={CONFIG.accordionSingle ? '' : undefined}>
+      {cats[type].map((c, k) => {
+        const open = initial.includes(c.id);
+        const pid = `cat-${type}-${c.id}`;
+        return (
+          <section class="dict-cat">
+            <h2 class="dict-cat__h">
+              <button type="button" class="dict-cat__head acc__trigger" aria-expanded={open} aria-controls={pid}>
+                <span class="dict-cat__num">{pad2(k + 1)}</span>
+                <span class="dict-cat__name">{c.name}</span>
+                <span class="dict-cat__count">{c.items.length}項目</span>
+                <Icon name="chevron-down" class="acc__chevron" />
+              </button>
+            </h2>
+            <ul class="dict-cat__list" id={pid} hidden={!open}>
+              {c.items.map((it) => (
+                <li>
+                  <a class="dict-row" href={url.item(it)}>
+                    <code class="dict-row__code">{it.name}</code>
+                    <span class="dict-row__desc">{it.summary}</span>
+                    <Icon name="chevron-right" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<script>
+  import { initAccordions, openAll, closeAll } from '../scripts/accordion';
+  initAccordions();
+  const cats = document.querySelector('.dict__cats')!;
+  document.querySelector('[data-acc-all="open"]')?.addEventListener('click', () => openAll(cats));
+  document.querySelector('[data-acc-all="close"]')?.addEventListener('click', () => closeAll(cats));
+</script>
