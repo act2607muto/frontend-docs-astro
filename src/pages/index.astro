@@ -1,0 +1,54 @@
+---
+// ① トップ
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+import SearchBox from '../components/SearchBox.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { order } from '../lib/data';
+import { url } from '../lib/url';
+import { CONFIG } from '../config';
+
+const entries = [
+  { num: '01', sub: 'ROADMAP', title: '学習する', desc: '初心者・中級者・上級者の3段階で、学ぶ順番に沿って進めます。', href: url.learn() },
+  { num: '02', sub: 'HTML', title: 'HTML辞典', desc: `${order.html.length}のタグを、基本構造からメディアまでカテゴリ別に。`, href: url.dict('html') },
+  { num: '03', sub: 'CSS', title: 'CSS辞典', desc: `${order.css.length}のプロパティを、文字からレスポンシブまでカテゴリ別に。`, href: url.dict('css') },
+];
+---
+<BaseLayout title="HTML & CSS GUIDE">
+  <div class="top">
+    <div class="top__bar"><ThemeToggle label /></div>
+    <main class="top__main">
+      <div class="top__kicker">学ぶ・調べる・理解する</div>
+      <h1 class="top__title">HTML &amp; CSS GUIDE</h1>
+      <p class="top__lead">HTMLタグとCSSプロパティを網羅した辞典と、段階的に学べるロードマップ。すべての項目で、コードと実際の表示結果をあわせて確認できます。</p>
+      <SearchBox
+        class="top__search"
+        placeholder="タグ・プロパティ・やりたいことで検索（例：flex、中央寄せ）"
+        emptyText="一致する項目は見つかりませんでした。別のキーワードをお試しください。"
+      />
+      <div class="top__quick">
+        <span class="top__quick-label">よく調べるキーワード</span>
+        {CONFIG.quickWords.map((w) => <button type="button" class="btn btn-ghost" data-word={w}>{w}</button>)}
+      </div>
+      <nav class="top__entries" aria-label="入口">
+        {entries.map((e) => (
+          <a class="entry" href={e.href}>
+            <span class="entry__sub"><span>{e.num} — {e.sub}</span><Icon name="arrow-right" /></span>
+            <span class="entry__title">{e.title}</span>
+            <span class="entry__desc">{e.desc}</span>
+          </a>
+        ))}
+      </nav>
+    </main>
+    <Footer left="HTML & CSS GUIDE" />
+  </div>
+</BaseLayout>
+
+<script>
+  import { setQuery } from '../scripts/search';
+  const box = document.querySelector<HTMLElement>('.top__search')!;
+  document.querySelectorAll<HTMLButtonElement>('[data-word]').forEach((b) =>
+    b.addEventListener('click', () => setQuery(box, b.dataset.word ?? '')),
+  );
+</script>

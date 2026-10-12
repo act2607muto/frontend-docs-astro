@@ -1,0 +1,70 @@
+---
+// 詳細ページのサイドバー（SP ではドロワー）。WordPress の template-parts/sidebar に相当
+// HTML / CSS 両方の一覧を出力し、セグメント切替で表示を入れ替える
+import Icon from './Icon.astro';
+import { cats, TYPES, type Item } from '../lib/data';
+import { url } from '../lib/url';
+import { CONFIG } from '../config';
+
+interface Props {
+  item: Item;
+}
+const { item } = Astro.props;
+---
+<aside class="sidebar" id="sidebar" aria-label="カテゴリ" data-sidebar>
+  <div class="sidebar__head">
+    <span>カテゴリ</span>
+    <button type="button" class="btn btn-icon" aria-label="閉じる" data-drawer-close><Icon name="x" /></button>
+  </div>
+  <div class="seg" role="radiogroup" aria-label="辞典の種類">
+    {TYPES.map((t) => (
+      <label class="seg-opt"><input type="radio" name="sbtype" value={t} checked={t === item.type} />{t.toUpperCase()}</label>
+    ))}
+  </div>
+  {TYPES.map((t) => (
+    <div class="sidebar__cats" data-sidebar-type={t} data-accordion data-single={CONFIG.accordionSingle ? '' : undefined} hidden={t !== item.type}>
+      {cats[t].map((c) => {
+        const has = c.items.some((x) => x.id === item.id);
+        const pid = `side-${t}-${c.id}`;
+        return (
+          <div class:list={['side-cat', { 'is-current': has }]}>
+            <button type="button" class="side-cat__head acc__trigger" aria-expanded={has} aria-controls={pid}>
+              <span class="side-cat__name">{c.name}</span>
+              <span class="side-cat__count">{c.items.length}</span>
+              <Icon name="chevron-down" class="acc__chevron" />
+            </button>
+            <ul class="side-cat__list" id={pid} hidden={!has}>
+              {c.items.map((it) => (
+                <li>
+                  <a class="side-item" href={url.item(it)} aria-current={it.id === item.id ? 'page' : undefined}>
+                    <code>{it.name}</code><span>{it.summary}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </div>
+  ))}
+</aside>
+<div class="drawer-backdrop" hidden data-drawer-backdrop></div>
+
+<script>
+  import { initAccordions } from '../scripts/accordion';
+  import { initDrawer } from '../scripts/drawer';
+
+  initAccordions();
+  initDrawer();
+
+  // HTML / CSS の切替
+  document.querySelectorAll<HTMLElement>('[data-sidebar]').forEach((aside) => {
+    aside.querySelectorAll<HTMLInputElement>('input[name="sbtype"]').forEach((radio) =>
+      radio.addEventListener('change', () => {
+        aside.querySelectorAll<HTMLElement>('[data-sidebar-type]').forEach((list) => {
+          list.hidden = list.dataset.sidebarType !== radio.value;
+        });
+      }),
+    );
+  });
+</script>

@@ -1,0 +1,114 @@
+/* ==========================================================================
+   デザイントークン
+   ベース：Classical デザインシステム（フォントのみ本プロジェクトで上書き）
+   テーマは html[data-theme="light|dark"] で切り替える
+   ========================================================================== */
+
+:root {
+  /* — 色（ライト） — */
+  --color-bg: #f3f2f2;
+  --color-surface: #eae9e9;
+  --color-text: #201f1d;
+  --color-accent: #b68235;
+  --color-divider: color-mix(in srgb, #201f1d 16%, transparent);
+
+  --color-neutral-100: #f8f4f4;
+  --color-neutral-200: #eae7e7;
+  --color-neutral-300: #d7d3d3;
+  --color-neutral-400: #bab6b6;
+  --color-neutral-500: #9b9797;
+  --color-neutral-600: #7d7979;
+  --color-neutral-700: #605d5d;
+  --color-neutral-800: #444141;
+  --color-neutral-900: #2d2b2b;
+
+  --color-accent-100: #fff3e4;
+  --color-accent-200: #ffe3bf;
+  --color-accent-300: #facb8d;
+  --color-accent-400: #e1ad66;
+  --color-accent-500: #c28d41;
+  --color-accent-600: #a06f24;
+  --color-accent-700: #7d5411;
+  --color-accent-800: #5a3b0a;
+  --color-accent-900: #3a270d;
+
+  /* — 役割別の色 — */
+  --muted: color-mix(in srgb, var(--color-text) 62%, transparent);
+  --tint: color-mix(in srgb, var(--color-text) 5%, transparent);
+  --hl-bg: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  --hl-text: var(--color-accent-800);
+  --strong-accent: var(--color-accent-700);
+  --link: var(--color-accent-700);
+  --overlay: color-mix(in srgb, var(--color-neutral-900) 45%, transparent);
+
+  /* — シンタックスハイライト（VS Code Light+） — */
+  --code-bg: #fbfaf8;
+  --c-text: #1f1f1f;
+  --c-punct: #800000;
+  --c-tag: #800000;
+  --c-attr: #e50000;
+  --c-val: #0000ff;
+  --c-cmt: #008000;
+  --c-sel: #800000;
+  --c-prop: #e50000;
+  --c-cval: #0451a5;
+  --c-num: #098658;
+  --c-kw: #af00db;
+  --c-fn: #795e26;
+  --c-ln: #a19c98;
+
+  /* — フォント — */
+  --font-body: "Helvetica Neue", Helvetica, Arial, "Noto Sans JP", "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
+  --font-heading: var(--font-body);
+  --font-heading-weight: 700;
+  --font-code: ui-monospace, SFMono-Regular, Menlo, Consolas, "Noto Sans Mono", monospace;
+
+  /* — 形状・影 — */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --shadow-md: 0 3px 10px color-mix(in srgb, #2d2b2b 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #2d2b2b 22%, transparent);
+
+  /* — レイアウト — */
+  --header-h: 60px;
+  --pad-x: 40px;
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #1a1918;
+  --color-surface: #232120;
+  --color-text: #e4e0da;
+  --color-accent: #d2a25e;
+  --color-divider: color-mix(in srgb, #e4e0da 15%, transparent);
+
+  --hl-text: var(--color-accent-300);
+  --strong-accent: var(--color-accent-400);
+  --link: var(--color-accent-400);
+
+  --code-bg: #1e1e1e;
+  --c-text: #d4d4d4;
+  --c-punct: #808080;
+  --c-tag: #569cd6;
+  --c-attr: #9cdcfe;
+  --c-val: #ce9178;
+  --c-cmt: #6a9955;
+  --c-sel: #d7ba7d;
+  --c-prop: #9cdcfe;
+  --c-cval: #ce9178;
+  --c-num: #b5cea8;
+  --c-kw: #c586c0;
+  --c-fn: #dcdcaa;
+  --c-ln: #6e7681;
+
+  --shadow-md: 0 3px 12px rgba(0, 0, 0, .45);
+  --shadow-lg: 0 12px 36px rgba(0, 0, 0, .6);
+
+  color-scheme: dark;
+}
+
+@media (max-width: 759px) {
+  :root { --pad-x: 18px; }
+}

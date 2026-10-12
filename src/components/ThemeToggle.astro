@@ -1,0 +1,21 @@
+---
+// テーマ切替ボタン。アイコンとラベルは CSS で現在のテーマに合わせて出し分ける
+import Icon from './Icon.astro';
+
+interface Props {
+  /** true でアイコンの横に「ダークモード」などのラベルを表示 */
+  label?: boolean;
+  class?: string;
+}
+const { label = false, class: cls } = Astro.props;
+---
+<button type="button" class:list={['btn', label ? 'btn-secondary' : 'btn-icon', cls]} data-theme-toggle aria-label="ダークモードに切り替え">
+  <span class="theme-light-only"><Icon name="moon" /></span>
+  <span class="theme-dark-only"><Icon name="sun" /></span>
+  {label && (<><span class="theme-light-only">ダークモード</span><span class="theme-dark-only">ライトモード</span></>)}
+</button>
+
+<script>
+  import { initThemeToggles } from '../scripts/theme';
+  initThemeToggles();
+</script>

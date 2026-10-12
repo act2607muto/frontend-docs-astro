@@ -1,0 +1,19 @@
+{
+  "name": "frontend-docs-astro",
+  "private": true,
+  "type": "module",
+  "description": "HTML & CSS GUIDE — Astro版（HTMLタグ・CSSプロパティの辞典と学習ロードマップ）",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "astro": "^7.3.8"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^6.0.3"
+  }
+}

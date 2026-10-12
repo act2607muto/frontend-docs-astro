@@ -1,0 +1,1187 @@
+[
+  {
+    "id": "html-doctype",
+    "type": "html",
+    "slug": "doctype",
+    "name": "!DOCTYPE",
+    "summary": "HTML文書であることの宣言",
+    "keywords": [
+      "DOCTYPE",
+      "宣言",
+      "doctype",
+      "html5",
+      "文書型"
+    ],
+    "category": "base"
+  },
+  {
+    "id": "html-html",
+    "type": "html",
+    "slug": "html",
+    "name": "html",
+    "summary": "HTML文書のルート要素",
+    "keywords": [
+      "文書",
+      "ルート",
+      "lang"
+    ],
+    "category": "base"
+  },
+  {
+    "id": "html-head",
+    "type": "html",
+    "slug": "head",
+    "name": "head",
+    "summary": "文書のメタ情報をまとめる",
+    "keywords": [
+      "ヘッド"
+    ],
+    "category": "base"
+  },
+  {
+    "id": "html-body",
+    "type": "html",
+    "slug": "body",
+    "name": "body",
+    "summary": "文書の本文",
+    "keywords": [
+      "本文"
+    ],
+    "category": "base"
+  },
+  {
+    "id": "html-title",
+    "type": "html",
+    "slug": "title",
+    "name": "title",
+    "summary": "ページのタイトル",
+    "keywords": [
+      "タブ",
+      "タイトル"
+    ],
+    "category": "base"
+  },
+  {
+    "id": "html-meta",
+    "type": "html",
+    "slug": "meta",
+    "name": "meta",
+    "summary": "文字コードなどのメタデータ",
+    "keywords": [
+      "文字コード",
+      "viewport"
+    ],
+    "category": "base"
+  },
+  {
+    "id": "html-link",
+    "type": "html",
+    "slug": "link",
+    "name": "link",
+    "summary": "外部ファイルの読み込み",
+    "keywords": [
+      "CSS",
+      "読み込み",
+      "スタイルシート"
+    ],
+    "category": "base"
+  },
+  {
+    "id": "html-h1",
+    "type": "html",
+    "slug": "h1",
+    "name": "h1",
+    "summary": "最上位の見出し",
+    "keywords": [
+      "見出し",
+      "タイトル",
+      "heading"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-h2",
+    "type": "html",
+    "slug": "h2",
+    "name": "h2",
+    "summary": "第2階層の見出し",
+    "keywords": [
+      "見出し"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-h3",
+    "type": "html",
+    "slug": "h3",
+    "name": "h3",
+    "summary": "第3階層の見出し",
+    "keywords": [
+      "見出し"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-p",
+    "type": "html",
+    "slug": "p",
+    "name": "p",
+    "summary": "段落",
+    "keywords": [
+      "文章",
+      "段落",
+      "テキスト"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-span",
+    "type": "html",
+    "slug": "span",
+    "name": "span",
+    "summary": "意味を持たないインライン要素",
+    "keywords": [
+      "インライン"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-strong",
+    "type": "html",
+    "slug": "strong",
+    "name": "strong",
+    "summary": "重要な内容を示す",
+    "keywords": [
+      "強調",
+      "太字"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-em",
+    "type": "html",
+    "slug": "em",
+    "name": "em",
+    "summary": "強勢を示す",
+    "keywords": [
+      "強調",
+      "斜体"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-br",
+    "type": "html",
+    "slug": "br",
+    "name": "br",
+    "summary": "改行",
+    "keywords": [
+      "改行"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-blockquote",
+    "type": "html",
+    "slug": "blockquote",
+    "name": "blockquote",
+    "summary": "引用文",
+    "keywords": [
+      "引用"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-a",
+    "type": "html",
+    "slug": "a",
+    "name": "a",
+    "summary": "ハイパーリンク",
+    "keywords": [
+      "リンク",
+      "URL",
+      "href"
+    ],
+    "category": "linkimg"
+  },
+  {
+    "id": "html-img",
+    "type": "html",
+    "slug": "img",
+    "name": "img",
+    "summary": "画像を埋め込む",
+    "keywords": [
+      "画像",
+      "写真",
+      "alt"
+    ],
+    "category": "linkimg"
+  },
+  {
+    "id": "html-picture",
+    "type": "html",
+    "slug": "picture",
+    "name": "picture",
+    "summary": "条件に応じて画像を切り替える",
+    "keywords": [
+      "画像",
+      "レスポンシブ"
+    ],
+    "category": "linkimg"
+  },
+  {
+    "id": "html-figure",
+    "type": "html",
+    "slug": "figure",
+    "name": "figure",
+    "summary": "図表のまとまり",
+    "keywords": [
+      "画像",
+      "図"
+    ],
+    "category": "linkimg"
+  },
+  {
+    "id": "html-figcaption",
+    "type": "html",
+    "slug": "figcaption",
+    "name": "figcaption",
+    "summary": "図表のキャプション",
+    "keywords": [
+      "画像",
+      "キャプション"
+    ],
+    "category": "linkimg"
+  },
+  {
+    "id": "html-ul",
+    "type": "html",
+    "slug": "ul",
+    "name": "ul",
+    "summary": "順序のないリスト",
+    "keywords": [
+      "リスト",
+      "箇条書き"
+    ],
+    "category": "listtable"
+  },
+  {
+    "id": "html-ol",
+    "type": "html",
+    "slug": "ol",
+    "name": "ol",
+    "summary": "順序のあるリスト",
+    "keywords": [
+      "リスト",
+      "番号"
+    ],
+    "category": "listtable"
+  },
+  {
+    "id": "html-li",
+    "type": "html",
+    "slug": "li",
+    "name": "li",
+    "summary": "リストの項目",
+    "keywords": [
+      "リスト"
+    ],
+    "category": "listtable"
+  },
+  {
+    "id": "html-dl",
+    "type": "html",
+    "slug": "dl",
+    "name": "dl",
+    "summary": "説明リスト",
+    "keywords": [
+      "用語",
+      "説明"
+    ],
+    "category": "listtable"
+  },
+  {
+    "id": "html-dt",
+    "type": "html",
+    "slug": "dt",
+    "name": "dt",
+    "summary": "説明リストの用語",
+    "keywords": [
+      "用語",
+      "説明リスト"
+    ],
+    "category": "listtable"
+  },
+  {
+    "id": "html-dd",
+    "type": "html",
+    "slug": "dd",
+    "name": "dd",
+    "summary": "用語の説明",
+    "keywords": [
+      "説明",
+      "説明リスト"
+    ],
+    "category": "listtable"
+  },
+  {
+    "id": "html-table",
+    "type": "html",
+    "slug": "table",
+    "name": "table",
+    "summary": "表",
+    "keywords": [
+      "テーブル",
+      "表"
+    ],
+    "category": "listtable"
+  },
+  {
+    "id": "html-tr",
+    "type": "html",
+    "slug": "tr",
+    "name": "tr",
+    "summary": "表の行",
+    "keywords": [
+      "テーブル"
+    ],
+    "category": "listtable"
+  },
+  {
+    "id": "html-th",
+    "type": "html",
+    "slug": "th",
+    "name": "th",
+    "summary": "表の見出しセル",
+    "keywords": [
+      "テーブル"
+    ],
+    "category": "listtable"
+  },
+  {
+    "id": "html-td",
+    "type": "html",
+    "slug": "td",
+    "name": "td",
+    "summary": "表のデータセル",
+    "keywords": [
+      "テーブル"
+    ],
+    "category": "listtable"
+  },
+  {
+    "id": "html-form",
+    "type": "html",
+    "slug": "form",
+    "name": "form",
+    "summary": "フォーム全体",
+    "keywords": [
+      "送信",
+      "フォーム"
+    ],
+    "category": "form"
+  },
+  {
+    "id": "html-input",
+    "type": "html",
+    "slug": "input",
+    "name": "input",
+    "summary": "入力欄",
+    "keywords": [
+      "入力",
+      "テキスト",
+      "チェックボックス"
+    ],
+    "category": "form"
+  },
+  {
+    "id": "html-label",
+    "type": "html",
+    "slug": "label",
+    "name": "label",
+    "summary": "入力欄のラベル",
+    "keywords": [
+      "ラベル"
+    ],
+    "category": "form"
+  },
+  {
+    "id": "html-textarea",
+    "type": "html",
+    "slug": "textarea",
+    "name": "textarea",
+    "summary": "複数行の入力欄",
+    "keywords": [
+      "入力"
+    ],
+    "category": "form"
+  },
+  {
+    "id": "html-select",
+    "type": "html",
+    "slug": "select",
+    "name": "select",
+    "summary": "プルダウンの選択肢",
+    "keywords": [
+      "セレクト"
+    ],
+    "category": "form"
+  },
+  {
+    "id": "html-button",
+    "type": "html",
+    "slug": "button",
+    "name": "button",
+    "summary": "ボタン",
+    "keywords": [
+      "ボタン",
+      "クリック"
+    ],
+    "category": "form"
+  },
+  {
+    "id": "html-header",
+    "type": "html",
+    "slug": "header",
+    "name": "header",
+    "summary": "ヘッダー領域",
+    "keywords": [
+      "ヘッダー"
+    ],
+    "category": "structure"
+  },
+  {
+    "id": "html-nav",
+    "type": "html",
+    "slug": "nav",
+    "name": "nav",
+    "summary": "ナビゲーション",
+    "keywords": [
+      "メニュー",
+      "ナビ"
+    ],
+    "category": "structure"
+  },
+  {
+    "id": "html-main",
+    "type": "html",
+    "slug": "main",
+    "name": "main",
+    "summary": "ページの主要な内容",
+    "keywords": [
+      "メイン"
+    ],
+    "category": "structure"
+  },
+  {
+    "id": "html-section",
+    "type": "html",
+    "slug": "section",
+    "name": "section",
+    "summary": "主題ごとのまとまり",
+    "keywords": [
+      "セクション"
+    ],
+    "category": "structure"
+  },
+  {
+    "id": "html-article",
+    "type": "html",
+    "slug": "article",
+    "name": "article",
+    "summary": "独立したコンテンツ",
+    "keywords": [
+      "記事"
+    ],
+    "category": "structure"
+  },
+  {
+    "id": "html-aside",
+    "type": "html",
+    "slug": "aside",
+    "name": "aside",
+    "summary": "補足情報",
+    "keywords": [
+      "サイドバー"
+    ],
+    "category": "structure"
+  },
+  {
+    "id": "html-footer",
+    "type": "html",
+    "slug": "footer",
+    "name": "footer",
+    "summary": "フッター領域",
+    "keywords": [
+      "フッター"
+    ],
+    "category": "structure"
+  },
+  {
+    "id": "html-div",
+    "type": "html",
+    "slug": "div",
+    "name": "div",
+    "summary": "汎用のブロック要素",
+    "keywords": [
+      "ボックス"
+    ],
+    "category": "structure"
+  },
+  {
+    "id": "html-video",
+    "type": "html",
+    "slug": "video",
+    "name": "video",
+    "summary": "動画を埋め込む",
+    "keywords": [
+      "動画"
+    ],
+    "category": "media"
+  },
+  {
+    "id": "html-audio",
+    "type": "html",
+    "slug": "audio",
+    "name": "audio",
+    "summary": "音声を埋め込む",
+    "keywords": [
+      "音声"
+    ],
+    "category": "media"
+  },
+  {
+    "id": "html-iframe",
+    "type": "html",
+    "slug": "iframe",
+    "name": "iframe",
+    "summary": "別のページを埋め込む",
+    "keywords": [
+      "埋め込み",
+      "地図",
+      "YouTube"
+    ],
+    "category": "media"
+  },
+  {
+    "id": "html-canvas",
+    "type": "html",
+    "slug": "canvas",
+    "name": "canvas",
+    "summary": "スクリプトで描画する領域",
+    "keywords": [
+      "描画"
+    ],
+    "category": "media"
+  },
+  {
+    "id": "html-svg",
+    "type": "html",
+    "slug": "svg",
+    "name": "svg",
+    "summary": "ベクター画像",
+    "keywords": [
+      "アイコン",
+      "画像"
+    ],
+    "category": "media"
+  },
+  {
+    "id": "html-details",
+    "type": "html",
+    "slug": "details",
+    "name": "details",
+    "summary": "開閉できる詳細情報",
+    "keywords": [
+      "アコーディオン",
+      "開閉"
+    ],
+    "category": "other"
+  },
+  {
+    "id": "html-summary",
+    "type": "html",
+    "slug": "summary",
+    "name": "summary",
+    "summary": "detailsの見出し",
+    "keywords": [
+      "アコーディオン"
+    ],
+    "category": "other"
+  },
+  {
+    "id": "html-dialog",
+    "type": "html",
+    "slug": "dialog",
+    "name": "dialog",
+    "summary": "ダイアログ",
+    "keywords": [
+      "モーダル"
+    ],
+    "category": "other"
+  },
+  {
+    "id": "html-code",
+    "type": "html",
+    "slug": "code",
+    "name": "code",
+    "summary": "コードの断片",
+    "keywords": [
+      "コード"
+    ],
+    "category": "other"
+  },
+  {
+    "id": "html-pre",
+    "type": "html",
+    "slug": "pre",
+    "name": "pre",
+    "summary": "整形済みテキスト",
+    "keywords": [
+      "コード",
+      "空白"
+    ],
+    "category": "other"
+  },
+  {
+    "id": "css-font-size",
+    "type": "css",
+    "slug": "font-size",
+    "name": "font-size",
+    "summary": "文字の大きさ",
+    "keywords": [
+      "文字",
+      "サイズ"
+    ],
+    "category": "font"
+  },
+  {
+    "id": "css-font-weight",
+    "type": "css",
+    "slug": "font-weight",
+    "name": "font-weight",
+    "summary": "文字の太さ",
+    "keywords": [
+      "太字"
+    ],
+    "category": "font"
+  },
+  {
+    "id": "css-font-family",
+    "type": "css",
+    "slug": "font-family",
+    "name": "font-family",
+    "summary": "書体",
+    "keywords": [
+      "フォント"
+    ],
+    "category": "font"
+  },
+  {
+    "id": "css-line-height",
+    "type": "css",
+    "slug": "line-height",
+    "name": "line-height",
+    "summary": "行の高さ",
+    "keywords": [
+      "行間"
+    ],
+    "category": "font"
+  },
+  {
+    "id": "css-letter-spacing",
+    "type": "css",
+    "slug": "letter-spacing",
+    "name": "letter-spacing",
+    "summary": "文字の間隔",
+    "keywords": [
+      "字間"
+    ],
+    "category": "font"
+  },
+  {
+    "id": "css-text-align",
+    "type": "css",
+    "slug": "text-align",
+    "name": "text-align",
+    "summary": "行揃え",
+    "keywords": [
+      "中央寄せ",
+      "左寄せ",
+      "右寄せ"
+    ],
+    "category": "font"
+  },
+  {
+    "id": "css-text-decoration",
+    "type": "css",
+    "slug": "text-decoration",
+    "name": "text-decoration",
+    "summary": "下線などの装飾",
+    "keywords": [
+      "下線"
+    ],
+    "category": "font"
+  },
+  {
+    "id": "css-color",
+    "type": "css",
+    "slug": "color",
+    "name": "color",
+    "summary": "文字色",
+    "keywords": [
+      "色",
+      "文字色"
+    ],
+    "category": "color"
+  },
+  {
+    "id": "css-background-color",
+    "type": "css",
+    "slug": "background-color",
+    "name": "background-color",
+    "summary": "背景色",
+    "keywords": [
+      "背景",
+      "色"
+    ],
+    "category": "color"
+  },
+  {
+    "id": "css-background-image",
+    "type": "css",
+    "slug": "background-image",
+    "name": "background-image",
+    "summary": "背景画像",
+    "keywords": [
+      "背景",
+      "画像"
+    ],
+    "category": "color"
+  },
+  {
+    "id": "css-opacity",
+    "type": "css",
+    "slug": "opacity",
+    "name": "opacity",
+    "summary": "不透明度",
+    "keywords": [
+      "透明"
+    ],
+    "category": "color"
+  },
+  {
+    "id": "css-margin",
+    "type": "css",
+    "slug": "margin",
+    "name": "margin",
+    "summary": "外側の余白",
+    "keywords": [
+      "余白",
+      "間隔",
+      "中央寄せ",
+      "外側"
+    ],
+    "category": "box"
+  },
+  {
+    "id": "css-padding",
+    "type": "css",
+    "slug": "padding",
+    "name": "padding",
+    "summary": "内側の余白",
+    "keywords": [
+      "余白",
+      "内側"
+    ],
+    "category": "box"
+  },
+  {
+    "id": "css-width",
+    "type": "css",
+    "slug": "width",
+    "name": "width",
+    "summary": "幅",
+    "keywords": [
+      "幅",
+      "サイズ"
+    ],
+    "category": "box"
+  },
+  {
+    "id": "css-height",
+    "type": "css",
+    "slug": "height",
+    "name": "height",
+    "summary": "高さ",
+    "keywords": [
+      "高さ",
+      "サイズ"
+    ],
+    "category": "box"
+  },
+  {
+    "id": "css-max-width",
+    "type": "css",
+    "slug": "max-width",
+    "name": "max-width",
+    "summary": "最大の幅",
+    "keywords": [
+      "幅",
+      "レスポンシブ"
+    ],
+    "category": "box"
+  },
+  {
+    "id": "css-box-sizing",
+    "type": "css",
+    "slug": "box-sizing",
+    "name": "box-sizing",
+    "summary": "サイズの計算方法",
+    "keywords": [
+      "ボックスモデル"
+    ],
+    "category": "box"
+  },
+  {
+    "id": "css-display",
+    "type": "css",
+    "slug": "display",
+    "name": "display",
+    "summary": "表示形式",
+    "keywords": [
+      "横並び",
+      "非表示",
+      "flex",
+      "grid",
+      "block"
+    ],
+    "category": "layout"
+  },
+  {
+    "id": "css-position",
+    "type": "css",
+    "slug": "position",
+    "name": "position",
+    "summary": "配置方法",
+    "keywords": [
+      "固定",
+      "絶対配置",
+      "sticky"
+    ],
+    "category": "layout"
+  },
+  {
+    "id": "css-z-index",
+    "type": "css",
+    "slug": "z-index",
+    "name": "z-index",
+    "summary": "重なり順",
+    "keywords": [
+      "重なり"
+    ],
+    "category": "layout"
+  },
+  {
+    "id": "css-overflow",
+    "type": "css",
+    "slug": "overflow",
+    "name": "overflow",
+    "summary": "はみ出した部分の扱い",
+    "keywords": [
+      "スクロール",
+      "はみ出し"
+    ],
+    "category": "layout"
+  },
+  {
+    "id": "css-float",
+    "type": "css",
+    "slug": "float",
+    "name": "float",
+    "summary": "回り込み",
+    "keywords": [
+      "回り込み"
+    ],
+    "category": "layout"
+  },
+  {
+    "id": "css-flex-direction",
+    "type": "css",
+    "slug": "flex-direction",
+    "name": "flex-direction",
+    "summary": "アイテムの並ぶ方向",
+    "keywords": [
+      "flex",
+      "縦並び",
+      "横並び"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-justify-content",
+    "type": "css",
+    "slug": "justify-content",
+    "name": "justify-content",
+    "summary": "主軸方向の配置",
+    "keywords": [
+      "flex",
+      "中央寄せ",
+      "横並び",
+      "均等"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-align-items",
+    "type": "css",
+    "slug": "align-items",
+    "name": "align-items",
+    "summary": "交差軸方向の配置",
+    "keywords": [
+      "flex",
+      "中央寄せ",
+      "縦"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-gap",
+    "type": "css",
+    "slug": "gap",
+    "name": "gap",
+    "summary": "アイテム間の間隔",
+    "keywords": [
+      "flex",
+      "grid",
+      "間隔",
+      "余白"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-flex",
+    "type": "css",
+    "slug": "flex",
+    "name": "flex",
+    "summary": "アイテムの伸縮",
+    "keywords": [
+      "flex",
+      "伸縮"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-grid-template-columns",
+    "type": "css",
+    "slug": "grid-template-columns",
+    "name": "grid-template-columns",
+    "summary": "グリッドの列",
+    "keywords": [
+      "grid",
+      "列",
+      "カラム"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-place-items",
+    "type": "css",
+    "slug": "place-items",
+    "name": "place-items",
+    "summary": "縦横の配置をまとめて指定",
+    "keywords": [
+      "grid",
+      "中央寄せ"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-border",
+    "type": "css",
+    "slug": "border",
+    "name": "border",
+    "summary": "枠線",
+    "keywords": [
+      "枠線",
+      "線"
+    ],
+    "category": "deco"
+  },
+  {
+    "id": "css-border-radius",
+    "type": "css",
+    "slug": "border-radius",
+    "name": "border-radius",
+    "summary": "角丸",
+    "keywords": [
+      "角丸",
+      "円"
+    ],
+    "category": "deco"
+  },
+  {
+    "id": "css-box-shadow",
+    "type": "css",
+    "slug": "box-shadow",
+    "name": "box-shadow",
+    "summary": "影",
+    "keywords": [
+      "影",
+      "シャドウ"
+    ],
+    "category": "deco"
+  },
+  {
+    "id": "css-outline",
+    "type": "css",
+    "slug": "outline",
+    "name": "outline",
+    "summary": "アウトライン",
+    "keywords": [
+      "フォーカス"
+    ],
+    "category": "deco"
+  },
+  {
+    "id": "css-transition",
+    "type": "css",
+    "slug": "transition",
+    "name": "transition",
+    "summary": "変化をなめらかにする",
+    "keywords": [
+      "アニメーション",
+      "ホバー"
+    ],
+    "category": "anim"
+  },
+  {
+    "id": "css-animation",
+    "type": "css",
+    "slug": "animation",
+    "name": "animation",
+    "summary": "アニメーションの設定",
+    "keywords": [
+      "アニメーション"
+    ],
+    "category": "anim"
+  },
+  {
+    "id": "css-transform",
+    "type": "css",
+    "slug": "transform",
+    "name": "transform",
+    "summary": "移動・回転・拡大",
+    "keywords": [
+      "回転",
+      "拡大",
+      "移動"
+    ],
+    "category": "anim"
+  },
+  {
+    "id": "css-keyframes",
+    "type": "css",
+    "slug": "keyframes",
+    "name": "@keyframes",
+    "summary": "アニメーションの中間状態",
+    "keywords": [
+      "アニメーション"
+    ],
+    "category": "anim"
+  },
+  {
+    "id": "css-media",
+    "type": "css",
+    "slug": "media",
+    "name": "@media",
+    "summary": "画面幅に応じた切り替え",
+    "keywords": [
+      "レスポンシブ",
+      "メディアクエリ",
+      "スマホ"
+    ],
+    "category": "resp"
+  },
+  {
+    "id": "css-clamp",
+    "type": "css",
+    "slug": "clamp",
+    "name": "clamp()",
+    "summary": "最小値・推奨値・最大値",
+    "keywords": [
+      "レスポンシブ",
+      "文字サイズ"
+    ],
+    "category": "resp"
+  },
+  {
+    "id": "css-container",
+    "type": "css",
+    "slug": "container",
+    "name": "@container",
+    "summary": "コンテナの幅に応じた切り替え",
+    "keywords": [
+      "コンテナクエリ"
+    ],
+    "category": "resp"
+  },
+  {
+    "id": "css-aspect-ratio",
+    "type": "css",
+    "slug": "aspect-ratio",
+    "name": "aspect-ratio",
+    "summary": "縦横比",
+    "keywords": [
+      "比率",
+      "画像"
+    ],
+    "category": "resp"
+  },
+  {
+    "id": "css-hover",
+    "type": "css",
+    "slug": "hover",
+    "name": ":hover",
+    "summary": "マウスを乗せたとき",
+    "keywords": [
+      "疑似クラス",
+      "ホバー"
+    ],
+    "category": "other"
+  },
+  {
+    "id": "css-before",
+    "type": "css",
+    "slug": "before",
+    "name": "::before",
+    "summary": "要素の前に内容を追加",
+    "keywords": [
+      "疑似要素"
+    ],
+    "category": "other"
+  },
+  {
+    "id": "css-var",
+    "type": "css",
+    "slug": "var",
+    "name": "var()",
+    "summary": "CSS変数を参照",
+    "keywords": [
+      "変数",
+      "カスタムプロパティ"
+    ],
+    "category": "other"
+  },
+  {
+    "id": "css-cursor",
+    "type": "css",
+    "slug": "cursor",
+    "name": "cursor",
+    "summary": "カーソルの形",
+    "keywords": [
+      "マウス"
+    ],
+    "category": "other"
+  }
+]

@@ -1,0 +1,66 @@
+---
+// ⑥ 学習ロードマップ
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import { index, pad2, roadmap, titleOf, type Item } from '../../lib/data';
+import { url } from '../../lib/url';
+
+let n = 0;
+const stages = roadmap.map((s) => {
+  const start = n + 1;
+  const steps = s.steps.map((step) => ({
+    ...step,
+    num: pad2(++n),
+    links: [...new Set(step.links)].map((id) => index[id]).filter((x): x is Item => !!x),
+  }));
+  return { ...s, steps, anchor: `stage-${s.num}`, range: `STEP ${pad2(start)}–${pad2(n)}` };
+});
+---
+<BaseLayout title="学習ロードマップ | HTML & CSS GUIDE">
+  <Header current="learn" />
+  <main class="page page--wide">
+    <div class="kicker">LEARNING ROADMAP</div>
+    <h1 class="page-title">学習ロードマップ</h1>
+    <p class="page-lead page-lead--roadmap">上から順に進めると、HTMLの基礎から実務レベルのCSSまで無理なく身につきます。各項目のタグ・プロパティを選ぶと、辞典の詳細ページで解説とサンプルを確認できます。</p>
+    <nav class="stage-jump" aria-label="段階">
+      {stages.map((s) => (
+        <a href={`#${s.anchor}`}>
+          <span class="stage-jump__num">{s.num}</span>
+          <span class="stage-jump__text"><span class="stage-jump__name">{s.name}</span><span class="stage-jump__range">{s.range}</span></span>
+          <Icon name="chevron-down" />
+        </a>
+      ))}
+    </nav>
+    {stages.map((s) => (
+      <section class="stage" id={s.anchor}>
+        <div class="stage__label">
+          <div class="kicker">STAGE {s.num} · {s.en}</div>
+          <h2>{s.name}</h2>
+          <p>{s.desc}</p>
+        </div>
+        <ol>
+          {s.steps.map((st) => (
+            <li class="step">
+              <span class="step__num">{st.num}</span>
+              <div class="step__body">
+                <h3>{st.title}</h3>
+                <p>{st.desc}</p>
+                <div class="chips">
+                  {st.links.map((it) => <a class="chip" href={url.item(it)}>{titleOf(it)}</a>)}
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))}
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style is:global>
+  /* 段階ジャンプをなめらかにスクロール */
+  html { scroll-behavior: smooth; }
+</style>

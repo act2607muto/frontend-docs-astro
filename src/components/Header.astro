@@ -1,0 +1,58 @@
+---
+// 共通ヘッダー（トップ以外）。WordPress の template-parts/header に相当
+import Icon from './Icon.astro';
+import SearchBox from './SearchBox.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import { url } from '../lib/url';
+
+interface Props {
+  current: 'learn' | 'html' | 'css';
+  /** true で SP 用のサイドバー開閉ボタンを表示（詳細ページ） */
+  menu?: boolean;
+}
+const { current, menu = false } = Astro.props;
+
+const nav = [
+  { key: 'learn', label: '学習する', href: url.learn() },
+  { key: 'html', label: 'HTML辞典', href: url.dict('html') },
+  { key: 'css', label: 'CSS辞典', href: url.dict('css') },
+] as const;
+---
+<header class="site-header" data-site-header>
+  <div class="site-header__inner">
+    <div class="site-header__brand">
+      {menu && (
+        <button type="button" class="btn btn-icon site-header__menu" aria-label="カテゴリメニュー" aria-controls="sidebar" aria-expanded="false" data-drawer-open>
+          <Icon name="menu" />
+        </button>
+      )}
+      <a class="logo" href={url.top()}>HTML &amp; CSS GUIDE</a>
+    </div>
+    <nav class="gnav gnav--desktop" aria-label="メイン">
+      {nav.map((n) => <a href={n.href} aria-current={n.key === current ? 'page' : undefined}>{n.label}</a>)}
+    </nav>
+    <div class="site-header__spacer"></div>
+    <SearchBox class="hdr-search" placeholder="検索（flex、余白…）" emptyText="一致する項目は見つかりませんでした。" />
+    <div class="site-header__actions">
+      <button type="button" class="btn btn-icon site-header__search-toggle" aria-label="検索" aria-expanded="false" data-search-toggle>
+        <Icon name="search" />
+      </button>
+      <ThemeToggle />
+    </div>
+  </div>
+  <nav class="gnav gnav--mobile" aria-label="メイン">
+    {nav.map((n) => <a href={n.href} aria-current={n.key === current ? 'page' : undefined}>{n.label}</a>)}
+  </nav>
+</header>
+
+<script>
+  // SP：検索欄の開閉
+  document.querySelectorAll<HTMLElement>('[data-site-header]').forEach((header) => {
+    const toggle = header.querySelector<HTMLButtonElement>('[data-search-toggle]');
+    toggle?.addEventListener('click', () => {
+      const open = header.classList.toggle('is-search-open');
+      toggle.setAttribute('aria-expanded', String(open));
+      if (open) header.querySelector<HTMLInputElement>('.hdr-search input')?.focus();
+    });
+  });
+</script>
