@@ -1,6 +1,6 @@
 // POST /api/search-log  { "keyword": "flex" }
 // 検索結果から項目を開いたときの検索語を記録する
-import { isConfigured, matchesDictionary, normalizeKeyword, supabase } from './_lib/supabase.js';
+import { failed, isConfigured, matchesDictionary, normalizeKeyword, supabase } from './_lib/supabase.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -21,6 +21,6 @@ export default async function handler(req, res) {
     headers: { Prefer: 'return=minimal' },
     body: JSON.stringify({ keyword }),
   });
-  if (!r.ok) return res.status(502).json({ error: 'Failed to save' });
+  if (!r.ok) return failed(res, r, 'Failed to save');
   return res.status(204).end();
 }

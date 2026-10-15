@@ -1,6 +1,6 @@
 // GET /api/popular-keywords?limit=5
 // 直近30日間でよく検索された語句を返す（5分間キャッシュ）
-import { isConfigured, supabase } from './_lib/supabase.js';
+import { failed, isConfigured, supabase } from './_lib/supabase.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     method: 'POST',
     body: JSON.stringify({ days: 30, max_count: limit }),
   });
-  if (!r.ok) return res.status(502).json({ error: 'Failed to load' });
+  if (!r.ok) return failed(res, r, 'Failed to load');
 
   const rows = await r.json();
   res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600');
