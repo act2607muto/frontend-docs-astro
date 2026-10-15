@@ -4,9 +4,10 @@ import Icon from './Icon.astro';
 import SearchBox from './SearchBox.astro';
 import ThemeToggle from './ThemeToggle.astro';
 import { url } from '../lib/url';
+import { SITE, TYPES, TYPE_INFO } from '../lib/data';
 
 interface Props {
-  current: 'learn' | 'html' | 'css';
+  current: 'learn' | 'html' | 'css' | 'js';
   /** true で SP 用のサイドバー開閉ボタンを表示（詳細ページ） */
   menu?: boolean;
 }
@@ -14,9 +15,8 @@ const { current, menu = false } = Astro.props;
 
 const nav = [
   { key: 'learn', label: '学習する', href: url.learn() },
-  { key: 'html', label: 'HTML辞典', href: url.dict('html') },
-  { key: 'css', label: 'CSS辞典', href: url.dict('css') },
-] as const;
+  ...TYPES.map((t) => ({ key: t, label: TYPE_INFO[t].dict, href: url.dict(t) })),
+];
 ---
 <header class="site-header" data-site-header>
   <div class="site-header__inner">
@@ -26,13 +26,13 @@ const nav = [
           <Icon name="menu" />
         </button>
       )}
-      <a class="logo" href={url.top()}>HTML &amp; CSS GUIDE</a>
+      <a class="logo" href={url.top()}>{SITE}</a>
     </div>
     <nav class="gnav gnav--desktop" aria-label="メイン">
       {nav.map((n) => <a href={n.href} aria-current={n.key === current ? 'page' : undefined}>{n.label}</a>)}
     </nav>
     <div class="site-header__spacer"></div>
-    <SearchBox class="hdr-search" placeholder="検索（flex、余白…）" emptyText="一致する項目は見つかりませんでした。" />
+    <SearchBox class="hdr-search" placeholder="検索（flex、余白…）" emptyText="一致する項目は見つかりませんでした。" hint />
     <div class="site-header__actions">
       <button type="button" class="btn btn-icon site-header__search-toggle" aria-label="検索" aria-expanded="false" data-search-toggle>
         <Icon name="search" />

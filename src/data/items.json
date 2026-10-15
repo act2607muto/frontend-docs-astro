@@ -192,6 +192,110 @@
     "category": "text"
   },
   {
+    "id": "html-small",
+    "type": "html",
+    "slug": "small",
+    "name": "small",
+    "summary": "注釈・小さな補足",
+    "keywords": [
+      "注釈",
+      "著作権",
+      "コピーライト",
+      "補足",
+      "小さい文字"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-time",
+    "type": "html",
+    "slug": "time",
+    "name": "time",
+    "summary": "日付・時刻",
+    "keywords": [
+      "日付",
+      "時刻",
+      "datetime",
+      "投稿日",
+      "日時"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-dfn",
+    "type": "html",
+    "slug": "dfn",
+    "name": "dfn",
+    "summary": "用語の定義",
+    "keywords": [
+      "定義",
+      "用語",
+      "専門用語",
+      "説明",
+      "初出"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-abbr",
+    "type": "html",
+    "slug": "abbr",
+    "name": "abbr",
+    "summary": "略語",
+    "keywords": [
+      "略語",
+      "省略形",
+      "頭字語",
+      "title",
+      "正式名称"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-ruby",
+    "type": "html",
+    "slug": "ruby",
+    "name": "ruby",
+    "summary": "ふりがな（ルビ）",
+    "keywords": [
+      "ルビ",
+      "ふりがな",
+      "読み仮名",
+      "漢字",
+      "振り仮名"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-rt",
+    "type": "html",
+    "slug": "rt",
+    "name": "rt",
+    "summary": "ルビのテキスト",
+    "keywords": [
+      "ルビ",
+      "ふりがな",
+      "読み",
+      "ruby text"
+    ],
+    "category": "text"
+  },
+  {
+    "id": "html-rp",
+    "type": "html",
+    "slug": "rp",
+    "name": "rp",
+    "summary": "ルビ非対応時の括弧",
+    "keywords": [
+      "ルビ",
+      "括弧",
+      "ふりがな",
+      "フォールバック",
+      "ruby parenthesis"
+    ],
+    "category": "text"
+  },
+  {
     "id": "html-a",
     "type": "html",
     "slug": "a",
@@ -529,6 +633,21 @@
     "category": "structure"
   },
   {
+    "id": "html-address",
+    "type": "html",
+    "slug": "address",
+    "name": "address",
+    "summary": "連絡先情報",
+    "keywords": [
+      "連絡先",
+      "住所",
+      "問い合わせ",
+      "メール",
+      "電話番号"
+    ],
+    "category": "structure"
+  },
+  {
     "id": "html-video",
     "type": "html",
     "slug": "video",
@@ -642,6 +761,250 @@
       "空白"
     ],
     "category": "other"
+  },
+  {
+    "id": "html-comment",
+    "type": "html",
+    "slug": "comment",
+    "name": "!-- --",
+    "summary": "コメント（画面に表示されないメモ）",
+    "keywords": [
+      "コメント",
+      "コメントアウト",
+      "メモ",
+      "注釈",
+      "非表示"
+    ],
+    "category": "other"
+  },
+  {
+    "id": "css-external-stylesheet",
+    "type": "css",
+    "slug": "external-stylesheet",
+    "name": "外部スタイルシート",
+    "summary": "CSSファイルを読み込む",
+    "keywords": [
+      "外部CSS",
+      "link",
+      "stylesheet",
+      "CSSファイル",
+      "読み込み",
+      "書き方"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-internal-stylesheet",
+    "type": "css",
+    "slug": "internal-stylesheet",
+    "name": "内部スタイルシート",
+    "summary": "style要素に書く",
+    "keywords": [
+      "内部CSS",
+      "style要素",
+      "埋め込み",
+      "<style>",
+      "書き方"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-inline-style",
+    "type": "css",
+    "slug": "inline-style",
+    "name": "インラインスタイル",
+    "summary": "style属性に書く",
+    "keywords": [
+      "インラインスタイルシート",
+      "style属性",
+      "直接指定",
+      "書き方",
+      "インライン"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-specificity",
+    "type": "css",
+    "slug": "specificity",
+    "name": "詳細度",
+    "summary": "どの指定が優先されるかの決まり",
+    "keywords": [
+      "詳細度",
+      "優先順位",
+      "specificity",
+      "点数",
+      "!important",
+      "上書き"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-inheritance",
+    "type": "css",
+    "slug": "inheritance",
+    "name": "継承",
+    "summary": "親のスタイルを子が受け継ぐ仕組み",
+    "keywords": [
+      "継承",
+      "inherit",
+      "受け継ぐ",
+      "親子",
+      "引き継ぎ"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-id-selector",
+    "type": "css",
+    "slug": "id-selector",
+    "name": "#id",
+    "summary": "idセレクタ（1つだけの要素を指定）",
+    "keywords": [
+      "id",
+      "idセレクタ",
+      "シャープ",
+      "#",
+      "一意"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-class-selector",
+    "type": "css",
+    "slug": "class-selector",
+    "name": ".class",
+    "summary": "クラスセレクタ（グループを指定）",
+    "keywords": [
+      "class",
+      "クラス",
+      "クラスセレクタ",
+      "ドット",
+      "."
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-type-selector",
+    "type": "css",
+    "slug": "type-selector",
+    "name": "要素セレクタ",
+    "summary": "タグ名で直接指定する（なるべく避ける）",
+    "keywords": [
+      "タグ",
+      "要素",
+      "タイプセレクタ",
+      "直接指定",
+      "要素名"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-selector-list",
+    "type": "css",
+    "slug": "selector-list",
+    "name": "A, B",
+    "summary": "複数の要素にまとめて指定する",
+    "keywords": [
+      "複数指定",
+      "グループ化",
+      "カンマ",
+      "セレクタリスト",
+      "複合セレクタ"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-descendant-selector",
+    "type": "css",
+    "slug": "descendant-selector",
+    "name": "A B",
+    "summary": "子孫セレクタ（中にある要素すべて）",
+    "keywords": [
+      "子孫",
+      "孫",
+      "子孫セレクタ",
+      "空白",
+      "入れ子"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-child-selector",
+    "type": "css",
+    "slug": "child-selector",
+    "name": "A > B",
+    "summary": "子セレクタ（直下の子要素だけ）",
+    "keywords": [
+      "子要素",
+      "子セレクタ",
+      ">",
+      "直下",
+      "結合子"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-adjacent-sibling-selector",
+    "type": "css",
+    "slug": "adjacent-sibling-selector",
+    "name": "A + B",
+    "summary": "隣接兄弟セレクタ（すぐ次の要素）",
+    "keywords": [
+      "隣接",
+      "兄弟",
+      "隣接セレクタ",
+      "+",
+      "次の要素"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-general-sibling-selector",
+    "type": "css",
+    "slug": "general-sibling-selector",
+    "name": "A ~ B",
+    "summary": "一般兄弟セレクタ（後ろにある兄弟すべて）",
+    "keywords": [
+      "兄弟",
+      "兄弟要素",
+      "一般兄弟",
+      "~",
+      "チルダ"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-pseudo-class",
+    "type": "css",
+    "slug": "pseudo-class",
+    "name": "疑似クラス",
+    "summary": "要素の状態や位置で指定する（:）",
+    "keywords": [
+      "疑似クラス",
+      ":hover",
+      ":nth-child",
+      ":focus",
+      "コロン",
+      "状態"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-pseudo-element",
+    "type": "css",
+    "slug": "pseudo-element",
+    "name": "疑似要素",
+    "summary": "要素の一部分や追加部分を指定する（::）",
+    "keywords": [
+      "疑似要素",
+      "::before",
+      "::after",
+      "::first-letter",
+      "ダブルコロン",
+      "content"
+    ],
+    "category": "syntax"
   },
   {
     "id": "css-font-size",
@@ -1183,5 +1546,305 @@
       "マウス"
     ],
     "category": "other"
+  },
+  {
+    "id": "js-let-const",
+    "type": "js",
+    "slug": "let-const",
+    "name": "let / const",
+    "summary": "変数を宣言する",
+    "keywords": [
+      "変数",
+      "定数",
+      "宣言",
+      "var",
+      "代入"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-if",
+    "type": "js",
+    "slug": "if",
+    "name": "if",
+    "summary": "条件によって処理を分ける",
+    "keywords": [
+      "条件分岐",
+      "else",
+      "比較",
+      "もし",
+      "分岐"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-for",
+    "type": "js",
+    "slug": "for",
+    "name": "for",
+    "summary": "処理を繰り返す",
+    "keywords": [
+      "繰り返し",
+      "ループ",
+      "for...of",
+      "while",
+      "反復"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-function",
+    "type": "js",
+    "slug": "function",
+    "name": "function",
+    "summary": "処理をまとめて名前を付ける",
+    "keywords": [
+      "関数",
+      "引数",
+      "戻り値",
+      "return",
+      "定義"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-arrow-function",
+    "type": "js",
+    "slug": "arrow-function",
+    "name": "() =>",
+    "summary": "短く書ける関数（アロー関数）",
+    "keywords": [
+      "アロー関数",
+      "arrow",
+      "関数",
+      "=>",
+      "コールバック"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-array",
+    "type": "js",
+    "slug": "array",
+    "name": "Array",
+    "summary": "複数の値を順番に並べる（配列）",
+    "keywords": [
+      "配列",
+      "リスト",
+      "push",
+      "length",
+      "要素"
+    ],
+    "category": "data"
+  },
+  {
+    "id": "js-object",
+    "type": "js",
+    "slug": "object",
+    "name": "Object",
+    "summary": "名前と値の組をまとめる（オブジェクト）",
+    "keywords": [
+      "オブジェクト",
+      "プロパティ",
+      "キー",
+      "連想配列",
+      "ドット"
+    ],
+    "category": "data"
+  },
+  {
+    "id": "js-template-literal",
+    "type": "js",
+    "slug": "template-literal",
+    "name": "`${}`",
+    "summary": "変数を埋め込める文字列（テンプレート文字列）",
+    "keywords": [
+      "テンプレート文字列",
+      "テンプレートリテラル",
+      "バッククォート",
+      "文字列",
+      "埋め込み"
+    ],
+    "category": "data"
+  },
+  {
+    "id": "js-foreach",
+    "type": "js",
+    "slug": "foreach",
+    "name": "forEach()",
+    "summary": "配列の要素ごとに処理する",
+    "keywords": [
+      "forEach",
+      "繰り返し",
+      "配列",
+      "ループ",
+      "各要素"
+    ],
+    "category": "data"
+  },
+  {
+    "id": "js-map",
+    "type": "js",
+    "slug": "map",
+    "name": "map()",
+    "summary": "配列の各要素を変換した新しい配列を作る",
+    "keywords": [
+      "map",
+      "変換",
+      "配列",
+      "加工",
+      "新しい配列"
+    ],
+    "category": "data"
+  },
+  {
+    "id": "js-filter",
+    "type": "js",
+    "slug": "filter",
+    "name": "filter()",
+    "summary": "条件に合う要素だけを取り出す",
+    "keywords": [
+      "filter",
+      "絞り込み",
+      "検索",
+      "配列",
+      "条件"
+    ],
+    "category": "data"
+  },
+  {
+    "id": "js-query-selector",
+    "type": "js",
+    "slug": "query-selector",
+    "name": "querySelector()",
+    "summary": "CSSセレクタで要素を取得する",
+    "keywords": [
+      "要素の取得",
+      "セレクタ",
+      "querySelectorAll",
+      "getElementById",
+      "DOM"
+    ],
+    "category": "dom"
+  },
+  {
+    "id": "js-text-content",
+    "type": "js",
+    "slug": "text-content",
+    "name": "textContent",
+    "summary": "要素の文字を読み書きする",
+    "keywords": [
+      "テキスト",
+      "文字の書き換え",
+      "innerHTML",
+      "innerText",
+      "表示"
+    ],
+    "category": "dom"
+  },
+  {
+    "id": "js-class-list",
+    "type": "js",
+    "slug": "class-list",
+    "name": "classList",
+    "summary": "クラスの追加・削除・切り替え",
+    "keywords": [
+      "クラス",
+      "toggle",
+      "add",
+      "remove",
+      "切り替え"
+    ],
+    "category": "dom"
+  },
+  {
+    "id": "js-create-element",
+    "type": "js",
+    "slug": "create-element",
+    "name": "createElement()",
+    "summary": "新しい要素を作って追加する",
+    "keywords": [
+      "要素の作成",
+      "append",
+      "appendChild",
+      "追加",
+      "生成"
+    ],
+    "category": "dom"
+  },
+  {
+    "id": "js-add-event-listener",
+    "type": "js",
+    "slug": "add-event-listener",
+    "name": "addEventListener()",
+    "summary": "クリックなどの操作に反応する",
+    "keywords": [
+      "イベント",
+      "クリック",
+      "click",
+      "onclick",
+      "操作"
+    ],
+    "category": "event"
+  },
+  {
+    "id": "js-prevent-default",
+    "type": "js",
+    "slug": "prevent-default",
+    "name": "preventDefault()",
+    "summary": "ブラウザの標準の動作を止める",
+    "keywords": [
+      "既定の動作",
+      "フォーム送信",
+      "submit",
+      "リンク",
+      "キャンセル"
+    ],
+    "category": "event"
+  },
+  {
+    "id": "js-event-target",
+    "type": "js",
+    "slug": "event-target",
+    "name": "event.target",
+    "summary": "イベントが起きた要素を調べる",
+    "keywords": [
+      "イベントオブジェクト",
+      "target",
+      "委譲",
+      "クリックされた要素",
+      "closest"
+    ],
+    "category": "event"
+  },
+  {
+    "id": "js-set-timeout",
+    "type": "js",
+    "slug": "set-timeout",
+    "name": "setTimeout()",
+    "summary": "指定した時間のあとに実行する",
+    "keywords": [
+      "タイマー",
+      "遅延",
+      "setInterval",
+      "待つ",
+      "時間"
+    ],
+    "category": "async"
+  },
+  {
+    "id": "js-async-await",
+    "type": "js",
+    "slug": "async-await",
+    "name": "async / await",
+    "summary": "時間のかかる処理を順番に書く",
+    "keywords": [
+      "非同期",
+      "Promise",
+      "await",
+      "fetch",
+      "then"
+    ],
+    "category": "async"
   }
 ]

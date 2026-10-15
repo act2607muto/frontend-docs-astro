@@ -1,5 +1,5 @@
 ---
-// html / css を持つデータからコードブロックを並べる
+// html / css / js を持つデータからコードブロックを並べる
 import CodeBlock from './CodeBlock.astro';
 import type { CodeSet } from '../lib/data';
 
@@ -11,3 +11,4 @@ const { code, small } = Astro.props;
 ---
 {code.html && <CodeBlock lang="HTML" code={code.html} small={small} />}
 {code.css && <CodeBlock lang="CSS" code={code.css} small={small} />}
+{code.js && <CodeBlock lang="JS" code={code.js} small={small} />}

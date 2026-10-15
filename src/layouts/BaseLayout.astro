@@ -3,6 +3,7 @@
 import '../styles/tokens.css';
 import '../styles/base.css';
 import '../styles/components.css';
+import SearchDialog from '../components/SearchDialog.astro';
 
 interface Props {
   title: string;
@@ -10,7 +11,7 @@ interface Props {
 }
 const {
   title,
-  description = 'HTMLタグとCSSプロパティを、サンプルコードと実際の表示結果で学べる辞典・学習サイトです。',
+  description = 'HTMLタグ・CSSプロパティ・JavaScriptを、サンプルコードと実際の表示結果で学べる辞典・学習サイトです。',
 } = Astro.props;
 ---
 <!doctype html>
@@ -26,6 +27,12 @@ const {
         var t; try { t = localStorage.getItem('hcg-theme'); } catch (e) {}
         if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         document.documentElement.dataset.theme = t;
+        // ショートカットの表記を Mac（⌘K）とそれ以外（Ctrl K）で切り替える
+        var p = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || navigator.userAgent;
+        document.documentElement.dataset.os = /mac|iphone|ipad/i.test(p) ? 'mac' : 'other';
+        // プレビュー（iframe）からのメッセージは、受け取り側のスクリプトが読み込まれる前に届くことがあるため、先にためておく
+        window.__hcgPreviewQueue = [];
+        addEventListener('message', function (e) { if (window.__hcgPreviewQueue) window.__hcgPreviewQueue.push(e); });
       })();
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,5 +41,6 @@ const {
   </head>
   <body>
     <slot />
+    <SearchDialog />
   </body>
 </html>

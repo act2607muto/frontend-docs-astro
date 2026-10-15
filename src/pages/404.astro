@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { url } from '../lib/url';
+import { SITE } from '../lib/data';
 ---
-<BaseLayout title="ページが見つかりません | HTML & CSS GUIDE">
+<BaseLayout title={`ページが見つかりません | ${SITE}`}>
   <main class="page">
     <div class="kicker">404 NOT FOUND</div>
     <h1 class="page-title">ページが見つかりません</h1>

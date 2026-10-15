@@ -8,13 +8,16 @@ interface Props {
   placeholder: string;
   emptyText: string;
   class?: string;
+  /** true で入力欄の右端にショートカットの目印（Ctrl K / ⌘K）を表示する */
+  hint?: boolean;
 }
-const { placeholder, emptyText, class: cls } = Astro.props;
+const { placeholder, emptyText, class: cls, hint = false } = Astro.props;
 ---
 <div
   class:list={['search', cls]}
   data-search
   data-index-url={url.searchIndex()}
+  data-log-url={url.api('search-log')}
   data-empty-text={emptyText}
   data-limit={CONFIG.searchLimit}
 >
@@ -27,8 +30,10 @@ const { placeholder, emptyText, class: cls } = Astro.props;
     role="combobox"
     aria-autocomplete="list"
     aria-expanded="false"
+    aria-keyshortcuts={hint ? 'Control+K Meta+K' : undefined}
     autocomplete="off"
   />
+  {hint && <kbd class="search__kbd" aria-hidden="true"><span class="os-other">Ctrl K</span><span class="os-mac">⌘K</span></kbd>}
   <div class="search__dropdown" hidden></div>
 </div>
 

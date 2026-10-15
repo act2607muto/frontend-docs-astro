@@ -8,7 +8,7 @@ import CodeBlocks from '../../components/CodeBlocks.astro';
 import Preview from '../../components/Preview.astro';
 import InlineText from '../../components/InlineText.astro';
 import SecHead from '../../components/SecHead.astro';
-import { getDetail, index, items, order, pad2, relatedOf, titleOf, type Item } from '../../lib/data';
+import { getDetail, index, items, order, pad2, relatedOf, SITE, titleOf, TYPE_INFO, type Item } from '../../lib/data';
 import { url } from '../../lib/url';
 
 export function getStaticPaths() {
@@ -20,11 +20,10 @@ interface Props {
 }
 const { item } = Astro.props;
 const d = getDetail(item.id);
-const isHtml = item.type === 'html';
-const dictName = isHtml ? 'HTML辞典' : 'CSS辞典';
+const info = TYPE_INFO[item.type];
 const title = d?.title || titleOf(item);
 const ja = d ? d.ja : item.summary;
-const lead = d ? d.lead : `${item.summary}を指定・表現するための${isHtml ? 'タグ' : 'プロパティ'}です。`;
+const lead = d ? d.lead : `${item.summary}を指定・表現するための${info.unit}です。`;
 
 const ord = order[item.type];
 const pos = ord.indexOf(item.id);
@@ -32,17 +31,17 @@ const prev = index[ord[pos - 1] ?? ''];
 const next = index[ord[pos + 1] ?? ''];
 const related = relatedOf(item);
 ---
-<BaseLayout title={`${title} ${ja} | HTML & CSS GUIDE`} description={d ? d.lead : item.summary}>
+<BaseLayout title={`${title} ${ja} | ${SITE}`} description={d ? d.lead : item.summary}>
   <Header current={item.type} menu />
   <div class="detail">
     <Sidebar item={item} />
     <article class="article">
       <nav class="crumbs" aria-label="パンくず">
-        <a href={url.dict(item.type)}>{dictName}</a><span>/</span>
+        <a href={url.dict(item.type)}>{info.dict}</a><span>/</span>
         <span>{item.categoryName}</span><span>/</span>
         <code>{item.name}</code>
       </nav>
-      <div class="kicker article__kicker">{isHtml ? 'HTML要素' : 'CSS'} ・ {item.categoryName}</div>
+      <div class="kicker article__kicker">{info.kicker} ・ {item.categoryName}</div>
       <h1 class="article__title">{title}</h1>
       <p class="article__ja">{ja}</p>
       <p class="article__lead">{lead}</p>

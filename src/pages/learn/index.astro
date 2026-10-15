@@ -4,7 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import Icon from '../../components/Icon.astro';
-import { index, pad2, roadmap, titleOf, type Item } from '../../lib/data';
+import { index, pad2, roadmap, SITE, titleOf, type Item } from '../../lib/data';
 import { url } from '../../lib/url';
 
 let n = 0;
@@ -18,7 +18,7 @@ const stages = roadmap.map((s) => {
   return { ...s, steps, anchor: `stage-${s.num}`, range: `STEP ${pad2(start)}–${pad2(n)}` };
 });
 ---
-<BaseLayout title="学習ロードマップ | HTML & CSS GUIDE">
+<BaseLayout title={`学習ロードマップ | ${SITE}`}>
   <Header current="learn" />
   <main class="page page--wide">
     <div class="kicker">LEARNING ROADMAP</div>

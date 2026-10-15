@@ -55,7 +55,12 @@
   --c-num: #098658;
   --c-kw: #af00db;
   --c-fn: #795e26;
+  --c-str: #a31515;
+  --c-stor: #0000ff;
+  --c-var: #001080;
   --c-ln: #a19c98;
+  --c-warn: #9a6700;
+  --c-error: #c0392b;
 
   /* — フォント — */
   --font-body: "Helvetica Neue", Helvetica, Arial, "Noto Sans JP", "Hiragino Sans",
@@ -101,7 +106,12 @@
   --c-num: #b5cea8;
   --c-kw: #c586c0;
   --c-fn: #dcdcaa;
+  --c-str: #ce9178;
+  --c-stor: #569cd6;
+  --c-var: #9cdcfe;
   --c-ln: #6e7681;
+  --c-warn: #d29922;
+  --c-error: #f47067;
 
   --shadow-md: 0 3px 12px rgba(0, 0, 0, .45);
   --shadow-lg: 0 12px 36px rgba(0, 0, 0, .6);

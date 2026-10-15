@@ -1,11 +1,11 @@
 ---
 // コードブロック：ハイライトはビルド時、コピーは src/scripts/code.ts
 import Icon from './Icon.astro';
-import { highlight } from '../lib/highlight';
+import { highlight, type Lang } from '../lib/highlight';
 import { CONFIG } from '../config';
 
 interface Props {
-  lang: 'HTML' | 'CSS';
+  lang: Lang;
   code: string;
   small?: boolean;
 }
