@@ -1183,6 +1183,511 @@
     ]
   },
   {
+    "id": "html-small",
+    "title": null,
+    "ja": "注釈・小さな補足",
+    "lead": "著作権表示や注意書き、法的な但し書きなど、本文に添える「小さな補足」を表します。ブラウザは既定で少し小さな文字で表示します。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "インライン要素"
+      },
+      {
+        "label": "終了タグ",
+        "value": "必須"
+      },
+      {
+        "label": "既定の表示",
+        "value": "ひと回り小さい文字"
+      }
+    ],
+    "code": {
+      "html": "<p>ブレンドコーヒー ¥480 <small>（税込）</small></p>\n<p><small>※ 価格は予告なく変更になる場合があります。</small></p>\n<footer><small>&copy; 2026 Cafe Mimosa</small></footer>",
+      "css": "small {\n  color: #666;\n}"
+    },
+    "preview": {
+      "height": 150,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`small` は、本文に添える注釈・但し書き・著作権表示など、「付け足しの小さな情報」を表す要素です。",
+      "見た目が小さくなるのはブラウザの既定のスタイルで、本来の役割は「補足である」という意味を伝えることです。",
+      "ただ文字を小さくしたいだけなら、`span` などにCSSの `font-size` を指定します。"
+    ],
+    "values": {
+      "label": "使いどころ",
+      "head": "用途",
+      "rows": [
+        {
+          "key": "著作権表示",
+          "desc": "© 年 サイト名"
+        },
+        {
+          "key": "価格の注記",
+          "desc": "（税込）・※送料別"
+        },
+        {
+          "key": "注意書き",
+          "desc": "※ 予告なく変更になる場合があります"
+        },
+        {
+          "key": "ライセンス表記",
+          "desc": "画像やコードの利用条件"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "フッターの著作権表示",
+        "desc": "サイトのフッターでは small で著作権表示を書くのが定番です。",
+        "html": "<footer>\n  <small>&copy; 2026 Cafe Mimosa. All rights reserved.</small>\n</footer>",
+        "css": "footer {\n  text-align: center;\n}"
+      }
+    ],
+    "notes": [
+      "段落全体や長い文章を small で囲まないでください。補足の短い文に使います。",
+      "見出しの副題（サブタイトル）には small ではなく p などを使います。"
+    ],
+    "related": [
+      "html-footer",
+      "html-span",
+      "css-font-size",
+      "html-strong"
+    ]
+  },
+  {
+    "id": "html-time",
+    "title": null,
+    "ja": "日付・時刻",
+    "lead": "日付や時刻を表す要素です。datetime 属性に機械が読み取れる形式で日時を書くと、検索エンジンやカレンダーアプリが正しく理解できます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "インライン要素"
+      },
+      {
+        "label": "終了タグ",
+        "value": "必須"
+      },
+      {
+        "label": "主な属性",
+        "value": "datetime"
+      }
+    ],
+    "code": {
+      "html": "<p>投稿日：<time datetime=\"2026-04-01\">2026年4月1日</time></p>\n<p>営業時間：<time datetime=\"10:00\">午前10時</time>〜<time datetime=\"18:00\">午後6時</time></p>\n<p>イベント開始：<time datetime=\"2026-05-05T13:00+09:00\">5月5日 13時</time></p>",
+      "css": null
+    },
+    "preview": {
+      "height": 150,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`time` は、文章中の日付や時刻を示す要素です。見た目は変わりませんが、そこが日時であることがコンピューターに伝わります。",
+      "画面に表示する文字は「2026年4月1日」のように自由に書けます。そのかわり `datetime` 属性に `2026-04-01` のような決まった形式で日時を書いておきます。",
+      "ブログの投稿日やイベントの開催日時などに使うと、検索エンジンが日付を正しく認識しやすくなります。"
+    ],
+    "values": {
+      "label": "datetime の書き方",
+      "head": "値",
+      "rows": [
+        {
+          "key": "2026-04-01",
+          "desc": "日付（年-月-日）"
+        },
+        {
+          "key": "13:00",
+          "desc": "時刻（時:分）"
+        },
+        {
+          "key": "2026-04-01T13:00",
+          "desc": "日付と時刻（間に T）"
+        },
+        {
+          "key": "2026-04-01T13:00+09:00",
+          "desc": "タイムゾーン付き（日本時間）"
+        },
+        {
+          "key": "2026-04",
+          "desc": "年月だけ"
+        },
+        {
+          "key": "PT2H30M",
+          "desc": "期間（2時間30分）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "記事の投稿日と更新日",
+        "desc": "article の header に投稿日を time で書きます。",
+        "html": "<article>\n  <header>\n    <h2>春の新メニュー</h2>\n    <p>公開：<time datetime=\"2026-04-01\">2026.04.01</time></p>\n  </header>\n</article>"
+      }
+    ],
+    "notes": [
+      "datetime 属性の形式が正しくないと、日時として認識されません。",
+      "文字自体が決まった形式（例：2026-04-01）なら、datetime 属性は省略できます。"
+    ],
+    "related": [
+      "html-article",
+      "html-p",
+      "html-span",
+      "html-small"
+    ]
+  },
+  {
+    "id": "html-dfn",
+    "title": null,
+    "ja": "用語の定義",
+    "lead": "文章の中で、その場で意味を説明している用語を示します。専門用語が初めて登場して定義する箇所に使います。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "インライン要素"
+      },
+      {
+        "label": "終了タグ",
+        "value": "必須"
+      },
+      {
+        "label": "既定の表示",
+        "value": "斜体"
+      }
+    ],
+    "code": {
+      "html": "<p><dfn>レスポンシブデザイン</dfn>とは、画面の幅に合わせてレイアウトを変え、どの端末でも見やすく表示する作り方のことです。</p>\n<p><dfn><abbr title=\"Cascading Style Sheets\">CSS</abbr></dfn>は、Webページの見た目を指定する言語です。</p>",
+      "css": "dfn {\n  font-style: normal;\n  font-weight: bold;\n  color: #7d5411;\n}"
+    },
+    "preview": {
+      "height": 150,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`dfn` は \"definition\"（定義）の略で、その文の中で意味を説明している用語を示します。囲むのは用語の部分だけで、説明文は同じ段落の中に書きます。",
+      "1つの用語につき、定義している1か所だけに使います。2回目以降に登場するときは `dfn` で囲みません。",
+      "略語を定義するときは、上の2つ目の例のように `abbr` と組み合わせることもできます。"
+    ],
+    "values": {
+      "label": "主な属性",
+      "head": "属性",
+      "rows": [
+        {
+          "key": "title",
+          "desc": "定義している用語を別の書き方で示す"
+        },
+        {
+          "key": "id",
+          "desc": "ほかの場所からリンクで参照する"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "用語集にリンクする",
+        "desc": "dfn に id を付けておくと、別の場所からその定義へリンクできます。",
+        "html": "<p><dfn id=\"def-flex\">Flexbox</dfn>は、要素を1方向に並べるレイアウトの仕組みです。</p>\n<p>詳しくは<a href=\"#def-flex\">Flexbox</a>の説明を参照してください。</p>"
+      }
+    ],
+    "notes": [
+      "強調や太字のために dfn を使わないでください。",
+      "同じ用語を何度も dfn で囲まず、定義している箇所だけに使います。"
+    ],
+    "related": [
+      "html-abbr",
+      "html-dl",
+      "html-em",
+      "html-p"
+    ]
+  },
+  {
+    "id": "html-abbr",
+    "title": null,
+    "ja": "略語",
+    "lead": "HTML や CSS のような略語を示します。title 属性に正式名称を書くと、マウスを乗せたときに表示されます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "インライン要素"
+      },
+      {
+        "label": "終了タグ",
+        "value": "必須"
+      },
+      {
+        "label": "主な属性",
+        "value": "title"
+      }
+    ],
+    "code": {
+      "html": "<p><abbr title=\"HyperText Markup Language\">HTML</abbr>で構造をつくり、<abbr title=\"Cascading Style Sheets\">CSS</abbr>で見た目を整えます。</p>\n<p>締め切りは<abbr title=\"as soon as possible\">ASAP</abbr>でお願いします。</p>",
+      "css": "abbr[title] {\n  text-decoration: underline dotted;\n  cursor: help;\n}"
+    },
+    "preview": {
+      "height": 120,
+      "note": "点線の付いた略語にマウスを乗せると、正式名称が表示されます",
+      "fullDocument": false
+    },
+    "explain": [
+      "`abbr` は \"abbreviation\"（略語）の略で、文章中の略語を示す要素です。",
+      "`title` 属性に正式名称を書くと、多くのブラウザではマウスを乗せたときに表示されます。多くのブラウザは、`title` 付きの `abbr` に点線の下線を表示します。",
+      "ただし `title` はタッチ操作の端末では表示されません。初めて出てくる略語は、本文の中で正式名称も書いておくと親切です。"
+    ],
+    "values": {
+      "label": "主な属性・CSS",
+      "head": "名前",
+      "rows": [
+        {
+          "key": "title 属性",
+          "desc": "正式名称や説明"
+        },
+        {
+          "key": "text-decoration: underline dotted",
+          "desc": "点線の下線で略語であることを示す"
+        },
+        {
+          "key": "cursor: help",
+          "desc": "マウスを乗せたときにヘルプのカーソルにする"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "初出で正式名称を書く",
+        "desc": "本文で正式名称を書き、以降は略語だけにする書き方です。",
+        "html": "<p><abbr>SEO</abbr>（Search Engine Optimization：検索エンジン最適化）の基本を紹介します。</p>"
+      }
+    ],
+    "notes": [
+      "title の内容は読み上げソフトで読まれない場合があります。重要な説明は本文に書きます。",
+      "すべての略語に abbr を付ける必要はありません。読者が知らなそうなものに使います。"
+    ],
+    "related": [
+      "html-dfn",
+      "html-span",
+      "css-cursor",
+      "css-text-decoration"
+    ]
+  },
+  {
+    "id": "html-ruby",
+    "title": null,
+    "ja": "ふりがな（ルビ）",
+    "lead": "漢字などの文字の上に、ふりがな（ルビ）を表示します。読み方は rt 要素で書き、ruby 要素で全体を囲みます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "インライン要素"
+      },
+      {
+        "label": "終了タグ",
+        "value": "必須"
+      },
+      {
+        "label": "中に入れる",
+        "value": "親文字 ＋ rt（＋ rp）"
+      }
+    ],
+    "code": {
+      "html": "<p><ruby>漢字<rp>（</rp><rt>かんじ</rt><rp>）</rp></ruby>にふりがなを付けます。</p>\n<p><ruby>東<rt>とう</rt>京<rt>きょう</rt></ruby>のように、1文字ずつ付けることもできます。</p>",
+      "css": "p {\n  font-size: 20px;\n  line-height: 2.4;\n}"
+    },
+    "preview": {
+      "height": 160,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`ruby` は、文字にふりがな（ルビ）を付けるための要素です。ふりがなを付けたい文字（親文字）と、読みを書いた `rt` を `ruby` で囲みます。",
+      "上の1つ目の例のように熟語全体に付けることも、2つ目の例のように1文字ずつ `rt` を付けることもできます。",
+      "`rp` はルビに対応していない環境でだけ表示される括弧です。対応していれば非表示になり、対応していなければ「漢字（かんじ）」のように表示されます。"
+    ],
+    "values": {
+      "label": "関連する要素・CSS",
+      "head": "名前",
+      "rows": [
+        {
+          "key": "ruby",
+          "desc": "ルビ全体を囲む"
+        },
+        {
+          "key": "rt",
+          "desc": "ふりがなの部分"
+        },
+        {
+          "key": "rp",
+          "desc": "非対応環境向けの括弧"
+        },
+        {
+          "key": "ruby-position",
+          "desc": "ルビの位置（over / under）"
+        },
+        {
+          "key": "ruby-align",
+          "desc": "ルビの揃え方"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "ルビの色と大きさを変える",
+        "desc": "rt にスタイルを指定すると、ふりがなだけを装飾できます。",
+        "html": "<ruby>躑躅<rp>（</rp><rt>つつじ</rt><rp>）</rp></ruby>",
+        "css": "rt {\n  font-size: .5em;\n  color: #a06f24;\n}"
+      }
+    ],
+    "notes": [
+      "ルビを付けると行の高さが増えます。行間（line-height）を広めにしておくと読みやすくなります。",
+      "rp は省略できますが、付けておくと古い環境でも読みが伝わります。"
+    ],
+    "related": [
+      "html-rt",
+      "html-rp",
+      "css-line-height",
+      "css-font-size"
+    ]
+  },
+  {
+    "id": "html-rt",
+    "title": null,
+    "ja": "ルビのテキスト",
+    "lead": "ruby 要素の中で、ふりがな（ルビ）の文字そのものを書く要素です。直前の親文字の上に小さく表示されます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "ruby の子要素"
+      },
+      {
+        "label": "終了タグ",
+        "value": "省略可（書くのが一般的）"
+      },
+      {
+        "label": "記述位置",
+        "value": "ruby の中、親文字の後"
+      }
+    ],
+    "code": {
+      "html": "<p><ruby>明日<rt>あした</rt></ruby>は<ruby>晴<rt>は</rt></ruby>れるでしょう。</p>\n<p class=\"under\"><ruby>Mimosa<rt>ミモザ</rt></ruby></p>",
+      "css": "p {\n  font-size: 20px;\n  line-height: 2.4;\n}\nrt {\n  color: #a06f24;\n}\n.under ruby {\n  ruby-position: under;\n}"
+    },
+    "preview": {
+      "height": 160,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`rt` は \"ruby text\" の略で、ルビとして表示する読みの文字を書きます。必ず `ruby` の中に、ふりがなを付けたい文字の後に書きます。",
+      "ブラウザは `rt` を親文字の上に、親文字より小さい文字で表示します。",
+      "CSSの `ruby-position: under` を `ruby` に指定すると、ルビを下に表示できます。英単語に読みを添えるときなどに使えます。"
+    ],
+    "values": {
+      "label": "よく指定するCSS",
+      "head": "プロパティ",
+      "rows": [
+        {
+          "key": "font-size",
+          "desc": "ルビの文字の大きさ（既定は親文字の約半分）"
+        },
+        {
+          "key": "color",
+          "desc": "ルビの文字色"
+        },
+        {
+          "key": "ruby-position",
+          "desc": "over（上）/ under（下）※ ruby に指定"
+        },
+        {
+          "key": "letter-spacing",
+          "desc": "ルビの字間"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "ルビを選択・コピーさせない",
+        "desc": "本文をコピーしたときにふりがなが混ざらないようにします。",
+        "css": "rt {\n  user-select: none;\n}"
+      }
+    ],
+    "notes": [
+      "ruby の外で rt は使えません。",
+      "ふりがなを括弧で表示したい環境向けには、rp を前後に添えます。"
+    ],
+    "related": [
+      "html-ruby",
+      "html-rp",
+      "css-font-size",
+      "css-color"
+    ]
+  },
+  {
+    "id": "html-rp",
+    "title": null,
+    "ja": "ルビ非対応時の括弧",
+    "lead": "ルビに対応していない環境でだけ表示される括弧を書く要素です。rt の前後に置き、対応環境では非表示になります。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "ruby の子要素"
+      },
+      {
+        "label": "終了タグ",
+        "value": "省略可（書くのが一般的）"
+      },
+      {
+        "label": "記述位置",
+        "value": "rt の直前と直後"
+      }
+    ],
+    "code": {
+      "html": "<p><ruby>紫陽花<rp>（</rp><rt>あじさい</rt><rp>）</rp></ruby></p>\n<p class=\"fallback\"><ruby>紫陽花<rp>（</rp><rt>あじさい</rt><rp>）</rp></ruby></p>",
+      "css": "p {\n  font-size: 20px;\n  line-height: 2.4;\n}\n/* ルビ非対応の環境を再現 */\n.fallback ruby, .fallback rt, .fallback rp {\n  display: inline;\n  font-size: inherit;\n}"
+    },
+    "preview": {
+      "height": 150,
+      "note": "2行目はルビ非対応の環境の表示を、CSSで再現しています",
+      "fullDocument": false
+    },
+    "explain": [
+      "`rp` は \"ruby parenthesis\"（ルビの括弧）の略です。ルビに対応したブラウザでは表示されず、対応していない環境でだけ表示されます。",
+      "上の例の2行目は、CSSでルビに対応していない環境を再現したものです。このとき `rp` の括弧が表示され、「紫陽花（あじさい）」と読みが括弧書きで伝わります。",
+      "現在の主要なブラウザはすべてルビに対応していますが、読み上げソフトやテキストを取り出す仕組みでは括弧があると意味が伝わりやすくなります。"
+    ],
+    "values": {
+      "label": "書き方",
+      "head": "パターン",
+      "rows": [
+        {
+          "key": "<rp>（</rp><rt>…</rt><rp>）</rp>",
+          "desc": "全角の括弧で囲む（日本語向け）"
+        },
+        {
+          "key": "<rp>(</rp><rt>…</rt><rp>)</rp>",
+          "desc": "半角の括弧で囲む"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "熟語全体にルビを付ける基本形",
+        "desc": "ruby・rt・rp をそろえた、もっとも安全な書き方です。",
+        "html": "<ruby>\n  薔薇<rp>（</rp><rt>ばら</rt><rp>）</rp>\n</ruby>"
+      }
+    ],
+    "notes": [
+      "rp には括弧などの記号だけを書きます。",
+      "rp は rt の直前・直後に置きます。離れた場所に置くと意味がありません。"
+    ],
+    "related": [
+      "html-ruby",
+      "html-rt",
+      "html-span",
+      "css-display"
+    ]
+  },
+  {
     "id": "html-a",
     "title": null,
     "ja": "ハイパーリンク",
@@ -3334,6 +3839,79 @@
     ]
   },
   {
+    "id": "html-address",
+    "title": null,
+    "ja": "連絡先情報",
+    "lead": "ページや記事の作者・運営者への連絡先（メールアドレス、電話番号、住所など）を表します。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "ブロック要素"
+      },
+      {
+        "label": "終了タグ",
+        "value": "必須"
+      },
+      {
+        "label": "既定の表示",
+        "value": "斜体"
+      }
+    ],
+    "code": {
+      "html": "<footer>\n  <address>\n    カフェ・ミモザ<br>\n    〒100-0001 東京都千代田区千代田1-1<br>\n    TEL：<a href=\"tel:0312345678\">03-1234-5678</a><br>\n    <a href=\"mailto:info@example.com\">info@example.com</a>\n  </address>\n</footer>",
+      "css": "address {\n  font-style: normal;\n  line-height: 1.8;\n}"
+    },
+    "preview": {
+      "height": 170,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`address` は、そのページ（または記事）の作者や運営者に連絡するための情報をまとめる要素です。フッターに置くことが多いです。",
+      "`article` の中に置くと、その記事の著者の連絡先を表します。",
+      "ブラウザは既定で斜体にしますが、日本語では読みにくいため `font-style: normal` で戻すのが一般的です。"
+    ],
+    "values": {
+      "label": "中に書く主な内容",
+      "head": "内容",
+      "rows": [
+        {
+          "key": "メールアドレス",
+          "desc": "<a href=\"mailto:…\"> でリンクにする"
+        },
+        {
+          "key": "電話番号",
+          "desc": "<a href=\"tel:…\"> で発信できるリンクにする"
+        },
+        {
+          "key": "住所",
+          "desc": "運営者・店舗の所在地"
+        },
+        {
+          "key": "SNSなど",
+          "desc": "連絡手段となるアカウントへのリンク"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "記事の著者の連絡先",
+        "desc": "article の footer に著者情報として書きます。",
+        "html": "<article>\n  <h2>コーヒーの淹れ方</h2>\n  <p>…</p>\n  <footer>\n    <address>文：<a href=\"mailto:writer@example.com\">山田 花子</a></address>\n  </footer>\n</article>"
+      }
+    ],
+    "notes": [
+      "連絡先とは関係のない住所（例：イベント会場の住所）には address を使いません。p などで書きます。",
+      "address の中に見出しや header・footer などは入れられません。"
+    ],
+    "related": [
+      "html-footer",
+      "html-a",
+      "html-br",
+      "html-article"
+    ]
+  },
+  {
     "id": "html-video",
     "title": null,
     "ja": "動画を埋め込む",
@@ -4098,6 +4676,1264 @@
       "html-br",
       "css-overflow",
       "css-font-family"
+    ]
+  },
+  {
+    "id": "html-comment",
+    "title": "<!-- -->",
+    "ja": "コメント（画面に表示されないメモ）",
+    "lead": "HTMLの中に書く、画面に表示されないメモです。<!-- と --> で囲んだ部分はブラウザに無視されます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "コメント（要素ではない）"
+      },
+      {
+        "label": "書き方",
+        "value": "<!-- 内容 -->"
+      },
+      {
+        "label": "表示",
+        "value": "画面には表示されない"
+      }
+    ],
+    "code": {
+      "html": "<!-- ヘッダー ここから -->\n<header>\n  <p>カフェ・ミモザ</p>\n</header>\n<!-- ヘッダー ここまで -->\n\n<p>表示される文章です。</p>\n<!-- <p>一時的に非表示にしている文章です。</p> -->",
+      "css": null
+    },
+    "preview": {
+      "height": 120,
+      "note": "コメント部分は表示されず、「表示される文章です。」だけが見えます",
+      "fullDocument": false
+    },
+    "explain": [
+      "`<!--` と `-->` で囲んだ部分は「コメント」になり、ブラウザの画面には表示されません。複数行にまたがって書くこともできます。",
+      "コードの区切りや説明を書いておくと、あとから読む自分や他の人が構造を理解しやすくなります。",
+      "上の例の最後の行のように、要素をコメントで囲むと一時的に表示しないようにできます（コメントアウト）。"
+    ],
+    "values": {
+      "label": "言語ごとのコメントの書き方",
+      "head": "言語",
+      "rows": [
+        {
+          "key": "HTML",
+          "desc": "<!-- コメント -->"
+        },
+        {
+          "key": "CSS",
+          "desc": "/* コメント */"
+        },
+        {
+          "key": "JavaScript",
+          "desc": "// 1行コメント ／ /* 複数行 */"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "CSSのコメント",
+        "desc": "CSSでは /* と */ で囲みます。HTMLの書き方とは違うので注意します。",
+        "css": "/* ボタンの基本スタイル */\n.btn {\n  padding: 8px 16px; /* 上下 左右 */\n}"
+      }
+    ],
+    "notes": [
+      "コメントは画面に出ませんが、ページのソースを表示すれば誰でも読めます。パスワードや個人情報は書かないでください。",
+      "コメントの中に -- （ハイフン2つ）を書くと、コメントが途中で終わったと解釈されることがあります。",
+      "コメントを入れ子にすることはできません。"
+    ],
+    "related": [
+      "html-doctype",
+      "html-html",
+      "html-pre",
+      "html-code"
+    ]
+  },
+  {
+    "id": "css-external-stylesheet",
+    "title": null,
+    "ja": "CSSファイルを読み込む",
+    "lead": "CSSを別のファイル（.css）に書き、HTMLの head で link 要素を使って読み込む方法です。いちばん基本となる書き方です。",
+    "meta": [
+      {
+        "label": "書く場所",
+        "value": "別ファイル（style.css など）"
+      },
+      {
+        "label": "読み込み",
+        "value": "<link rel=\"stylesheet\" href=\"…\">"
+      },
+      {
+        "label": "おすすめ度",
+        "value": "◎ 基本はこの方法"
+      }
+    ],
+    "code": {
+      "html": "<!DOCTYPE html>\n<html lang=\"ja\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>外部スタイルシート</title>\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>\n<body>\n  <h1>メニュー</h1>\n  <p class=\"lead\">見た目は style.css にまとめて書いています。</p>\n</body>\n</html>",
+      "css": "/* style.css */\nh1 {\n  color: #7d5411;\n  border-bottom: 2px solid #b68235;\n}\n.lead {\n  color: #555;\n}"
+    },
+    "preview": {
+      "height": 160,
+      "note": "CSS欄の内容を style.css として読み込んだ状態で表示しています",
+      "fullDocument": true
+    },
+    "explain": [
+      "外部スタイルシートは、CSSを `.css` ファイルに書き、HTMLの `head` の中で `link` 要素を使って読み込む方法です。上の例では、CSS欄の内容を `style.css` として読み込んだ状態を表示しています。",
+      "HTML（構造）とCSS（見た目）を別のファイルに分けられるため、どちらも読みやすくなります。複数のページで同じ `style.css` を読み込めば、1つのファイルを直すだけでサイト全体のデザインを変更できます。",
+      "ブラウザは一度読み込んだCSSファイルを保存（キャッシュ）しておくので、2ページ目以降の表示も速くなります。実際のサイト制作では、この方法が基本です。"
+    ],
+    "values": {
+      "label": "3つの書き方の比較",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "外部スタイルシート",
+          "desc": "別ファイルに書いて link で読み込む。複数ページで共有でき、管理しやすい"
+        },
+        {
+          "key": "内部スタイルシート",
+          "desc": "HTMLの head 内の style 要素に書く。そのページだけに効く"
+        },
+        {
+          "key": "インラインスタイル",
+          "desc": "要素の style 属性に直接書く。その要素だけに効き、詳細度が非常に高い"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "複数のCSSファイルを読み込む",
+        "desc": "後に読み込んだファイルの指定ほど優先されます（詳細度が同じ場合）。共通のCSSを先に、ページ専用のCSSを後に書きます。",
+        "html": "<link rel=\"stylesheet\" href=\"css/base.css\">\n<link rel=\"stylesheet\" href=\"css/components.css\">\n<link rel=\"stylesheet\" href=\"css/top.css\">"
+      }
+    ],
+    "notes": [
+      "href のパスは、HTMLファイルの場所を基準に書きます。フォルダ構成に注意します。",
+      "CSSファイルの中には style タグは書きません。CSSの記述だけを書きます。",
+      "link は head の中に書きます。body の途中に書くと、表示がちらつく原因になります。"
+    ],
+    "related": [
+      "css-internal-stylesheet",
+      "css-inline-style",
+      "html-link",
+      "css-specificity"
+    ]
+  },
+  {
+    "id": "css-internal-stylesheet",
+    "title": null,
+    "ja": "style要素にCSSを書く",
+    "lead": "HTMLファイルの head の中に style 要素を置き、その中にCSSを書く方法です。そのページだけに適用されます。",
+    "meta": [
+      {
+        "label": "書く場所",
+        "value": "HTMLの head 内の <style>"
+      },
+      {
+        "label": "効く範囲",
+        "value": "そのページだけ"
+      },
+      {
+        "label": "おすすめ度",
+        "value": "○ 1ページだけの小さな調整に"
+      }
+    ],
+    "code": {
+      "html": "<!DOCTYPE html>\n<html lang=\"ja\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>内部スタイルシート</title>\n  <style>\n    h1 {\n      color: #7d5411;\n    }\n    .lead {\n      background: #fff3e4;\n      padding: 8px 12px;\n    }\n  </style>\n</head>\n<body>\n  <h1>メニュー</h1>\n  <p class=\"lead\">このページの見た目は head の style に書いています。</p>\n</body>\n</html>",
+      "css": null
+    },
+    "preview": {
+      "height": 160,
+      "note": "head の style 要素に書いたCSSが適用されています",
+      "fullDocument": true
+    },
+    "explain": [
+      "内部スタイルシートは、HTMLの `head` の中に `style` 要素を書き、その中にCSSを記述する方法です。「埋め込みスタイルシート」とも呼ばれます。",
+      "CSSを別ファイルにしないので、HTMLファイル1つで完結します。練習用のページや、そのページだけで使う小さなスタイルを書くときに便利です。",
+      "一方で、複数のページで同じCSSを使い回せないため、ページが増えると同じ記述をあちこちに書くことになります。サイト全体で使うスタイルは外部スタイルシートにまとめましょう。"
+    ],
+    "values": {
+      "label": "3つの書き方の比較",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "外部スタイルシート",
+          "desc": "別ファイル。複数ページで共有でき、管理しやすい"
+        },
+        {
+          "key": "内部スタイルシート",
+          "desc": "head の style 要素に書く。そのページだけに効く"
+        },
+        {
+          "key": "インラインスタイル",
+          "desc": "要素の style 属性に書く。その要素だけに効く"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "外部スタイルシートと組み合わせる",
+        "desc": "共通部分は外部CSS、そのページだけの調整は style で書けます。後に書いたほうが優先されます（詳細度が同じ場合）。",
+        "html": "<head>\n  <link rel=\"stylesheet\" href=\"style.css\">\n  <style>\n    /* このページだけの調整 */\n    .hero { background: #201f1d; }\n  </style>\n</head>"
+      }
+    ],
+    "notes": [
+      "style 要素の中にはCSSだけを書きます。HTMLのタグは書けません。",
+      "同じスタイルを複数のページの style に書いていたら、外部スタイルシートに移すサインです。"
+    ],
+    "related": [
+      "css-external-stylesheet",
+      "css-inline-style",
+      "html-head",
+      "css-specificity"
+    ]
+  },
+  {
+    "id": "css-inline-style",
+    "title": null,
+    "ja": "style属性にCSSを書く",
+    "lead": "HTMLの要素に style 属性を付けて、その要素だけに直接CSSを書く方法です。インラインスタイルシートとも呼ばれます。",
+    "meta": [
+      {
+        "label": "書く場所",
+        "value": "要素の style 属性"
+      },
+      {
+        "label": "効く範囲",
+        "value": "その要素だけ"
+      },
+      {
+        "label": "詳細度",
+        "value": "1-0-0-0（≒1000点）"
+      }
+    ],
+    "code": {
+      "html": "<p>ふつうの段落です。</p>\n<p style=\"color: #c0392b; font-weight: bold;\">この段落だけ style 属性で赤く太字にしています。</p>\n<p class=\"note\" style=\"color: #2e7d5b;\">クラスの指定より style 属性が優先されます。</p>",
+      "css": ".note {\n  color: #7d5411;\n}"
+    },
+    "preview": {
+      "height": 150,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "インラインスタイルは、要素に `style` 属性を付け、その値に「プロパティ: 値;」を直接書く方法です。セレクタは書きません。",
+      "その要素だけにスタイルが適用され、詳細度が非常に高い（1-0-0-0、約1000点）ため、CSSファイルの指定よりも優先されます。上の3つ目の段落では、`.note` の色より `style` 属性の色が勝っています。",
+      "優先度が高すぎて後から上書きしにくく、HTMLとデザインが混ざって管理しづらくなるため、通常のサイト制作ではなるべく使いません。JavaScriptで一時的に見た目を変えるときなどに使われます。"
+    ],
+    "values": {
+      "label": "3つの書き方の比較",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "外部スタイルシート",
+          "desc": "別ファイル。基本はこれ"
+        },
+        {
+          "key": "内部スタイルシート",
+          "desc": "head の style 要素。そのページだけ"
+        },
+        {
+          "key": "インラインスタイル",
+          "desc": "style 属性。その要素だけ・最も優先される"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "JavaScript で一時的に変更する",
+        "desc": "JavaScript の style プロパティで変えた値は、インラインスタイルとして要素に書き込まれます。",
+        "html": "<p id=\"msg\">メッセージ</p>\n<script>\n  document.getElementById('msg').style.color = 'red';\n  // → <p id=\"msg\" style=\"color: red;\"> になる\n</script>"
+      }
+    ],
+    "notes": [
+      "インラインスタイルを上書きするには !important が必要になり、CSSがどんどん複雑になります。多用しないようにします。",
+      "style 属性には :hover などの疑似クラスやメディアクエリは書けません。",
+      "メールの本文（HTMLメール）など、外部CSSが使えない場面ではインラインスタイルが使われます。"
+    ],
+    "related": [
+      "css-specificity",
+      "css-external-stylesheet",
+      "css-internal-stylesheet",
+      "css-class-selector"
+    ]
+  },
+  {
+    "id": "css-specificity",
+    "title": null,
+    "ja": "どの指定が優先されるかの決まり",
+    "lead": "同じ要素に複数のCSSが当たったとき、どれが優先されるかを決める「強さ」の決まりです。セレクタの種類ごとに点数のように数えて比べます。",
+    "meta": [
+      {
+        "label": "比べる単位",
+        "value": "インライン - id - class - 要素"
+      },
+      {
+        "label": "同じ強さのとき",
+        "value": "後に書いたほうが優先"
+      },
+      {
+        "label": "例外",
+        "value": "!important"
+      }
+    ],
+    "code": {
+      "html": "<p id=\"lead\" class=\"text\">この文字は何色になるでしょう？</p>",
+      "css": "/* 要素セレクタ：0-0-1 ≒ 1点 */\np {\n  color: blue;\n}\n/* クラスセレクタ：0-1-0 ≒ 10点 */\n.text {\n  color: green;\n}\n/* idセレクタ：1-0-0 ≒ 100点 → これが勝つ */\n#lead {\n  color: #c0392b;\n}"
+    },
+    "preview": {
+      "height": 90,
+      "note": "#lead（id）の指定が最も強いため、文字は赤になります",
+      "fullDocument": false
+    },
+    "explain": [
+      "同じ要素に複数のスタイルが指定されたとき、ブラウザは「詳細度」が高いほうを使います。上の例では、`p`・`.text`・`#lead` の3つが同じ段落を指定していますが、最も詳細度が高い `#lead` の赤が使われます。",
+      "詳細度は、セレクタに含まれる「id」「クラス・属性・疑似クラス」「要素・疑似要素」の数を、それぞれ別の桁として数えます。インラインスタイル（style属性）はさらに上の桁です。目安として 1000点・100点・10点・1点 と考えると分かりやすくなります。",
+      "ただし点数は桁の比較なので、繰り上がりはありません。クラスを11個つなげても（0-11-0）、id 1つ（1-0-0）には勝てません。詳細度が同じときは、CSSの中で後に書いたほうが優先されます。"
+    ],
+    "values": {
+      "label": "詳細度の目安",
+      "head": "セレクタの種類",
+      "rows": [
+        {
+          "key": "インラインスタイル（style 属性）",
+          "desc": "1-0-0-0 ≒ 1000点"
+        },
+        {
+          "key": "id セレクタ（#id）",
+          "desc": "1-0-0 ≒ 100点"
+        },
+        {
+          "key": "クラス・属性セレクタ・疑似クラス（.class / [type] / :hover）",
+          "desc": "0-1-0 ≒ 10点"
+        },
+        {
+          "key": "要素・疑似要素（p / ::before）",
+          "desc": "0-0-1 ≒ 1点"
+        },
+        {
+          "key": "*（ユニバーサルセレクタ）",
+          "desc": "0点"
+        },
+        {
+          "key": "!important",
+          "desc": "詳細度に関係なく最優先（多用しない）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "セレクタの詳細度を数える",
+        "desc": "セレクタに含まれる種類ごとに数えて、左の桁から比べます。",
+        "css": "/* 0-0-1  ≒ 1点 */\nli { }\n/* 0-0-2  ≒ 2点 */\nul li { }\n/* 0-1-1  ≒ 11点 */\nli.active { }\n/* 0-2-1  ≒ 21点 */\n.menu li:hover { }\n/* 1-0-1  ≒ 101点 */\n#nav li { }"
+      },
+      {
+        "title": "詳細度を上げずに上書きする",
+        "desc": "上書きできないときは、詳細度を上げるより、後に書く・クラスを1つ足す程度にとどめます。id や !important に頼るとさらに上書きしにくくなります。",
+        "css": "/* △ 上書きのために強くしすぎない */\n#main .content .box p { }\n\n/* ○ クラス1つで指定し、後に書く */\n.box-text { }"
+      }
+    ],
+    "notes": [
+      "!important はどんな詳細度にも勝ってしまうため、使うと後から上書きできなくなります。最終手段にとどめます。",
+      "継承された値（親から引き継いだ color など）は、詳細度に関係なく、直接指定したスタイルに負けます。",
+      "詳細度を低く・そろえておくと、CSSが上書きしやすく管理しやすくなります。スタイルは基本的にクラスで指定するのがおすすめです。"
+    ],
+    "related": [
+      "css-id-selector",
+      "css-class-selector",
+      "css-type-selector",
+      "css-inline-style"
+    ]
+  },
+  {
+    "id": "css-inheritance",
+    "title": null,
+    "ja": "親のスタイルを子が受け継ぐ仕組み",
+    "lead": "親要素に指定したスタイルの一部が、中にある子要素・孫要素にも自動で受け継がれる仕組みです。文字の色や大きさなど、主に文字に関するプロパティが継承されます。",
+    "meta": [
+      {
+        "label": "仕組み",
+        "value": "親 → 子 → 孫へ値が受け継がれる"
+      },
+      {
+        "label": "主な対象",
+        "value": "文字に関するプロパティ"
+      },
+      {
+        "label": "強さ",
+        "value": "直接の指定より常に弱い"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"card\">\n  <h3>カードの見出し</h3>\n  <p>本文の段落です。<a href=\"#\">リンク</a></p>\n</div>",
+      "css": ".card {\n  color: #7d5411;             /* 継承される */\n  font-weight: bold;          /* 継承される */\n  border: 2px solid #b68235;  /* 継承されない */\n  padding: 12px 16px;         /* 継承されない */\n}"
+    },
+    "preview": {
+      "height": 170,
+      "note": "枠線は .card にだけ付き、文字色と太字は中の見出しと段落にも受け継がれています",
+      "fullDocument": false
+    },
+    "explain": [
+      "CSSには、親要素に指定したスタイルが、その中にある子要素や孫要素にも自動で受け継がれる「継承」という仕組みがあります。上の例では `.card` にしか指定していないのに、中の見出しと段落も同じ色・太字になっています。",
+      "ただし、すべてのプロパティが継承されるわけではありません。`color` や `font-size` のような文字に関するものは継承されますが、`border`・`padding`・`margin`・`background` のような箱に関するものは継承されません。例でも、枠線は `.card` の外側に1つ付いているだけで、見出しや段落にはそれぞれ付いていません。",
+      "継承された値は、その要素に直接指定されたスタイルにいつも負けます。例のリンクが青いままなのは、ブラウザが `a` 要素にあらかじめ色を指定しているためです。この仕組みを利用して、`body` に基本の文字色や書体を指定し、ページ全体に行き渡らせるのが一般的です。"
+    ],
+    "values": {
+      "label": "主なプロパティの継承",
+      "head": "プロパティ",
+      "rows": [
+        {
+          "key": "color",
+          "desc": "継承される"
+        },
+        {
+          "key": "font-size / font-family / font-weight",
+          "desc": "継承される"
+        },
+        {
+          "key": "line-height / text-align / letter-spacing",
+          "desc": "継承される"
+        },
+        {
+          "key": "list-style / cursor / visibility",
+          "desc": "継承される"
+        },
+        {
+          "key": "margin / padding / border",
+          "desc": "継承されない"
+        },
+        {
+          "key": "width / height / display / position",
+          "desc": "継承されない"
+        },
+        {
+          "key": "background",
+          "desc": "継承されない（初期値が透明なので、親の背景が透けて見える）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "inherit で親と同じ値にする",
+        "desc": "値に inherit と書くと、そのプロパティを親と同じ値にできます。リンクの色を周りの文字と同じにするときの定番の書き方です。",
+        "html": "<p class=\"note\">詳しくは<a href=\"#\">こちら</a>をご覧ください。</p>",
+        "css": ".note {\n  color: #7d5411;\n}\n.note a {\n  color: inherit;\n}"
+      },
+      {
+        "title": "body に基本のスタイルを指定する",
+        "desc": "body に指定した文字のスタイルは、継承によってページ内のほぼすべての要素に行き渡ります。",
+        "css": "body {\n  color: #201f1d;\n  font-family: \"Noto Sans JP\", sans-serif;\n  line-height: 1.8;\n}"
+      }
+    ],
+    "notes": [
+      "継承された値は、詳細度に関係なく、その要素に直接当たっているスタイル（ブラウザが最初から持っているスタイルを含む）に負けます。",
+      "見出しの文字サイズは、ブラウザの既定では「親の文字サイズの何倍」という指定になっているため、親の font-size を変えると見出しの大きさも一緒に変わります。",
+      "そのプロパティが継承されるかどうかは、この辞典の各プロパティのページの「継承」欄で確認できます。"
+    ],
+    "related": [
+      "css-child-selector",
+      "css-descendant-selector",
+      "css-specificity",
+      "css-color"
+    ]
+  },
+  {
+    "id": "css-id-selector",
+    "title": null,
+    "ja": "idセレクタ（1つだけの要素を指定）",
+    "lead": "HTMLの id 属性の値に「#」を付けて、その要素を指定するセレクタです。id はページ内で1つだけの要素に付ける名前です。",
+    "meta": [
+      {
+        "label": "書き方",
+        "value": "#id名 { }"
+      },
+      {
+        "label": "詳細度",
+        "value": "1-0-0（≒100点）"
+      },
+      {
+        "label": "ページ内の数",
+        "value": "同じ id は1つだけ"
+      }
+    ],
+    "code": {
+      "html": "<header id=\"site-header\">カフェ・ミモザ</header>\n<p>id は1ページに1つだけの要素に付けます。</p>",
+      "css": "#site-header {\n  padding: 12px 16px;\n  background: #201f1d;\n  color: #fff;\n  font-weight: bold;\n}"
+    },
+    "preview": {
+      "height": 130,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "id セレクタは、HTMLの `id` 属性の値の前に `#` を付けて書きます。`id=\"site-header\"` の要素なら `#site-header` です。",
+      "`id` は「ページ内で1つだけ」の要素に付ける名前で、同じ値をページ内で2回以上使ってはいけません。ページ内リンク（`<a href=\"#site-header\">`）や JavaScript で要素を取得するときの目印にもなります。",
+      "id セレクタは詳細度がとても高い（≒100点）ため、後からクラスで上書きしにくくなります。見た目の指定には基本的にクラスを使い、id はリンク先や JavaScript 用に使うのがおすすめです。"
+    ],
+    "values": {
+      "label": "id と class の違い",
+      "head": "項目",
+      "rows": [
+        {
+          "key": "書き方",
+          "desc": "id は #名前、class は .名前"
+        },
+        {
+          "key": "ページ内の数",
+          "desc": "id は1つだけ、class は何度でも使える"
+        },
+        {
+          "key": "1つの要素に付ける数",
+          "desc": "id は1つ、class は複数（空白区切り）"
+        },
+        {
+          "key": "詳細度",
+          "desc": "id ≒ 100点、class ≒ 10点"
+        },
+        {
+          "key": "主な用途",
+          "desc": "id はページ内リンク・JavaScript、class はスタイル指定"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "ページ内リンクの移動先にする",
+        "desc": "id を付けた要素へ、# 付きのリンクでジャンプできます。",
+        "html": "<a href=\"#access\">アクセスへ移動</a>\n…\n<section id=\"access\">\n  <h2>アクセス</h2>\n</section>"
+      }
+    ],
+    "notes": [
+      "同じ id を1ページで複数回使うと、ページ内リンクや JavaScript が正しく動きません。",
+      "id 名の先頭に数字は使わないようにします（CSSで指定しにくくなるため）。",
+      "id 名は英小文字とハイフンでつなぐ書き方（site-header など）が一般的です。"
+    ],
+    "related": [
+      "css-class-selector",
+      "css-specificity",
+      "css-type-selector",
+      "html-a"
+    ]
+  },
+  {
+    "id": "css-class-selector",
+    "title": null,
+    "ja": "クラスセレクタ（グループを指定）",
+    "lead": "HTMLの class 属性の値に「.」を付けて、そのクラスを持つ要素をまとめて指定するセレクタです。スタイル指定の基本です。",
+    "meta": [
+      {
+        "label": "書き方",
+        "value": ".class名 { }"
+      },
+      {
+        "label": "詳細度",
+        "value": "0-1-0（≒10点）"
+      },
+      {
+        "label": "ページ内の数",
+        "value": "何度でも使える"
+      }
+    ],
+    "code": {
+      "html": "<p class=\"badge\">NEW</p>\n<p class=\"badge\">人気</p>\n<p class=\"badge sale\">SALE</p>",
+      "css": ".badge {\n  display: inline-block;\n  margin: 0 6px 0 0;\n  padding: 2px 10px;\n  border: 1px solid #b68235;\n  border-radius: 999px;\n  color: #7d5411;\n  font-size: 13px;\n}\n.sale {\n  background: #c0392b;\n  border-color: #c0392b;\n  color: #fff;\n}"
+    },
+    "preview": {
+      "height": 80,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "クラスセレクタは、HTMLの `class` 属性の値の前に `.` を付けて書きます。`class=\"badge\"` の要素なら `.badge` です。",
+      "同じクラスはページ内で何度でも使えるため、「同じ見た目にしたい要素のグループ」に名前を付ける感覚で使います。1つの要素に、空白で区切って複数のクラスを付けることもできます（`class=\"badge sale\"`）。",
+      "詳細度がほどよく低く（≒10点）、上書きもしやすいため、スタイルの指定は基本的にクラスで行うのがおすすめです。"
+    ],
+    "values": {
+      "label": "クラスの付け方・指定の仕方",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "class=\"badge\"",
+          "desc": "クラスを1つ付ける"
+        },
+        {
+          "key": "class=\"badge sale\"",
+          "desc": "複数のクラスを空白区切りで付ける"
+        },
+        {
+          "key": ".badge { }",
+          "desc": "そのクラスを持つ要素すべて"
+        },
+        {
+          "key": ".badge.sale { }",
+          "desc": "両方のクラスを持つ要素だけ（間に空白を入れない）"
+        },
+        {
+          "key": "p.badge { }",
+          "desc": "p 要素で、かつ badge クラスを持つもの"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "状態を表すクラスを付け外しする",
+        "desc": "is- で始まるクラスで状態を表し、JavaScript で付け外しするのが定番です。",
+        "html": "<li class=\"menu-item is-active\">ホーム</li>",
+        "css": ".menu-item.is-active {\n  color: #b68235;\n  font-weight: bold;\n}"
+      }
+    ],
+    "notes": [
+      "クラス名は見た目（red、big）ではなく役割（badge、notice）で付けると、デザインを変えても名前を変えずに済みます。",
+      "クラス名に . は含めません（HTMLでは class=\"badge\"、CSSでは .badge）。",
+      ".badge.sale（空白なし）と .badge .sale（空白あり）は意味が違います。空白ありは「子孫」の指定になります。"
+    ],
+    "related": [
+      "css-id-selector",
+      "css-type-selector",
+      "css-selector-list",
+      "css-specificity"
+    ]
+  },
+  {
+    "id": "css-type-selector",
+    "title": null,
+    "ja": "タグ名で直接指定する",
+    "lead": "p や h2 などの要素名（タグ名）をそのまま書いて、その要素すべてにスタイルを指定するセレクタです。タイプセレクタとも呼ばれます。",
+    "meta": [
+      {
+        "label": "書き方",
+        "value": "要素名 { }"
+      },
+      {
+        "label": "詳細度",
+        "value": "0-0-1（≒1点）"
+      },
+      {
+        "label": "効く範囲",
+        "value": "ページ内のその要素すべて"
+      }
+    ],
+    "code": {
+      "html": "<section class=\"news\">\n  <h2>お知らせ</h2>\n</section>\n<aside>\n  <h2>人気の記事</h2>\n</aside>",
+      "css": "/* △ すべての h2 に効いてしまう */\nh2 {\n  color: #fff;\n  background: #7d5411;\n  padding: 4px 12px;\n}"
+    },
+    "preview": {
+      "height": 150,
+      "note": "装飾したかったのは「お知らせ」だけですが、すべての h2 に効いています",
+      "fullDocument": false
+    },
+    "explain": [
+      "要素セレクタは、`p`・`h2`・`a` のように要素名をそのまま書きます。そのページにあるその要素すべてにスタイルが適用されます。",
+      "上の例では「お知らせ」の見出しだけを装飾したかったのに、別のセクションにある「人気の記事」の `h2` まで同じ見た目になっています。共通のCSSファイルなら、別のページの `h2` にも影響します。",
+      "このように影響範囲が広すぎるため、要素名への直接指定はできるだけ避けます。ページ全体の基本スタイル（`body` の文字色、`img` の `max-width` など）や、リセットCSSに限って使うのが一般的です。"
+    ],
+    "values": {
+      "label": "使ってよい場面・避けたい場面",
+      "head": "場面",
+      "rows": [
+        {
+          "key": "○ body / html",
+          "desc": "ページ全体の文字色・書体・背景"
+        },
+        {
+          "key": "○ img",
+          "desc": "max-width: 100% などの共通設定"
+        },
+        {
+          "key": "○ リセットCSS",
+          "desc": "ブラウザごとの差をなくす初期設定"
+        },
+        {
+          "key": "△ h2 / p / li など",
+          "desc": "特定の場所だけ装飾したいときはクラスを使う"
+        },
+        {
+          "key": "△ div / span",
+          "desc": "役割がないため、クラスで指定する"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "クラスで範囲を限定する",
+        "desc": "装飾したい要素だけにクラスを付けると、ほかの h2 に影響しません。",
+        "html": "<section class=\"news\">\n  <h2 class=\"news-title\">お知らせ</h2>\n</section>",
+        "css": ".news-title {\n  color: #fff;\n  background: #7d5411;\n}"
+      },
+      {
+        "title": "親のクラスで範囲を絞る",
+        "desc": "クラスを付けられない場合は、親のクラスと組み合わせて範囲を限定します。",
+        "css": ".news h2 {\n  color: #7d5411;\n}"
+      }
+    ],
+    "notes": [
+      "要素セレクタで細かくデザインすると、後から追加した部分にも意図しないスタイルが当たってしまいます。",
+      "要素セレクタは詳細度が低い（≒1点）ため、クラスの指定で簡単に上書きされます。"
+    ],
+    "related": [
+      "css-class-selector",
+      "css-descendant-selector",
+      "css-specificity",
+      "css-id-selector"
+    ]
+  },
+  {
+    "id": "css-selector-list",
+    "title": null,
+    "ja": "複数の要素にまとめて指定する",
+    "lead": "複数のセレクタを「,（カンマ）」で区切ると、同じスタイルをまとめて指定できます。要素名とid・classを組み合わせて範囲を絞る書き方もあります。",
+    "meta": [
+      {
+        "label": "書き方",
+        "value": "A, B { }"
+      },
+      {
+        "label": "詳細度",
+        "value": "セレクタごとに別々に計算"
+      },
+      {
+        "label": "組み合わせ",
+        "value": "p.note / h2#title など"
+      }
+    ],
+    "code": {
+      "html": "<h2 class=\"title\">見出し</h2>\n<p class=\"lead\">リード文</p>\n<p class=\"note\">注意書き（p.note）</p>\n<div class=\"note\">注意書き（div.note）</div>",
+      "css": "/* カンマ区切り：.title と .lead に同じ色 */\n.title,\n.lead {\n  color: #7d5411;\n}\n/* 要素＋クラス：p 要素の .note だけ */\np.note {\n  padding: 4px 8px;\n  background: #fff3e4;\n}"
+    },
+    "preview": {
+      "height": 200,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "複数のセレクタに同じスタイルを当てたいときは、`.title, .lead` のように `,` で区切って並べます。同じ指定を何度も書かずに済みます。読みやすさのため、カンマの後で改行して1行に1つずつ書くのが一般的です。",
+      "`p.note` のように、要素名の直後に（空白を入れずに）クラスや id を続けると、「p 要素で、かつ note クラスを持つもの」だけを指定できます。上の例では、同じ `.note` でも `div` には背景が付いていません。",
+      "カンマで区切ったセレクタは、詳細度もそれぞれ別に計算されます。"
+    ],
+    "values": {
+      "label": "書き方の違い",
+      "head": "セレクタ",
+      "rows": [
+        {
+          "key": ".a, .b",
+          "desc": "a または b（カンマ区切り：まとめて指定）"
+        },
+        {
+          "key": "p.note",
+          "desc": "p 要素で note クラスを持つもの"
+        },
+        {
+          "key": "h2#title",
+          "desc": "h2 要素で id が title のもの"
+        },
+        {
+          "key": ".a.b",
+          "desc": "a と b の両方のクラスを持つもの"
+        },
+        {
+          "key": ".a .b",
+          "desc": "a の中にある b（空白：子孫セレクタ）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "見出しをまとめて指定する",
+        "desc": "h1〜h3 の書体や行の高さを一度に指定します。",
+        "css": "h1,\nh2,\nh3 {\n  font-weight: bold;\n  line-height: 1.3;\n}"
+      },
+      {
+        "title": "ホバーとフォーカスを同じ見た目に",
+        "desc": "疑似クラスもカンマで並べられます。",
+        "css": ".btn:hover,\n.btn:focus-visible {\n  background: #b68235;\n  color: #fff;\n}"
+      }
+    ],
+    "notes": [
+      "カンマで区切ったセレクタの1つに書き間違い（存在しない疑似クラスなど）があると、まとめて無効になることがあります。",
+      "p.note（空白なし）と p .note（空白あり）は意味が違います。空白ありは「p の中にある .note」になります。",
+      "最後のセレクタの後ろにはカンマを付けません。"
+    ],
+    "related": [
+      "css-class-selector",
+      "css-descendant-selector",
+      "css-type-selector",
+      "css-pseudo-class"
+    ]
+  },
+  {
+    "id": "css-descendant-selector",
+    "title": null,
+    "ja": "子孫セレクタ（中にある要素すべて）",
+    "lead": "セレクタを半角スペースで区切ると、「A の中にある B」をすべて指定できます。子だけでなく、孫やそれより深い要素も対象になります。",
+    "meta": [
+      {
+        "label": "書き方",
+        "value": "A B { }（半角スペース）"
+      },
+      {
+        "label": "対象",
+        "value": "子・孫・ひ孫…すべての子孫"
+      },
+      {
+        "label": "詳細度",
+        "value": "A と B の合計"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"box\">\n  <p>子の段落</p>\n  <div class=\"inner\">\n    <p>孫の段落（div の中）</p>\n  </div>\n  <p>子の段落</p>\n</div>",
+      "css": ".inner {\n  margin-left: 24px;\n  padding-left: 12px;\n  border-left: 2px solid #ddd;\n}\n/* .box の中にある p すべて（孫の p も含む） */\n.box p {\n  color: #c0392b;\n  font-weight: bold;\n}"
+    },
+    "preview": {
+      "height": 190,
+      "note": "孫の段落も含めて、.box の中の p がすべて赤くなります",
+      "fullDocument": false
+    },
+    "explain": [
+      "`A B` のようにセレクタを半角スペースで区切ると、A の中に含まれるすべての B が対象になります。これを「子孫セレクタ」と呼びます。",
+      "直接の子どもだけでなく、孫やひ孫など、どれだけ深い階層にあっても当てはまります。上の例では、`.box` の直下にある `p` だけでなく、さらに `div` の中に入っている「孫の段落」も赤くなっています。",
+      "親のクラスで範囲を限定できるため、`.news h2` のように「このセクションの中の見出しだけ」を指定するときによく使います。"
+    ],
+    "values": {
+      "label": "関係を表すセレクタ（結合子）",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "A B",
+          "desc": "子孫：A の中にある B すべて（孫以降も含む）"
+        },
+        {
+          "key": "A > B",
+          "desc": "子：A の直下にある B だけ"
+        },
+        {
+          "key": "A + B",
+          "desc": "隣接兄弟：A のすぐ次にある B（1つだけ）"
+        },
+        {
+          "key": "A ~ B",
+          "desc": "一般兄弟：A より後ろにある兄弟の B すべて"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "セクションの中のリンクだけ色を変える",
+        "desc": "親のクラスで範囲を限定すると、ほかの場所のリンクに影響しません。",
+        "css": ".footer a {\n  color: #ccc;\n}"
+      }
+    ],
+    "notes": [
+      "階層を深くつなげすぎる（.main .content .box ul li a など）と、詳細度が上がり、HTMLの構造を変えたときに効かなくなります。2〜3段程度にとどめます。",
+      "孫要素まで効いてほしくない場合は、子セレクタ（A > B）を使います。",
+      "color や font-size などは継承されるため、セレクタが直接当たっていない要素の文字にも影響することがあります（「継承」の項目を参照）。"
+    ],
+    "related": [
+      "css-child-selector",
+      "css-inheritance",
+      "css-adjacent-sibling-selector",
+      "css-type-selector"
+    ]
+  },
+  {
+    "id": "css-child-selector",
+    "title": null,
+    "ja": "子セレクタ（直下の子要素だけ）",
+    "lead": "セレクタを「>」で区切ると、「A の直下にある子要素の B」だけを指定できます。孫やそれより深い要素は対象になりません。",
+    "meta": [
+      {
+        "label": "書き方",
+        "value": "A > B { }"
+      },
+      {
+        "label": "対象",
+        "value": "直下の子要素だけ"
+      },
+      {
+        "label": "詳細度",
+        "value": "A と B の合計"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"box\">\n  <p>子の段落</p>\n  <div class=\"inner\">\n    <p>孫の段落（div の中）</p>\n  </div>\n  <p>子の段落</p>\n</div>",
+      "css": ".inner {\n  margin-left: 24px;\n  padding-left: 12px;\n  border-left: 2px solid #ddd;\n}\n/* .box の直下の p だけ（孫の p は含まない） */\n.box > p {\n  color: #c0392b;\n  font-weight: bold;\n}"
+    },
+    "preview": {
+      "height": 190,
+      "note": "直下の「子の段落」だけが赤くなり、「孫の段落」は元の色のままです",
+      "fullDocument": false
+    },
+    "explain": [
+      "`A > B` と書くと、A のすぐ下の階層にある子要素の B だけが対象になります。これを「子セレクタ」と呼びます。",
+      "上の例では、`.box` の直下にある2つの「子の段落」だけが赤くなり、`div` の中の「孫の段落」は元の色のままです。子孫セレクタ（`.box p`）との違いを見比べてみましょう。",
+      "ただし `color` のように親から子へ受け継がれる（継承される）プロパティには注意が必要です。セレクタが当たるのは子要素だけでも、孫要素がその子要素の中にあれば、子の色がそのまま孫にも受け継がれて同じ色に見えます。上の例で孫の段落が元の色のままなのは、孫の段落が子の `p` の中ではなく、別の `div` の中にあるためです（下の応用例も参照）。"
+    ],
+    "values": {
+      "label": "関係を表すセレクタ（結合子）",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "A B",
+          "desc": "子孫：A の中にある B すべて"
+        },
+        {
+          "key": "A > B",
+          "desc": "子：A の直下にある B だけ"
+        },
+        {
+          "key": "A + B",
+          "desc": "隣接兄弟：A のすぐ次の B"
+        },
+        {
+          "key": "A ~ B",
+          "desc": "一般兄弟：A より後ろの兄弟の B すべて"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "継承によって孫も同じ色になる例",
+        "desc": "li の中に孫の li がある場合、セレクタが当たるのは直下の li だけですが、color は継承されるため孫の li も赤く表示されます。孫を元の色に戻したいときは、孫の側に色を指定します。",
+        "html": "<ul class=\"menu\">\n  <li>カフェラテ\n    <ul>\n      <li>ホット</li>  <!-- 親の li から赤を受け継ぐ -->\n    </ul>\n  </li>\n</ul>",
+        "css": ".menu > li {\n  color: #c0392b;\n}\n/* 孫の li は元の色に戻す */\n.menu > li li {\n  color: #201f1d;\n}"
+      },
+      {
+        "title": "カードの直下の要素に余白をそろえる",
+        "desc": "子セレクタとユニバーサルセレクタ（*）を組み合わせると、直下の子すべてを指定できます。",
+        "css": ".card > * {\n  margin: 0 0 8px;\n}\n.card > *:last-child {\n  margin-bottom: 0;\n}"
+      }
+    ],
+    "notes": [
+      "> の前後の空白はあってもなくても同じ意味ですが、読みやすさのため空白を入れて書くのが一般的です。",
+      "HTMLの構造（入れ子の段数）を変えると効かなくなるので、構造と合わせて管理します。"
+    ],
+    "related": [
+      "css-descendant-selector",
+      "css-inheritance",
+      "css-adjacent-sibling-selector",
+      "css-general-sibling-selector"
+    ]
+  },
+  {
+    "id": "css-adjacent-sibling-selector",
+    "title": null,
+    "ja": "隣接兄弟セレクタ（すぐ次の要素）",
+    "lead": "セレクタを「+」で区切ると、「A のすぐ次にある兄弟要素の B」を1つだけ指定できます。兄弟要素とは、同じ親を持つ要素どうしのことです。",
+    "meta": [
+      {
+        "label": "書き方",
+        "value": "A + B { }"
+      },
+      {
+        "label": "対象",
+        "value": "A の直後にある B（1つだけ）"
+      },
+      {
+        "label": "条件",
+        "value": "A と B が同じ親を持つ"
+      }
+    ],
+    "code": {
+      "html": "<h2>メニュー</h2>\n<p>1つ目の段落</p>\n<p>2つ目の段落</p>\n<p>3つ目の段落</p>",
+      "css": "/* h2 のすぐ次にある p だけ */\nh2 + p {\n  color: #c0392b;\n  font-weight: bold;\n}"
+    },
+    "preview": {
+      "height": 200,
+      "note": "h2 のすぐ次にある「1つ目の段落」だけが赤くなります",
+      "fullDocument": false
+    },
+    "explain": [
+      "`A + B` と書くと、A の直後（すぐ次）にある兄弟要素の B だけが対象になります。これを「隣接兄弟セレクタ」と呼びます。",
+      "「兄弟要素」とは、同じ親要素の中に並んでいる要素どうしのことです。上の例では `h2` と3つの `p` が兄弟で、`h2` のすぐ次にある「1つ目の段落」だけが赤くなっています。",
+      "見出しの直後の段落だけ余白を変えたり、同じ要素が続くときに2つ目以降だけ間隔を空けたりするときに便利です。"
+    ],
+    "values": {
+      "label": "関係を表すセレクタ（結合子）",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "A B",
+          "desc": "子孫：A の中にある B すべて"
+        },
+        {
+          "key": "A > B",
+          "desc": "子：A の直下にある B だけ"
+        },
+        {
+          "key": "A + B",
+          "desc": "隣接兄弟：A のすぐ次の B（1つだけ）"
+        },
+        {
+          "key": "A ~ B",
+          "desc": "一般兄弟：A より後ろの兄弟の B すべて"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "2つ目以降のカードにだけ上の余白を付ける",
+        "desc": "「カードの次のカード」を指定すると、最初のカードには余白が付きません。",
+        "css": ".card + .card {\n  margin-top: 16px;\n}"
+      }
+    ],
+    "notes": [
+      "前にある要素は指定できません（B のすぐ前の A、という指定はできない）。",
+      "A と B の間にほかの要素が1つでも入ると当てはまりません。"
+    ],
+    "related": [
+      "css-general-sibling-selector",
+      "css-child-selector",
+      "css-descendant-selector",
+      "css-margin"
+    ]
+  },
+  {
+    "id": "css-general-sibling-selector",
+    "title": null,
+    "ja": "一般兄弟セレクタ（後ろにある兄弟すべて）",
+    "lead": "セレクタを「~（チルダ）」で区切ると、「A より後ろにある兄弟要素の B」をすべて指定できます。",
+    "meta": [
+      {
+        "label": "書き方",
+        "value": "A ~ B { }"
+      },
+      {
+        "label": "対象",
+        "value": "A より後ろの兄弟の B すべて"
+      },
+      {
+        "label": "条件",
+        "value": "A と B が同じ親を持つ"
+      }
+    ],
+    "code": {
+      "html": "<h2>メニュー</h2>\n<p>1つ目の段落</p>\n<p>2つ目の段落</p>\n<p>3つ目の段落</p>",
+      "css": "/* h2 より後ろにある兄弟の p すべて */\nh2 ~ p {\n  color: #c0392b;\n}"
+    },
+    "preview": {
+      "height": 200,
+      "note": "h2 より後ろにある段落がすべて赤くなります",
+      "fullDocument": false
+    },
+    "explain": [
+      "`A ~ B` と書くと、A と同じ親を持ち、A より後ろにあるすべての B が対象になります。これを「一般兄弟セレクタ」と呼びます。",
+      "隣接兄弟セレクタ（`A + B`）は直後の1つだけですが、一般兄弟セレクタは間にほかの要素があっても、後ろにあるものすべてに当てはまります。上の例では、3つの段落がすべて赤くなっています。",
+      "チェックボックスの状態に応じて後ろの要素の表示を切り替えるなど、CSSだけで簡単な動きを作るときにも使われます。"
+    ],
+    "values": {
+      "label": "関係を表すセレクタ（結合子）",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "A B",
+          "desc": "子孫：A の中にある B すべて"
+        },
+        {
+          "key": "A > B",
+          "desc": "子：A の直下にある B だけ"
+        },
+        {
+          "key": "A + B",
+          "desc": "隣接兄弟：A のすぐ次の B（1つだけ）"
+        },
+        {
+          "key": "A ~ B",
+          "desc": "一般兄弟：A より後ろの兄弟の B すべて"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "チェックで内容を表示する",
+        "desc": ":checked と ~ を組み合わせると、JavaScript を使わずに表示を切り替えられます。",
+        "html": "<input type=\"checkbox\" id=\"more\">\n<label for=\"more\">詳しく見る</label>\n<p class=\"detail\">詳しい説明です。</p>",
+        "css": ".detail {\n  display: none;\n}\n#more:checked ~ .detail {\n  display: block;\n}"
+      }
+    ],
+    "notes": [
+      "A より前にある兄弟は指定できません。",
+      "~ はキーボードの「へ」のキーを Shift と一緒に押すと入力できます（日本語配列の場合）。"
+    ],
+    "related": [
+      "css-adjacent-sibling-selector",
+      "css-child-selector",
+      "css-descendant-selector",
+      "css-pseudo-class"
+    ]
+  },
+  {
+    "id": "css-pseudo-class",
+    "title": null,
+    "ja": "要素の状態や位置で指定する",
+    "lead": "「マウスが乗っているとき」「最初の要素」のように、要素の状態や位置を条件にして指定する仕組みです。セレクタの後ろに「:（コロン1つ）」を付けて書きます。",
+    "meta": [
+      {
+        "label": "書き方",
+        "value": "セレクタ:疑似クラス名 { }"
+      },
+      {
+        "label": "記号",
+        "value": ":（コロン1つ）"
+      },
+      {
+        "label": "詳細度",
+        "value": "0-1-0（≒10点、クラスと同じ）"
+      }
+    ],
+    "code": {
+      "html": "<ul class=\"list\">\n  <li>ブレンド</li>\n  <li>カフェラテ</li>\n  <li>紅茶</li>\n  <li>ココア</li>\n</ul>\n<a href=\"#\" class=\"link\">マウスを乗せてください</a>",
+      "css": ".list li:first-child {\n  font-weight: bold;\n}\n.list li:nth-child(even) {\n  background: #f5efe6;\n}\n.link:hover {\n  color: #fff;\n  background: #b68235;\n}"
+    },
+    "preview": {
+      "height": 190,
+      "note": "リンクにマウスを乗せると背景色が変わります",
+      "fullDocument": false
+    },
+    "explain": [
+      "疑似クラスは、HTMLにクラスを書かなくても、要素の「状態」や「位置」を条件にして指定できる仕組みです。セレクタの後ろに `:` を1つ付けて書きます。",
+      "`:hover`（マウスが乗っている）や `:focus-visible`（キーボードで選択中）のような状態を表すものと、`:first-child`（最初の子）や `:nth-child(even)`（偶数番目）のような位置を表すものがあります。上の例では、最初の項目を太字に、偶数番目の行に背景色を付けています。",
+      "詳細度はクラスと同じ（≒10点）です。疑似要素（`::before` など）と名前が似ていますが、疑似クラスは「既にある要素を条件で選ぶ」もの、疑似要素は「要素の一部分や追加の部分を作る」ものです。"
+    ],
+    "values": {
+      "label": "よく使う疑似クラス",
+      "head": "疑似クラス",
+      "rows": [
+        {
+          "key": ":hover",
+          "desc": "マウスが乗っているとき"
+        },
+        {
+          "key": ":focus-visible",
+          "desc": "キーボードなどでフォーカスしたとき"
+        },
+        {
+          "key": ":first-child / :last-child",
+          "desc": "最初 / 最後の子要素"
+        },
+        {
+          "key": ":nth-child(n)",
+          "desc": "n 番目の子要素（odd・even・2n+1 なども可）"
+        },
+        {
+          "key": ":not(セレクタ)",
+          "desc": "そのセレクタに当てはまらないもの"
+        },
+        {
+          "key": ":checked / :disabled",
+          "desc": "チェックされている / 無効の入力欄"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "最後の項目だけ区切り線を消す",
+        "desc": ":not() を使うと「最後以外」を指定できます。",
+        "css": ".list li:not(:last-child) {\n  border-bottom: 1px solid #ddd;\n}"
+      },
+      {
+        "title": "3の倍数の項目を指定する",
+        "desc": ":nth-child() には計算式も書けます。",
+        "css": ".grid > *:nth-child(3n) {\n  margin-right: 0;\n}"
+      }
+    ],
+    "notes": [
+      "コロンの前後に空白を入れないでください（a :hover は「a の中の何かがホバーされたとき」という別の意味になります）。",
+      ":nth-child() は「同じ親の中で何番目か」を数えます。種類の違う要素も数に含まれる点に注意します（種類ごとに数えるなら :nth-of-type()）。"
+    ],
+    "related": [
+      "css-hover",
+      "css-pseudo-element",
+      "css-specificity",
+      "css-general-sibling-selector"
+    ]
+  },
+  {
+    "id": "css-pseudo-element",
+    "title": null,
+    "ja": "要素の一部分や追加部分を指定する",
+    "lead": "要素の「最初の1文字」「前後に追加する装飾」のように、HTMLには書かれていない部分を作って指定する仕組みです。セレクタの後ろに「::（コロン2つ）」を付けて書きます。",
+    "meta": [
+      {
+        "label": "書き方",
+        "value": "セレクタ::疑似要素名 { }"
+      },
+      {
+        "label": "記号",
+        "value": "::（コロン2つ）"
+      },
+      {
+        "label": "詳細度",
+        "value": "0-0-1（≒1点、要素と同じ）"
+      }
+    ],
+    "code": {
+      "html": "<p class=\"intro\">ようこそ、カフェ・ミモザへ。季節のケーキと自家焙煎のコーヒーをお楽しみください。</p>\n<h2 class=\"heading\">メニュー</h2>",
+      "css": ".intro::first-letter {\n  font-size: 2em;\n  font-weight: bold;\n  color: #b68235;\n}\n.heading::before {\n  content: \"■ \";\n  color: #b68235;\n}\n.heading::after {\n  content: \" ―\";\n  color: #ccc;\n}"
+    },
+    "preview": {
+      "height": 170,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "疑似要素は、要素の中の「一部分」や、要素の前後に「追加する部分」を、HTMLに書かずにCSSだけで作って装飾する仕組みです。セレクタの後ろに `::` を2つ付けて書きます。",
+      "上の例では、`::first-letter` で段落の最初の1文字だけを大きくし、`::before`・`::after` で見出しの前後に記号を追加しています。`::before` と `::after` は `content` プロパティで中身を指定しないと表示されません。",
+      "疑似クラス（`:hover` など）は「既にある要素を条件で選ぶ」もの、疑似要素は「要素の一部分や新しい部分を作る」ものです。古い書き方では疑似要素もコロン1つ（`:before`）で書かれていましたが、今は区別するために `::` を使います。"
+    ],
+    "values": {
+      "label": "よく使う疑似要素",
+      "head": "疑似要素",
+      "rows": [
+        {
+          "key": "::before",
+          "desc": "要素の中身の先頭に追加（content が必要）"
+        },
+        {
+          "key": "::after",
+          "desc": "要素の中身の末尾に追加（content が必要）"
+        },
+        {
+          "key": "::first-letter",
+          "desc": "最初の1文字"
+        },
+        {
+          "key": "::first-line",
+          "desc": "最初の1行"
+        },
+        {
+          "key": "::marker",
+          "desc": "リストの行頭記号・番号"
+        },
+        {
+          "key": "::placeholder",
+          "desc": "入力欄のプレースホルダー"
+        },
+        {
+          "key": "::selection",
+          "desc": "利用者が選択した部分"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "選択したときの色を変える",
+        "desc": "::selection で、文字を選択したときの背景色を変えられます。",
+        "css": "::selection {\n  background: #ffe3bf;\n  color: #201f1d;\n}"
+      },
+      {
+        "title": "疑似クラスと組み合わせる",
+        "desc": "疑似クラスの後ろに疑似要素を続けられます（順番は 疑似クラス → 疑似要素）。",
+        "css": ".link:hover::after {\n  content: \" →\";\n}"
+      }
+    ],
+    "notes": [
+      "1つのセレクタに書ける疑似要素は1つだけで、セレクタの最後に書きます。",
+      "::before・::after で追加した文字は、選択やコピーができず、読み上げも環境によって異なります。重要な情報はHTMLに書きます。",
+      "img や input など、中身を持たない要素には ::before・::after が使えません。"
+    ],
+    "related": [
+      "css-before",
+      "css-pseudo-class",
+      "css-specificity",
+      "html-li"
     ]
   },
   {
@@ -7509,6 +9345,1556 @@
       "html-button",
       "css-opacity",
       "html-summary"
+    ]
+  },
+  {
+    "id": "js-let-const",
+    "title": null,
+    "ja": "変数を宣言する",
+    "lead": "値に名前を付けて保存しておく「変数」を宣言します。あとから値を変えるなら let、変えないなら const を使います。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "宣言"
+      },
+      {
+        "label": "有効範囲",
+        "value": "ブロック（{ } の中）"
+      },
+      {
+        "label": "使い分け",
+        "value": "基本は const、再代入するときだけ let"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "const siteName = 'HTML & CSS GUIDE';\nlet count = 0;\n\ncount = count + 1;\ncount += 1;\n\nconsole.log(siteName);\nconsole.log(count);"
+    },
+    "preview": {
+      "height": 120,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "変数は、値を入れておく名前付きの箱のようなものです。`const` や `let` のあとに名前を書き、`=` で値を入れます。",
+      "`const` で宣言した変数には、あとから別の値を代入できません。`let` は何度でも代入し直せます。まずは `const` で書き、値を変える必要があるときだけ `let` にすると、意図しない書き換えを防げます。",
+      "`let` と `const` の変数は、宣言した `{ }`（ブロック）の中でだけ使えます。古い書き方の `var` は範囲の扱いが分かりにくいため、今は使いません。"
+    ],
+    "values": {
+      "label": "宣言の種類",
+      "head": "キーワード",
+      "rows": [
+        {
+          "key": "const",
+          "desc": "再代入できない変数（基本はこちら）"
+        },
+        {
+          "key": "let",
+          "desc": "再代入できる変数"
+        },
+        {
+          "key": "var",
+          "desc": "古い書き方。今は使わない"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "const でも中身は変えられる",
+        "desc": "const で宣言した配列やオブジェクトは、変数そのものは差し替えられませんが、中身の追加・変更はできます。",
+        "js": "const fruits = ['りんご'];\nfruits.push('みかん');\nconsole.log(fruits);\n\n// fruits = []; ← これはエラー"
+      }
+    ],
+    "notes": [
+      "宣言する前に変数を使うとエラーになります。",
+      "変数名には、何が入っているか分かる名前を付けます（例：count、userName）。",
+      "同じ範囲で同じ名前の変数を2回宣言することはできません。"
+    ],
+    "related": [
+      "js-if",
+      "js-template-literal",
+      "js-array",
+      "js-object"
+    ]
+  },
+  {
+    "id": "js-if",
+    "title": null,
+    "ja": "条件によって処理を分ける",
+    "lead": "条件が正しい（true）ときだけ処理を実行します。else を続けると、条件に合わないときの処理も書けます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "制御構文"
+      },
+      {
+        "label": "条件",
+        "value": "true / false になる式"
+      },
+      {
+        "label": "組み合わせ",
+        "value": "else if / else"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "const hour = 15;\n\nif (hour < 12) {\n  console.log('おはようございます');\n} else if (hour < 18) {\n  console.log('こんにちは');\n} else {\n  console.log('こんばんは');\n}"
+    },
+    "preview": {
+      "height": 100,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`if (条件) { 処理 }` と書くと、条件が `true` のときだけ `{ }` の中が実行されます。",
+      "`else if` で条件を追加でき、上から順に調べて最初に当てはまったものだけが実行されます。どれにも当てはまらないときは `else` の処理が実行されます。",
+      "条件には `===`（等しい）や `<`（より小さい）などの比較演算子を使います。等しいかどうかは `==` ではなく `===` で比べるのが基本です。"
+    ],
+    "values": {
+      "label": "よく使う比較・論理演算子",
+      "head": "演算子",
+      "rows": [
+        {
+          "key": "a === b",
+          "desc": "等しい（型も含めて比較）"
+        },
+        {
+          "key": "a !== b",
+          "desc": "等しくない"
+        },
+        {
+          "key": "a < b / a >= b",
+          "desc": "より小さい / 以上"
+        },
+        {
+          "key": "a && b",
+          "desc": "かつ（両方 true）"
+        },
+        {
+          "key": "a || b",
+          "desc": "または（どちらか true）"
+        },
+        {
+          "key": "!a",
+          "desc": "否定（true と false を反転）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "条件演算子で短く書く",
+        "desc": "値を2択で決めるだけなら、条件 ? 値1 : 値2 の形で1行に書けます。",
+        "js": "const stock = 0;\nconst label = stock > 0 ? '在庫あり' : '売り切れ';\nconsole.log(label);"
+      }
+    ],
+    "notes": [
+      "条件の中で = （代入）と === （比較）を間違えないようにします。",
+      "0、空の文字列 ''、null、undefined は false として扱われます。"
+    ],
+    "related": [
+      "js-for",
+      "js-let-const",
+      "js-function",
+      "js-filter"
+    ]
+  },
+  {
+    "id": "js-for",
+    "title": null,
+    "ja": "処理を繰り返す",
+    "lead": "同じ処理を決まった回数、または配列の要素の数だけ繰り返します。配列を順に処理するなら for...of が読みやすい書き方です。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "制御構文"
+      },
+      {
+        "label": "主な形",
+        "value": "for / for...of / while"
+      },
+      {
+        "label": "止める",
+        "value": "break / continue"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "for (let i = 1; i <= 3; i++) {\n  console.log(i + '回目');\n}\n\nconst menu = ['ブレンド', 'カフェラテ'];\nfor (const name of menu) {\n  console.log(name);\n}"
+    },
+    "preview": {
+      "height": 100,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`for (初期化; 条件; 更新)` の形では、条件が `true` の間だけ処理を繰り返します。上の例では `i` を1から3まで1ずつ増やしながら3回実行しています。",
+      "`for (const 変数 of 配列)` の形（for...of）は、配列の要素を先頭から1つずつ取り出して処理します。番号が必要ないときはこちらが簡潔です。",
+      "`break` で繰り返しを途中で終了し、`continue` でその回の残りを飛ばして次の回に進みます。"
+    ],
+    "values": {
+      "label": "繰り返しの書き方",
+      "head": "構文",
+      "rows": [
+        {
+          "key": "for (let i = 0; i < n; i++)",
+          "desc": "回数を決めて繰り返す"
+        },
+        {
+          "key": "for (const x of 配列)",
+          "desc": "配列の要素を順に取り出す"
+        },
+        {
+          "key": "for (const key in オブジェクト)",
+          "desc": "オブジェクトのキーを順に取り出す"
+        },
+        {
+          "key": "while (条件)",
+          "desc": "条件が true の間繰り返す"
+        },
+        {
+          "key": "配列.forEach()",
+          "desc": "配列の各要素に関数を実行する"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "条件に合ったら途中で止める",
+        "desc": "break を使うと、見つかった時点で繰り返しを終了できます。",
+        "js": "const scores = [62, 85, 91, 40];\nfor (const s of scores) {\n  if (s >= 90) {\n    console.log('90点以上を見つけました：' + s);\n    break;\n  }\n}"
+      }
+    ],
+    "notes": [
+      "条件がずっと true のままだと無限ループになり、ページが固まります。",
+      "配列を加工するだけなら、map() や filter() を使うと短く書けます。"
+    ],
+    "related": [
+      "js-foreach",
+      "js-array",
+      "js-if",
+      "js-map"
+    ]
+  },
+  {
+    "id": "js-function",
+    "title": null,
+    "ja": "処理をまとめて名前を付ける",
+    "lead": "ひとまとまりの処理に名前を付けて、何度でも呼び出せるようにします。値を受け取る「引数」と、結果を返す「戻り値」を使えます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "関数宣言"
+      },
+      {
+        "label": "受け取る値",
+        "value": "引数（パラメーター）"
+      },
+      {
+        "label": "返す値",
+        "value": "return で指定"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "function withTax(price) {\n  return Math.round(price * 1.1);\n}\n\nconsole.log(withTax(480));\nconsole.log(withTax(550));"
+    },
+    "preview": {
+      "height": 100,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`function 名前(引数) { 処理 }` で関数を定義し、`名前(値)` で呼び出します。同じ処理を何度も書かずに済み、修正も1か所で済みます。",
+      "`( )` の中の引数で値を受け取り、`return` で結果を呼び出し元に返します。`return` に達するとそこで関数は終了します。",
+      "引数には既定値を付けられます。`function greet(name = 'ゲスト')` のように書くと、値が渡されなかったときに既定値が使われます。"
+    ],
+    "values": {
+      "label": "関数の書き方",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "function 名前() {}",
+          "desc": "関数宣言"
+        },
+        {
+          "key": "const 名前 = function() {}",
+          "desc": "関数式"
+        },
+        {
+          "key": "const 名前 = () => {}",
+          "desc": "アロー関数"
+        },
+        {
+          "key": "(a, b = 1)",
+          "desc": "引数と既定値"
+        },
+        {
+          "key": "return 値",
+          "desc": "結果を返して終了する"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "ボタンのクリックで関数を呼ぶ",
+        "desc": "処理を関数にしておくと、イベントにそのまま渡せます。",
+        "html": "<button type=\"button\" id=\"hello\">あいさつ</button>",
+        "js": "function sayHello() {\n  console.log('こんにちは');\n}\ndocument.querySelector('#hello').addEventListener('click', sayHello);"
+      }
+    ],
+    "notes": [
+      "return のない関数は undefined を返します。",
+      "関数名は「何をするか」が分かる動詞から始めると読みやすくなります（例：getPrice、showMenu）。"
+    ],
+    "related": [
+      "js-arrow-function",
+      "js-add-event-listener",
+      "js-let-const",
+      "js-map"
+    ]
+  },
+  {
+    "id": "js-arrow-function",
+    "title": null,
+    "ja": "短く書ける関数（アロー関数）",
+    "lead": "function の代わりに => を使って、関数を短く書く方法です。map() や addEventListener() に渡す小さな関数でよく使います。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "関数式"
+      },
+      {
+        "label": "書き方",
+        "value": "(引数) => 処理"
+      },
+      {
+        "label": "よく使う場面",
+        "value": "配列のメソッド・イベント"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "const double = (n) => n * 2;\nconst greet = (name) => {\n  return name + 'さん、こんにちは';\n};\n\nconsole.log(double(21));\nconsole.log(greet('山田'));"
+    },
+    "preview": {
+      "height": 100,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`(引数) => { 処理 }` の形で関数を作ります。`function` と書くより短く、配列のメソッドなどに渡す関数を簡潔に書けます。",
+      "処理が1つの式だけなら、`{ }` と `return` を省略できます。`(n) => n * 2` は「n を受け取って n * 2 を返す」という意味です。",
+      "引数が1つなら `( )` も省略できます（`n => n * 2`）。引数がないときは `() =>` と書きます。"
+    ],
+    "values": {
+      "label": "省略の書き方",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "() => 処理",
+          "desc": "引数なし"
+        },
+        {
+          "key": "n => n * 2",
+          "desc": "引数1つ・式1つ（( ) と return を省略）"
+        },
+        {
+          "key": "(a, b) => a + b",
+          "desc": "引数2つ"
+        },
+        {
+          "key": "() => ({ x: 1 })",
+          "desc": "オブジェクトを返すときは ( ) で囲む"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "配列の処理に渡す",
+        "desc": "アロー関数は map() や filter() と組み合わせて使うことが多いです。",
+        "js": "const prices = [480, 550, 620];\nconst withTax = prices.map((p) => Math.round(p * 1.1));\nconsole.log(withTax);"
+      }
+    ],
+    "notes": [
+      "アロー関数の中の this は、外側の this をそのまま使います。オブジェクトのメソッドに使うときは注意します。",
+      "{ } を付けた場合は、値を返すのに return が必要です。"
+    ],
+    "related": [
+      "js-function",
+      "js-map",
+      "js-filter",
+      "js-add-event-listener"
+    ]
+  },
+  {
+    "id": "js-array",
+    "title": null,
+    "ja": "複数の値を順番に並べる（配列）",
+    "lead": "複数の値を1つにまとめ、順番（インデックス）で管理するデータの形です。[ ] の中にカンマ区切りで値を書きます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "組み込みオブジェクト"
+      },
+      {
+        "label": "番号",
+        "value": "0 から始まる"
+      },
+      {
+        "label": "要素数",
+        "value": "length プロパティ"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "const menu = ['ブレンド', 'カフェラテ', '紅茶'];\n\nconsole.log(menu[0]);\nconsole.log(menu.length);\n\nmenu.push('ココア');\nconsole.log(menu);"
+    },
+    "preview": {
+      "height": 100,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "配列は `[ ]` の中に値をカンマで区切って並べたものです。数値・文字列・オブジェクトなど、どんな値でも入れられます。",
+      "要素は `配列[番号]` で取り出します。番号（インデックス）は0から始まるため、最初の要素は `menu[0]` です。要素の数は `length` で分かります。",
+      "`push()` で末尾に追加、`pop()` で末尾を取り出すなど、配列には便利なメソッドがたくさん用意されています。"
+    ],
+    "values": {
+      "label": "よく使うメソッド・プロパティ",
+      "head": "名前",
+      "rows": [
+        {
+          "key": "length",
+          "desc": "要素の数"
+        },
+        {
+          "key": "push(値)",
+          "desc": "末尾に追加"
+        },
+        {
+          "key": "pop()",
+          "desc": "末尾を取り出して削除"
+        },
+        {
+          "key": "includes(値)",
+          "desc": "値が含まれているか（true / false）"
+        },
+        {
+          "key": "indexOf(値)",
+          "desc": "値の番号（ないときは -1）"
+        },
+        {
+          "key": "join(区切り)",
+          "desc": "要素をつないで文字列にする"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "配列からリストを作る",
+        "desc": "配列の要素を画面のリストに表示します。",
+        "html": "<ul id=\"list\"></ul>",
+        "js": "const menu = ['ブレンド', 'カフェラテ', '紅茶'];\nconst list = document.querySelector('#list');\nfor (const name of menu) {\n  const li = document.createElement('li');\n  li.textContent = name;\n  list.append(li);\n}"
+      }
+    ],
+    "notes": [
+      "存在しない番号を指定すると undefined になります（エラーにはなりません）。",
+      "const で宣言した配列でも、push などで中身は変更できます。"
+    ],
+    "related": [
+      "js-foreach",
+      "js-map",
+      "js-filter",
+      "js-object"
+    ]
+  },
+  {
+    "id": "js-object",
+    "title": null,
+    "ja": "名前と値の組をまとめる（オブジェクト）",
+    "lead": "「名前（キー）: 値」の組をまとめて1つのデータとして扱う形です。商品の名前と価格のように、関連する情報をひとまとめにできます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "組み込みオブジェクト"
+      },
+      {
+        "label": "書き方",
+        "value": "{ キー: 値 }"
+      },
+      {
+        "label": "参照",
+        "value": "obj.key / obj['key']"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "const item = {\n  name: 'カフェラテ',\n  price: 550,\n  hot: true,\n};\n\nconsole.log(item.name);\nitem.price = 580;\nconsole.log(item);"
+    },
+    "preview": {
+      "height": 100,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "オブジェクトは `{ キー: 値, … }` の形で書きます。キーはプロパティ名とも呼ばれ、値には数値・文字列・配列・関数など何でも入れられます。",
+      "値は `item.name` のように「.（ドット）」で取り出します。キーを変数で指定したいときは `item[key]` と書きます。",
+      "代入すると値を変更でき、存在しないキーに代入するとプロパティが追加されます。"
+    ],
+    "values": {
+      "label": "よく使う操作",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "obj.key",
+          "desc": "値を取り出す"
+        },
+        {
+          "key": "obj.key = 値",
+          "desc": "値を変更・追加する"
+        },
+        {
+          "key": "delete obj.key",
+          "desc": "プロパティを削除する"
+        },
+        {
+          "key": "'key' in obj",
+          "desc": "キーがあるか調べる"
+        },
+        {
+          "key": "Object.keys(obj)",
+          "desc": "キーの一覧を配列で取得"
+        },
+        {
+          "key": "const { name } = obj",
+          "desc": "分割代入で取り出す"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "オブジェクトの配列",
+        "desc": "同じ形のオブジェクトを配列に並べると、一覧データを扱えます。",
+        "js": "const menu = [\n  { name: 'ブレンド', price: 480 },\n  { name: 'カフェラテ', price: 550 },\n];\nfor (const m of menu) {\n  console.log(`${m.name}：${m.price}円`);\n}"
+      }
+    ],
+    "notes": [
+      "存在しないキーを参照すると undefined になります。さらにその先を参照するとエラーになるので、?. （オプショナルチェーン）を使うと安全です。",
+      "データを保存・送信するときは JSON.stringify() で文字列に変換します。"
+    ],
+    "related": [
+      "js-array",
+      "js-template-literal",
+      "js-let-const",
+      "js-map"
+    ]
+  },
+  {
+    "id": "js-template-literal",
+    "title": "`${}`",
+    "ja": "変数を埋め込める文字列",
+    "lead": "バッククォート（`）で囲んだ文字列の中に ${ } で変数や式を埋め込めます。改行もそのまま書けます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "文字列の書き方"
+      },
+      {
+        "label": "囲む記号",
+        "value": "`（バッククォート）"
+      },
+      {
+        "label": "埋め込み",
+        "value": "${ 式 }"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "const name = 'カフェラテ';\nconst price = 550;\n\nconsole.log(`${name}は${price}円です`);\nconsole.log(`税込：${Math.round(price * 1.1)}円`);"
+    },
+    "preview": {
+      "height": 100,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "バッククォート記号で囲んだ文字列を「テンプレート文字列（テンプレートリテラル）」と呼びます。`${ }` の中に書いた変数や式の値が、その位置に埋め込まれます。",
+      "`+` で文字列をつなぐよりも読みやすく、計算式や関数の呼び出しもそのまま書けます。",
+      "途中で改行すると、改行を含んだ文字列になります。HTMLの断片を組み立てるときにも便利です。"
+    ],
+    "values": {
+      "label": "文字列の書き方",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "'文字列' / \"文字列\"",
+          "desc": "ふつうの文字列"
+        },
+        {
+          "key": "`文字列`",
+          "desc": "テンプレート文字列"
+        },
+        {
+          "key": "`${式}`",
+          "desc": "式の値を埋め込む"
+        },
+        {
+          "key": "'a' + 'b'",
+          "desc": "+ でつなぐ（従来の書き方）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "HTMLを組み立てる",
+        "desc": "テンプレート文字列で作った HTML を画面に表示します。",
+        "html": "<div id=\"card\"></div>",
+        "js": "const item = { name: 'カフェラテ', price: 550 };\ndocument.querySelector('#card').innerHTML = `\n  <strong>${item.name}</strong>\n  <span>${item.price}円</span>\n`;"
+      }
+    ],
+    "notes": [
+      "利用者が入力した文字を innerHTML で埋め込むと、悪意のあるスクリプトが実行される危険があります。文字だけなら textContent を使います。",
+      "バッククォートは、日本語キーボードでは Shift + @ で入力できます。"
+    ],
+    "related": [
+      "js-let-const",
+      "js-object",
+      "js-text-content",
+      "js-create-element"
+    ]
+  },
+  {
+    "id": "js-foreach",
+    "title": null,
+    "ja": "配列の要素ごとに処理する",
+    "lead": "配列の要素1つずつに対して、渡した関数を順番に実行します。要素と一緒に番号（インデックス）も受け取れます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "配列のメソッド"
+      },
+      {
+        "label": "戻り値",
+        "value": "undefined"
+      },
+      {
+        "label": "引数",
+        "value": "要素・番号・配列"
+      }
+    ],
+    "code": {
+      "html": "<ol id=\"steps\"></ol>",
+      "css": null,
+      "js": "const steps = ['豆を挽く', 'お湯を注ぐ', '蒸らす'];\nconst ol = document.querySelector('#steps');\n\nsteps.forEach((step, i) => {\n  const li = document.createElement('li');\n  li.textContent = step;\n  ol.append(li);\n  console.log(i, step);\n});"
+    },
+    "preview": {
+      "height": 130,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`配列.forEach(関数)` は、配列の要素の数だけ関数を呼び出します。関数は1つ目の引数で要素を、2つ目の引数で番号を受け取れます。",
+      "上の例では、配列の手順を1つずつリスト項目にして画面に追加し、番号と内容をコンソールにも出力しています。",
+      "`forEach()` は何も返しません。新しい配列を作りたいときは `map()`、絞り込みたいときは `filter()` を使います。"
+    ],
+    "values": {
+      "label": "関数が受け取る引数",
+      "head": "引数",
+      "rows": [
+        {
+          "key": "1つ目",
+          "desc": "要素"
+        },
+        {
+          "key": "2つ目",
+          "desc": "番号（インデックス）"
+        },
+        {
+          "key": "3つ目",
+          "desc": "配列そのもの"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "複数の要素にまとめてイベントを付ける",
+        "desc": "querySelectorAll() の結果にも forEach() が使えます。",
+        "html": "<button type=\"button\" class=\"btn\">A</button>\n<button type=\"button\" class=\"btn\">B</button>",
+        "js": "document.querySelectorAll('.btn').forEach((btn) => {\n  btn.addEventListener('click', () => {\n    console.log(btn.textContent + ' が押されました');\n  });\n});"
+      }
+    ],
+    "notes": [
+      "forEach() は途中で止められません（break は使えない）。途中で止めたいときは for...of を使います。",
+      "forEach() の中で await しても、順番に待ってはくれません。"
+    ],
+    "related": [
+      "js-map",
+      "js-filter",
+      "js-for",
+      "js-array"
+    ]
+  },
+  {
+    "id": "js-map",
+    "title": null,
+    "ja": "配列の各要素を変換した新しい配列を作る",
+    "lead": "配列の要素1つずつに関数を実行し、その戻り値を集めた新しい配列を作ります。元の配列は変わりません。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "配列のメソッド"
+      },
+      {
+        "label": "戻り値",
+        "value": "新しい配列（要素数は同じ）"
+      },
+      {
+        "label": "元の配列",
+        "value": "変更しない"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "const prices = [480, 550, 620];\n\nconst withTax = prices.map((p) => Math.round(p * 1.1));\nconst labels = prices.map((p) => `${p}円`);\n\nconsole.log(withTax);\nconsole.log(labels);\nconsole.log(prices);"
+    },
+    "preview": {
+      "height": 100,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`map()` は「すべての要素を同じルールで変換する」ためのメソッドです。関数が返した値を順に並べた、新しい配列が返ります。",
+      "要素の数は元の配列と同じになります。元の配列は変更されないため、元のデータを残したまま加工できます。",
+      "オブジェクトの配列から特定の値だけを取り出す（例：商品名の一覧を作る）といった使い方もよくします。"
+    ],
+    "values": {
+      "label": "配列を加工するメソッド",
+      "head": "メソッド",
+      "rows": [
+        {
+          "key": "map()",
+          "desc": "各要素を変換した配列を作る"
+        },
+        {
+          "key": "filter()",
+          "desc": "条件に合う要素だけの配列を作る"
+        },
+        {
+          "key": "find()",
+          "desc": "条件に合う最初の要素を取り出す"
+        },
+        {
+          "key": "reduce()",
+          "desc": "要素をまとめて1つの値にする（合計など）"
+        },
+        {
+          "key": "sort()",
+          "desc": "並べ替える（元の配列も変わる）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "オブジェクトの配列から名前だけ取り出す",
+        "desc": "必要なプロパティだけを集めた配列を作れます。",
+        "js": "const menu = [\n  { name: 'ブレンド', price: 480 },\n  { name: 'カフェラテ', price: 550 },\n];\nconst names = menu.map((m) => m.name);\nconsole.log(names);"
+      }
+    ],
+    "notes": [
+      "関数で return を忘れると、要素がすべて undefined の配列になります。",
+      "画面への表示など、新しい配列が不要な処理には forEach() を使います。"
+    ],
+    "related": [
+      "js-filter",
+      "js-foreach",
+      "js-arrow-function",
+      "js-array"
+    ]
+  },
+  {
+    "id": "js-filter",
+    "title": null,
+    "ja": "条件に合う要素だけを取り出す",
+    "lead": "配列の要素のうち、関数が true を返したものだけを集めた新しい配列を作ります。検索や絞り込みに使います。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "配列のメソッド"
+      },
+      {
+        "label": "戻り値",
+        "value": "新しい配列（0個以上）"
+      },
+      {
+        "label": "元の配列",
+        "value": "変更しない"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "const menu = [\n  { name: 'ブレンド', price: 480 },\n  { name: 'カフェラテ', price: 550 },\n  { name: 'ケーキセット', price: 900 },\n];\n\nconst cheap = menu.filter((m) => m.price < 600);\nconsole.log(cheap.map((m) => m.name));\nconsole.log(cheap.length + '件');"
+    },
+    "preview": {
+      "height": 100,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`filter()` は、要素ごとに関数を実行し、`true` を返した要素だけを残した新しい配列を返します。",
+      "上の例では、価格が600円未満の商品だけを取り出し、`map()` で名前の一覧に変換しています。このようにメソッドをつなげて書けるのも配列メソッドの便利な点です。",
+      "1件も当てはまらないときは空の配列 `[]` が返ります。最初の1件だけが欲しいときは `find()` を使います。"
+    ],
+    "values": {
+      "label": "似たメソッド",
+      "head": "メソッド",
+      "rows": [
+        {
+          "key": "filter()",
+          "desc": "条件に合う要素をすべて配列で返す"
+        },
+        {
+          "key": "find()",
+          "desc": "条件に合う最初の要素を返す（ないと undefined）"
+        },
+        {
+          "key": "some()",
+          "desc": "1つでも合えば true"
+        },
+        {
+          "key": "every()",
+          "desc": "すべて合えば true"
+        },
+        {
+          "key": "includes()",
+          "desc": "特定の値が含まれるか"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "入力した文字で絞り込む",
+        "desc": "入力欄の文字を含む項目だけを表示します。",
+        "html": "<input id=\"q\" placeholder=\"絞り込み\">\n<ul id=\"list\"></ul>",
+        "js": "const words = ['margin', 'padding', 'gap', 'grid'];\nconst list = document.querySelector('#list');\nconst render = (q) => {\n  list.innerHTML = '';\n  words.filter((w) => w.includes(q)).forEach((w) => {\n    const li = document.createElement('li');\n    li.textContent = w;\n    list.append(li);\n  });\n};\ndocument.querySelector('#q').addEventListener('input', (e) => render(e.target.value));\nrender('');"
+      }
+    ],
+    "notes": [
+      "関数は true / false を返すように書きます。",
+      "大文字・小文字を区別せずに探すときは、両方を toLowerCase() でそろえてから比べます。"
+    ],
+    "related": [
+      "js-map",
+      "js-foreach",
+      "js-if",
+      "js-array"
+    ]
+  },
+  {
+    "id": "js-query-selector",
+    "title": null,
+    "ja": "CSSセレクタで要素を取得する",
+    "lead": "CSSと同じセレクタを使って、HTMLの要素を取得します。JavaScriptで画面を操作するときの最初の一歩です。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "Document / Element のメソッド"
+      },
+      {
+        "label": "戻り値",
+        "value": "最初に見つかった要素（ないと null）"
+      },
+      {
+        "label": "複数取得",
+        "value": "querySelectorAll()"
+      }
+    ],
+    "code": {
+      "html": "<h1 id=\"title\">メニュー</h1>\n<ul>\n  <li class=\"item\">ブレンド</li>\n  <li class=\"item\">カフェラテ</li>\n</ul>",
+      "css": null,
+      "js": "const title = document.querySelector('#title');\ntitle.style.color = '#b68235';\n\nconst items = document.querySelectorAll('.item');\nconsole.log(items.length + '個の要素');\nconsole.log(items[0]);"
+    },
+    "preview": {
+      "height": 180,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`document.querySelector('セレクタ')` は、CSSと同じ書き方で要素を探し、最初に見つかった1つを返します。id なら `#title`、クラスなら `.item` のように書きます。",
+      "当てはまる要素をすべて取得するには `querySelectorAll()` を使います。結果は配列に似た NodeList で、`length` や `forEach()` が使えます。",
+      "見つからなかったときは `null` が返ります。そのまま操作するとエラーになるため、要素があるか確認してから使うと安全です。"
+    ],
+    "values": {
+      "label": "要素を取得する主なメソッド",
+      "head": "メソッド",
+      "rows": [
+        {
+          "key": "querySelector(セレクタ)",
+          "desc": "最初の1つを取得"
+        },
+        {
+          "key": "querySelectorAll(セレクタ)",
+          "desc": "すべてを NodeList で取得"
+        },
+        {
+          "key": "getElementById(id)",
+          "desc": "id で取得（# は付けない）"
+        },
+        {
+          "key": "要素.closest(セレクタ)",
+          "desc": "自分または祖先で最も近い要素"
+        },
+        {
+          "key": "要素.querySelector()",
+          "desc": "その要素の中だけを探す"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "要素があるときだけ処理する",
+        "desc": "?. （オプショナルチェーン）を使うと、要素がないときにエラーになりません。",
+        "js": "document.querySelector('#banner')?.remove();"
+      }
+    ],
+    "notes": [
+      "script を head に書くと、HTMLが読み込まれる前に実行されて要素が見つかりません。body の最後に書くか、defer を付けます。",
+      "querySelectorAll() の結果は配列そのものではないため、map() などを使うときは Array.from() で配列に変換します。"
+    ],
+    "related": [
+      "js-text-content",
+      "js-class-list",
+      "js-add-event-listener",
+      "css-hover"
+    ]
+  },
+  {
+    "id": "js-text-content",
+    "title": null,
+    "ja": "要素の文字を読み書きする",
+    "lead": "要素の中の文字を取得したり、別の文字に書き換えたりするプロパティです。タグを含めて書き換えるときは innerHTML を使います。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "Node のプロパティ"
+      },
+      {
+        "label": "値",
+        "value": "文字列"
+      },
+      {
+        "label": "HTMLの解釈",
+        "value": "しない（安全）"
+      }
+    ],
+    "code": {
+      "html": "<p id=\"msg\">ボタンを押してください</p>\n<button type=\"button\" id=\"btn\">押す</button>",
+      "css": "button {\n  padding: 6px 16px;\n  border: 1px solid #b68235;\n  border-radius: 4px;\n  background: #fff;\n  color: #7d5411;\n  font: inherit;\n  cursor: pointer;\n}",
+      "js": "const msg = document.querySelector('#msg');\nlet count = 0;\n\ndocument.querySelector('#btn').addEventListener('click', () => {\n  count++;\n  msg.textContent = `${count}回押しました`;\n  console.log(msg.textContent);\n});"
+    },
+    "preview": {
+      "height": 140,
+      "note": "ボタンを押すと文字が書き換わります",
+      "fullDocument": false
+    },
+    "explain": [
+      "`要素.textContent` で要素の中の文字を取得でき、代入するとその文字に書き換わります。",
+      "代入した文字に `<b>` などのタグが含まれていても、タグとして解釈されずにそのまま文字として表示されます。利用者の入力を表示するときも安全です。",
+      "タグを含むHTMLとして書き換えたいときは `innerHTML` を使います。ただし、外部から来た文字をそのまま入れるのは危険なので注意します。"
+    ],
+    "values": {
+      "label": "似たプロパティ",
+      "head": "プロパティ",
+      "rows": [
+        {
+          "key": "textContent",
+          "desc": "文字だけを読み書き（タグは解釈しない）"
+        },
+        {
+          "key": "innerHTML",
+          "desc": "HTMLとして読み書き（タグを解釈する）"
+        },
+        {
+          "key": "innerText",
+          "desc": "画面に見えている文字（CSSの影響を受ける）"
+        },
+        {
+          "key": "value",
+          "desc": "入力欄（input など）の値"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "入力した文字をそのまま表示する",
+        "desc": "input の value を読み取り、textContent で表示します。",
+        "html": "<input id=\"name\" placeholder=\"お名前\">\n<p>こんにちは、<span id=\"out\">ゲスト</span>さん</p>",
+        "js": "const out = document.querySelector('#out');\ndocument.querySelector('#name').addEventListener('input', (e) => {\n  out.textContent = e.target.value || 'ゲスト';\n});"
+      }
+    ],
+    "notes": [
+      "textContent に代入すると、要素の中にあった子要素はすべて消えます。",
+      "入力欄の文字は textContent ではなく value で読み取ります。"
+    ],
+    "related": [
+      "js-query-selector",
+      "js-create-element",
+      "js-template-literal",
+      "js-add-event-listener"
+    ]
+  },
+  {
+    "id": "js-class-list",
+    "title": null,
+    "ja": "クラスの追加・削除・切り替え",
+    "lead": "要素のクラスを追加・削除・切り替えするためのプロパティです。見た目の変更はCSSに任せ、JavaScriptではクラスの付け外しだけを行うのが定番です。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "Element のプロパティ"
+      },
+      {
+        "label": "主なメソッド",
+        "value": "add / remove / toggle / contains"
+      },
+      {
+        "label": "組み合わせ",
+        "value": "CSS のクラス指定"
+      }
+    ],
+    "code": {
+      "html": "<button type=\"button\" id=\"toggle\">詳細を表示</button>\n<p class=\"detail\">営業時間：10:00〜18:00</p>",
+      "css": "button {\n  padding: 6px 16px;\n  border: 1px solid #b68235;\n  border-radius: 4px;\n  background: #fff;\n  color: #7d5411;\n  font: inherit;\n  cursor: pointer;\n}\n.detail {\n  display: none;\n  margin-top: 12px;\n}\n.detail.is-open {\n  display: block;\n}",
+      "js": "const btn = document.querySelector('#toggle');\nconst detail = document.querySelector('.detail');\n\nbtn.addEventListener('click', () => {\n  const open = detail.classList.toggle('is-open');\n  btn.textContent = open ? '詳細を隠す' : '詳細を表示';\n  console.log('is-open:', open);\n});"
+    },
+    "preview": {
+      "height": 130,
+      "note": "ボタンを押すと詳細が表示・非表示になります",
+      "fullDocument": false
+    },
+    "explain": [
+      "`要素.classList` は、要素に付いているクラスの一覧です。`add()` で追加、`remove()` で削除、`toggle()` で付いていれば外し・なければ付けます。",
+      "上の例では、ボタンを押すたびに `is-open` クラスを付け外しし、CSSの `.detail.is-open` で表示を切り替えています。",
+      "JavaScriptで `style` を直接書き換えるよりも、見た目をCSSにまとめておけるため、管理しやすくなります。"
+    ],
+    "values": {
+      "label": "主なメソッド",
+      "head": "メソッド",
+      "rows": [
+        {
+          "key": "add('名前')",
+          "desc": "クラスを追加"
+        },
+        {
+          "key": "remove('名前')",
+          "desc": "クラスを削除"
+        },
+        {
+          "key": "toggle('名前')",
+          "desc": "付け外しを切り替え（付いた後の状態を true / false で返す）"
+        },
+        {
+          "key": "toggle('名前', 条件)",
+          "desc": "条件が true なら付け、false なら外す"
+        },
+        {
+          "key": "contains('名前')",
+          "desc": "付いているか調べる"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "ダークモードを切り替える",
+        "desc": "html 要素にクラスを付け、CSS変数で配色を切り替えます。",
+        "html": "<button type=\"button\" id=\"theme\">テーマ切替</button>",
+        "css": ":root.dark {\n  --bg: #1a1918;\n}\nbody {\n  background: var(--bg, #fff);\n}",
+        "js": "document.querySelector('#theme').addEventListener('click', () => {\n  document.documentElement.classList.toggle('dark');\n});"
+      }
+    ],
+    "notes": [
+      "クラス名に . （ドット）は付けません（add('.is-open') は誤り）。",
+      "状態を表すクラスには is- などの接頭辞を付けると、役割が分かりやすくなります。"
+    ],
+    "related": [
+      "js-query-selector",
+      "js-add-event-listener",
+      "css-display",
+      "css-transition"
+    ]
+  },
+  {
+    "id": "js-create-element",
+    "title": null,
+    "ja": "新しい要素を作って追加する",
+    "lead": "新しいHTML要素を作るメソッドです。作った要素は append() などでページに追加して、初めて画面に表示されます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "Document のメソッド"
+      },
+      {
+        "label": "戻り値",
+        "value": "作成した要素"
+      },
+      {
+        "label": "追加",
+        "value": "append / prepend / before / after"
+      }
+    ],
+    "code": {
+      "html": "<input id=\"todo\" placeholder=\"やること\">\n<button type=\"button\" id=\"add\">追加</button>\n<ul id=\"list\"></ul>",
+      "css": "button {\n  padding: 6px 16px;\n  border: 1px solid #b68235;\n  border-radius: 4px;\n  background: #fff;\n  color: #7d5411;\n  font: inherit;\n  cursor: pointer;\n}\ninput {\n  padding: 6px 10px;\n  border: 1px solid #bbb;\n  border-radius: 4px;\n  font: inherit;\n}",
+      "js": "const input = document.querySelector('#todo');\nconst list = document.querySelector('#list');\n\ndocument.querySelector('#add').addEventListener('click', () => {\n  if (!input.value) return;\n  const li = document.createElement('li');\n  li.textContent = input.value;\n  list.append(li);\n  console.log('追加：' + input.value);\n  input.value = '';\n});"
+    },
+    "preview": {
+      "height": 130,
+      "note": "文字を入力して「追加」を押すと、リストに項目が増えます",
+      "fullDocument": false
+    },
+    "explain": [
+      "`document.createElement('タグ名')` で新しい要素を作ります。作っただけではページに表示されず、`append()` などで既存の要素の中に追加する必要があります。",
+      "作った要素には `textContent` で文字を入れたり、`classList` でクラスを付けたりしてから追加します。",
+      "上の例は、入力した文字をリスト項目として追加していく、簡単なやることリストです。"
+    ],
+    "values": {
+      "label": "追加・削除のメソッド",
+      "head": "メソッド",
+      "rows": [
+        {
+          "key": "親.append(要素)",
+          "desc": "親の中の最後に追加"
+        },
+        {
+          "key": "親.prepend(要素)",
+          "desc": "親の中の最初に追加"
+        },
+        {
+          "key": "要素.before(新要素)",
+          "desc": "要素の直前に追加"
+        },
+        {
+          "key": "要素.after(新要素)",
+          "desc": "要素の直後に追加"
+        },
+        {
+          "key": "要素.remove()",
+          "desc": "要素を削除"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "属性を設定してリンクを作る",
+        "desc": "href などの属性はプロパティや setAttribute() で設定します。",
+        "html": "<p id=\"area\"></p>",
+        "js": "const a = document.createElement('a');\na.href = 'https://example.com';\na.textContent = '公式サイト';\na.target = '_blank';\ndocument.querySelector('#area').append(a);"
+      }
+    ],
+    "notes": [
+      "同じ要素を2か所に append すると、最初の場所から移動します（複製はされません）。",
+      "大量の要素を1つずつ追加すると遅くなることがあります。まとめて追加するときは DocumentFragment を使います。"
+    ],
+    "related": [
+      "js-text-content",
+      "js-query-selector",
+      "js-foreach",
+      "html-li"
+    ]
+  },
+  {
+    "id": "js-add-event-listener",
+    "title": null,
+    "ja": "クリックなどの操作に反応する",
+    "lead": "クリックや入力などの「イベント」が起きたときに実行する関数を登録します。ボタンやフォームを動かすための基本のメソッドです。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "EventTarget のメソッド"
+      },
+      {
+        "label": "引数",
+        "value": "イベント名・関数・オプション"
+      },
+      {
+        "label": "よく使うイベント",
+        "value": "click / input / submit"
+      }
+    ],
+    "code": {
+      "html": "<button type=\"button\" id=\"like\">♡ いいね</button>\n<span id=\"count\">0</span>",
+      "css": "button {\n  padding: 6px 16px;\n  border: 1px solid #b68235;\n  border-radius: 4px;\n  background: #fff;\n  color: #7d5411;\n  font: inherit;\n  cursor: pointer;\n}",
+      "js": "const btn = document.querySelector('#like');\nconst count = document.querySelector('#count');\nlet n = 0;\n\nbtn.addEventListener('click', () => {\n  n++;\n  count.textContent = n;\n  console.log('click', n);\n});"
+    },
+    "preview": {
+      "height": 100,
+      "note": "ボタンを押すと数が増えます",
+      "fullDocument": false
+    },
+    "explain": [
+      "`要素.addEventListener('イベント名', 関数)` で、そのイベントが起きたときに関数が呼ばれるようになります。上の例では、ボタンがクリックされるたびに数を増やしています。",
+      "関数は引数でイベントの情報（イベントオブジェクト）を受け取れます。押された要素は `event.target`、押されたキーは `event.key` で分かります。",
+      "同じ要素に何個でも関数を登録できます。登録を解除するには `removeEventListener()` を使います。"
+    ],
+    "values": {
+      "label": "よく使うイベント",
+      "head": "イベント名",
+      "rows": [
+        {
+          "key": "click",
+          "desc": "クリック（タップ）したとき"
+        },
+        {
+          "key": "input",
+          "desc": "入力欄の値が変わるたび"
+        },
+        {
+          "key": "change",
+          "desc": "選択や入力が確定したとき"
+        },
+        {
+          "key": "submit",
+          "desc": "フォームを送信するとき"
+        },
+        {
+          "key": "keydown",
+          "desc": "キーを押したとき"
+        },
+        {
+          "key": "DOMContentLoaded",
+          "desc": "HTMLの読み込みが終わったとき"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "1回だけ反応させる",
+        "desc": "オプションの once: true を指定すると、1回実行したあと自動で解除されます。",
+        "html": "<button type=\"button\" id=\"once\">1回だけ</button>",
+        "js": "document.querySelector('#once').addEventListener('click', () => {\n  console.log('1回目だけ表示されます');\n}, { once: true });"
+      }
+    ],
+    "notes": [
+      "HTMLの onclick 属性に書くより、addEventListener を使うほうが複数の処理を管理しやすくなります。",
+      "addEventListener('click', fn()) のように ( ) を付けると、登録した瞬間に実行されてしまいます。関数そのもの（fn）を渡します。"
+    ],
+    "related": [
+      "js-prevent-default",
+      "js-event-target",
+      "js-function",
+      "html-button"
+    ]
+  },
+  {
+    "id": "js-prevent-default",
+    "title": null,
+    "ja": "ブラウザの標準の動作を止める",
+    "lead": "フォーム送信でのページ移動やリンクの遷移など、ブラウザが本来行う動作を取り消します。JavaScriptで独自の処理をしたいときに使います。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "Event のメソッド"
+      },
+      {
+        "label": "対象",
+        "value": "キャンセル可能なイベント"
+      },
+      {
+        "label": "よく使う場面",
+        "value": "submit / click（リンク）"
+      }
+    ],
+    "code": {
+      "html": "<form id=\"form\">\n  <input name=\"email\" type=\"email\" placeholder=\"メールアドレス\" required>\n  <button>登録</button>\n</form>\n<p id=\"result\"></p>",
+      "css": "button {\n  padding: 6px 16px;\n  border: 1px solid #b68235;\n  border-radius: 4px;\n  background: #fff;\n  color: #7d5411;\n  font: inherit;\n  cursor: pointer;\n}\ninput {\n  padding: 6px 10px;\n  border: 1px solid #bbb;\n  border-radius: 4px;\n  font: inherit;\n}",
+      "js": "const form = document.querySelector('#form');\n\nform.addEventListener('submit', (event) => {\n  event.preventDefault();\n  const email = form.elements.email.value;\n  document.querySelector('#result').textContent = `${email} で登録しました`;\n  console.log('送信を止めて、JavaScriptで処理しました');\n});"
+    },
+    "preview": {
+      "height": 140,
+      "note": "メールアドレスを入力して「登録」を押しても、ページは移動しません",
+      "fullDocument": false
+    },
+    "explain": [
+      "フォームを送信すると、ブラウザは通常ページを移動（再読み込み）します。`submit` イベントの中で `event.preventDefault()` を呼ぶと、この移動を止められます。",
+      "上の例では、送信を止めたうえで、入力されたメールアドレスを画面に表示しています。実際のサイトでは、ここで `fetch()` を使ってデータを送信します。",
+      "リンクの `click` イベントで呼ぶと、ページ移動を止めてアコーディオンの開閉などに使えます。"
+    ],
+    "values": {
+      "label": "関連するメソッド",
+      "head": "メソッド",
+      "rows": [
+        {
+          "key": "preventDefault()",
+          "desc": "ブラウザ標準の動作を止める"
+        },
+        {
+          "key": "stopPropagation()",
+          "desc": "親要素へイベントが伝わるのを止める"
+        },
+        {
+          "key": "event.defaultPrevented",
+          "desc": "止められたかどうか"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "ページ内リンクをなめらかにスクロール",
+        "desc": "リンクの移動を止め、scrollIntoView() で動かします。",
+        "html": "<a href=\"#bottom\" id=\"jump\">下へ</a>\n<div style=\"height:600px\"></div>\n<p id=\"bottom\">ここが下です</p>",
+        "js": "document.querySelector('#jump').addEventListener('click', (e) => {\n  e.preventDefault();\n  document.querySelector('#bottom').scrollIntoView({ behavior: 'smooth' });\n});"
+      }
+    ],
+    "notes": [
+      "preventDefault() を呼ぶと、ブラウザの入力チェック（required など）の後の送信も止まります。必要な処理は自分で書きます。",
+      "スクロールなど一部のイベントは、passive 指定などにより止められない場合があります。"
+    ],
+    "related": [
+      "js-add-event-listener",
+      "js-event-target",
+      "html-form",
+      "html-a"
+    ]
+  },
+  {
+    "id": "js-event-target",
+    "title": null,
+    "ja": "イベントが起きた要素を調べる",
+    "lead": "イベントオブジェクトの target プロパティには、実際にクリックなどの操作をされた要素が入っています。親要素にまとめてイベントを登録する「イベント委譲」でよく使います。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "Event のプロパティ"
+      },
+      {
+        "label": "値",
+        "value": "操作された要素"
+      },
+      {
+        "label": "似たもの",
+        "value": "currentTarget（登録した要素）"
+      }
+    ],
+    "code": {
+      "html": "<ul id=\"menu\">\n  <li>ブレンド</li>\n  <li>カフェラテ</li>\n  <li>紅茶</li>\n</ul>\n<p id=\"selected\">選んでください</p>",
+      "css": "li {\n  cursor: pointer;\n}\nli.is-active {\n  color: #b68235;\n  font-weight: bold;\n}",
+      "js": "const menu = document.querySelector('#menu');\n\nmenu.addEventListener('click', (event) => {\n  const li = event.target.closest('li');\n  if (!li) return;\n  menu.querySelectorAll('li').forEach((x) => x.classList.remove('is-active'));\n  li.classList.add('is-active');\n  document.querySelector('#selected').textContent = li.textContent + 'を選びました';\n  console.log(event.target);\n});"
+    },
+    "preview": {
+      "height": 180,
+      "note": "項目をクリックすると、選んだ項目が強調されます",
+      "fullDocument": false
+    },
+    "explain": [
+      "イベントの関数が受け取る `event` には、そのイベントの情報が入っています。`event.target` は、実際にクリックされた要素です。",
+      "上の例では、`li` 1つずつではなく親の `ul` にだけイベントを登録し、`event.target` からどの項目が押されたかを判断しています。この方法を「イベント委譲」と呼び、項目が後から増えてもそのまま動きます。",
+      "クリックされたのが中の子要素の場合もあるため、`closest('li')` で目的の要素までさかのぼると確実です。"
+    ],
+    "values": {
+      "label": "イベントオブジェクトの主なプロパティ",
+      "head": "プロパティ",
+      "rows": [
+        {
+          "key": "target",
+          "desc": "実際に操作された要素"
+        },
+        {
+          "key": "currentTarget",
+          "desc": "イベントを登録した要素"
+        },
+        {
+          "key": "type",
+          "desc": "イベントの種類（click など）"
+        },
+        {
+          "key": "key",
+          "desc": "押されたキー（キーボードイベント）"
+        },
+        {
+          "key": "clientX / clientY",
+          "desc": "クリックした位置"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "押されたキーで処理を分ける",
+        "desc": "keydown イベントの key で、どのキーが押されたか分かります。",
+        "html": "<input id=\"search\" placeholder=\"Enterで検索\">",
+        "js": "document.querySelector('#search').addEventListener('keydown', (e) => {\n  if (e.key === 'Enter') {\n    console.log('検索：' + e.target.value);\n  }\n});"
+      }
+    ],
+    "notes": [
+      "target は子要素になることがあるため、closest() で確認せずに使うと意図しない要素を操作してしまいます。",
+      "アロー関数ではなく function で書いた場合、this は currentTarget と同じ要素になります。"
+    ],
+    "related": [
+      "js-add-event-listener",
+      "js-class-list",
+      "js-prevent-default",
+      "js-query-selector"
+    ]
+  },
+  {
+    "id": "js-set-timeout",
+    "title": null,
+    "ja": "指定した時間のあとに実行する",
+    "lead": "指定したミリ秒だけ待ってから、関数を1回実行します。一定間隔で繰り返すときは setInterval() を使います。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "グローバル関数"
+      },
+      {
+        "label": "時間の単位",
+        "value": "ミリ秒（1000 = 1秒）"
+      },
+      {
+        "label": "取り消し",
+        "value": "clearTimeout()"
+      }
+    ],
+    "code": {
+      "html": "<p id=\"msg\">3秒後にメッセージが変わります</p>",
+      "css": null,
+      "js": "console.log('開始');\n\nsetTimeout(() => {\n  document.querySelector('#msg').textContent = '3秒たちました';\n  console.log('3秒後');\n}, 3000);\n\nconsole.log('setTimeout の次の行');"
+    },
+    "preview": {
+      "height": 80,
+      "note": "3秒後に文字が変わります。「もう一度実行」で最初から確認できます",
+      "fullDocument": false
+    },
+    "explain": [
+      "`setTimeout(関数, ミリ秒)` は、指定した時間が過ぎたあとに関数を1回だけ実行します。1000ミリ秒が1秒です。",
+      "待っている間も、後に続く処理は止まらずに先に進みます。上の例のコンソールでは、「setTimeout の次の行」が「3秒後」より先に表示されます。",
+      "`setTimeout()` は番号（タイマーID）を返します。その番号を `clearTimeout()` に渡すと、実行前に取り消せます。"
+    ],
+    "values": {
+      "label": "タイマーの関数",
+      "head": "関数",
+      "rows": [
+        {
+          "key": "setTimeout(fn, ms)",
+          "desc": "ms ミリ秒後に1回実行"
+        },
+        {
+          "key": "clearTimeout(id)",
+          "desc": "setTimeout を取り消す"
+        },
+        {
+          "key": "setInterval(fn, ms)",
+          "desc": "ms ミリ秒ごとに繰り返し実行"
+        },
+        {
+          "key": "clearInterval(id)",
+          "desc": "setInterval を止める"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "1秒ごとにカウントダウンする",
+        "desc": "setInterval で繰り返し、0になったら止めます。",
+        "html": "<p id=\"count\">5</p>",
+        "js": "let n = 5;\nconst timer = setInterval(() => {\n  n--;\n  document.querySelector('#count').textContent = n;\n  if (n === 0) clearInterval(timer);\n}, 1000);"
+      }
+    ],
+    "notes": [
+      "指定した時間ちょうどに実行される保証はありません。ほかの処理が重いと遅れることがあります。",
+      "アニメーションには、setInterval より CSS の transition や requestAnimationFrame() が向いています。"
+    ],
+    "related": [
+      "js-async-await",
+      "js-function",
+      "js-arrow-function",
+      "css-transition"
+    ]
+  },
+  {
+    "id": "js-async-await",
+    "title": null,
+    "ja": "時間のかかる処理を順番に書く",
+    "lead": "通信など時間のかかる処理（非同期処理）を、上から順に実行するように書ける仕組みです。async を付けた関数の中で、await で結果を待ちます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "構文"
+      },
+      {
+        "label": "対象",
+        "value": "Promise を返す処理"
+      },
+      {
+        "label": "エラー処理",
+        "value": "try...catch"
+      }
+    ],
+    "code": {
+      "html": "<button type=\"button\" id=\"load\">データを読み込む</button>\n<p id=\"status\"></p>",
+      "css": "button {\n  padding: 6px 16px;\n  border: 1px solid #b68235;\n  border-radius: 4px;\n  background: #fff;\n  color: #7d5411;\n  font: inherit;\n  cursor: pointer;\n}",
+      "js": "const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));\n\nasync function loadData() {\n  const status = document.querySelector('#status');\n  status.textContent = '読み込み中…';\n  console.log('読み込み開始');\n  await wait(1500);\n  status.textContent = '読み込みが完了しました';\n  console.log('読み込み完了');\n}\n\ndocument.querySelector('#load').addEventListener('click', loadData);"
+    },
+    "preview": {
+      "height": 120,
+      "note": "ボタンを押すと、1.5秒後に表示が変わります",
+      "fullDocument": false
+    },
+    "explain": [
+      "JavaScriptでは、通信やタイマーなど時間のかかる処理は、終わるのを待たずに次へ進みます（非同期処理）。こうした処理の多くは、結果を後で受け取るための `Promise` を返します。",
+      "関数の前に `async` を付けると、その中で `await` が使えるようになります。`await` は Promise の結果が出るまで待ち、結果を値として受け取ります。",
+      "上の例では、1.5秒待つ処理を `await` で待ってから、表示を「完了」に変えています。実際のサイトでは `fetch()` でサーバーからデータを取得するときによく使います。"
+    ],
+    "values": {
+      "label": "関連する書き方",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "async function 名前() {}",
+          "desc": "非同期関数を定義する"
+        },
+        {
+          "key": "await Promise",
+          "desc": "結果が出るまで待つ"
+        },
+        {
+          "key": "try { } catch (e) { }",
+          "desc": "エラーを受け取る"
+        },
+        {
+          "key": "Promise.all([...])",
+          "desc": "複数の処理をまとめて待つ"
+        },
+        {
+          "key": "fetch(url)",
+          "desc": "サーバーからデータを取得する（Promise を返す）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "fetch でデータを取得する",
+        "desc": "サーバーから JSON を取得する定番の書き方です。失敗に備えて try...catch で囲みます。",
+        "js": "async function getMenu() {\n  try {\n    const res = await fetch('/api/menu.json');\n    if (!res.ok) throw new Error('取得に失敗しました');\n    const menu = await res.json();\n    console.log(menu);\n  } catch (error) {\n    console.error(error);\n  }\n}"
+      }
+    ],
+    "notes": [
+      "await は async を付けた関数の中（またはモジュールの最上位）でしか使えません。",
+      "await を付け忘れると、結果の値ではなく Promise そのものを受け取ってしまいます。"
+    ],
+    "related": [
+      "js-set-timeout",
+      "js-function",
+      "js-prevent-default",
+      "js-object"
     ]
   }
 ]

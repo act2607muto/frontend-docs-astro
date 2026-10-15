@@ -2,7 +2,8 @@
 
 export type TokenClass =
   | 'text' | 'punct' | 'tag' | 'attr' | 'val' | 'cmt'
-  | 'sel' | 'prop' | 'cval' | 'num' | 'kw' | 'fn';
+  | 'sel' | 'prop' | 'cval' | 'num' | 'kw' | 'fn'
+  | 'str' | 'stor' | 'var';
 export interface Token { t: string; c: TokenClass }
 type Push = (t: string, c: TokenClass) => void;
 
@@ -91,9 +92,40 @@ export function tokCSS(src: string): Token[] {
   return out;
 }
 
+// JavaScript：宣言・値のキーワード（青）と制御構文のキーワード（紫）を色分けする
+const JS_STORAGE = new Set([
+  'const', 'let', 'var', 'function', 'class', 'new', 'this', 'true', 'false', 'null', 'undefined',
+  'typeof', 'instanceof', 'async', 'extends', 'static', 'get', 'set',
+]);
+const JS_CONTROL = new Set([
+  'if', 'else', 'for', 'while', 'do', 'return', 'break', 'continue', 'switch', 'case', 'default',
+  'try', 'catch', 'finally', 'throw', 'await', 'of', 'in', 'import', 'export', 'from',
+]);
+
+export function tokJS(src: string): Token[] {
+  const out: Token[] = [];
+  const re = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)|(`(?:\\[\s\S]|[^`\\])*`|"(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*')|(\b\d+(?:\.\d+)?\b)|([A-Za-z_$][\w$]*)(\s*\()?|(\s+)|([\s\S])/g;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(src))) {
+    const [, cmt, str, num, ident, call, ws, other] = m;
+    if (cmt) out.push({ t: cmt, c: 'cmt' });
+    else if (str) out.push({ t: str, c: 'str' });
+    else if (num) out.push({ t: num, c: 'num' });
+    else if (ident) {
+      const c: TokenClass = JS_CONTROL.has(ident) ? 'kw' : JS_STORAGE.has(ident) ? 'stor' : call ? 'fn' : 'var';
+      out.push({ t: ident, c });
+      if (call) out.push({ t: call, c: 'text' });
+    } else out.push({ t: ws || other || '', c: 'text' });
+  }
+  return out;
+}
+
+export type Lang = 'HTML' | 'CSS' | 'JS';
+const TOKENIZERS: Record<Lang, (src: string) => Token[]> = { HTML: tokHTML, CSS: tokCSS, JS: tokJS };
+
 /** コードを行ごとのトークン列に変換 */
-export function highlight(lang: 'HTML' | 'CSS', code: string): Token[][] {
-  const toks = lang === 'HTML' ? tokHTML(code) : tokCSS(code);
+export function highlight(lang: Lang, code: string): Token[][] {
+  const toks = TOKENIZERS[lang](code);
   const lines: Token[][] = [[]];
   for (const tk of toks) {
     tk.t.split('\n').forEach((part, k) => {

@@ -9,4 +9,6 @@ export const url = {
   learn: () => `${BASE}learn/`,
   item: (item: { type: ItemType; slug: string }) => `${BASE}${item.type}/${item.slug}/`,
   searchIndex: () => `${BASE}search-index.json`,
+  /** Vercel の API（GitHub Pages では存在しない） */
+  api: (name: string) => `${BASE}api/${name}`,
 };

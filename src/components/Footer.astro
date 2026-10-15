@@ -1,11 +1,11 @@
 ---
 // 共通フッター。WordPress の template-parts/footer に相当
-import { countLabel } from '../lib/data';
+import { countLabel, SITE } from '../lib/data';
 
 interface Props {
   left?: string;
 }
-const { left = 'HTML & CSS GUIDE — 学ぶ・調べる・理解する' } = Astro.props;
+const { left = `${SITE} — 学ぶ・調べる・理解する` } = Astro.props;
 ---
 <footer class="site-footer">
   <span>{left}</span><span>{countLabel()}</span>

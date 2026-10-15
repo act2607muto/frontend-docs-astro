@@ -9,6 +9,23 @@ const BASE_STYLE =
 const RESIZE_SCRIPT =
   '<script>(function(){var b=document.body,last=0;function s(){var h=Math.ceil(Math.max(b.scrollHeight,b.getBoundingClientRect().height));if(h!==last){last=h;parent.postMessage({hcgPreviewHeight:h},"*")}}addEventListener("load",s);new ResizeObserver(s).observe(b)})()<\/script>';
 
+// iframe 内で最初に実行し、console の出力とエラーを親に送る
+const CONSOLE_SCRIPT = `<script>(function(){
+function fmt(v,d){d=d||0;
+if(typeof v==="string")return d?JSON.stringify(v):v;
+if(v===undefined)return "undefined";
+if(typeof v==="function")return "ƒ "+(v.name||"")+"()";
+if(typeof Element!=="undefined"&&v instanceof Element){var c=typeof v.className==="string"&&v.className.trim()?"."+v.className.trim().split(/\\s+/).join("."):"";return "<"+v.tagName.toLowerCase()+(v.id?"#"+v.id:"")+c+">"}
+if(v instanceof Error)return v.name+": "+v.message;
+if(Array.isArray(v))return d>2?"[…]":"["+v.map(function(x){return fmt(x,d+1)}).join(", ")+"]";
+if(v&&typeof v==="object"){if(d>2)return "{…}";var k=Object.keys(v);return k.length?"{ "+k.map(function(n){return n+": "+fmt(v[n],d+1)}).join(", ")+" }":"{}"}
+return String(v)}
+function send(l,a){parent.postMessage({hcgConsole:{level:l,text:[].map.call(a,function(x){return fmt(x)}).join(" ")}},"*")}
+["log","info","warn","error"].forEach(function(l){var o=console[l];console[l]=function(){send(l,arguments);o.apply(console,arguments)}});
+addEventListener("error",function(e){send("error",[e.message])});
+addEventListener("unhandledrejection",function(e){send("error",["Uncaught (in promise) "+fmt(e.reason)])});
+})()<\/script>`;
+
 // サンプル内の画像ファイル名（photo.jpg など）を、ファイル名入りのプレースホルダー画像に置き換える
 // 空白は srcset の区切りと誤認されるため %20 にする
 const placeholderImg = (name: string) =>
@@ -17,14 +34,17 @@ const withPlaceholders = (src: string) => src.replace(/[\w-]+\.(?:jpe?g|png|webp
 
 /**
  * fullDocument=true の場合は html をそのまま文書として使い、css は外部CSSを読み込んだ状態として head に差し込む
+ * js がある場合は console の出力を親に送るスクリプトを先頭に入れ、js 本体は body の最後で実行する
  */
-export function buildSrcdoc({ html, css }: CodeSet, fullDocument = false): string {
+export function buildSrcdoc({ html, css, js }: CodeSet, fullDocument = false): string {
   const body = withPlaceholders(html || '');
   const style = withPlaceholders(css || '');
+  const head = js ? CONSOLE_SCRIPT : '';
+  const tail = (js ? `<script>${js}<\/script>` : '') + RESIZE_SCRIPT;
   if (fullDocument) {
-    const tag = `<style>${BASE_STYLE}${style}</style>`;
+    const tag = `${head}<style>${BASE_STYLE}${style}</style>`;
     const doc = body.includes('</head>') ? body.replace('</head>', `${tag}</head>`) : tag + body;
-    return doc.includes('</body>') ? doc.replace('</body>', `${RESIZE_SCRIPT}</body>`) : doc + RESIZE_SCRIPT;
+    return doc.includes('</body>') ? doc.replace('</body>', `${tail}</body>`) : doc + tail;
   }
-  return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><style>${BASE_STYLE}${style}</style></head><body>${body}${RESIZE_SCRIPT}</body></html>`;
+  return `<!doctype html><html lang="ja"><head><meta charset="utf-8">${head}<style>${BASE_STYLE}${style}</style></head><body>${body}${tail}</body></html>`;
 }

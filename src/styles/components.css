@@ -115,7 +115,7 @@
   .site-header__menu, .site-header__search-toggle { display: inline-flex; }
   .gnav--desktop { display: none; }
   .gnav--mobile {
-    display: grid; grid-template-columns: repeat(3, 1fr); height: auto;
+    display: grid; grid-template-columns: repeat(4, 1fr); height: auto;
     border-top: 1px solid var(--color-divider); gap: 0;
   }
   .gnav--mobile a { justify-content: center; padding: 10px 0; font-size: 13px; }
@@ -174,7 +174,9 @@
 }
 .top__kicker { font-size: 12px; letter-spacing: .18em; color: var(--strong-accent); }
 .top__title { font-size: 80px; font-weight: 400; letter-spacing: -.02em; line-height: 1; margin: 16px 0 20px; }
-.top__lead { font-size: 15.5px; line-height: 1.95; color: var(--muted); max-width: 580px; margin-bottom: 36px; text-wrap: pretty; }
+.top__lead { font-size: 15.5px; line-height: 1.95; color: var(--muted); max-width: 720px; margin-bottom: 36px; text-wrap: pretty; }
+/* PC・タブレットだけで改行する（スマホでは自然に折り返す） */
+@media (max-width: 759px) { .pc-only { display: none; } }
 .top__search .input { min-height: 52px; padding-left: 46px; font-size: 15px; }
 .top__quick { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin-top: 14px; font-size: 12.5px; }
 .top__quick-label { color: var(--muted); margin-right: 4px; }
@@ -196,7 +198,7 @@
 @media (max-width: 1099px) { .top__title { font-size: 66px; } }
 @media (max-width: 759px) {
   .top__main { padding: 24px 22px 56px; }
-  .top__title { font-size: 46px; }
+  .top__title { font-size: min(46px, 10vw); white-space: nowrap; }
 }
 
 /* ==========================================================================
@@ -429,6 +431,9 @@
 .t-kw { color: var(--c-kw); }
 .t-fn { color: var(--c-fn); }
 .t-text { color: var(--c-text); }
+.t-str { color: var(--c-str); }
+.t-stor { color: var(--c-stor); }
+.t-var { color: var(--c-var); }
 
 /* ==========================================================================
    実行結果プレビュー（共通部品）
@@ -501,7 +506,80 @@
 .dict-cat__h { font: inherit; letter-spacing: normal; line-height: inherit; }
 
 /* ==========================================================================
-   テーマに応じた出し分け（テーマ切替ボタンのアイコン・ラベル）
+   コンソール（JS のプレビュー）
+   ========================================================================== */
+.console { border-top: 1px solid var(--color-accent); background: var(--code-bg); }
+.preview--console-only .preview__frame { display: none; }
+.preview--console-only .console { border-top: 0; }
+.console__head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 4px 6px 4px 14px; border-bottom: 1px solid var(--color-divider);
+  font-size: 11.5px; letter-spacing: .08em; color: var(--muted);
+}
+.console__rerun { font-size: 12px; letter-spacing: 0; }
+.console__lines { max-height: 260px; overflow: auto; padding: 6px 0; font-family: var(--font-code); font-size: 13px; line-height: 1.6; }
+.console__line { padding: 3px 14px 3px 30px; position: relative; white-space: pre-wrap; word-break: break-all; color: var(--c-text); }
+.console__line + .console__line { border-top: 1px solid var(--color-divider); }
+.console__line::before { content: "›"; position: absolute; left: 14px; color: var(--c-ln); }
+.console__line--warn { color: var(--c-warn); background: color-mix(in srgb, var(--c-warn) 10%, transparent); }
+.console__line--error { color: var(--c-error); background: color-mix(in srgb, var(--c-error) 10%, transparent); }
+.console__empty { padding: 3px 14px; font-family: var(--font-body); font-size: 12.5px; color: var(--muted); }
+
+/* ==========================================================================
+   ショートカットの目印・検索ウィンドウ（Ctrl / ⌘ + K）
+   ========================================================================== */
+.search__kbd {
+  position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+  padding: 1px 6px; border: 1px solid var(--color-divider); border-radius: 3px;
+  font-family: var(--font-code); font-size: 11px; line-height: 1.5; color: var(--muted);
+  pointer-events: none;
+}
+.search input:focus ~ .search__kbd,
+.search input:not(:placeholder-shown) ~ .search__kbd { display: none; }
+.hdr-search .search__kbd { top: 17px; }
+.hdr-search .input { padding-right: 56px; }
+.top__search .input { padding-right: 64px; }
+/* タッチ操作の端末ではキーボードショートカットを案内しない */
+@media (hover: none) {
+  .search__kbd, .search-dialog__shortcut { display: none; }
+}
+
+.search-dialog {
+  width: min(640px, calc(100% - 32px)); max-height: min(560px, calc(100dvh - 96px));
+  margin: 12vh auto auto; padding: 0;
+  display: flex; flex-direction: column;
+  color: var(--color-text); background: var(--color-bg);
+  border: 1px solid var(--color-divider); border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+}
+.search-dialog:not([open]) { display: none; }
+.search-dialog::backdrop { background: var(--overlay); }
+.search-dialog .search { display: flex; flex-direction: column; min-height: 0; flex: 1; }
+.search-dialog .search__icon { top: 17px; }
+.search-dialog .input {
+  min-height: 52px; padding-left: 46px; font-size: 15px;
+  border: 0; border-bottom: 1px solid var(--color-divider); border-radius: 0;
+}
+.search-dialog .input:focus-visible { outline: none; border-bottom-color: var(--color-accent); }
+.search-dialog .search__dropdown {
+  position: static; flex: 1; max-height: none; overflow: auto;
+  border: 0; border-radius: 0; box-shadow: none;
+}
+.search-dialog__foot {
+  display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 8px 16px;
+  border-top: 1px solid var(--color-divider);
+  font-size: 11.5px; color: var(--muted);
+}
+.search-dialog__foot kbd {
+  display: inline-block; min-width: 20px; margin-right: 2px; padding: 0 5px;
+  border: 1px solid var(--color-divider); border-radius: 3px;
+  font-family: var(--font-code); font-size: 11px; text-align: center;
+}
+.search-dialog__shortcut { margin-left: auto; }
+.top__quick-words { display: contents; }
+
+/* ==========================================================================
+   Astro 版のみ：テーマ・OS に応じた出し分け（サーバーで両方出力し、CSS で切り替える）
    ========================================================================== */
 .theme-dark-only { display: none; }
 :root[data-theme="dark"] .theme-dark-only { display: inline-flex; }
@@ -510,3 +588,8 @@
 
 .code__copy > span { display: inline-flex; align-items: center; gap: 5px; }
 .code__copy > span[hidden] { display: none; }
+
+/* ショートカットの表記（Mac は ⌘K、それ以外は Ctrl K） */
+.os-mac { display: none; }
+:root[data-os="mac"] .os-mac { display: inline; }
+:root[data-os="mac"] .os-other { display: none; }

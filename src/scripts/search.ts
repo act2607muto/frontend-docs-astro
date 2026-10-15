@@ -2,7 +2,7 @@
 // 検索用データ（search-index.json）は最初にフォーカスしたときに1度だけ読み込む
 
 export interface SearchItem {
-  type: 'html' | 'css';
+  type: 'html' | 'css' | 'js';
   slug: string;
   name: string;
   summary: string;
@@ -47,10 +47,19 @@ const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ESC[c]!);
 
 let uid = 0;
 
+/** 検索結果から項目を開いたときに、検索語を記録する（Vercel の API。ページ移動を妨げないよう sendBeacon で送る） */
+function logSearch(logUrl: string, query: string) {
+  const keyword = query.trim();
+  if (!keyword || !logUrl || !navigator.sendBeacon) return;
+  try {
+    navigator.sendBeacon(logUrl, new Blob([JSON.stringify({ keyword })], { type: 'application/json' }));
+  } catch { /* 記録できなくても検索には影響させない */ }
+}
+
 function setup(el: HTMLElement) {
   const input = el.querySelector('input')!;
   const drop = el.querySelector<HTMLElement>('.search__dropdown')!;
-  const { indexUrl = '', emptyText = '', limit = '8' } = el.dataset;
+  const { indexUrl = '', logUrl = '', emptyText = '', limit = '8' } = el.dataset;
   const id = `search-list-${++uid}`;
   drop.id = id;
   input.setAttribute('aria-controls', id);
@@ -105,11 +114,13 @@ function setup(el: HTMLElement) {
     if (e.isComposing) return; // 日本語変換中のEnterは無視
     if (e.key === 'ArrowDown') { e.preventDefault(); if (drop.hidden) render(); else move(1); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
-    else if (e.key === 'Enter' && !drop.hidden && results[active]) { e.preventDefault(); location.href = results[active]!.url; }
+    else if (e.key === 'Enter' && !drop.hidden && results[active]) { e.preventDefault(); logSearch(logUrl, input.value); location.href = results[active]!.url; }
     else if (e.key === 'Escape') close();
   });
   // クリック時に入力欄のフォーカスを外さない（Safari ではリンクにフォーカスが移らないため）
   drop.addEventListener('mousedown', (e) => e.preventDefault());
+  // 候補をクリックして項目を開いたときも検索語を記録する
+  drop.addEventListener('click', (e) => { if ((e.target as Element).closest('.search__result')) logSearch(logUrl, input.value); });
   el.addEventListener('focusout', (e) => { if (!el.contains(e.relatedTarget as Node | null)) close(); });
 }
 

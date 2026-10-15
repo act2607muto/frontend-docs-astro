@@ -4,8 +4,19 @@ import itemsJson from '../data/items.json';
 import detailsJson from '../data/details.json';
 import roadmapJson from '../data/roadmap.json';
 
-export type ItemType = 'html' | 'css';
-export const TYPES: ItemType[] = ['html', 'css'];
+export type ItemType = 'html' | 'css' | 'js';
+/** 辞典の種類（表示順） */
+export const TYPES: ItemType[] = ['html', 'css', 'js'];
+
+/** 種類ごとの表示名 */
+export const TYPE_INFO: Record<ItemType, { dict: string; tag: string; kicker: string; unit: string }> = {
+  html: { dict: 'HTML辞典', tag: 'HTML', kicker: 'HTML要素', unit: 'タグ' },
+  css: { dict: 'CSS辞典', tag: 'CSS', kicker: 'CSS', unit: 'プロパティ' },
+  js: { dict: 'JS辞典', tag: 'JS', kicker: 'JavaScript', unit: '構文・メソッド' },
+};
+
+/** サイト名 */
+export const SITE = 'FRONTEND-DOCS';
 
 export interface Item {
   id: string;
@@ -22,6 +33,7 @@ export interface Item {
 export interface CodeSet {
   html?: string | null;
   css?: string | null;
+  js?: string | null;
 }
 
 export interface Detail {
@@ -58,7 +70,8 @@ const details: Record<string, Detail> = Object.fromEntries(
 );
 
 const catName = new Map<string, string>();
-for (const type of TYPES) for (const c of categoriesJson[type]) catName.set(`${type}:${c.id}`, c.name);
+const categoryList = categoriesJson as Record<ItemType, { id: string; name: string }[]>;
+for (const type of TYPES) for (const c of categoryList[type]) catName.set(`${type}:${c.id}`, c.name);
 
 export const items: Item[] = (itemsJson as Omit<Item, 'categoryName' | 'hasDetail'>[]).map((it) => ({
   ...it,
@@ -71,7 +84,7 @@ export const index: Record<string, Item> = Object.fromEntries(items.map((it) => 
 export const cats = Object.fromEntries(
   TYPES.map((type) => [
     type,
-    categoriesJson[type].map((c) => ({
+    categoryList[type].map((c) => ({
       ...c,
       items: items.filter((it) => it.type === type && it.category === c.id),
     })),
@@ -99,7 +112,7 @@ export function relatedOf(item: Item): Item[] {
   return ids.map((id) => index[id]).filter((x): x is Item => !!x);
 }
 
-export const countLabel = () => `HTML ${order.html.length}項目 ・ CSS ${order.css.length}項目を収録`;
+export const countLabel = () => `${TYPES.map((t) => `${TYPE_INFO[t].tag} ${order[t].length}項目`).join(' ・ ')}を収録`;
 
 /** `バッククォート` 部分を分割（奇数番目がコード） */
 export const segments = (text: string) =>

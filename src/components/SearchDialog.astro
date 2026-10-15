@@ -1,0 +1,37 @@
+---
+// Ctrl + K（Mac は ⌘ + K）でどのページからでも開ける検索ウィンドウ
+import SearchBox from './SearchBox.astro';
+---
+<dialog class="search-dialog" aria-label="サイト内検索" data-search-dialog>
+  <SearchBox
+    class="search-dialog__box"
+    placeholder="タグ・プロパティ・やりたいことで検索"
+    emptyText="一致する項目は見つかりませんでした。別のキーワードをお試しください。"
+  />
+  <div class="search-dialog__foot">
+    <span><kbd>↑</kbd><kbd>↓</kbd> 選択</span>
+    <span><kbd>Enter</kbd> 移動</span>
+    <span><kbd>Esc</kbd> 閉じる</span>
+    <span class="search-dialog__shortcut"><kbd><span class="os-other">Ctrl K</span><span class="os-mac">⌘K</span></kbd> で開閉</span>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-search-dialog]')!;
+  const input = dialog.querySelector('input')!;
+  const isMac = document.documentElement.dataset.os === 'mac';
+
+  // 背景（ダイアログの外側）をクリックしたら閉じる
+  dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.isComposing || e.key.toLowerCase() !== 'k' || !(isMac ? e.metaKey : e.ctrlKey) || e.altKey || e.shiftKey) return;
+    e.preventDefault(); // ブラウザ標準の Ctrl + K（アドレスバーでの検索など）を止める
+    if (dialog.open) return dialog.close();
+    dialog.showModal();
+    input.focus();
+    input.select();
+    // 前回の語句が残っていれば候補を表示し直す
+    if (input.value) input.dispatchEvent(new Event('input'));
+  });
+</script>
