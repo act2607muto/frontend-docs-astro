@@ -7,7 +7,9 @@ export const isConfigured = () => !!(process.env.SUPABASE_URL && process.env.SUP
 
 export function supabase(path, init = {}) {
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;
-  return fetch(`${process.env.SUPABASE_URL.replace(/\/$/, '')}/rest/v1/${path}`, {
+  // 末尾の / や /rest/v1/ まで含めて登録されていても動くように取り除く
+  const base = process.env.SUPABASE_URL.trim().replace(/\/+$/, '').replace(/\/rest\/v1$/, '');
+  return fetch(`${base}/rest/v1/${path}`, {
     ...init,
     headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', ...init.headers },
   });
@@ -25,7 +27,7 @@ export async function failed(res, r, message) {
     reason = [j.code, j.message || j.msg || j.error, j.hint].filter(Boolean).join(' / ') || reason;
   } catch {}
   let host = '';
-  try { host = new URL(process.env.SUPABASE_URL).host; } catch { host = '(SUPABASE_URL が URL の形になっていません)'; }
+  try { host = new URL(process.env.SUPABASE_URL.trim()).host; } catch { host = '(SUPABASE_URL が URL の形になっていません)'; }
   if (host && !host.endsWith('.supabase.co')) reason += ` / SUPABASE_URL が https://〇〇.supabase.co の形ではありません（${host}）`;
   console.error(`[supabase] ${message}: ${r.status} ${reason}`);
   return res.status(502).json({ error: message, status: r.status, reason });
