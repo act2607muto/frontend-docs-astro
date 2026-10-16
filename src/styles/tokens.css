@@ -4,6 +4,25 @@
    テーマは html[data-theme="light|dark"] で切り替える
    ========================================================================== */
 
+/* 欧文フォント（Helvetica Neue / Helvetica / Arial）を英数字だけに使う。
+   端末の欧文フォント経由で一部の漢字（例：「辞典」の「典」）だけ別のフォントで表示されるのを防ぎ、
+   日本語はすべて Noto Sans JP で表示する */
+@font-face {
+  font-family: "Latin Sans"; font-weight: 100 400;
+  src: local("Helvetica Neue"), local("HelveticaNeue"), local("Helvetica"), local("Arial"), local("ArialMT");
+  unicode-range: U+0000-024F, U+02B0-02FF, U+0300-036F, U+1E00-1EFF, U+2000-206F, U+20A0-20CF, U+2100-214F, U+2190-21FF, U+2212;
+}
+@font-face {
+  font-family: "Latin Sans"; font-weight: 500 600;
+  src: local("Helvetica Neue Medium"), local("HelveticaNeue-Medium"), local("Helvetica"), local("Arial"), local("ArialMT");
+  unicode-range: U+0000-024F, U+02B0-02FF, U+0300-036F, U+1E00-1EFF, U+2000-206F, U+20A0-20CF, U+2100-214F, U+2190-21FF, U+2212;
+}
+@font-face {
+  font-family: "Latin Sans"; font-weight: 700 900;
+  src: local("Helvetica Neue Bold"), local("HelveticaNeue-Bold"), local("Helvetica Bold"), local("Helvetica-Bold"), local("Arial Bold"), local("Arial-BoldMT");
+  unicode-range: U+0000-024F, U+02B0-02FF, U+0300-036F, U+1E00-1EFF, U+2000-206F, U+20A0-20CF, U+2100-214F, U+2190-21FF, U+2212;
+}
+
 :root {
   /* — 色（ライト） — */
   --color-bg: #f3f2f2;
@@ -63,7 +82,7 @@
   --c-error: #c0392b;
 
   /* — フォント — */
-  --font-body: "Helvetica Neue", Helvetica, Arial, "Noto Sans JP", "Hiragino Sans",
+  --font-body: "Latin Sans", "Noto Sans JP", "Hiragino Sans",
     "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, sans-serif;
   --font-heading: var(--font-body);
   --font-heading-weight: 700;
