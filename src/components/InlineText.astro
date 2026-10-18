@@ -1,5 +1,5 @@
 ---
-// `バッククォート` 部分をインラインコードとして表示する
+// `バッククォート` 部分をインラインコード、**アスタリスク2つ** で囲んだ部分を強調として表示する
 import { segments } from '../lib/data';
 
 interface Props {
@@ -7,4 +7,7 @@ interface Props {
 }
 const { text } = Astro.props;
 ---
-{segments(text).map((s) => (s.code ? <code class="icode">{s.t}</code> : s.t))}
+{segments(text).map((s) => {
+  const inner = s.code ? <code class="icode">{s.t}</code> : s.t;
+  return s.strong ? <strong>{inner}</strong> : inner;
+})}

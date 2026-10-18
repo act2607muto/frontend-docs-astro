@@ -8,6 +8,7 @@ import CodeBlocks from '../../components/CodeBlocks.astro';
 import Preview from '../../components/Preview.astro';
 import InlineText from '../../components/InlineText.astro';
 import SecHead from '../../components/SecHead.astro';
+import AdvancedSection from '../../components/AdvancedSection.astro';
 import { getDetail, index, items, order, pad2, relatedOf, SITE, titleOf, TYPE_INFO, type Item } from '../../lib/data';
 import { url } from '../../lib/url';
 
@@ -88,6 +89,7 @@ const related = relatedOf(item);
               {d.notes.map((note, i) => <li><span class="num">{pad2(i + 1)}</span><span><InlineText text={note} /></span></li>)}
             </ol>
           </section>
+          {d.advanced && <AdvancedSection num="05" advanced={d.advanced} />}
         </>
       ) : (
         <div class="pending">
@@ -98,7 +100,7 @@ const related = relatedOf(item);
       )}
 
       <section class="sec sec--related">
-        <SecHead num={d ? '05' : '01'} title="関連項目" />
+        <SecHead num={d ? (d.advanced ? '06' : '05') : '01'} title="関連項目" />
         <ul class="related">
           {related.map((r) => (
             <li>
