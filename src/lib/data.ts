@@ -49,7 +49,24 @@ export interface Detail {
   usages: ({ title: string; desc: string } & CodeSet)[];
   notes: string[];
   related: string[];
+  /** 応用編（任意）。table の rowspan / colspan など、1ページの中で掘り下げる解説 */
+  advanced?: Advanced;
 }
+
+/** 応用編：ブロックを上から順に並べる。文中の `…` はインラインコードになる */
+export interface Advanced {
+  title: string;
+  blocks: AdvancedBlock[];
+}
+
+export type AdvancedBlock =
+  | { type: 'h'; text: string }
+  | { type: 'p'; text: string }
+  | { type: 'table'; head: string[]; rows: string[][] }
+  | { type: 'words'; items: { word: string; parts: { en: string; ja: string }[]; meaning: string }[] }
+  | { type: 'diagram'; kind: 'row' | 'col'; caption: string }
+  | { type: 'callout'; title: string; items: string[] }
+  | { type: 'example'; title: string; desc: string; html: string; css: string; height: number; points: { code: string; text: string }[] };
 
 export interface Category {
   id: string;
@@ -117,8 +134,11 @@ export const countLabel = () => `${TYPES.map((t) => `${TYPE_INFO[t].tag} ${order
 /** `バッククォート` 部分を分割（奇数番目がコード） */
 export const segments = (text: string) =>
   text
-    .split(/`([^`]+)`/)
-    .map((t, i) => ({ t, code: i % 2 === 1 }))
+    // **…** は強調（中に `コード` を含んでもよい）
+    .split(/\*\*(.+?)\*\*/)
+    .flatMap((t, i) =>
+      t.split(/`([^`]+)`/).map((u, j) => ({ t: u, code: j % 2 === 1, strong: i % 2 === 1 })),
+    )
     .filter((s) => s.t);
 
 export const pad2 = (n: number) => String(n).padStart(2, '0');

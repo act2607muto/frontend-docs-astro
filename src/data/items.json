@@ -436,7 +436,11 @@
     "summary": "表",
     "keywords": [
       "テーブル",
-      "表"
+      "表",
+      "rowspan",
+      "colspan",
+      "セル結合",
+      "結合"
     ],
     "category": "listtable"
   },

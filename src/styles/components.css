@@ -593,3 +593,68 @@
 .os-mac { display: none; }
 :root[data-os="mac"] .os-mac { display: inline; }
 :root[data-os="mac"] .os-other { display: none; }
+
+/* ==========================================================================
+   詳細ページ：応用編（details.json の advanced）
+   ========================================================================== */
+.adv__h { margin-top: 44px; }
+.adv .sec__head + .adv__h { margin-top: 8px; }
+.adv__p { font-size: 15px; line-height: 1.95; text-align: justify; margin-bottom: 14px; }
+.adv__table { margin-bottom: 24px; }
+.adv__table td:first-child { white-space: nowrap; }
+
+/* 英単語の分解 */
+.words { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin: 6px 0 20px; }
+.word { padding: 16px 18px; border: 1px solid var(--color-divider); border-radius: var(--radius-md); background: var(--tint); }
+.word__name { display: block; font-size: 20px; font-weight: 500; color: var(--strong-accent); margin-bottom: 10px; }
+.word__parts { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-bottom: 10px; }
+.word__part { display: inline-flex; flex-direction: column; padding: 6px 10px; border-radius: var(--radius-sm, 4px); background: var(--color-bg); border: 1px solid var(--color-divider); }
+.word__part code { font-size: 14px; color: var(--strong-accent); }
+.word__part span { font-size: 12.5px; color: var(--muted); }
+.word__plus { color: var(--muted); }
+.word__meaning { font-size: 14.5px; line-height: 1.8; }
+
+/* 図解（rowspan / colspan） */
+.adv__figure { margin: 8px 0 24px; }
+.adv__figure figcaption { font-size: 14.5px; line-height: 1.85; margin-top: 12px; text-align: justify; }
+.span-dg {
+  display: grid; position: relative; max-width: 460px;
+  grid-auto-rows: 52px; gap: 0;
+  font-size: 12.5px;
+}
+.span-dg--row { grid-template-columns: auto repeat(3, 1fr); grid-template-rows: repeat(3, 52px); }
+.span-dg--col { grid-template-columns: repeat(3, 1fr); grid-template-rows: auto repeat(3, 52px); }
+.span-dg__band { border-radius: 4px; }
+.span-dg--row .span-dg__band { margin: 3px 0; background: color-mix(in srgb, var(--span-row-line) 14%, transparent); }
+.span-dg--col .span-dg__band { margin: 0 3px; background: color-mix(in srgb, var(--span-col-line) 14%, transparent); }
+.span-dg__label { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 4px 10px; color: var(--muted); line-height: 1.3; }
+.span-dg__label small { font-size: 10.5px; }
+.span-dg__cell, .span-dg__merged { position: relative; margin: 6px; border: 1px dashed var(--color-neutral-400); border-radius: 3px; }
+.span-dg__merged {
+  display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 2px;
+  border-style: solid; border-width: 2px; font-weight: 700; text-align: center; padding: 4px;
+}
+.span-dg--row .span-dg__merged { background: var(--span-row-bg); border-color: var(--span-row-line); color: var(--span-row-text); }
+.span-dg--col .span-dg__merged { background: var(--span-col-bg); border-color: var(--span-col-line); color: var(--span-col-text); }
+.span-dg__merged code { font-size: 12.5px; }
+.span-dg__merged span { font-size: 11.5px; font-weight: 500; }
+
+/* まとめの枠 */
+.callout { margin: 8px 0 24px; padding: 16px 20px; border-left: 3px solid var(--color-accent); border-radius: 0 var(--radius-md) var(--radius-md) 0; background: var(--hl-bg); }
+.callout__title { font-weight: 700; margin-bottom: 6px; }
+.callout ul { list-style: disc; padding-left: 1.3em; }
+.callout li { font-size: 14.5px; line-height: 1.85; }
+
+/* 使用例 */
+.adv__example { margin: 28px 0 44px; padding-top: 24px; border-top: 1px solid var(--color-divider); }
+.adv__example-title { font-size: 18px; margin-bottom: 8px; }
+.adv__example .preview { margin-top: 14px; }
+.adv__map-label { margin: 18px 0 6px; font-size: 12.5px; letter-spacing: .08em; color: var(--muted); }
+.adv__map { border-top: 1px solid var(--color-divider); }
+.adv__map li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); gap: 6px 18px; padding: 12px 0; border-bottom: 1px solid var(--color-divider); }
+.adv__map-code { font-size: 12.5px; color: var(--strong-accent); word-break: break-all; }
+.adv__map li > span { font-size: 14px; line-height: 1.8; }
+@media (max-width: 759px) {
+  .adv__map li { grid-template-columns: 1fr; }
+  .span-dg { font-size: 11.5px; }
+}
