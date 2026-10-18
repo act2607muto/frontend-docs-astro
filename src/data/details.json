@@ -2578,7 +2578,271 @@
       "html-th",
       "html-td",
       "css-border"
-    ]
+    ],
+    "advanced": {
+      "title": "応用編：セルを結合する（rowspan / colspan）",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "表を作っていると、「この見出しは2行ぶんまとめたい」「この欄は横に広げたい」という場面が出てきます。そんなときに使うのが、セルを結合（くっつけて1つに）する `rowspan` と `colspan` という属性です。`th` や `td` に書き足すだけで使えます。"
+        },
+        {
+          "type": "h",
+          "text": "まずはおさらい：表をつくる4つのタグ"
+        },
+        {
+          "type": "table",
+          "head": [
+            "タグ",
+            "もとの英語",
+            "役割"
+          ],
+          "rows": [
+            [
+              "`<table>`",
+              "table ＝ 表",
+              "表の全体を囲む"
+            ],
+            [
+              "`<tr>`",
+              "table row ＝ 表の行",
+              "横一列（1行）をつくる"
+            ],
+            [
+              "`<th>`",
+              "table header ＝ 表の見出し",
+              "見出しのセル（太字・中央寄せで表示される）"
+            ],
+            [
+              "`<td>`",
+              "table data ＝ 表のデータ",
+              "中身のセル"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "HTMLの表は、**行（`<tr>`）を上から順に書き、その中にセル（`<th>`・`<td>`）を左から順に並べる**というルールで作ります。この「先に行、セルはその中」という書き方が、`rowspan` と `colspan` を理解するカギになります。"
+        },
+        {
+          "type": "h",
+          "text": "英単語を分解してみよう"
+        },
+        {
+          "type": "words",
+          "items": [
+            {
+              "word": "rowspan",
+              "parts": [
+                {
+                  "en": "row",
+                  "ja": "行（横一列）"
+                },
+                {
+                  "en": "span",
+                  "ja": "またがる・範囲"
+                }
+              ],
+              "meaning": "「いくつの**行**にまたがるか」を指定します。`rowspan=\"2\"` なら2つの行にまたがります。"
+            },
+            {
+              "word": "colspan",
+              "parts": [
+                {
+                  "en": "col",
+                  "ja": "column の略＝列（縦一列）"
+                },
+                {
+                  "en": "span",
+                  "ja": "またがる・範囲"
+                }
+              ],
+              "meaning": "「いくつの**列**にまたがるか」を指定します。`colspan=\"2\"` なら2つの列にまたがります。"
+            }
+          ]
+        },
+        {
+          "type": "h",
+          "text": "なぜ rowspan は縦、colspan は横に結合するの？"
+        },
+        {
+          "type": "p",
+          "text": "ここがいちばん混乱しやすいところです。`row` は「横一列」なのに、`rowspan` は**縦**に結合します。反対に `column` は「縦一列」なのに、`colspan` は**横**に結合します。あべこべに見えますが、「何をまたぐのか」を考えると納得できます。"
+        },
+        {
+          "type": "diagram",
+          "kind": "row",
+          "caption": "**rowspan**：行（横一列）は、上から下へ積み重なっています。1行目と2行目の「2つの行」にまたがるには、セルを**下へ**伸ばすしかありません。だから `rowspan` は縦方向の結合になります。"
+        },
+        {
+          "type": "diagram",
+          "kind": "col",
+          "caption": "**colspan**：列（縦一列）は、左から右へ並んでいます。1列目と2列目の「2つの列」にまたがるには、セルを**右へ**伸ばすしかありません。だから `colspan` は横方向の結合になります。"
+        },
+        {
+          "type": "callout",
+          "title": "覚え方",
+          "items": [
+            "`rowspan` ＝ 行（row）を何本またぐか → 行は縦に積まれているので、セルは**縦に伸びる**",
+            "`colspan` ＝ 列（column）を何本またぐか → 列は横に並んでいるので、セルは**横に伸びる**",
+            "「row＝横なのに縦？」と迷ったら、「横一列の“帯”を何本またぐか」と考えましょう。"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "rowspan と colspan の違い"
+        },
+        {
+          "type": "table",
+          "head": [
+            "属性",
+            "結合する方向",
+            "意味"
+          ],
+          "rows": [
+            [
+              "`rowspan=\"2\"`",
+              "縦方向",
+              "2行分を結合"
+            ],
+            [
+              "`rowspan=\"3\"`",
+              "縦方向",
+              "3行分を結合"
+            ],
+            [
+              "`colspan=\"2\"`",
+              "横方向",
+              "2列分を結合"
+            ],
+            [
+              "`colspan=\"3\"`",
+              "横方向",
+              "3列分を結合"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "結合したら、その分の <td> を書かない",
+          "items": [
+            "`rowspan` を使うと、結合したセルが**下の行**にはみ出してきます。そのため、**次の行では**その場所の `<td>` を書きません。",
+            "`colspan` を使うと、結合したセルが**右どなり**の場所を使います。そのため、**同じ行では**その分の `<td>` を書きません。",
+            "書き忘れると、セルが1つ余って表の右側がはみ出し、ガタガタの表になります。"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "コードと表示結果で見てみよう"
+        },
+        {
+          "type": "p",
+          "text": "ここからは、コードとブラウザでの表示を並べて確認します。縦に結合したセルは**オレンジ**、横に結合したセルは**青**に色を付けています。色は CSS の `class` で付けているだけで、結合そのものは `rowspan`・`colspan` の働きです。"
+        },
+        {
+          "type": "example",
+          "title": "例1：rowspan=\"2\"（縦に2行分を結合）",
+          "desc": "時間割で、「月曜日」のセルを1時間目と2時間目の2行にまたがらせます。",
+          "html": "<table>\n  <tr>\n    <th>曜日</th>\n    <th>時間</th>\n    <th>教科</th>\n  </tr>\n  <tr>\n    <td class=\"row-merged\" rowspan=\"2\">月曜日</td>\n    <td>1時間目</td>\n    <td>国語</td>\n  </tr>\n  <tr>\n    <td>2時間目</td>\n    <td>数学</td>\n  </tr>\n</table>",
+          "css": "table {\n  border-collapse: collapse;\n}\nth, td {\n  padding: 8px 12px;\n  border: 1px solid #999;\n  text-align: center;\n}\nth {\n  background: #f2f2f2;\n}\n/* 結合したセルに色を付ける（結合そのものには関係ない） */\n.row-merged {\n  background: #ffe3bf; /* 縦に結合：オレンジ */\n  font-weight: bold;\n}\n.col-merged {\n  background: #d6e6fb; /* 横に結合：青 */\n  font-weight: bold;\n}",
+          "height": 150,
+          "points": [
+            {
+              "code": "<td class=\"row-merged\" rowspan=\"2\">月曜日</td>",
+              "text": "オレンジの「月曜日」のセルです。`rowspan=\"2\"` なので、書いた行とその下の行の**2行分**を縦に使います。"
+            },
+            {
+              "code": "3つ目の <tr>（2時間目の行）",
+              "text": "`<td>` が**2つしかありません**。1列目は上から伸びてきた「月曜日」が使っているので、書かないのが正解です。"
+            }
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例2：rowspan=\"3\"（縦に3行分を結合）",
+          "desc": "「月曜日」を1〜3時間目の3行にまたがらせます。数字を変えるだけで、伸びる長さが変わります。",
+          "html": "<table>\n  <tr>\n    <th>曜日</th>\n    <th>時間</th>\n    <th>教科</th>\n  </tr>\n  <tr>\n    <td class=\"row-merged\" rowspan=\"3\">月曜日</td>\n    <td>1時間目</td>\n    <td>国語</td>\n  </tr>\n  <tr>\n    <td>2時間目</td>\n    <td>数学</td>\n  </tr>\n  <tr>\n    <td>3時間目</td>\n    <td>英語</td>\n  </tr>\n</table>",
+          "css": "table {\n  border-collapse: collapse;\n}\nth, td {\n  padding: 8px 12px;\n  border: 1px solid #999;\n  text-align: center;\n}\nth {\n  background: #f2f2f2;\n}\n/* 結合したセルに色を付ける（結合そのものには関係ない） */\n.row-merged {\n  background: #ffe3bf; /* 縦に結合：オレンジ */\n  font-weight: bold;\n}\n.col-merged {\n  background: #d6e6fb; /* 横に結合：青 */\n  font-weight: bold;\n}",
+          "height": 190,
+          "points": [
+            {
+              "code": "<td class=\"row-merged\" rowspan=\"3\">月曜日</td>",
+              "text": "オレンジのセルが**3行分**、縦に伸びています。"
+            },
+            {
+              "code": "3つ目と4つ目の <tr>",
+              "text": "どちらも `<td>` が2つです。「月曜日」が1列目を3行分使っているので、下の2行では1列目を書きません。"
+            }
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例3：colspan=\"2\"（横に2列分を結合）",
+          "desc": "名簿で、「名前」の見出しを「姓」と「名」の2列にまたがらせます。",
+          "html": "<table>\n  <tr>\n    <th class=\"col-merged\" colspan=\"2\">名前</th>\n    <th>年齢</th>\n  </tr>\n  <tr>\n    <td>山田</td>\n    <td>太郎</td>\n    <td>13</td>\n  </tr>\n  <tr>\n    <td>佐藤</td>\n    <td>花子</td>\n    <td>14</td>\n  </tr>\n</table>",
+          "css": "table {\n  border-collapse: collapse;\n}\nth, td {\n  padding: 8px 12px;\n  border: 1px solid #999;\n  text-align: center;\n}\nth {\n  background: #f2f2f2;\n}\n/* 結合したセルに色を付ける（結合そのものには関係ない） */\n.row-merged {\n  background: #ffe3bf; /* 縦に結合：オレンジ */\n  font-weight: bold;\n}\n.col-merged {\n  background: #d6e6fb; /* 横に結合：青 */\n  font-weight: bold;\n}",
+          "height": 150,
+          "points": [
+            {
+              "code": "<th class=\"col-merged\" colspan=\"2\">名前</th>",
+              "text": "青い「名前」の見出しです。`colspan=\"2\"` なので、右どなりまでの**2列分**を横に使います。"
+            },
+            {
+              "code": "1つ目の <tr>",
+              "text": "セルは `<th>` が**2つだけ**です。「名前」が2列分を使うので、2 ＋ 1 ＝ 3列になり、下の行（3つずつ）とそろいます。"
+            }
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例4：colspan=\"3\"（横に3列分を結合）",
+          "desc": "成績表の一番上に、表全体の題名を3列にまたがらせて置きます。",
+          "html": "<table>\n  <tr>\n    <th class=\"col-merged\" colspan=\"3\">1学期の成績</th>\n  </tr>\n  <tr>\n    <th>国語</th>\n    <th>数学</th>\n    <th>英語</th>\n  </tr>\n  <tr>\n    <td>80</td>\n    <td>75</td>\n    <td>90</td>\n  </tr>\n</table>",
+          "css": "table {\n  border-collapse: collapse;\n}\nth, td {\n  padding: 8px 12px;\n  border: 1px solid #999;\n  text-align: center;\n}\nth {\n  background: #f2f2f2;\n}\n/* 結合したセルに色を付ける（結合そのものには関係ない） */\n.row-merged {\n  background: #ffe3bf; /* 縦に結合：オレンジ */\n  font-weight: bold;\n}\n.col-merged {\n  background: #d6e6fb; /* 横に結合：青 */\n  font-weight: bold;\n}",
+          "height": 150,
+          "points": [
+            {
+              "code": "<th class=\"col-merged\" colspan=\"3\">1学期の成績</th>",
+              "text": "青いセルが**3列分**、横いっぱいに伸びています。"
+            },
+            {
+              "code": "1つ目の <tr>",
+              "text": "セルは**1つだけ**です。この1つで3列分を使うので、ほかのセルは書きません。"
+            }
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例5：rowspan と colspan を組み合わせる",
+          "desc": "時間割で、2時間続きの「理科」を縦に、全曜日共通の「給食」を横に結合します。",
+          "html": "<table>\n  <tr>\n    <th></th>\n    <th>月</th>\n    <th>火</th>\n    <th>水</th>\n  </tr>\n  <tr>\n    <th>1時間目</th>\n    <td class=\"row-merged\" rowspan=\"2\">理科</td>\n    <td>国語</td>\n    <td>数学</td>\n  </tr>\n  <tr>\n    <th>2時間目</th>\n    <td>英語</td>\n    <td>社会</td>\n  </tr>\n  <tr>\n    <th>昼</th>\n    <td class=\"col-merged\" colspan=\"3\">給食</td>\n  </tr>\n</table>",
+          "css": "table {\n  border-collapse: collapse;\n}\nth, td {\n  padding: 8px 12px;\n  border: 1px solid #999;\n  text-align: center;\n}\nth {\n  background: #f2f2f2;\n}\n/* 結合したセルに色を付ける（結合そのものには関係ない） */\n.row-merged {\n  background: #ffe3bf; /* 縦に結合：オレンジ */\n  font-weight: bold;\n}\n.col-merged {\n  background: #d6e6fb; /* 横に結合：青 */\n  font-weight: bold;\n}",
+          "height": 190,
+          "points": [
+            {
+              "code": "<td class=\"row-merged\" rowspan=\"2\">理科</td>",
+              "text": "オレンジのセルです。月曜日の1時間目と2時間目の**2行分**を縦に使います。"
+            },
+            {
+              "code": "3つ目の <tr>（2時間目の行）",
+              "text": "`<th>` のあとに `<td>` が**2つだけ**です。月曜日の場所は「理科」が使っているので書きません。"
+            },
+            {
+              "code": "<td class=\"col-merged\" colspan=\"3\">給食</td>",
+              "text": "青いセルです。月・火・水の**3列分**を横に使います。そのため、この行には `<td>` が1つしかありません。"
+            }
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "セルの数を数えて確かめよう",
+          "items": [
+            "どの行も「**書いたセルの数 ＋ `colspan` で増えた分 ＋ 上の行から `rowspan` で伸びてきた分**」が同じになっていれば、正しい表です。",
+            "例5では、どの行も4つ（見出し1つ＋曜日3つ）になっています。2時間目の行は「書いたセル3つ ＋ 上から伸びてきた1つ」、昼の行は「見出し1つ ＋ `colspan=\"3\"` で3つ分」です。"
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "html-tr",

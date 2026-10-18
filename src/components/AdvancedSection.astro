@@ -1,0 +1,81 @@
+---
+// 詳細ページの「応用編」。details.json の advanced.blocks を上から順に描画する
+import CodeBlocks from './CodeBlocks.astro';
+import Preview from './Preview.astro';
+import InlineText from './InlineText.astro';
+import SecHead from './SecHead.astro';
+import SpanDiagram from './SpanDiagram.astro';
+import type { Advanced } from '../lib/data';
+
+interface Props {
+  num: string;
+  advanced: Advanced;
+}
+const { num, advanced } = Astro.props;
+---
+<section class="sec adv">
+  <SecHead num={num} title={advanced.title} />
+  {advanced.blocks.map((b) => {
+    switch (b.type) {
+      case 'h':
+        return <h3 class="sub-title adv__h">{b.text}</h3>;
+      case 'p':
+        return <p class="adv__p"><InlineText text={b.text} /></p>;
+      case 'table':
+        return (
+          <div class="values adv__table">
+            <table class="table">
+              <thead><tr>{b.head.map((h) => <th>{h}</th>)}</tr></thead>
+              <tbody>{b.rows.map((r) => <tr>{r.map((c) => <td><InlineText text={c} /></td>)}</tr>)}</tbody>
+            </table>
+          </div>
+        );
+      case 'words':
+        return (
+          <div class="words">
+            {b.items.map((w) => (
+              <div class="word">
+                <code class="word__name">{w.word}</code>
+                <div class="word__parts">
+                  {w.parts.map((p, i) => (
+                    <>
+                      {i > 0 && <span class="word__plus">＋</span>}
+                      <span class="word__part"><code>{p.en}</code><span>{p.ja}</span></span>
+                    </>
+                  ))}
+                </div>
+                <p class="word__meaning"><InlineText text={w.meaning} /></p>
+              </div>
+            ))}
+          </div>
+        );
+      case 'diagram':
+        return (
+          <figure class="adv__figure">
+            <SpanDiagram kind={b.kind} />
+            <figcaption><InlineText text={b.caption} /></figcaption>
+          </figure>
+        );
+      case 'callout':
+        return (
+          <div class="callout">
+            <p class="callout__title">{b.title}</p>
+            <ul>{b.items.map((t) => <li><InlineText text={t} /></li>)}</ul>
+          </div>
+        );
+      case 'example':
+        return (
+          <div class="adv__example">
+            <h4 class="adv__example-title">{b.title}</h4>
+            <p class="adv__p"><InlineText text={b.desc} /></p>
+            <CodeBlocks code={b} small />
+            <Preview code={b} preview={{ height: b.height, note: null, fullDocument: false }} />
+            <p class="adv__map-label">コードと表示の対応</p>
+            <ol class="adv__map">
+              {b.points.map((pt) => <li><code class="adv__map-code">{pt.code}</code><span><InlineText text={pt.text} /></span></li>)}
+            </ol>
+          </div>
+        );
+    }
+  })}
+</section>
