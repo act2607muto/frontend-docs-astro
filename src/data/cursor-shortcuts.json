@@ -1,0 +1,162 @@
+[
+  {
+    "id": "general",
+    "title": "一般",
+    "en": "GENERAL",
+    "desc": "Agent パネルや設定、モードの切り替えなど、Cursor 全体で使う操作です。",
+    "items": [
+      { "label": "サイドパネル（Agent）を開閉", "mac": "Cmd+I / Cmd+L", "win": "Ctrl+I / Ctrl+L" },
+      { "label": "バックグラウンドエージェントのパネル", "mac": "Cmd+E", "win": "Ctrl+E" },
+      { "label": "モードメニューを開く", "mac": "Cmd+.", "win": "Ctrl+." },
+      { "label": "AI モデルを順に切り替え", "mac": "Cmd+/", "win": "Ctrl+/", "note": "チャット欄にいるとき。エディタ上では行コメントの切り替えになります。" },
+      { "label": "Cursor の設定", "mac": "Cmd+Shift+J", "win": "Ctrl+Shift+J" },
+      { "label": "一般設定", "mac": "Cmd+,", "win": "Ctrl+," },
+      { "label": "コマンドパレット", "mac": "Cmd+Shift+P", "win": "Ctrl+Shift+P" }
+    ]
+  },
+  {
+    "id": "chat",
+    "title": "チャット / Agent",
+    "en": "CHAT",
+    "desc": "Agent とのやり取りや、提案された変更の承認・却下に使います。",
+    "items": [
+      { "label": "メッセージを送信", "mac": "Enter", "win": "Enter", "note": "生成中に送ると、次のメッセージとして順番待ちになります。" },
+      { "label": "強制送信", "mac": "Cmd+Enter", "win": "Ctrl+Enter" },
+      { "label": "生成をキャンセル", "mac": "Cmd+Shift+Backspace", "win": "Ctrl+Shift+Backspace" },
+      { "label": "選択中のコードをコンテキストに追加", "mac": "Cmd+Shift+L", "win": "Ctrl+Shift+L" },
+      { "label": "クリップボードの内容をコンテキストとして追加", "mac": "Cmd+V", "win": "Ctrl+V" },
+      { "label": "クリップボードを入力欄にテキストで貼り付け", "mac": "Cmd+Shift+V", "win": "Ctrl+Shift+V" },
+      { "label": "変更をすべて承認", "mac": "Cmd+Enter", "win": "Ctrl+Enter" },
+      { "label": "変更をすべて却下", "mac": "Cmd+Backspace", "win": "Ctrl+Backspace" },
+      { "label": "次のメッセージへ移動", "mac": "Tab", "win": "Tab" },
+      { "label": "Agent のモードを切り替え", "mac": "Shift+Tab", "win": "Shift+Tab" },
+      { "label": "モデルの切り替え", "mac": "Cmd+Opt+/", "win": "Ctrl+Alt+/" },
+      { "label": "新しいチャット", "mac": "Cmd+N / Cmd+R", "win": "Ctrl+N / Ctrl+R" },
+      { "label": "新しいチャットタブ", "mac": "Cmd+T", "win": "Ctrl+T" },
+      { "label": "前のチャット / 次のチャット", "mac": "Cmd+[ / Cmd+]", "win": "Ctrl+[ / Ctrl+]" },
+      { "label": "チャットを閉じる", "mac": "Cmd+W", "win": "Ctrl+W" },
+      { "label": "入力欄からフォーカスを外す", "mac": "Esc", "win": "Esc" }
+    ]
+  },
+  {
+    "id": "inline",
+    "title": "インライン編集",
+    "en": "INLINE EDIT",
+    "desc": "エディタ上で、選択したコードをその場で AI に書き換えてもらいます。",
+    "items": [
+      { "label": "インライン編集を開く", "mac": "Cmd+K", "win": "Ctrl+K" },
+      { "label": "入力欄のフォーカスを切り替え", "mac": "Cmd+Shift+K", "win": "Ctrl+Shift+K" },
+      { "label": "送信", "mac": "Enter", "win": "Enter" },
+      { "label": "キャンセル", "mac": "Cmd+Shift+Backspace", "win": "Ctrl+Shift+Backspace" },
+      { "label": "簡単な質問をする（編集せずに回答だけ受け取る）", "mac": "Opt+Enter", "win": "Alt+Enter" }
+    ]
+  },
+  {
+    "id": "context",
+    "title": "コード選択とコンテキスト",
+    "en": "CONTEXT",
+    "desc": "AI に渡すファイルやコードを指定します。入力欄で記号を打つと候補が出ます。",
+    "items": [
+      { "label": "@ シンボル（ファイル・フォルダなどを参照）", "mac": "@", "win": "@" },
+      { "label": "ファイルを参照", "mac": "#", "win": "#" },
+      { "label": "ショートカットコマンド", "mac": "/", "win": "/" },
+      { "label": "選択範囲をチャットに追加", "mac": "Cmd+Shift+L", "win": "Ctrl+Shift+L" },
+      { "label": "選択範囲をインライン編集に追加", "mac": "Cmd+Shift+K", "win": "Ctrl+Shift+K" },
+      { "label": "選択範囲を新しいチャットに追加", "mac": "Cmd+L", "win": "Ctrl+L" },
+      { "label": "ファイル読み込み方式の切り替え", "mac": "Cmd+M", "win": "Ctrl+M" },
+      { "label": "チャットでコードベースを検索", "mac": "Cmd+Enter", "win": "Ctrl+Enter" },
+      { "label": "コピーしたコードを参照として追加", "mac": "Cmd+C → Cmd+V", "win": "Ctrl+C → Ctrl+V", "note": "コードを選択してからコピーし、チャット欄に貼り付けます。" },
+      { "label": "コピーしたコードをテキストとして追加", "mac": "Cmd+C → Cmd+Shift+V", "win": "Ctrl+C → Ctrl+Shift+V" }
+    ]
+  },
+  {
+    "id": "tab",
+    "title": "Tab 補完",
+    "en": "TAB",
+    "desc": "入力中に薄い文字で出てくる AI の提案を受け入れます。",
+    "items": [
+      { "label": "提案を受け入れる", "mac": "Tab", "win": "Tab" },
+      { "label": "提案を単語ごとに受け入れる", "mac": "Cmd+→", "win": "Ctrl+→" },
+      { "label": "提案を却下", "mac": "Esc", "win": "Esc" }
+    ]
+  },
+  {
+    "id": "terminal",
+    "title": "ターミナル",
+    "en": "TERMINAL",
+    "desc": "ターミナルでやりたいことを日本語で書くと、コマンドを作ってくれます。",
+    "items": [
+      { "label": "AI プロンプトバーを開く", "mac": "Cmd+K", "win": "Ctrl+K" },
+      { "label": "生成されたコマンドを実行", "mac": "Cmd+Enter", "win": "Ctrl+Enter" },
+      { "label": "コマンドを受け入れる（入力欄に入れるだけ）", "mac": "Esc", "win": "Esc" }
+    ]
+  },
+  {
+    "id": "editor",
+    "title": "行の編集",
+    "en": "EDITOR",
+    "desc": "ここからは VS Code と共通の操作です。行の移動や複製はコーディングの速さに直結します。",
+    "items": [
+      { "label": "行・選択範囲を上下に移動", "mac": "Opt+↑ / Opt+↓", "win": "Alt+↑ / Alt+↓" },
+      { "label": "行・選択範囲を上下にコピー（複製）", "mac": "Opt+Shift+↑ / Opt+Shift+↓", "win": "Alt+Shift+↑ / Alt+Shift+↓", "note": "Linux は Ctrl+Shift+Alt+↑ / ↓" },
+      { "label": "下に空行を挿入して移動", "mac": "Cmd+Enter", "win": "Ctrl+Enter" },
+      { "label": "上に空行を挿入して移動", "mac": "Cmd+Shift+Enter", "win": "Ctrl+Shift+Enter" },
+      { "label": "行コメントの切り替え", "mac": "Cmd+/", "win": "Ctrl+/" },
+      { "label": "インデントを増やす / 減らす", "mac": "Cmd+] / Cmd+[", "win": "Ctrl+] / Ctrl+[" },
+      { "label": "ドキュメントを整形", "mac": "Opt+Shift+F", "win": "Alt+Shift+F", "note": "Linux は Ctrl+Shift+I" },
+      { "label": "折り返し表示の切り替え", "mac": "Opt+Z", "win": "Alt+Z" },
+      { "label": "保存", "mac": "Cmd+S", "win": "Ctrl+S" }
+    ]
+  },
+  {
+    "id": "multi",
+    "title": "マルチカーソル・選択",
+    "en": "MULTI CURSOR",
+    "desc": "複数の場所を同時に書き換えられます。同じクラス名をまとめて直したいときに便利です。",
+    "items": [
+      { "label": "同じ単語を次々に選択", "mac": "Cmd+D", "win": "Ctrl+D" },
+      { "label": "カーソルを上下に追加", "mac": "Cmd+Opt+↑ / Cmd+Opt+↓", "win": "Ctrl+Alt+↑ / Ctrl+Alt+↓", "note": "Linux は Shift+Alt+↑ / ↓" },
+      { "label": "クリックした位置にカーソルを追加", "mac": "Opt+クリック", "win": "Alt+クリック" },
+      { "label": "矩形（ボックス）選択", "mac": "Opt+Shift+ドラッグ", "win": "Alt+Shift+ドラッグ" },
+      { "label": "選択範囲を広げる / 狭める", "mac": "Ctrl+Shift+Cmd+→ / Ctrl+Shift+Cmd+←", "win": "Alt+Shift+→ / Alt+Shift+←" }
+    ]
+  },
+  {
+    "id": "search",
+    "title": "検索・移動",
+    "en": "SEARCH",
+    "desc": "ファイルを開く・探す・コードの定義へ飛ぶといった移動の操作です。",
+    "items": [
+      { "label": "ファイル名で開く（Quick Open）", "mac": "Cmd+P", "win": "Ctrl+P" },
+      { "label": "ファイル内を検索", "mac": "Cmd+F", "win": "Ctrl+F" },
+      { "label": "ファイル内で置換", "mac": "Cmd+Opt+F", "win": "Ctrl+H" },
+      { "label": "プロジェクト全体を検索", "mac": "Cmd+Shift+F", "win": "Ctrl+Shift+F" },
+      { "label": "指定した行へ移動", "mac": "Ctrl+G", "win": "Ctrl+G" },
+      { "label": "定義へ移動", "mac": "F12", "win": "F12" },
+      { "label": "シンボル名を一括変更", "mac": "F2", "win": "F2" }
+    ]
+  },
+  {
+    "id": "view",
+    "title": "画面・タブ",
+    "en": "VIEW",
+    "desc": "サイドバーやターミナルの表示、エディタの分割などの操作です。",
+    "items": [
+      { "label": "サイドバーの表示切り替え", "mac": "Cmd+B", "win": "Ctrl+B" },
+      { "label": "ターミナルの表示切り替え", "mac": "Ctrl+`", "win": "Ctrl+`" },
+      { "label": "エディタを左右に分割", "mac": "Cmd+\\", "win": "Ctrl+\\" },
+      { "label": "閉じたタブを開き直す", "mac": "Cmd+Shift+T", "win": "Ctrl+Shift+T" },
+      { "label": "タブを閉じる", "mac": "Cmd+W", "win": "Ctrl+W" }
+    ]
+  },
+  {
+    "id": "emmet",
+    "title": "HTML / CSS で便利（Emmet）",
+    "en": "EMMET",
+    "desc": "Emmet は短い略記から HTML や CSS を一気に書ける機能です。Cursor にも最初から入っています。",
+    "items": [
+      { "label": "略記を展開（例：ul>li*3 と入力して Tab）", "mac": "Tab", "win": "Tab", "note": "Cursor の Tab 補完の提案が出ているときは、そちらが優先されます。" },
+      { "label": "選択範囲をタグで囲む", "mac": "Cmd+Shift+P → Emmet: Wrap with Abbreviation", "win": "Ctrl+Shift+P → Emmet: Wrap with Abbreviation" }
+    ]
+  }
+]

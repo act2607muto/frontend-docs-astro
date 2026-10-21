@@ -46,6 +46,19 @@ const entries = [
           </a>
         ))}
       </nav>
+      <aside class="top__appendix" aria-label="付録">
+        <a class="appendix-banner" href={url.cursor()}>
+          <span class="appendix-banner__body">
+            <span class="appendix-banner__label">APPENDIX — 付録</span>
+            <span class="appendix-banner__title">Cursor ショートカット</span>
+            <span class="appendix-banner__desc">AI エディタ Cursor のキー操作を Mac / Windows 別にまとめました</span>
+            <span class="appendix-banner__more">一覧を見る<Icon name="arrow-right" /></span>
+          </span>
+          <span class="appendix-banner__keys" aria-hidden="true">
+            <kbd class="kbd kbd--sym">⌘</kbd><kbd class="kbd">K</kbd>
+          </span>
+        </a>
+      </aside>
     </main>
     <Footer left={SITE} />
   </div>

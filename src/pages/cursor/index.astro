@@ -1,0 +1,108 @@
+---
+// ⑦ Cursor のショートカットキー一覧（データは cursor-shortcuts.json）
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import SecHead from '../../components/SecHead.astro';
+import { pad2, SITE } from '../../lib/data';
+import shortcuts from '../../data/cursor-shortcuts.json';
+
+/** Mac の修飾キーは記号で表示する（名前は title 属性に入れる） */
+const MAC_SYMBOL: Record<string, string> = { Cmd: '⌘', Opt: '⌥', Shift: '⇧', Ctrl: '⌃' };
+const MAC_NAME: Record<string, string> = { Cmd: 'Command', Opt: 'Option', Shift: 'Shift', Ctrl: 'Control' };
+
+/**
+ * "Cmd+C → Cmd+V / Cmd+Shift+V" のような表記を
+ * 候補（ / ）→ 手順（ → ）→ キー（+）の入れ子に分ける。
+ * 「Emmet: …」のようにキーではない手順は text として扱う
+ */
+const parse = (s: string) =>
+  s.split(' / ').map((alt) =>
+    alt.split(' → ').map((step) => (step.includes(': ') ? { text: step } : { keys: step.split(/\+(?=.)/) })),
+  );
+
+const sections = shortcuts.map((s, i) => ({
+  ...s,
+  num: pad2(i + 1),
+  items: s.items.map((it) => ({ ...it, mac: parse(it.mac), win: parse(it.win) })),
+}));
+const total = shortcuts.reduce((n, s) => n + s.items.length, 0);
+---
+<BaseLayout title={`Cursor ショートカットキー一覧 | ${SITE}`} description="AI エディタ Cursor のショートカットキーを、Mac と Windows の両方の表記でまとめた一覧です。">
+  <Header current="cursor" />
+  <main class="page page--wide">
+    <div class="kicker">APPENDIX — CURSOR SHORTCUTS</div>
+    <h1 class="page-title">Cursor ショートカット</h1>
+    <p class="page-lead">AI エディタ Cursor でよく使うショートカットキー {total} 個を、Mac と Windows の両方の表記でまとめました。前半は Cursor 独自の AI 機能、後半は VS Code と共通のエディタ操作です。</p>
+    <p class="kbd-legend">
+      <span><kbd class="kbd kbd--sym">⌘</kbd> Command</span>
+      <span><kbd class="kbd kbd--sym">⌥</kbd> Option</span>
+      <span><kbd class="kbd kbd--sym">⇧</kbd> Shift</span>
+      <span><kbd class="kbd kbd--sym">⌃</kbd> Control</span>
+    </p>
+    <nav class="chips kbd-jump" aria-label="カテゴリ">
+      {sections.map((s) => <a class="chip" href={`#${s.id}`}>{s.title}</a>)}
+    </nav>
+
+    {sections.map((s) => (
+      <section class="sec kbd-sec" id={s.id}>
+        <SecHead num={s.num} title={s.title} />
+        <p class="kbd-sec__desc">{s.desc}</p>
+        <table class="table kbd-table">
+          <thead><tr><th>操作</th><th class="kbd-col--mac">MAC</th><th class="kbd-col--win">WINDOWS / LINUX</th></tr></thead>
+          <tbody>
+            {s.items.map((it) => (
+              <tr>
+                <td class="kbd-table__label">
+                  {it.label}
+                  {'note' in it && it.note && <span class="kbd-table__note">{it.note}</span>}
+                </td>
+                {(['mac', 'win'] as const).map((os) => (
+                  <td class:list={['kbd-table__keys', `kbd-col--${os}`]} data-os-label={os === 'mac' ? 'Mac' : 'Win'}>
+                    {it[os].map((alt, ai) => (
+                      <>
+                        {ai > 0 && <span class="kbd-sep">/</span>}
+                        <span class="kbd-combo">
+                          {alt.map((step, si) => (
+                            <>
+                              {si > 0 && <span class="kbd-sep">→</span>}
+                              {'text' in step
+                                ? <span class="kbd-text">{step.text}</span>
+                                : step.keys.map((k, ki) => (
+                                    <>
+                                      {ki > 0 && <span class="kbd-plus">+</span>}
+                                      {os === 'mac' && MAC_SYMBOL[k]
+                                        ? <kbd class="kbd kbd--sym" title={MAC_NAME[k]}>{MAC_SYMBOL[k]}</kbd>
+                                        : <kbd class="kbd">{k}</kbd>}
+                                    </>
+                                  ))}
+                            </>
+                          ))}
+                        </span>
+                      </>
+                    ))}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+    ))}
+
+    <section class="sec kbd-sec">
+      <SecHead num={pad2(sections.length + 1)} title="覚えておきたいこと" />
+      <ul class="kbd-notes">
+        <li>ショートカットは「Cursor の設定」→ Keyboard Shortcuts から自由に変更できます。</li>
+        <li>同じキーでも場所によって動きが変わります。たとえば <kbd class="kbd kbd--sym">⌘</kbd><span class="kbd-plus">+</span><kbd class="kbd">K</kbd> は、エディタではインライン編集、ターミナルではコマンドの生成になります。</li>
+        <li>VS Code で定番の <kbd class="kbd kbd--sym">⌘</kbd><span class="kbd-plus">+</span><kbd class="kbd kbd--sym">⇧</kbd><span class="kbd-plus">+</span><kbd class="kbd">L</kbd>（一致をすべて選択）と <kbd class="kbd kbd--sym">⌘</kbd><span class="kbd-plus">+</span><kbd class="kbd kbd--sym">⇧</kbd><span class="kbd-plus">+</span><kbd class="kbd">K</kbd>（行の削除）は、Cursor では AI 機能に割り当てられています。</li>
+        <li>割り当ては Cursor のバージョンによって変わることがあります。最新の情報は<a href="https://cursor.com/docs/reference/keyboard-shortcuts" target="_blank" rel="noopener">公式ドキュメント</a>で確認してください。</li>
+      </ul>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style is:global>
+  html { scroll-behavior: smooth; }
+</style>
