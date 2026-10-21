@@ -16,7 +16,6 @@ const { current, menu = false } = Astro.props;
 const nav = [
   { key: 'learn', label: '学習する', href: url.learn() },
   ...TYPES.map((t) => ({ key: t, label: TYPE_INFO[t].dict, href: url.dict(t) })),
-  { key: 'cursor', label: 'Cursor', href: url.cursor() },
 ];
 ---
 <header class="site-header" data-site-header>

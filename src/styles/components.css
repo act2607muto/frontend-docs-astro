@@ -115,7 +115,7 @@
   .site-header__menu, .site-header__search-toggle { display: inline-flex; }
   .gnav--desktop { display: none; }
   .gnav--mobile {
-    display: grid; grid-template-columns: repeat(5, 1fr); height: auto;
+    display: grid; grid-template-columns: repeat(4, 1fr); height: auto;
     border-top: 1px solid var(--color-divider); gap: 0;
   }
   .gnav--mobile a { justify-content: center; padding: 10px 0; font-size: 13px; }
@@ -181,7 +181,7 @@
 .top__quick { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 6px; margin-top: 14px; font-size: 12.5px; }
 .top__quick-label { color: var(--muted); margin-right: 4px; }
 .top__quick .btn { font-size: 12.5px; padding: 3px 8px; }
-.top__entries { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0 28px; margin-top: 64px; }
+.top__entries { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0 28px; margin-top: 64px; }
 .entry {
   display: flex; flex-direction: column; gap: 6px; padding: 18px 0 22px;
   border-top: 1px solid var(--color-text);
@@ -194,6 +194,23 @@
 }
 .entry__title { font-size: 24px; font-weight: 700; line-height: 1.2; }
 .entry__desc { font-size: 13px; line-height: 1.75; color: var(--muted); }
+/* 付録（辞典とは別枠。入口の下に小さく置く） */
+.top__appendix { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 40px; }
+.top__appendix-label { font-size: 11px; letter-spacing: .16em; color: var(--muted); }
+.top__appendix-link {
+  display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px;
+  padding: 10px 14px; border: 1px dashed var(--color-divider); border-radius: var(--radius-md);
+  color: var(--color-text); text-decoration: none;
+}
+.top__appendix-link:hover { border-color: var(--color-accent); color: var(--strong-accent); }
+.top__appendix-title { font-size: 14px; font-weight: 700; }
+.top__appendix-desc { font-size: 12.5px; color: var(--muted); }
+.top__appendix-link .icon { align-self: center; width: 14px; height: 14px; color: var(--muted); }
+@media (max-width: 759px) {
+  .top__appendix-link { align-self: stretch; display: grid; grid-template-columns: minmax(0, 1fr) auto; }
+  .top__appendix-desc { grid-row: 2; }
+  .top__appendix-link .icon { grid-row: 1 / 3; grid-column: 2; }
+}
 
 @media (max-width: 1099px) { .top__title { font-size: 66px; } }
 @media (max-width: 759px) {
