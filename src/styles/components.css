@@ -194,22 +194,31 @@
 }
 .entry__title { font-size: 24px; font-weight: 700; line-height: 1.2; }
 .entry__desc { font-size: 13px; line-height: 1.75; color: var(--muted); }
-/* 付録（辞典とは別枠。入口の下に小さく置く） */
-.top__appendix { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 40px; }
-.top__appendix-label { font-size: 11px; letter-spacing: .16em; color: var(--muted); }
-.top__appendix-link {
-  display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px;
-  padding: 10px 14px; border: 1px dashed var(--color-divider); border-radius: var(--radius-md);
+/* 付録（辞典とは別枠。入口の下、左寄せのバナーとして置く） */
+.top__appendix { margin-top: 40px; }
+.appendix-banner {
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  max-width: 480px; padding: 20px 24px;
+  background: var(--color-surface); border: 1px solid var(--color-divider); border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius-md);
   color: var(--color-text); text-decoration: none;
+  transition: border-color .15s, transform .15s;
 }
-.top__appendix-link:hover { border-color: var(--color-accent); color: var(--strong-accent); }
-.top__appendix-title { font-size: 14px; font-weight: 700; }
-.top__appendix-desc { font-size: 12.5px; color: var(--muted); }
-.top__appendix-link .icon { align-self: center; width: 14px; height: 14px; color: var(--muted); }
+.appendix-banner:hover { border-color: var(--color-accent); color: var(--color-text); transform: translateY(-2px); }
+.appendix-banner__body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.appendix-banner__label { font-size: 11px; letter-spacing: .16em; color: var(--strong-accent); }
+.appendix-banner__title { font-size: 20px; font-weight: 700; line-height: 1.3; }
+.appendix-banner__desc { font-size: 12.5px; line-height: 1.7; color: var(--muted); }
+.appendix-banner__more { display: inline-flex; align-items: center; gap: 4px; margin-top: 6px; font-size: 12.5px; color: var(--strong-accent); }
+.appendix-banner__more .icon { width: 14px; height: 14px; transition: transform .15s; }
+.appendix-banner:hover .appendix-banner__more .icon { transform: translateX(3px); }
+.appendix-banner__keys { display: flex; gap: 6px; flex-shrink: 0; transform: rotate(-6deg); }
+.appendix-banner__keys .kbd { min-width: 44px; padding: 8px 10px; font-size: 20px; line-height: 1.2; border-bottom-width: 3px; background: var(--color-bg); }
 @media (max-width: 759px) {
-  .top__appendix-link { align-self: stretch; display: grid; grid-template-columns: minmax(0, 1fr) auto; }
-  .top__appendix-desc { grid-row: 2; }
-  .top__appendix-link .icon { grid-row: 1 / 3; grid-column: 2; }
+  .appendix-banner { max-width: none; padding: 18px 18px; }
+  .appendix-banner__title { font-size: 18px; }
+  .appendix-banner__keys .kbd { min-width: 36px; padding: 6px 8px; font-size: 16px; }
 }
 
 @media (max-width: 1099px) { .top__title { font-size: 66px; } }
