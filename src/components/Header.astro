@@ -7,7 +7,7 @@ import { url } from '../lib/url';
 import { SITE, TYPES, TYPE_INFO } from '../lib/data';
 
 interface Props {
-  current: 'learn' | 'html' | 'css' | 'js';
+  current: 'learn' | 'html' | 'css' | 'js' | 'cursor';
   /** true で SP 用のサイドバー開閉ボタンを表示（詳細ページ） */
   menu?: boolean;
 }
@@ -16,6 +16,7 @@ const { current, menu = false } = Astro.props;
 const nav = [
   { key: 'learn', label: '学習する', href: url.learn() },
   ...TYPES.map((t) => ({ key: t, label: TYPE_INFO[t].dict, href: url.dict(t) })),
+  { key: 'cursor', label: 'Cursor', href: url.cursor() },
 ];
 ---
 <header class="site-header" data-site-header>
