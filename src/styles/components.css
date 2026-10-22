@@ -134,6 +134,18 @@
   display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
   font-size: 12px; color: var(--muted);
 }
+.site-footer__right { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+.site-footer a { color: inherit; }
+.site-footer a:hover { color: var(--strong-accent); }
+
+/* プライバシーポリシー・利用規約 */
+.legal .sec { margin-top: 48px; }
+.legal .sec__head h2 { font-size: 22px; }
+.legal p, .legal li { font-size: 15px; line-height: 1.95; }
+.legal p { margin-bottom: 14px; }
+.legal ol, .legal ul { padding-left: 1.5em; margin-bottom: 14px; }
+.legal li + li { margin-top: 6px; }
+.legal__date { margin-top: 56px; font-size: 13px; color: var(--muted); text-align: right; }
 
 /* ==========================================================================
    検索（共通部品）

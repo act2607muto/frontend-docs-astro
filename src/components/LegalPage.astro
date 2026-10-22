@@ -1,0 +1,27 @@
+---
+// プライバシーポリシー・利用規約の共通レイアウト。本文は各ページのスロットに書く
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { SITE } from '../lib/data';
+
+interface Props {
+  kicker: string;
+  title: string;
+  lead: string;
+  /** 制定日（例：2026年10月22日） */
+  date: string;
+}
+const { kicker, title, lead, date } = Astro.props;
+---
+<BaseLayout title={`${title} | ${SITE}`} description={lead}>
+  <Header />
+  <main class="page legal">
+    <div class="kicker">{kicker}</div>
+    <h1 class="page-title">{title}</h1>
+    <p class="page-lead">{lead}</p>
+    <slot />
+    <p class="legal__date">制定日：{date}</p>
+  </main>
+  <Footer />
+</BaseLayout>
