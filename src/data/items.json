@@ -1499,6 +1499,24 @@
     "category": "layout"
   },
   {
+    "id": "css-flexbox",
+    "type": "css",
+    "slug": "flexbox",
+    "name": "Flexbox",
+    "summary": "親と子に書くプロパティの一覧",
+    "keywords": [
+      "flex",
+      "flexbox",
+      "display: flex",
+      "横並び",
+      "コンテナ",
+      "アイテム",
+      "親要素",
+      "子要素"
+    ],
+    "category": "flexgrid"
+  },
+  {
     "id": "css-flex-direction",
     "type": "css",
     "slug": "flex-direction",
@@ -1508,6 +1526,21 @@
       "flex",
       "縦並び",
       "横並び"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-flex-wrap",
+    "type": "css",
+    "slug": "flex-wrap",
+    "name": "flex-wrap",
+    "summary": "アイテムの折り返し",
+    "keywords": [
+      "flex",
+      "折り返し",
+      "wrap",
+      "nowrap",
+      "flex-flow"
     ],
     "category": "flexgrid"
   },
@@ -1561,6 +1594,20 @@
     "keywords": [
       "flex",
       "伸縮"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-order",
+    "type": "css",
+    "slug": "order",
+    "name": "order",
+    "summary": "アイテムの並び順",
+    "keywords": [
+      "flex",
+      "並び順",
+      "順番",
+      "入れ替え"
     ],
     "category": "flexgrid"
   },
