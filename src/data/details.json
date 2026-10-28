@@ -5332,6 +5332,76 @@
     ]
   },
   {
+    "id": "css-reset-css",
+    "title": "リセットCSS",
+    "ja": "ブラウザごとの初期スタイルの違いをなくす",
+    "lead": "ブラウザが最初から持っているスタイル（user agent stylesheet）は、ブラウザごとに少しずつ違います。その差をなくすために、自分の CSS より先に読み込んでおくのがリセットCSSです。",
+    "meta": [
+      {
+        "label": "目的",
+        "value": "ブラウザごとの見た目の差をなくす"
+      },
+      {
+        "label": "書く場所",
+        "value": "ほかのスタイルより前（一番上）"
+      },
+      {
+        "label": "種類",
+        "value": "ress / destyle.css / normalize.css など"
+      }
+    ],
+    "code": {
+      "html": "<h1>見出し</h1>\n<p>段落の文章です。</p>\n<ul>\n  <li>リスト1</li>\n  <li>リスト2</li>\n</ul>",
+      "css": "/* とても小さなリセットCSSの例 */\n*,\n*::before,\n*::after {\n  box-sizing: border-box;\n}\nh1, p, ul {\n  margin: 0;\n  padding: 0;\n}\nh1 {\n  font-size: inherit;\n}\nul {\n  list-style: none;\n}"
+    },
+    "preview": {
+      "height": 120,
+      "note": "見出しの大きさ、上下の余白、リストの点と左の余白など、ブラウザが付けていたスタイルが消えます",
+      "fullDocument": false
+    },
+    "explain": [
+      "すべてのブラウザには **user agent stylesheet**（ユーザーエージェントスタイルシート、UAスタイルシート）と呼ばれるデフォルトのスタイルが付属しています。これは表示する Web ページのすべてに適用される仕様で、ネット上に公開されています。CSS を何も書かなくても、`h1` が大きく太字になったり、`ul` に点が付いたりするのはこのためです。",
+      "この仕様から、行間やフォント周りの見た目がブラウザごとに微妙に異なります。**その差異をなくすためにリセットCSSが考案されました。** いくつかの種類があり、有志のエンジニアが作成・公開しています。",
+      "使用方法は、**スタイルの一番上に記述** し、ほかのスタイルより前にページに適用させることです。別ファイルのリセットCSSを使うときは、自分の `style.css` より先に `link` で読み込みます。"
+    ],
+    "values": {
+      "label": "主なブラウザの UA スタイルシート",
+      "head": "ブラウザ",
+      "rows": [
+        {
+          "key": "Chrome, Opera",
+          "desc": "Chromium UA stylesheet（chromium.googlesource.com の html.css）"
+        },
+        {
+          "key": "Firefox",
+          "desc": "Mozilla UA stylesheet（searchfox.org の mozilla-central/source/layout/style/res/html.css）"
+        },
+        {
+          "key": "Safari",
+          "desc": "WebKit UA stylesheet（trac.webkit.org の Source/WebCore/css/html.css）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "リセットCSSを自分の CSS より先に読み込む",
+        "desc": "後から読み込んだ CSS が優先されるので、リセットCSSを先に書き、その上に自分のスタイルを重ねます。",
+        "html": "<head>\n  <meta charset=\"UTF-8\">\n  <title>トップページ</title>\n  <!-- 1. リセットCSS -->\n  <link rel=\"stylesheet\" href=\"css/reset.css\">\n  <!-- 2. 自分のCSS -->\n  <link rel=\"stylesheet\" href=\"css/style.css\">\n</head>"
+      }
+    ],
+    "notes": [
+      "読み込む順番を逆にすると、自分で書いたスタイルがリセットCSSで打ち消されてしまいます。",
+      "リセットCSSには、余白などをすべて消す「消すタイプ」（destyle.css など）と、ブラウザ間の差だけをそろえて初期スタイルは残す「整えるタイプ」（normalize.css など）があります。案件ではどれを使っているか最初に確認しましょう。",
+      "リセットCSSを使うと見出しやリストの見た目も消えるので、必要なスタイルは自分で書き直します。"
+    ],
+    "related": [
+      "css-external-stylesheet",
+      "css-specificity",
+      "css-box-sizing",
+      "css-list-style"
+    ]
+  },
+  {
     "id": "css-specificity",
     "title": null,
     "ja": "どの指定が優先されるかの決まり",
@@ -8956,7 +9026,8 @@
       "css-flex-direction",
       "css-justify-content",
       "css-grid-template-columns",
-      "css-position"
+      "css-position",
+      "css-grid"
     ]
   },
   {
@@ -9058,8 +9129,8 @@
     },
     "explain": [
       "`position` は、要素をどのように配置するかを決めるプロパティです。`static` 以外を指定すると、`top`・`right`・`bottom`・`left` で位置を調整できます。",
-      "`absolute` は、`position` が指定された直近の祖先要素を基準に配置します。上の例では親の `.card` に `relative` を指定し、その左上を基準にバッジを置いています。",
-      "`sticky` はスクロールしても指定位置に貼り付く配置で、追従するヘッダーや見出しに使います。"
+      "`absolute` は、`static` 以外の `position` が指定された直近の祖先要素（多くは `relative` の親）の左上を基準に配置します。上の例では親の `.card` に `relative` を指定し、その左上を基準にバッジを置いています。基準になる親が見つからないときは、ページの左上が基準になります。",
+      "`fixed` は画面の左上、`sticky` は親要素の左上が基準です。どちらもスクロールしても決まった位置に表示されますが、`fixed` は要素の高さがなくなり、`sticky` はなくならない点が違います（下の応用編を参照）。"
     ],
     "values": {
       "label": "指定できる値",
@@ -9071,19 +9142,19 @@
         },
         {
           "key": "relative",
-          "desc": "本来の位置を基準にずらす。absolute の基準にもなる"
+          "desc": "本来の位置から上下左右にずらす。absolute の基準点にもなる"
         },
         {
           "key": "absolute",
-          "desc": "基準の祖先要素に対して配置。元の場所は詰められる"
+          "desc": "static 以外の親要素の左上を基準に配置。親がなければページの左上。元の場所は詰められる"
         },
         {
           "key": "fixed",
-          "desc": "画面（ビューポート）に対して固定"
+          "desc": "画面（ビューポート）の左上を基準に固定。要素の高さがなくなる"
         },
         {
           "key": "sticky",
-          "desc": "スクロールで指定位置に来たら貼り付く"
+          "desc": "親要素の中で、スクロールして指定位置に来たら貼り付く。高さはなくならない"
         }
       ]
     },
@@ -9092,18 +9163,187 @@
         "title": "スクロールしても上部に残るヘッダー",
         "desc": "sticky を使うと、ヘッダーが画面上部に貼り付きます。",
         "css": ".site-header {\n  position: sticky;\n  top: 0;\n  z-index: 10;\n  background: #fff;\n}"
+      },
+      {
+        "title": "画面の下に固定するバナー",
+        "desc": "fixed で画面の下に固定します。本文の最後が隠れないよう、body の下に余白を空けておきます。",
+        "html": "<a class=\"line-banner\" href=\"#\">LINE で友だち追加する</a>",
+        "css": ".line-banner {\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  width: 100%;\n  padding: 16px;\n  background: #06c755;\n  color: #fff;\n  text-align: center;\n}\nbody {\n  padding-bottom: 56px;\n}"
       }
     ],
     "notes": [
       "absolute の基準になる親に position: relative を付け忘れると、思わぬ位置に表示されます。",
-      "absolute や fixed の要素は通常の流れから外れるため、ほかの要素と重なることがあります。"
+      "absolute や fixed の要素は通常の流れから外れるため、ほかの要素と重なることがあります。",
+      "fixed の要素は高さがなくなるため、下の要素が上に詰まって隠れることがあります。固定ヘッダーなら body に padding-top を付けて、ヘッダーの高さ分を空けておきます。",
+      "sticky は親要素の中でしか貼り付きません。親の高さが sticky の要素と同じだと、動く余地がなく効かないように見えます。"
     ],
     "related": [
       "css-z-index",
       "css-transform",
       "css-overflow",
       "html-header"
-    ]
+    ],
+    "advanced": {
+      "title": "relative・absolute・fixed・sticky のくわしい使い方",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "relative：本来の位置からずらす／absolute の基準点を作る"
+        },
+        {
+          "type": "p",
+          "text": "`relative` は、コンテンツが本来表示される位置から上下左右に移動させます。もう1つの大事な役割が **absolute の起点（基準点）を作る** ことです。親要素に `relative` を指定すると、子要素は親要素を基準に位置を調整できるようになります。"
+        },
+        {
+          "type": "example",
+          "title": "例1：relative で本来の位置からずらす",
+          "desc": "点線の枠が本来の位置です。relative でずらしても、元の場所は空いたまま残ります。",
+          "html": "<div class=\"wrapper\">\n  <div class=\"ghost\"></div>\n  <div class=\"item\">.item</div>\n</div>",
+          "css": ".wrapper {\n  position: relative;\n  height: 110px;\n  padding: 12px;\n  background: #3a93c8;\n}\n.ghost {\n  position: absolute;\n  width: 120px;\n  height: 60px;\n  border: 2px dashed #fff;\n}\n.item {\n  position: relative;\n  top: 20px;\n  left: 40px;\n  width: 120px;\n  height: 60px;\n  padding: 6px;\n  background: #7fb24a;\n  color: #fff;\n  font-size: 12px;\n}",
+          "height": 140,
+          "points": [
+            {
+              "code": "position: relative;",
+              "text": "本来の位置を基準にします。"
+            },
+            {
+              "code": "top: 20px; left: 40px;",
+              "text": "本来の位置から、上を20px・左を40px空けた位置（下と右）にずれます。"
+            }
+          ]
+        },
+        {
+          "type": "h",
+          "text": "absolute：static 以外の親要素を起点に移動する"
+        },
+        {
+          "type": "p",
+          "text": "`absolute` は、`static` 以外（多くは `relative`）を指定した親要素の左上を起点に移動します。**relative を指定した要素が見つからない場合は、ページの左上が基準** になります。"
+        },
+        {
+          "type": "example",
+          "title": "例2：relative の親の左上を基準にする",
+          "desc": "スライドと同じ指定です。.wrapper の左上から、左に100px・上に200px の位置に .item が置かれます。",
+          "html": "<div class=\"wrapper\">\n  .wrapper\n  <div class=\"item\">.item</div>\n</div>",
+          "css": ".wrapper {\n  position: relative;\n  height: 300px;\n  padding: 6px 10px;\n  background: #3a93c8;\n  color: #fff;\n  font-size: 12px;\n}\n.item {\n  position: absolute;\n  left: 100px;\n  top: 200px;\n  width: 140px;\n  height: 70px;\n  padding: 6px;\n  background: #7fb24a;\n}",
+          "height": 320,
+          "points": [
+            {
+              "code": ".wrapper { position: relative; }",
+              "text": "親要素が absolute の基準点になります。"
+            },
+            {
+              "code": "left: 100px; top: 200px;",
+              "text": "親の左端から100px、上端から200pxの位置に、子要素の左上がそろいます。"
+            }
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例3：relative の親がないとき",
+          "desc": "例2から .wrapper の position: relative を消すと、.item はページの左上を基準に配置され、.wrapper の外にはみ出します。",
+          "html": "<div class=\"wrapper\">\n  .wrapper（relative なし）\n  <div class=\"item\">.item</div>\n</div>",
+          "css": "body {\n  margin: 0;\n}\n.wrapper {\n  margin: 60px 0 0 120px;\n  height: 80px;\n  padding: 6px 10px;\n  background: #3a93c8;\n  color: #fff;\n  font-size: 12px;\n}\n.item {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100px;\n  height: 40px;\n  padding: 6px;\n  background: #7fb24a;\n}",
+          "height": 150,
+          "points": [
+            {
+              "code": ".wrapper { margin: 60px 0 0 120px; }",
+              "text": ".wrapper には relative がないので、基準になりません。"
+            },
+            {
+              "code": "left: 0; top: 0;",
+              "text": "基準がページの左上になるため、.item は画面の左上の角に表示されます。"
+            }
+          ]
+        },
+        {
+          "type": "h",
+          "text": "fixed：画面の決まった位置に固定する"
+        },
+        {
+          "type": "p",
+          "text": "`fixed` は、**画面の決まった位置に要素を固定** させたいときに使います。基準は画面（ビューポート）の左上で、スクロールしても同じ場所に表示され続けます。サイト上部に固定されるヘッダーや、スマートフォンで画面の下に出続ける「LINE 友だち追加」のようなバナーがこれにあたります。"
+        },
+        {
+          "type": "h",
+          "text": "sticky：親要素の中で決まった位置に固定する"
+        },
+        {
+          "type": "p",
+          "text": "`sticky` は、**親要素の中で決まった位置に要素を固定** させたいときに使います。`relative`（基準点）の設定は必要ありません。親要素の範囲内でだけ貼り付き、親要素が画面から出ていくと一緒に流れていきます。サイドバー（メニュー）や、追従する広告バナーなどに使うことが多いです。"
+        },
+        {
+          "type": "example",
+          "title": "例4：枠の中でスクロールしてみる",
+          "desc": "枠の中をスクロールすると、左のメニューが上に貼り付いたまま付いてきます。",
+          "html": "<div class=\"scroll\">\n  <div class=\"layout\">\n    <nav class=\"side\">メニュー</nav>\n    <div class=\"main\">本文<br>本文<br>本文<br>本文<br>本文<br>本文<br>本文<br>本文<br>本文<br>本文<br>本文<br>本文</div>\n  </div>\n</div>",
+          "css": ".scroll {\n  height: 160px;\n  overflow: auto;\n  border: 1px solid #aaa;\n}\n.layout {\n  display: flex;\n  align-items: flex-start;\n  gap: 10px;\n  padding: 10px;\n}\n.side {\n  position: sticky;\n  left: 0;\n  top: 0;\n  width: 90px;\n  padding: 10px;\n  background: #b68235;\n  color: #fff;\n  font-size: 12px;\n}\n.main {\n  flex: 1;\n  font-size: 12px;\n  line-height: 1.8;\n}",
+          "height": 180,
+          "points": [
+            {
+              "code": "position: sticky; left: 0; top: 0;",
+              "text": "スクロールして上端に届いたところで貼り付きます。"
+            },
+            {
+              "code": "align-items: flex-start;",
+              "text": "Flexbox の中では子要素が親の高さまで伸びるため、伸びないようにしておきます。伸びると貼り付く余地がなくなり、sticky が効きません。"
+            }
+          ]
+        },
+        {
+          "type": "h",
+          "text": "fixed と sticky の違い"
+        },
+        {
+          "type": "table",
+          "head": [
+            "",
+            "fixed",
+            "sticky"
+          ],
+          "rows": [
+            [
+              "基準",
+              "**画面**の左上",
+              "**親要素**の左上"
+            ],
+            [
+              "要素の高さ",
+              "**なくなる**ため、下にある要素がその分だけ上に詰まって配置される",
+              "**なくならない**（元の場所を占めたまま）"
+            ],
+            [
+              "relative の設定",
+              "不要",
+              "不要"
+            ],
+            [
+              "よく使う場面",
+              "固定ヘッダー、画面下の追従バナー",
+              "サイドバー、追従する広告バナー、表の見出し"
+            ]
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例5：fixed は高さがなくなる",
+          "desc": "fixed のヘッダーは高さがなくなるので、本文の1行目が上に詰まり、ヘッダーの下に潜り込んで隠れています。",
+          "html": "<header class=\"fixed\">fixed のヘッダー</header>\n<p>本文の1行目（ヘッダーに隠れている）</p>\n<p>本文の2行目</p>",
+          "css": "body {\n  margin: 0;\n}\n.fixed {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  padding: 12px;\n  background: rgba(182, 130, 53, 0.9);\n  color: #fff;\n  font-size: 13px;\n}\np {\n  margin: 8px 12px;\n  font-size: 13px;\n}",
+          "height": 90,
+          "points": [
+            {
+              "code": "position: fixed;",
+              "text": "ヘッダーの高さがなくなるので、本文の1行目が上に詰まってヘッダーの下に隠れます。"
+            },
+            {
+              "code": "（対策）body { padding-top: ヘッダーの高さ; }",
+              "text": "fixed のヘッダーを使うときは、本文の上にヘッダーの高さ分の余白を空けておきます。sticky ならこの対策は要りません。"
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "css-z-index",
@@ -9539,7 +9779,8 @@
       "css-display",
       "css-flex-direction",
       "css-justify-content",
-      "css-flex"
+      "css-flex",
+      "css-grid-vs-flex"
     ],
     "advanced": {
       "title": "親と子に書くプロパティ一覧",
@@ -10363,6 +10604,159 @@
     ]
   },
   {
+    "id": "css-grid",
+    "title": "CSS Grid",
+    "ja": "線を引いて区切った場所に要素を並べる",
+    "lead": "CSS Grid（グリッドレイアウト）は、縦と横の線で親要素を区切り、その中に子要素を配置するしくみです。親要素に display: grid を書き、行と列の大きさを親で決めます。",
+    "meta": [
+      {
+        "label": "始め方",
+        "value": "親要素に display: grid"
+      },
+      {
+        "label": "構成",
+        "value": "コンテナ（親）とアイテム（子）"
+      },
+      {
+        "label": "使う場面",
+        "value": "行と列がある格子状のレイアウト"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"wrapper\">\n  <div class=\"box_01\">要素1</div>\n  <div class=\"box_02\">要素2</div>\n  <div class=\"box_03\">要素3</div>\n  <div class=\"box_04\">要素4</div>\n  <div class=\"box_05\">要素5</div>\n  <div class=\"box_06\">要素6</div>\n</div>",
+      "css": ".wrapper {\n  height: 200px;\n  background-color: #ddd;\n  border: #aaa 1px solid;\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr; /* 3つのトラック（列）を定義 */\n  grid-template-rows: 1fr 1fr; /* 2つのトラック（行）を定義 */\n}\n.wrapper div {\n  font-size: 12px;\n}\n.box_01 { background-color: red; }\n.box_02 { background-color: green; }\n.box_03 { background-color: blue; }\n.box_04 { background-color: yellow; }\n.box_05 { background-color: cyan; }\n.box_06 { background-color: purple; }"
+    },
+    "preview": {
+      "height": 220,
+      "note": "親に3列×2行の線を引くと、6つの子要素が左上から順にマスへ入ります",
+      "fullDocument": false
+    },
+    "explain": [
+      "グリッドとは、**列と行を決める横の線と縦の線が交差したもの**です。`grid` のプロパティを使うと、要素をグリッド上の行と列の中に配置できます。table のようにマス同士をつなげたり、自由な位置に置いたりできるのが特徴です。",
+      "使い方は、並べたい要素を囲む親要素に `display: grid` を指定し、`grid-template-columns`（列）と `grid-template-rows`（行）で線の引き方を決めます。上の例は「3列×2行」なので、6つの子要素が左上から順に1マスずつ入ります。",
+      "Flexbox は子要素ごとに幅を決めていきますが、Grid は **親要素で先に線を引き**、区切られた場所に子要素を当てはめていきます。違いは「Grid と Flexbox の違い」のページで詳しく比べています。"
+    ],
+    "values": {
+      "label": "Grid レイアウトで使われる用語",
+      "head": "用語",
+      "rows": [
+        {
+          "key": "コンテナ",
+          "desc": "Grid レイアウト全体を囲む要素（display: grid を書いた親要素）"
+        },
+        {
+          "key": "アイテム",
+          "desc": "コンテナの子要素すべて（孫要素は含まない）"
+        },
+        {
+          "key": "ライン",
+          "desc": "グリッドの枠線を作る縦と横の線。左上から 1, 2, 3… と番号が付く"
+        },
+        {
+          "key": "トラック",
+          "desc": "グリッドの行と列のこと。ラインとラインに挟まれた帯"
+        },
+        {
+          "key": "セル",
+          "desc": "トラック内に指定するコンテンツのこと。グリッドの最小単位（1マス）"
+        },
+        {
+          "key": "エリア",
+          "desc": "トラック同士が重なった場所。複数のセルをまとめた範囲"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "複雑なレイアウトはジェネレーターで作る",
+        "desc": "マスをまたぐような複雑なレイアウトは、オンラインで公開されているジェネレーターを使えばOKです。講義では CSS Grid Generator（cssgrid-generator.netlify.app）が紹介されています。列数・行数・間隔を入力し、マスをドラッグして範囲を選ぶと、コードを書き出してくれます。",
+        "css": "/* CSS Grid Generator が書き出すコードの例 */\n.parent {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-template-rows: repeat(2, 1fr);\n  grid-column-gap: 0px;\n  grid-row-gap: 0px;\n}\n.div1 { grid-area: 1 / 1 / 3 / 2; }"
+      }
+    ],
+    "notes": [
+      "display: grid は並べたい要素そのものではなく、それを囲む親要素に書きます。",
+      "効くのは直下の子要素だけです。孫要素も並べたいときは、子要素にも display: grid を指定します。",
+      "ジェネレーターが書き出す grid-area: 1 / 1 / 3 / 2 は「行の開始 / 列の開始 / 行の終了 / 列の終了」のライン番号を1行にまとめた書き方です。"
+    ],
+    "related": [
+      "css-grid-template-columns",
+      "css-grid-template-rows",
+      "css-grid-column-row",
+      "css-grid-vs-flex"
+    ],
+    "advanced": {
+      "title": "Grid で使うプロパティ一覧",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Grid のプロパティも、Flexbox と同じく **親要素（コンテナ）に書くもの** と **子要素（アイテム）に書くもの** があります。まずは下の5つを覚えれば、基本的なレイアウトが作れます。"
+        },
+        {
+          "type": "h",
+          "text": "親要素（コンテナ）に書くプロパティ"
+        },
+        {
+          "type": "table",
+          "head": [
+            "プロパティ",
+            "役割"
+          ],
+          "rows": [
+            [
+              "`display: grid`",
+              "コンテナの役割を担う HTML 要素に指定する"
+            ],
+            [
+              "`grid-template-rows`",
+              "行のトラックの高さを指定"
+            ],
+            [
+              "`grid-template-columns`",
+              "列のトラックの横幅を指定"
+            ],
+            [
+              "`gap`",
+              "トラック同士の間隔"
+            ],
+            [
+              "`place-items`",
+              "セルの中でのアイテムの位置（縦横まとめて）"
+            ]
+          ]
+        },
+        {
+          "type": "h",
+          "text": "子要素（アイテム）に書くプロパティ"
+        },
+        {
+          "type": "table",
+          "head": [
+            "プロパティ",
+            "役割"
+          ],
+          "rows": [
+            [
+              "`grid-row`",
+              "アイテムを配置するときに、行のライン番号を指定"
+            ],
+            [
+              "`grid-column`",
+              "アイテムを配置するときに、列のライン番号を指定"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "単位「fr」",
+          "items": [
+            "`fr` は Grid 専用の単位で、余った幅（高さ）を分け合います。`1fr 1fr 1fr` なら3等分です。",
+            "`fr` を使えば、親要素にぴったり収まるようにトラックが配置されます。"
+          ]
+        }
+      ]
+    }
+  },
+  {
     "id": "css-grid-template-columns",
     "title": null,
     "ja": "グリッドの列",
@@ -10429,11 +10823,212 @@
       "gap は列の幅に含まれず、列と列の間に追加されます。"
     ],
     "related": [
-      "css-gap",
-      "css-display",
-      "css-place-items",
-      "css-media"
+      "css-grid",
+      "css-grid-template-rows",
+      "css-grid-column-row",
+      "css-gap"
     ]
+  },
+  {
+    "id": "css-grid-template-rows",
+    "title": null,
+    "ja": "グリッドの行",
+    "lead": "Gridレイアウトで、行の数と高さ（行のトラックの高さ）を定義します。grid-template-columns と組み合わせて、縦横のマス目を作ります。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "none"
+      },
+      {
+        "label": "適用対象",
+        "value": "Gridコンテナ"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"wrapper\">\n  <div class=\"box_01\">要素1</div>\n  <div class=\"box_02\">要素2</div>\n  <div class=\"box_03\">要素3</div>\n  <div class=\"box_04\">要素4</div>\n  <div class=\"box_05\">要素5</div>\n  <div class=\"box_06\">要素6</div>\n</div>",
+      "css": ".wrapper {\n  height: 240px;\n  background-color: #ddd;\n  border: #aaa 1px solid;\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr; /* 3つのトラック（列）を定義 */\n  grid-template-rows: 1fr 2fr; /* 2つのトラック（行）を定義 */\n}\n.wrapper div {\n  font-size: 12px;\n}\n.box_01 { background-color: red; }\n.box_02 { background-color: green; }\n.box_03 { background-color: blue; }\n.box_04 { background-color: yellow; }\n.box_05 { background-color: cyan; }\n.box_06 { background-color: purple; }"
+    },
+    "preview": {
+      "height": 260,
+      "note": "1fr 2fr なので、親の高さ 240px を 1:2 に分け、上の行が 80px、下の行が 160px になります",
+      "fullDocument": false
+    },
+    "explain": [
+      "`grid-template-rows` に高さを並べると、その数だけ行ができます。`100px 200px` なら「高さ100pxの行」と「高さ200pxの行」の2行です。",
+      "単位 `fr` を使えば、親要素にフィットする形で配置されます。上の例では親の高さが 240px なので、`1fr 2fr` は 80px と 160px に分かれます。`1fr 1fr` にすれば同じ高さの2行です。",
+      "列は `grid-template-columns`、行は `grid-template-rows` で決めます。2つをセットで書くと、何列×何行のマス目かがひと目で分かります。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "1fr 1fr",
+          "desc": "親の高さを2等分した2行"
+        },
+        {
+          "key": "100px 1fr",
+          "desc": "高さ100pxの行と、残りを埋める行"
+        },
+        {
+          "key": "repeat(3, 1fr)",
+          "desc": "同じ高さの行を3つ（1fr 1fr 1fr と同じ）"
+        },
+        {
+          "key": "auto",
+          "desc": "中身の高さに合わせた行"
+        },
+        {
+          "key": "none",
+          "desc": "行を定義しない（初期値。中身に合わせて自動で行ができる）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "ヘッダー・本文・フッターの3段レイアウト",
+        "desc": "上下は中身の高さ、真ん中は残り全部にすると、フッターを画面の下に置けます。",
+        "html": "<body class=\"page\">\n  <header>ヘッダー</header>\n  <main>本文</main>\n  <footer>フッター</footer>\n</body>",
+        "css": ".page {\n  min-height: 100vh;\n  display: grid;\n  grid-template-rows: auto 1fr auto;\n}"
+      }
+    ],
+    "notes": [
+      "親に高さがないと、fr で指定した行は中身の高さになります。fr で分けたいときは、親に height を指定します。",
+      "定義した行より子要素が多いと、足りない行は自動で追加されます（高さは中身に合わせた auto）。"
+    ],
+    "related": [
+      "css-grid",
+      "css-grid-template-columns",
+      "css-grid-column-row",
+      "css-gap"
+    ]
+  },
+  {
+    "id": "css-grid-column-row",
+    "title": "grid-column / grid-row",
+    "ja": "アイテムを置く範囲をライン番号で指定",
+    "lead": "Gridアイテムに書き、「何番目の線から何番目の線まで」を使うかを指定します。grid-column が列（横方向）、grid-row が行（縦方向）です。複数のマスをまたいだ配置ができます。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "auto"
+      },
+      {
+        "label": "適用対象",
+        "value": "Gridアイテム（子要素）"
+      },
+      {
+        "label": "書き方",
+        "value": "開始ライン / 終了ライン"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"wrapper\">\n  <div class=\"box_01\">要素1</div>\n  <div class=\"box_02\">要素2</div>\n  <div class=\"box_03\">要素3</div>\n  <div class=\"box_04\">要素4</div>\n  <div class=\"box_05\">要素5</div>\n</div>",
+      "css": ".wrapper {\n  height: 200px;\n  background-color: #ddd;\n  border: #aaa 1px solid;\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  grid-template-rows: 1fr 1fr;\n}\n.wrapper div {\n  font-size: 12px;\n}\n.box_01 { background-color: red; }\n.box_02 { background-color: green; }\n.box_03 { background-color: blue; }\n.box_04 { background-color: yellow; }\n.box_05 {\n  background-color: cyan;\n  grid-column: 2 / 3;\n  grid-row: 1 / 3;\n}"
+    },
+    "preview": {
+      "height": 220,
+      "note": "要素5が真ん中の列を上から下まで使い、残りの要素は空いているマスに順に入ります",
+      "fullDocument": false
+    },
+    "explain": [
+      "Grid の線には、左上から順に番号が付いています。これを **ライン番号** と呼びます。3列×2行のグリッドなら、縦の線は column1〜column4 の4本、横の線は row1〜row3 の3本です（下の「ライン番号の数え方」の図を参照）。",
+      "`grid-column: 2 / 3;` は「列のライン2からライン3まで」、つまり2列目の1マス分を使います。`grid-row: 1 / 3;` は「行のライン1からライン3まで」なので、1行目と2行目の2マス分の高さになります。",
+      "上の例では要素5（`.box_05`）を真ん中の列に縦長に置いています。位置を指定していない要素1〜4は、空いているマスに左上から順に自動で入ります。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "2 / 3",
+          "desc": "ライン2からライン3まで（1マス分）"
+        },
+        {
+          "key": "1 / 3",
+          "desc": "ライン1からライン3まで（2マス分）"
+        },
+        {
+          "key": "1 / -1",
+          "desc": "最初のラインから最後のラインまで（端から端まで）"
+        },
+        {
+          "key": "1 / span 2",
+          "desc": "ライン1から2マス分（span はマスの数）"
+        },
+        {
+          "key": "auto",
+          "desc": "自動で配置（初期値）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "見出しだけ横いっぱいに広げる",
+        "desc": "3列のカード一覧で、見出しだけを全列にまたがらせます。",
+        "css": ".cards {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n}\n.cards__title {\n  grid-column: 1 / -1;\n}"
+      }
+    ],
+    "notes": [
+      "数字はマスの番号ではなく線（ライン）の番号です。3列のグリッドの右端の線は 3 ではなく 4 になります。",
+      "grid-column・grid-row は子要素（アイテム）に書きます。親に書いても効きません。",
+      "マスが重なるように指定すると、要素同士が重なって表示されます。"
+    ],
+    "related": [
+      "css-grid",
+      "css-grid-template-columns",
+      "css-grid-template-rows",
+      "css-grid-vs-flex"
+    ],
+    "advanced": {
+      "title": "ライン番号の数え方",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "線の番号を見やすくするため、3列×2行のグリッドの各マスに番号を書きました。縦の線（column）は左から 1・2・3・4、横の線（row）は上から 1・2・3 です。"
+        },
+        {
+          "type": "example",
+          "title": "例1：3列×2行のマスとライン番号",
+          "desc": "マスの左上が「そのマスが始まるライン番号」です。たとえば右下のマスは、列がライン3〜4、行がライン2〜3になります。",
+          "html": "<div class=\"grid\">\n  <div>列 1/2・行 1/2</div>\n  <div>列 2/3・行 1/2</div>\n  <div>列 3/4・行 1/2</div>\n  <div>列 1/2・行 2/3</div>\n  <div>列 2/3・行 2/3</div>\n  <div>列 3/4・行 2/3</div>\n</div>",
+          "css": ".grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  grid-template-rows: 60px 60px;\n  gap: 6px;\n}\n.grid div {\n  display: grid;\n  place-items: center;\n  background: #3a93c8;\n  color: #fff;\n  font-size: 12px;\n  border-radius: 4px;\n}",
+          "height": 150,
+          "points": [
+            {
+              "code": "grid-template-columns: 1fr 1fr 1fr;",
+              "text": "列が3つなので、縦の線は **4本**（column1〜column4）できます。"
+            },
+            {
+              "code": "grid-template-rows: 60px 60px;",
+              "text": "行が2つなので、横の線は **3本**（row1〜row3）できます。"
+            }
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例2：grid-column: 2 / 3; grid-row: 1 / 3;",
+          "desc": "スライドと同じ指定です。column2 と column3 の線に挟まれ、row1 から row3 までの範囲を使うので、真ん中の列が縦長の1つのマスになります。",
+          "html": "<div class=\"grid\">\n  <div></div>\n  <div class=\"box_05\">grid-column: 2 / 3;<br>grid-row: 1 / 3;</div>\n  <div></div>\n  <div></div>\n  <div></div>\n</div>",
+          "css": ".grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  grid-template-rows: 60px 60px;\n  gap: 6px;\n}\n.grid div {\n  background: #cfcbd6;\n  border-radius: 4px;\n}\n.grid .box_05 {\n  grid-column: 2 / 3;\n  grid-row: 1 / 3;\n  display: grid;\n  place-items: center;\n  background: #3a93c8;\n  color: #fff;\n  font-size: 12px;\n  text-align: center;\n}",
+          "height": 150,
+          "points": [
+            {
+              "code": "grid-column: 2 / 3;",
+              "text": "列のライン2からライン3まで。真ん中の列の1マス分の幅です。"
+            },
+            {
+              "code": "grid-row: 1 / 3;",
+              "text": "行のライン1からライン3まで。2マス分の高さになります。"
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "css-place-items",
@@ -10510,6 +11105,80 @@
       "css-align-items",
       "css-justify-content",
       "css-grid-template-columns",
+      "css-display"
+    ]
+  },
+  {
+    "id": "css-grid-vs-flex",
+    "title": "Grid と Flexbox の違い",
+    "ja": "線を引いて当てはめるか、子要素ごとに幅を決めるか",
+    "lead": "Grid と Flexbox はどちらも要素を並べるためのしくみですが、考え方が違います。Flexbox は子要素ごとに幅を決め、Grid は親要素で線を引いてから子要素を当てはめます。",
+    "meta": [
+      {
+        "label": "Flexbox",
+        "value": "子要素（アイテム）に幅・高さを書く"
+      },
+      {
+        "label": "Grid",
+        "value": "親要素に幅・高さを書く"
+      },
+      {
+        "label": "結論",
+        "value": "両方使いこなせるようにする"
+      }
+    ],
+    "code": {
+      "html": "<p class=\"label\">grid</p>\n<div class=\"grid\">\n  <div class=\"box_01\"></div>\n  <div class=\"box_02\"></div>\n  <div class=\"box_03\"></div>\n  <div class=\"box_04\"></div>\n  <div class=\"box_05\"></div>\n  <div class=\"box_06\"></div>\n</div>\n<p class=\"label\">flex</p>\n<div class=\"flex\">\n  <div class=\"box_01\"></div>\n  <div class=\"box_02\"></div>\n  <div class=\"box_03\"></div>\n  <div class=\"box_04\"></div>\n  <div class=\"box_05\"></div>\n  <div class=\"box_06\"></div>\n</div>",
+      "css": ".label {\n  margin: 4px 0;\n  font-size: 12px;\n}\n.grid, .flex {\n  height: 80px;\n  background-color: #ddd;\n}\n/* grid：親で線を引く */\n.grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  grid-template-rows: 1fr 1fr;\n}\n/* flex：子要素ごとに幅を決める */\n.flex {\n  display: flex;\n  flex-wrap: wrap;\n}\n.flex div {\n  width: 33.333%;\n}\n.box_01 { background-color: red; }\n.box_02 { background-color: green; }\n.box_03 { background-color: blue; }\n.box_04 { background-color: yellow; }\n.box_05 { background-color: cyan; }\n.box_06 { background-color: purple; }"
+    },
+    "preview": {
+      "height": 220,
+      "note": "見た目は同じ3列×2行ですが、grid は親で列と行を決め、flex は子要素それぞれに幅を決めています",
+      "fullDocument": false
+    },
+    "explain": [
+      "**違い1：並べ方の考え方**。Flexbox は、横並びにして子要素の幅や配置を決めていきます。Grid は、どのように配置するか先に線を設定して、区切られた領域に子要素を当てはめていきます。",
+      "**違い2：幅や高さを書く場所**。Flexbox は子要素（アイテム）に横幅や高さを指定します。Grid は親要素に横幅や高さを指定します。上の例でも、flex は `.flex div` に `width` を書き、grid は `.grid` に `grid-template-columns` と `grid-template-rows` を書いています。",
+      "Flexbox は子要素ごとに幅を決める分、柔軟な対応ができます。一方 Grid は、行や列の数や幅が増えるほど実装が複雑になる可能性があります。ただし、マスをまたぐようなレイアウトは Grid を使うと簡単に作れるので、**両方使いこなせるようになっておく**ことが大切です。"
+    ],
+    "values": {
+      "label": "Grid と Flexbox の比較",
+      "head": "比べること",
+      "rows": [
+        {
+          "key": "並べ方",
+          "desc": "flex：横並びにして子要素の幅や配置を決めていく ／ grid：線を設定して、区切られた領域に子要素を当てはめていく"
+        },
+        {
+          "key": "幅・高さを書く場所",
+          "desc": "flex：子要素（アイテム） ／ grid：親要素（コンテナ）"
+        },
+        {
+          "key": "得意なこと",
+          "desc": "flex：1列に並べる・中身に合わせて柔軟に伸び縮み ／ grid：行と列がある格子状・マスをまたぐ配置"
+        },
+        {
+          "key": "注意",
+          "desc": "grid は行と列の数や幅が増えるほど、コードが複雑になりやすい"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "Grid だと簡単に作れるレイアウト",
+        "desc": "大きさの違うパネルを組み合わせたレイアウトは、Flexbox だと入れ子が必要になりますが、Grid ならライン番号を指定するだけで作れます。",
+        "html": "<div class=\"panels\">\n  <div class=\"a\"></div>\n  <div class=\"b\"></div>\n  <div class=\"c\"></div>\n  <div class=\"d\"></div>\n  <div class=\"e\"></div>\n  <div class=\"f\"></div>\n</div>",
+        "css": ".panels {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-template-rows: repeat(3, 60px);\n  gap: 6px;\n}\n.panels div {\n  background: #3a93c8;\n  border-radius: 6px;\n}\n.b { grid-column: 2 / 3; grid-row: 1 / 3; }\n.d { grid-row: 2 / 4; }\n.f { grid-column: 2 / 4; }"
+      }
+    ],
+    "notes": [
+      "どちらか一方だけを使う必要はありません。ページ全体の枠組みを Grid、その中のボタンやメニューの横並びを Flexbox、のように組み合わせて使えます。",
+      "迷ったら「1方向に並べるだけなら Flexbox、縦と横の両方をそろえたいなら Grid」と考えると選びやすくなります。"
+    ],
+    "related": [
+      "css-flexbox",
+      "css-grid",
+      "css-grid-column-row",
       "css-display"
     ]
   },

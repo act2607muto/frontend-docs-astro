@@ -828,6 +828,25 @@
     "category": "syntax"
   },
   {
+    "id": "css-reset-css",
+    "type": "css",
+    "slug": "reset-css",
+    "name": "リセットCSS",
+    "summary": "ブラウザごとの初期スタイルの違いをなくす",
+    "keywords": [
+      "リセット",
+      "reset",
+      "user agent stylesheet",
+      "UAスタイルシート",
+      "ブラウザの初期スタイル",
+      "デフォルトスタイル",
+      "ress",
+      "destyle",
+      "normalize"
+    ],
+    "category": "syntax"
+  },
+  {
     "id": "css-specificity",
     "type": "css",
     "slug": "specificity",
@@ -1647,6 +1666,27 @@
     "category": "flexgrid"
   },
   {
+    "id": "css-grid",
+    "type": "css",
+    "slug": "grid",
+    "name": "CSS Grid",
+    "summary": "用語とプロパティの一覧",
+    "keywords": [
+      "grid",
+      "グリッド",
+      "display: grid",
+      "グリッドレイアウト",
+      "コンテナ",
+      "アイテム",
+      "ライン",
+      "トラック",
+      "セル",
+      "エリア",
+      "ジェネレーター"
+    ],
+    "category": "flexgrid"
+  },
+  {
     "id": "css-grid-template-columns",
     "type": "css",
     "slug": "grid-template-columns",
@@ -1660,6 +1700,39 @@
     "category": "flexgrid"
   },
   {
+    "id": "css-grid-template-rows",
+    "type": "css",
+    "slug": "grid-template-rows",
+    "name": "grid-template-rows",
+    "summary": "グリッドの行",
+    "keywords": [
+      "grid",
+      "行",
+      "高さ",
+      "fr",
+      "トラック"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-grid-column-row",
+    "type": "css",
+    "slug": "grid-column-row",
+    "name": "grid-column / grid-row",
+    "summary": "アイテムを置く範囲をライン番号で指定",
+    "keywords": [
+      "grid",
+      "grid-column",
+      "grid-row",
+      "ライン番号",
+      "結合",
+      "またぐ",
+      "span",
+      "grid-area"
+    ],
+    "category": "flexgrid"
+  },
+  {
     "id": "css-place-items",
     "type": "css",
     "slug": "place-items",
@@ -1668,6 +1741,22 @@
     "keywords": [
       "grid",
       "中央寄せ"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-grid-vs-flex",
+    "type": "css",
+    "slug": "grid-vs-flex",
+    "name": "Grid と Flexbox の違い",
+    "summary": "線を引いて当てはめるか、子要素ごとに幅を決めるか",
+    "keywords": [
+      "grid",
+      "flex",
+      "flexbox",
+      "違い",
+      "比較",
+      "使い分け"
     ],
     "category": "flexgrid"
   },
