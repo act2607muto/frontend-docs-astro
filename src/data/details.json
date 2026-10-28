@@ -8803,6 +8803,82 @@
     ]
   },
   {
+    "id": "css-box-types",
+    "title": "ボックスの種類",
+    "ja": "ブロック・インライン・インラインブロック",
+    "lead": "HTMLの要素は、表示のされ方によって「ブロックボックス」「インラインボックス」「インラインブロックボックス」の3種類に分けて考えられます。横幅・高さの扱いと、横に並ぶかどうかが違います。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "ブロック / インライン / インラインブロック"
+      },
+      {
+        "label": "変更方法",
+        "value": "display: block / inline / inline-block"
+      },
+      {
+        "label": "使う場面",
+        "value": "幅が効かない・横に並ばないときの原因探し"
+      }
+    ],
+    "code": {
+      "html": "<p class=\"label\">ブロック（div）</p>\n<div class=\"block\">div</div>\n<div class=\"block w\">width: 120px の div</div>\n<p class=\"label\">インライン（a）</p>\n<a class=\"inline\" href=\"#\">a テキスト</a>\n<a class=\"inline\" href=\"#\">a テキストです</a>\n<p class=\"label\">インラインブロック（display: inline-block）</p>\n<span class=\"ib\">幅120px</span>\n<span class=\"ib\">幅120px</span>",
+      "css": ".label {\n  margin: 8px 0 4px;\n  font-size: 12px;\n}\n.block, .inline, .ib {\n  padding: 4px 8px;\n  background: #b68235;\n  color: #fff;\n  font-size: 13px;\n}\n.block {\n  margin-bottom: 4px;\n}\n.w {\n  width: 120px;\n}\n.inline {\n  width: 300px; /* インラインなので効かない */\n}\n.ib {\n  display: inline-block;\n  width: 120px;\n  height: 40px;\n}"
+    },
+    "preview": {
+      "height": 250,
+      "note": "ブロックは幅を決めても横に何も入り込みません。インラインは width が効かず、インラインブロックは幅・高さが効いたまま横に並びます",
+      "fullDocument": false
+    },
+    "explain": [
+      "**ブロックボックス**（ブロック要素）は、親要素の横幅いっぱいに広がります。初期状態では、下に書いたコンテンツが横に割り込むことはなく、`width` などで幅を決めても、空いた隙間にコンテンツが滑り込むことはありません。普段使うタグのほとんどはブロックボックスと考えてOKです。",
+      "**インラインボックス**（インライン要素）は、横幅や高さが包んでいる中身の分しかありません（＝`width`・`height` を設定できない）。ブロック要素の中で文章の一部として登場することが多いですが、単独でも使えます。何も指定がなければ、横幅に余裕があるだけ横に並び、空いているスペースに入り込もうとします。",
+      "**インラインブロックボックス**（インラインブロック要素）は、ブロックとインライン両方の性質を併せ持ちます。幅と高さを設定でき、指定がなければ要素自体が本来持っている幅と高さで表示されます。前の要素がインラインやインラインブロックのときは、空いている部分に入り込もうとします（横に並びます）。画像を挿入する `img` タグや、Googleマップで使う `iframe` タグがこれにあたります。",
+      "どの種類にするかは CSS の `display` で変更できます。ブロックボックスにするなら `display: block;`、インラインボックスなら `display: inline;`、インラインブロックボックスなら `display: inline-block;` と書きます。"
+    ],
+    "values": {
+      "label": "3種類の比較",
+      "head": "種類",
+      "rows": [
+        {
+          "key": "ブロック（block）",
+          "desc": "横幅いっぱいに広がり縦に積まれる。幅・高さを指定できる。例：div, p, h1〜h6, ul"
+        },
+        {
+          "key": "インライン（inline）",
+          "desc": "中身の分の大きさで横に並ぶ。幅・高さは指定できない。例：a, span, strong, i, em, b, br, time, u"
+        },
+        {
+          "key": "インラインブロック（inline-block）",
+          "desc": "横に並びつつ、幅・高さを指定できる。例：img, iframe"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "リンクをボタンのような大きさにする",
+        "desc": "a はインラインなので width・height が効きません。display: inline-block にすると、横に並んだまま大きさを指定できます。",
+        "html": "<a class=\"btn\" href=\"#\">お問い合わせ</a>",
+        "css": ".btn {\n  display: inline-block;\n  width: 200px;\n  padding: 12px 0;\n  text-align: center;\n}"
+      },
+      {
+        "title": "画像の下にできる隙間を消す",
+        "desc": "img はインラインブロックとして文字と同じ行に置かれるため、下に少し隙間ができます。display: block にすると消えます。",
+        "css": "img {\n  display: block;\n}"
+      }
+    ],
+    "notes": [
+      "厳密には、HTML Living Standard では「ブロック要素」「インライン要素」という分類はもう存在しません。ただし、CSS でレイアウトするときは実質同じ働きをするので、この3種類で考えると理解しやすくなります。",
+      "インライン要素には上下の margin も効きません。余白を付けたいときは inline-block か block に変更します。"
+    ],
+    "related": [
+      "css-display",
+      "css-width",
+      "html-img",
+      "html-span"
+    ]
+  },
+  {
     "id": "css-display",
     "title": null,
     "ja": "表示形式",
@@ -9222,6 +9298,10 @@
           "desc": "回り込みなし（初期値）"
         },
         {
+          "key": "inherit",
+          "desc": "親要素から float プロパティの値を継承する"
+        },
+        {
           "key": "clear: both",
           "desc": "回り込みを解除する"
         },
@@ -9247,7 +9327,146 @@
       "html-img",
       "css-flex",
       "css-position"
-    ]
+    ],
+    "advanced": {
+      "title": "float の解除（clear・clearfix・overflow）",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "float の問題点"
+        },
+        {
+          "type": "p",
+          "text": "子要素すべてが float されている場合、**親要素の高さがなくなってしまいます**。float した要素は親の高さに数えられないためです。親の背景や枠線が子を包まなくなり、下に続く要素も回り込んでしまうので、**float は解除が必要**です。"
+        },
+        {
+          "type": "example",
+          "title": "例1：解除しないと親の高さがなくなる",
+          "desc": "親（薄い色の枠）の中の2つの子を左右に float すると、親の高さが 0 になり、子がはみ出します。",
+          "html": "<div class=\"wrapper\">\n  <div class=\"left\">float: left;</div>\n  <div class=\"right\">float: right;</div>\n</div>",
+          "css": ".wrapper {\n  padding: 4px;\n  background: #f5efe6;\n  border: 2px solid #5a3b0a;\n}\n.left, .right {\n  width: 40%;\n  padding: 16px 0;\n  text-align: center;\n  background: #b68235;\n  color: #fff;\n}\n.left {\n  float: left;\n}\n.right {\n  float: right;\n}",
+          "height": 110,
+          "points": [
+            {
+              "code": ".wrapper",
+              "text": "親要素です。子が2つとも float しているので、高さは padding の分しかありません。"
+            },
+            {
+              "code": "float: left; / float: right;",
+              "text": "子要素は親の枠から下にはみ出して表示されます。"
+            }
+          ]
+        },
+        {
+          "type": "h",
+          "text": "解除する方法01：clear"
+        },
+        {
+          "type": "p",
+          "text": "`clear` は float を解除させるために使います。値は `left`・`right`・`both` で、**float を使った直後の要素**に書きます。ただし、clear した要素の `margin-top` は効かなくなってしまいます。"
+        },
+        {
+          "type": "example",
+          "title": "例2：直後の要素に clear: both",
+          "desc": "float した2つの後にある「ボックス1」に clear: both を書くと、回り込みが止まり、ボックス1は float した要素の下に並びます。",
+          "html": "<div class=\"left\">左のコンテンツ</div>\n<div class=\"right\">右のコンテンツ</div>\n<div class=\"box box01\">ボックス1</div>\n<div class=\"box\">ボックス2</div>",
+          "css": ".left, .right, .box {\n  padding: 10px 0;\n  text-align: center;\n  background: #5a3b0a;\n  color: #fff;\n  font-size: 12px;\n}\n.left, .right {\n  width: 48%;\n}\n.left {\n  float: left;\n}\n.right {\n  float: right;\n}\n.box {\n  margin-top: 6px;\n}\n.box01 {\n  clear: both;\n}",
+          "height": 140,
+          "points": [
+            {
+              "code": ".box01 { clear: both; }",
+              "text": "float した要素の**直後の要素**に書きます。左右どちらの float も解除するので `both` にしています。"
+            },
+            {
+              "code": ".box { margin-top: 6px; }",
+              "text": "ボックス1にも margin-top を付けていますが、clear した要素では効きません。"
+            }
+          ]
+        },
+        {
+          "type": "h",
+          "text": "解除する方法02：clearfix"
+        },
+        {
+          "type": "p",
+          "text": "**float をかけている要素の親要素**にスタイルをかけます。`::after` 擬似要素で親の最後に空のブロックを作り、そこに `clear: both` を指定するしくみです。margin-top が効かない問題を回避できます。"
+        },
+        {
+          "type": "example",
+          "title": "例3：親の ::after で解除する（clearfix）",
+          "desc": "例1と同じHTMLに、親の .wrapper::after を足すだけで、親が子を包むようになります。",
+          "html": "<div class=\"wrapper\">\n  <div class=\"left\">float: left;</div>\n  <div class=\"right\">float: right;</div>\n</div>",
+          "css": ".wrapper {\n  padding: 4px;\n  background: #f5efe6;\n  border: 2px solid #5a3b0a;\n}\n.wrapper::after {\n  content: \"\";\n  display: block;\n  clear: both;\n}\n.left, .right {\n  width: 40%;\n  padding: 16px 0;\n  text-align: center;\n  background: #b68235;\n  color: #fff;\n}\n.left {\n  float: left;\n}\n.right {\n  float: right;\n}",
+          "height": 90,
+          "points": [
+            {
+              "code": "content: \"\";",
+              "text": "中身が空の擬似要素を、親の最後に作ります。"
+            },
+            {
+              "code": "display: block; clear: both;",
+              "text": "その擬似要素をブロックにして float を解除するので、親が float した子の下端まで伸びます。"
+            }
+          ]
+        },
+        {
+          "type": "h",
+          "text": "解除する方法03：overflow"
+        },
+        {
+          "type": "p",
+          "text": "親要素に `overflow: hidden` を指定する方法です。`auto` や `scroll` を設定しても解除できますが、スクロールバーが出る可能性があるため `hidden` で OK です。"
+        },
+        {
+          "type": "example",
+          "title": "例4：親に overflow: hidden",
+          "desc": "例1の親に overflow: hidden を1行足すだけで、親が子を包みます。",
+          "html": "<div class=\"wrapper\">\n  <div class=\"left\">float: left;</div>\n  <div class=\"right\">float: right;</div>\n</div>",
+          "css": ".wrapper {\n  padding: 4px;\n  background: #f5efe6;\n  border: 2px solid #5a3b0a;\n  overflow: hidden;\n}\n.left, .right {\n  width: 40%;\n  padding: 16px 0;\n  text-align: center;\n  background: #b68235;\n  color: #fff;\n}\n.left {\n  float: left;\n}\n.right {\n  float: right;\n}",
+          "height": 90,
+          "points": [
+            {
+              "code": "overflow: hidden;",
+              "text": "float した子を含めた高さで親が計算され、子を包むようになります。"
+            }
+          ]
+        },
+        {
+          "type": "h",
+          "text": "どれを使う？ clearfix を使うのが無難"
+        },
+        {
+          "type": "table",
+          "head": [
+            "方法",
+            "特徴・注意点"
+          ],
+          "rows": [
+            [
+              "`clear: both`",
+              "clear: both を設定する、直後に続く要素が必要。デザインやレイアウトを目的としただけのタグを入れることは好ましくない"
+            ],
+            [
+              "clearfix",
+              "すべてスタイルシートで処理するため、HTMLの文章構造を損なうことなく対応できる。やや古いブラウザにも対応可能"
+            ],
+            [
+              "`overflow`",
+              "一部の古いブラウザでは、印刷時に float した部分が消えてしまう場合がある。ブラウザによっては親要素自体が消えてしまうリスクも。影などはみ出た装飾も切れる"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "今どきの書き方：display: flow-root",
+          "items": [
+            "親に `display: flow-root;` を指定しても、clearfix と同じように float した子を包めます（「応用例・注意点」の「親要素の高さがなくなる問題を防ぐ」を参照）。",
+            "1行で書けて余計な擬似要素も要りません。講義どおり clearfix を使っても、flow-root を使っても、どちらでも大丈夫です。",
+            "なお、横並びのレイアウトを作るなら、そもそも float ではなく Flexbox を使うのが一般的です。"
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "css-flexbox",
@@ -9724,6 +9943,88 @@
     ]
   },
   {
+    "id": "css-align-self",
+    "title": null,
+    "ja": "1つのアイテムだけの交差軸方向の配置",
+    "lead": "Flexbox で、特定の子要素だけ垂直方向（交差軸方向）の位置を変えたいときに、その子要素に指定します。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "auto"
+      },
+      {
+        "label": "適用対象",
+        "value": "フレックスアイテム・グリッドアイテム"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"flex\">\n  <div class=\"item\">1</div>\n  <div class=\"item\">2</div>\n  <div class=\"item end\">3</div>\n  <div class=\"item\">4</div>\n</div>",
+      "css": ".flex {\n  display: flex;\n  align-items: flex-start;\n  gap: 8px;\n  height: 120px;\n  background: #f5efe6;\n}\n.item {\n  padding: 8px 16px;\n  background: #b68235;\n  color: #fff;\n}\n.end {\n  align-self: flex-end;\n}"
+    },
+    "preview": {
+      "height": 160,
+      "note": "親の align-items: flex-start で全員上揃え。3だけ align-self: flex-end で下に揃います",
+      "fullDocument": false
+    },
+    "explain": [
+      "`align-self` は、アイテム（子要素）の垂直方向の位置を指定するプロパティです。横並びのときは、上揃え・下揃え・中央揃えなどを子要素ごとに決められます。",
+      "親要素でも `align-items` で垂直方向の位置を指定できますが、子要素に `align-self` が指定されている場合は **align-self が優先されます**。全体は親の `align-items` で揃え、例外の1つだけを `align-self` で変える、という使い方をします。",
+      "親要素に高さの余白がなければ（親の高さとアイテムの高さが同じなら）、どの値を指定しても表示は変わりません。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "auto",
+          "desc": "親要素の align-items の値を使用（初期値）"
+        },
+        {
+          "key": "flex-start",
+          "desc": "子要素を上揃えで配置"
+        },
+        {
+          "key": "flex-end",
+          "desc": "子要素を下揃えで配置"
+        },
+        {
+          "key": "center",
+          "desc": "子要素を中央揃えで配置"
+        },
+        {
+          "key": "baseline",
+          "desc": "子要素をベースライン（文字の下端）に合わせて配置"
+        },
+        {
+          "key": "stretch",
+          "desc": "子要素を上下の余白を埋めるように配置"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "カードの「詳しく見る」ボタンだけ右下に置く",
+        "desc": "縦並び（column）のときは交差軸が横になるので、align-self: flex-end で右寄せになります。",
+        "html": "<div class=\"card\">\n  <p>説明文が入ります。</p>\n  <a class=\"card__more\" href=\"#\">詳しく見る</a>\n</div>",
+        "css": ".card {\n  display: flex;\n  flex-direction: column;\n}\n.card__more {\n  align-self: flex-end;\n}"
+      }
+    ],
+    "notes": [
+      "align-self は子要素に書くプロパティです。親に書いても効きません。",
+      "flex-direction: column のときは交差軸が横になるため、左右の位置を決めるプロパティになります。"
+    ],
+    "related": [
+      "css-align-items",
+      "css-flexbox",
+      "css-justify-content",
+      "css-flex-direction"
+    ]
+  },
+  {
     "id": "css-gap",
     "title": null,
     "ja": "アイテム間の間隔",
@@ -9891,7 +10192,105 @@
       "css-display",
       "css-flex-direction",
       "css-gap"
-    ]
+    ],
+    "advanced": {
+      "title": "flex-basis と flex-shrink",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "flex-basis：flex 専用の幅"
+        },
+        {
+          "type": "p",
+          "text": "`flex-basis` は、**flex 専用の width 設定プロパティ**です。伸び縮みする前の、基本の大きさを決めます。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "",
+            "width",
+            "flex-basis"
+          ],
+          "rows": [
+            [
+              "使える要素",
+              "どの要素にも使える",
+              "flex の子要素（フレックスアイテム）にのみ使える"
+            ],
+            [
+              "両方書いたとき",
+              "—",
+              "**flex-basis の値が優先される**"
+            ],
+            [
+              "向き",
+              "常に横幅",
+              "flex アイテムが並ぶ方向（`flex-direction`）によって横幅か高さの値になる"
+            ]
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例1：width と flex-basis を両方書く",
+          "desc": "width: 100px と flex-basis: 200px を両方書くと、flex-basis の 200px になります。",
+          "html": "<div class=\"flex\">\n  <div class=\"item basis\">width: 100px<br>flex-basis: 200px</div>\n  <div class=\"item\">width: 100px</div>\n</div>",
+          "css": ".flex {\n  display: flex;\n  gap: 8px;\n}\n.item {\n  width: 100px;\n  padding: 8px;\n  background: #b68235;\n  color: #fff;\n  font-size: 12px;\n}\n.basis {\n  flex-basis: 200px;\n}",
+          "height": 90,
+          "points": [
+            {
+              "code": "flex-basis: 200px;",
+              "text": "左の箱は `width: 100px` も書いてありますが、**flex-basis が優先**されて 200px の幅になります。"
+            },
+            {
+              "code": "width: 100px;",
+              "text": "右の箱は width だけなので、そのまま 100px です。"
+            }
+          ]
+        },
+        {
+          "type": "h",
+          "text": "flex-shrink：縮む割合"
+        },
+        {
+          "type": "p",
+          "text": "shrink は「縮む」という意味で、`flex-shrink` は **圧縮率** を指定します。子要素の幅の合計が親要素からはみ出す場合に使います。"
+        },
+        {
+          "type": "p",
+          "text": "`1`、`2`、`3` などの単位なしの数値で指定し、数値が大きいほどよく縮みます。初期値は `1` なので、何も書かなければ子要素は親に収まるように縮みます。`flex-shrink: 0` と書くと圧縮率が 0 になり、flex-basis や width で設定した子要素の幅がそのまま確保されます。そのぶん、親要素からはみ出します。"
+        },
+        {
+          "type": "example",
+          "title": "例2：flex-shrink: 0 で縮まないようにする",
+          "desc": "幅 300px の親に、width: 150px の子を3つ並べます。上は初期値（1）で縮んで収まり、下は flex-shrink: 0 で縮まずはみ出します。",
+          "html": "<div class=\"flex\">\n  <div class=\"item\">1</div>\n  <div class=\"item\">2</div>\n  <div class=\"item\">3</div>\n</div>\n<div class=\"flex\">\n  <div class=\"item no-shrink\">1</div>\n  <div class=\"item no-shrink\">2</div>\n  <div class=\"item no-shrink\">3</div>\n</div>",
+          "css": ".flex {\n  display: flex;\n  width: 300px;\n  margin-bottom: 12px;\n  border: 2px dashed #999;\n}\n.item {\n  width: 150px;\n  padding: 8px 0;\n  text-align: center;\n  background: #b68235;\n  color: #fff;\n  border-right: 1px solid #fff;\n}\n.no-shrink {\n  flex-shrink: 0;\n}",
+          "height": 120,
+          "points": [
+            {
+              "code": ".item { width: 150px; }",
+              "text": "3つで 450px あり、親の 300px からはみ出す幅です。"
+            },
+            {
+              "code": "（上の段）flex-shrink: 1（初期値）",
+              "text": "3つとも同じ割合で縮み、親の点線の中に収まります。"
+            },
+            {
+              "code": ".no-shrink { flex-shrink: 0; }",
+              "text": "下の段は縮まないので、150px ずつのまま**親からはみ出します**。"
+            }
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "まとめて書くなら flex",
+          "items": [
+            "`flex: 0 0 200px;` は「伸びない・縮まない・基本の幅 200px」という意味です。",
+            "順番は `flex-grow` → `flex-shrink` → `flex-basis` です。"
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "css-order",

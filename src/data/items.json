@@ -1423,6 +1423,25 @@
     "category": "box"
   },
   {
+    "id": "css-box-types",
+    "type": "css",
+    "slug": "box-types",
+    "name": "ボックスの種類",
+    "summary": "ブロック・インライン・インラインブロック",
+    "keywords": [
+      "ブロック要素",
+      "インライン要素",
+      "インラインブロック",
+      "block",
+      "inline",
+      "inline-block",
+      "ブロックボックス",
+      "インラインボックス",
+      "display"
+    ],
+    "category": "layout"
+  },
+  {
     "id": "css-display",
     "type": "css",
     "slug": "display",
@@ -1568,6 +1587,22 @@
       "flex",
       "中央寄せ",
       "縦"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-align-self",
+    "type": "css",
+    "slug": "align-self",
+    "name": "align-self",
+    "summary": "1つのアイテムだけの交差軸方向の配置",
+    "keywords": [
+      "flex",
+      "縦",
+      "中央寄せ",
+      "下揃え",
+      "個別",
+      "align-items"
     ],
     "category": "flexgrid"
   },
