@@ -3090,7 +3090,8 @@
     "explain": [
       "`form` は、利用者が入力したデータをサーバーに送るための入れ物です。中の入力欄の値が、送信ボタンを押したときにまとめて送られます。",
       "`action` 属性に送信先のURLを、`method` 属性に送信方法を書きます。検索フォームのようにURLに値を付けて送るなら `get`、お問い合わせなど内容を見せずに送るなら `post` を使います。",
-      "送信される値の名前は、各入力欄の `name` 属性で決まります。`name` がない入力欄の値は送信されません。"
+      "送信される値の名前は、各入力欄の `name` 属性で決まります。`name` がない入力欄の値は送信されません。",
+      "HTMLだけでは、送られてきたデータを受け取って処理する（メールを送る・保存するなど）ことはできません。受け取り側は、PHP などのサーバー側のプログラムや、フォームの送信サービスで用意します。"
     ],
     "values": {
       "label": "主な属性",
@@ -3102,7 +3103,19 @@
         },
         {
           "key": "method",
-          "desc": "get（URLに付けて送る）/ post（本文として送る）"
+          "desc": "get・post・dialog の3種類（下の行を参照）"
+        },
+        {
+          "key": "method=\"get\"",
+          "desc": "URLの末尾にデータを連結して送信する"
+        },
+        {
+          "key": "method=\"post\"",
+          "desc": "URLに表示せずにデータを送信する"
+        },
+        {
+          "key": "method=\"dialog\"",
+          "desc": "dialog 要素の中で使い、送信せずにダイアログを閉じる"
         },
         {
           "key": "autocomplete",
@@ -3123,7 +3136,8 @@
     ],
     "notes": [
       "form の中に form を入れることはできません。",
-      "サンプルの送信先は架空のため、プレビューで送信しても何も起こりません。"
+      "サンプルの送信先は架空のため、プレビューで送信しても何も起こりません。",
+      "method を省略すると get になります。お問い合わせなど個人情報を含むフォームでは post を指定します。"
     ],
     "related": [
       "html-input",
@@ -3166,7 +3180,7 @@
       "入力欄には必ずラベルを付けます。`placeholder` は入力例を示すためのもので、ラベルの代わりにはなりません。"
     ],
     "values": {
-      "label": "よく使う type の値",
+      "label": "type の値",
       "head": "値",
       "rows": [
         {
@@ -3174,24 +3188,88 @@
           "desc": "1行のテキスト"
         },
         {
-          "key": "email / tel / url",
-          "desc": "メールアドレス / 電話番号 / URL"
+          "key": "password",
+          "desc": "パスワード（入力内容を伏せ字にする）"
+        },
+        {
+          "key": "email",
+          "desc": "メールアドレス"
+        },
+        {
+          "key": "tel",
+          "desc": "電話番号"
+        },
+        {
+          "key": "url",
+          "desc": "URL"
+        },
+        {
+          "key": "search",
+          "desc": "検索ボックス"
         },
         {
           "key": "number",
           "desc": "数値（min・max・step で範囲を指定）"
         },
         {
-          "key": "password",
-          "desc": "入力内容を伏せ字にする"
-        },
-        {
-          "key": "checkbox / radio",
-          "desc": "複数選択 / 1つだけ選択"
+          "key": "range",
+          "desc": "スライドゲージ（つまみで数値を選ぶ）"
         },
         {
           "key": "date",
-          "desc": "日付の選択"
+          "desc": "年月日"
+        },
+        {
+          "key": "month",
+          "desc": "年月"
+        },
+        {
+          "key": "week",
+          "desc": "週（年と何週目か）"
+        },
+        {
+          "key": "time",
+          "desc": "時刻"
+        },
+        {
+          "key": "datetime-local",
+          "desc": "日時（年月日と時刻）"
+        },
+        {
+          "key": "color",
+          "desc": "カラーピッカー"
+        },
+        {
+          "key": "checkbox",
+          "desc": "チェックボックス（複数選択）"
+        },
+        {
+          "key": "radio",
+          "desc": "ラジオボタン（1つだけ選択）"
+        },
+        {
+          "key": "file",
+          "desc": "ファイル添付用のボタン"
+        },
+        {
+          "key": "submit",
+          "desc": "送信ボタン"
+        },
+        {
+          "key": "reset",
+          "desc": "リセットボタン（入力内容を初期状態に戻す）"
+        },
+        {
+          "key": "button",
+          "desc": "汎用ボタン（value の文字を表示。動きは JavaScript で付ける）"
+        },
+        {
+          "key": "image",
+          "desc": "画像を使った送信ボタン（src で画像を指定）"
+        },
+        {
+          "key": "hidden",
+          "desc": "画面に表示せず、値だけを送信する"
         }
       ]
     },
@@ -3205,11 +3283,28 @@
         "title": "ラジオボタンで1つ選ばせる",
         "desc": "同じ name のラジオボタンは、1つしか選べません。",
         "html": "<label><input type=\"radio\" name=\"size\" value=\"S\"> S</label>\n<label><input type=\"radio\" name=\"size\" value=\"M\" checked> M</label>"
+      },
+      {
+        "title": "スライドゲージとカラーピッカー",
+        "desc": "range は min・max・step で範囲と刻みを指定します。color はクリックすると色を選ぶ画面が開きます。",
+        "html": "<label>音量 <input type=\"range\" name=\"volume\" min=\"0\" max=\"100\" step=\"10\" value=\"50\"></label>\n<label>テーマカラー <input type=\"color\" name=\"theme\" value=\"#b68235\"></label>"
+      },
+      {
+        "title": "ボタンの種類",
+        "desc": "value に書いた文字がボタンに表示されます。ボタンは button 要素でも作れ、中にアイコンなども入れられるため、button のほうがよく使われます。",
+        "html": "<input type=\"submit\" value=\"送信する\">\n<input type=\"reset\" value=\"リセット\">\n<input type=\"button\" value=\"ボタン\">\n<input type=\"image\" src=\"button.png\" alt=\"送信する\">"
+      },
+      {
+        "title": "ファイルを添付する",
+        "desc": "type=\"file\" でファイルを送るときは、form に method=\"post\" と enctype=\"multipart/form-data\" が必要です。",
+        "html": "<form action=\"/upload\" method=\"post\" enctype=\"multipart/form-data\">\n  <input type=\"file\" name=\"photo\" accept=\"image/*\">\n  <button>アップロード</button>\n</form>"
       }
     ],
     "notes": [
       "placeholder だけで項目名を示すと、入力を始めた時点で見えなくなります。必ず label を付けます。",
-      "フォームで送信するには name 属性が必要です。"
+      "フォームで送信するには name 属性が必要です。",
+      "type=\"image\" の送信ボタンには、画像の代わりになる alt 属性を必ず付けます。",
+      "date・time・color などの見た目は、ブラウザやOSによって異なります。"
     ],
     "related": [
       "html-label",
@@ -3300,7 +3395,7 @@
       },
       {
         "label": "主な属性",
-        "value": "rows・cols・maxlength"
+        "value": "rows・cols・maxlength・minlength"
       }
     ],
     "code": {
@@ -3330,6 +3425,10 @@
           "desc": "入力できる最大文字数"
         },
         {
+          "key": "minlength",
+          "desc": "入力が必要な最小文字数"
+        },
+        {
           "key": "placeholder",
           "desc": "入力例"
         },
@@ -3341,9 +3440,9 @@
     },
     "usages": [
       {
-        "title": "文字数の上限を設ける",
-        "desc": "maxlength を付けると、それ以上は入力できなくなります。",
-        "html": "<textarea name=\"comment\" rows=\"3\" maxlength=\"200\"></textarea>"
+        "title": "文字数の上限・下限を設ける",
+        "desc": "maxlength を付けるとそれ以上は入力できなくなり、minlength を付けると文字数が足りないときに送信時にブラウザが警告します。",
+        "html": "<textarea name=\"comment\" rows=\"3\" minlength=\"10\" maxlength=\"200\"></textarea>"
       }
     ],
     "notes": [
@@ -3388,7 +3487,8 @@
     "explain": [
       "`select` はプルダウン形式の選択欄です。中に `option` を並べ、選ばれた `option` の `value` が送信されます。",
       "`selected` 属性を付けた `option` が最初から選ばれた状態になります。",
-      "選択肢が多いときは `optgroup` でグループに分けると選びやすくなります。"
+      "選択肢が多いときは `optgroup` でグループに分けると選びやすくなります。",
+      "`multiple` 属性を付けると、Ctrl キー（Mac は ⌘ キー）を押しながら複数の項目を選べるセレクトボックスになります。PHP などで受け取る場合は、`name` 属性の値の最後に `[]` を付けておくと、選んだ項目がすべて受け渡されます（付けないと最後の1つしか受け取れません）。"
     ],
     "values": {
       "label": "主な属性",
@@ -3421,6 +3521,11 @@
         "title": "選択肢をグループに分ける",
         "desc": "optgroup の label はグループ名として表示され、選択はできません。",
         "html": "<select name=\"drink\">\n  <optgroup label=\"コーヒー\">\n    <option>ブレンド</option>\n    <option>カフェラテ</option>\n  </optgroup>\n  <optgroup label=\"紅茶\">\n    <option>ダージリン</option>\n  </optgroup>\n</select>"
+      },
+      {
+        "title": "複数選択できるセレクトボックス",
+        "desc": "multiple と name の [] をセットで付けます。size で一度に見える行数を指定できます。",
+        "html": "<select name=\"acthouse[]\" multiple size=\"3\">\n  <option value=\"html\" selected>HTML</option>\n  <option value=\"css\">CSS</option>\n  <option value=\"js\">JS</option>\n</select>"
       }
     ],
     "notes": [
@@ -5305,7 +5410,8 @@
       "css-important",
       "css-id-selector",
       "css-class-selector",
-      "css-inline-style"
+      "css-inline-style",
+      "css-attribute-selector"
     ]
   },
   {
@@ -5662,6 +5768,125 @@
     ]
   },
   {
+    "id": "css-units",
+    "title": null,
+    "ja": "色の書き方と px・%・em・rem・vw などの単位",
+    "lead": "色やサイズの値には、いくつかの書き方があります。色は色名・16進数・rgb()・rgba() など、サイズは px のような絶対値と、% や rem のような相対値を使い分けます。",
+    "meta": [
+      {
+        "label": "色の値",
+        "value": "色名・#16進数・rgb()・rgba()"
+      },
+      {
+        "label": "絶対値",
+        "value": "px"
+      },
+      {
+        "label": "相対値",
+        "value": "%・em・rem・vw・vh・vmin・vmax"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"parent\">\n  <p class=\"em\">1.5em = 30px</p>\n  <p class=\"rem\">1.5rem = 24px</p>\n</div>\n<div class=\"bar half\">width: 50%</div>\n<div class=\"bar vw\">width: 30vw</div>",
+      "css": ".parent {\n  font-size: 20px;\n}\n.em {\n  font-size: 1.5em;\n  margin: 0;\n}\n.rem {\n  font-size: 1.5rem;\n  margin: 0 0 10px;\n}\n.bar {\n  padding: 4px 8px;\n  margin-bottom: 6px;\n  font-size: 14px;\n  background: #f6ead8;\n  border-left: 4px solid #b68235;\n}\n.half {\n  width: 50%;\n}\n.vw {\n  width: 30vw;\n}"
+    },
+    "preview": {
+      "height": 190,
+      "note": "親の文字サイズは 20px です。em は親（20px）を、rem は html（16px）を基準に計算されます",
+      "fullDocument": false
+    },
+    "explain": [
+      "**色の値**は、`red` のような色名、`#ffffff` のような16進数、`rgb(255, 255, 255)` のように赤・緑・青を0〜255で表す書き方があります。`rgba(255, 255, 255, .8)` は rgb に透明度（Alpha）を加えたもので、最後の値が 0（透明）〜1（不透明）です。16進数は `#ff0000` を `#f00` のように3桁に省略できます。",
+      "**px** は画面の1ドットを1とする絶対値で、親や画面の大きさに関係なく同じ大きさになります。",
+      "**%** は親要素の値を基準にした相対値です。`width: 50%` なら親の幅の半分です。**em** は親要素の文字サイズ（font-size）が基準で、`1.5em` は親の1.5倍です。**rem** はルート要素（`html`）の文字サイズが基準で、ブラウザの初期値は 16px なので `1.5rem` は 24px になります。",
+      "**vw・vh** はビューポート（ブラウザの表示領域）の横幅・縦幅を基準にした相対値で、`1vw` が横幅の1%です。**vmin・vmax** は、横幅と縦幅の小さいほう・大きいほうを基準にします。",
+      "**単位の使い分け**は、制作会社や案件のコーディングルール（レギュレーション）で決められていることが多いため、それぞれの違いを理解しておくことが大切です。一般的には、文字サイズは px・em・rem を使います。rem で指定しておくと、html の font-size を変えるだけでページ全体の文字サイズを一気に変更できます（PCサイトだけのページなら px でも問題ありません）。",
+      "レイアウトのサイズは px と % を使い分けます。header や main のようにページのレイアウトを担う要素の幅を % で指定すると、画面のサイズが変わっても要素が見切れたり、横スクロールが出たりしません。"
+    ],
+    "values": {
+      "label": "色の値と単位",
+      "head": "値・単位",
+      "rows": [
+        {
+          "key": "red / blue / green",
+          "desc": "色の名前"
+        },
+        {
+          "key": "#ffffff / #fff",
+          "desc": "16進数（3桁に省略できる）"
+        },
+        {
+          "key": "rgb(255, 255, 255)",
+          "desc": "赤・緑・青を0〜255で"
+        },
+        {
+          "key": "rgba(255, 255, 255, .8)",
+          "desc": "rgb に透明度（0〜1）を加えたもの"
+        },
+        {
+          "key": "px",
+          "desc": "1px = 1ドットの絶対値"
+        },
+        {
+          "key": "%",
+          "desc": "親要素の値を基準にした相対値"
+        },
+        {
+          "key": "em",
+          "desc": "親要素の font-size を基準にした相対値"
+        },
+        {
+          "key": "rem",
+          "desc": "ルート要素（html）の font-size を基準にした相対値"
+        },
+        {
+          "key": "vw",
+          "desc": "ビューポートの横幅の1%"
+        },
+        {
+          "key": "vh",
+          "desc": "ビューポートの縦幅の1%"
+        },
+        {
+          "key": "vmin",
+          "desc": "横幅と縦幅の小さいほうの1%"
+        },
+        {
+          "key": "vmax",
+          "desc": "横幅と縦幅の大きいほうの1%"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "文字サイズを rem でまとめて変える",
+        "desc": "rem で指定しておくと、html の font-size を変えるだけで全体が拡大・縮小します。",
+        "css": "h1 {\n  font-size: 2rem;\n}\np {\n  font-size: 1rem;\n}\n\n/* 広い画面では全体を少し大きく */\n@media (min-width: 768px) {\n  html {\n    font-size: 112.5%;\n  }\n}"
+      },
+      {
+        "title": "レイアウトの幅は % と max-width で",
+        "desc": "% で画面に合わせて伸び縮みさせ、max-width で広がりすぎを防ぎます。",
+        "css": ".container {\n  width: 90%;\n  max-width: 1080px;\n  margin: 0 auto;\n}"
+      },
+      {
+        "title": "画面の高さいっぱいのメインビジュアル",
+        "desc": "vh を使うと、ブラウザの縦幅に合わせた高さにできます。",
+        "css": ".hero {\n  min-height: 100vh;\n}"
+      }
+    ],
+    "notes": [
+      "0 のときは単位を省略できます（margin: 0）。それ以外は、数値と単位の間に空白を入れずに書きます（16 px は無効）。",
+      "em は入れ子にすると、親の em がさらに掛け算されて大きくなりすぎることがあります。迷ったら rem を使います。",
+      "100vw はスクロールバーの幅を含むため、width: 100vw にすると横スクロールが出ることがあります。幅いっぱいにするなら width: 100% を使います。"
+    ],
+    "related": [
+      "css-font-size",
+      "css-width",
+      "css-color",
+      "css-clamp"
+    ]
+  },
+  {
     "id": "css-id-selector",
     "title": null,
     "ja": "idセレクタ（1つだけの要素を指定）",
@@ -5815,7 +6040,8 @@
       "css-id-selector",
       "css-type-selector",
       "css-selector-list",
-      "css-specificity"
+      "css-specificity",
+      "css-attribute-selector"
     ]
   },
   {
@@ -5899,6 +6125,171 @@
       "css-descendant-selector",
       "css-specificity",
       "css-id-selector"
+    ]
+  },
+  {
+    "id": "css-attribute-selector",
+    "title": null,
+    "ja": "属性の値で指定する（含む・始まる・終わる）",
+    "lead": "class や href などの属性の値で要素を選ぶセレクタです。「〜を含む」「〜で始まる」「〜で終わる」のように、値の一部で指定することもできます。",
+    "meta": [
+      {
+        "label": "書き方",
+        "value": "[属性名=\"値\"] { }"
+      },
+      {
+        "label": "詳細度",
+        "value": "0-1-0（クラスと同じ）"
+      },
+      {
+        "label": "別名",
+        "value": "ワイルドカード（講義での呼び方）"
+      }
+    ],
+    "code": {
+      "html": "<p class=\"acthouse-title\">acthouse-title</p>\n<p class=\"box-acthouse-content\">box-acthouse-content</p>\n<p class=\"lead-acthouse\">lead-acthouse</p>",
+      "css": "/* acthouse を含む → 3つすべて */\n[class*=\"acthouse\"] {\n  padding-left: 8px;\n  border-left: 4px solid #b68235;\n}\n/* acthouse- で始まる → 1つ目だけ */\n[class^=\"acthouse-\"] {\n  color: #2e7d5b;\n}\n/* -acthouse で終わる → 3つ目だけ */\n[class$=\"-acthouse\"] {\n  color: #1f5fa8;\n}"
+    },
+    "preview": {
+      "height": 150,
+      "note": "左の線は3つすべて、緑は「acthouse- で始まる」1つ目、青は「-acthouse で終わる」3つ目だけに付いています",
+      "fullDocument": false
+    },
+    "explain": [
+      "属性セレクタは `[属性名]` や `[属性名=\"値\"]` のように、角かっこ（`[ ]`）の中に属性を書いて要素を選びます。クラスに限らず、`href`・`type`・`data-*` など、どの属性にも使えます。",
+      "`=` の前に記号を付けると、値の一部で指定できます。`*=` は「〜を含む」、`^=` は「〜で始まる」、`$=` は「〜で終わる」です。似た名前のクラスをまとめて指定したいときに便利で、講義では「ワイルドカード（正規表現）」として紹介されています（実際の正規表現とは別のもので、使えるのはこの3つの記号などに限られます）。",
+      "比べられるのは属性の値の文字列全体です。`class=\"title acthouse-lead\"` のようにクラスが複数あると、文字列の先頭は `title` なので `[class^=\"acthouse-\"]` には一致しません。",
+      "詳細度はクラスセレクタと同じ（0-1-0）です。"
+    ],
+    "values": {
+      "label": "書き方",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "[attr]",
+          "desc": "その属性を持つ要素（値は問わない）"
+        },
+        {
+          "key": "[attr=\"値\"]",
+          "desc": "値が完全に一致する"
+        },
+        {
+          "key": "[attr*=\"値\"]",
+          "desc": "値を含む"
+        },
+        {
+          "key": "[attr^=\"値\"]",
+          "desc": "値で始まる"
+        },
+        {
+          "key": "[attr$=\"値\"]",
+          "desc": "値で終わる"
+        },
+        {
+          "key": "[attr~=\"値\"]",
+          "desc": "空白で区切った単語のどれかが一致する"
+        },
+        {
+          "key": "[attr=\"値\" i]",
+          "desc": "大文字・小文字を区別しない"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "外部リンクとPDFに印を付ける",
+        "desc": "href の始まりや終わりで、リンクの種類を見分けられます。",
+        "css": "a[href^=\"http\"]::after {\n  content: \" ↗\";\n}\na[href$=\".pdf\"]::after {\n  content: \"（PDF）\";\n}"
+      },
+      {
+        "title": "入力欄の種類ごとに指定する",
+        "desc": "type 属性の値で、input の種類ごとにスタイルを分けられます。",
+        "css": "input[type=\"text\"],\ninput[type=\"email\"] {\n  width: 100%;\n  padding: 8px;\n}\ninput[type=\"checkbox\"] {\n  width: 18px;\n  height: 18px;\n}"
+      }
+    ],
+    "notes": [
+      "値は \" \" で囲みます。英数字とハイフンだけなら省略もできますが、囲んでおくほうが確実です。",
+      "クラスを1つ付ければ済む場面では、クラスセレクタのほうが読みやすくなります。部分一致は、名前の規則が決まっているクラスや、自分でクラスを付けられない要素に使います。"
+    ],
+    "related": [
+      "css-class-selector",
+      "css-universal-selector",
+      "css-specificity",
+      "css-pseudo-class"
+    ]
+  },
+  {
+    "id": "css-universal-selector",
+    "title": null,
+    "ja": "すべての要素を指定する",
+    "lead": "「*」（アスタリスク）1文字で、ページ内のすべての要素を指定するセレクタです。リセットCSSや box-sizing の一括指定によく使います。",
+    "meta": [
+      {
+        "label": "書き方",
+        "value": "* { }"
+      },
+      {
+        "label": "詳細度",
+        "value": "0-0-0（0点）"
+      },
+      {
+        "label": "効く範囲",
+        "value": "すべての要素"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"box\">width: 200px</div>",
+      "css": "*,\n*::before,\n*::after {\n  box-sizing: border-box;\n}\n.box {\n  width: 200px;\n  padding: 20px;\n  border: 4px solid #b68235;\n  background: #f6ead8;\n}"
+    },
+    "preview": {
+      "height": 110,
+      "note": "すべての要素が border-box になっているため、padding と border を足しても箱の幅は 200px のままです",
+      "fullDocument": false
+    },
+    "explain": [
+      "ユニバーサルセレクタ（全称セレクタ）は `*` と書き、`html`・`body` から `span` まで、すべての要素に一致します。",
+      "よく使うのは、上の例のように `box-sizing: border-box` をすべての要素にまとめて指定する書き方です。幅の計算に padding と border が含まれるようになり、レイアウトを組みやすくなります。`::before`・`::after` の疑似要素は `*` には含まれないため、一緒に書いておくのが定番です。",
+      "ほかのセレクタと組み合わせると範囲を絞れます。`.card > *` は「.card の直下の子すべて」、`.list *` は「.list の中のすべての要素」です。",
+      "詳細度は 0（0-0-0）なので、要素セレクタやクラスで簡単に上書きできます。"
+    ],
+    "values": {
+      "label": "よく使う書き方",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "* { }",
+          "desc": "すべての要素"
+        },
+        {
+          "key": "*, *::before, *::after { }",
+          "desc": "疑似要素も含めてすべて（box-sizing の指定で定番）"
+        },
+        {
+          "key": ".card > * { }",
+          "desc": ".card の直下の子すべて"
+        },
+        {
+          "key": ".list * { }",
+          "desc": ".list の中のすべての要素"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "子要素の間隔をまとめて指定する",
+        "desc": "隣接セレクタと組み合わせると、2つ目以降の子すべてに上の余白を付けられます。",
+        "css": ".stack > * + * {\n  margin-top: 16px;\n}"
+      }
+    ],
+    "notes": [
+      "* { margin: 0; padding: 0; } のように何でも指定すると、見出しやリストの余白がすべて消えるなど影響が大きくなります。指定するプロパティは最小限にします。",
+      "文字色や書体のように継承するプロパティは、* ではなく body に指定すれば子要素に引き継がれます。"
+    ],
+    "related": [
+      "css-box-sizing",
+      "css-type-selector",
+      "css-attribute-selector",
+      "css-child-selector"
     ]
   },
   {
@@ -6565,7 +6956,8 @@
       "css-line-height",
       "css-font-weight",
       "css-clamp",
-      "html-h1"
+      "html-h1",
+      "css-units"
     ]
   },
   {
@@ -7257,7 +7649,8 @@
       "css-background-color",
       "css-opacity",
       "css-var",
-      "css-text-decoration"
+      "css-text-decoration",
+      "css-units"
     ]
   },
   {
@@ -7330,7 +7723,8 @@
       "css-color",
       "css-background-image",
       "css-opacity",
-      "css-padding"
+      "css-padding",
+      "css-units"
     ]
   },
   {
@@ -7364,7 +7758,8 @@
     "explain": [
       "`background-image` は、`url()` で画像ファイルを、`linear-gradient()` などでグラデーションを背景に表示するプロパティです。",
       "既定では画像が元の大きさで繰り返し並びます。`background-size: cover` で要素全体を覆うように拡大し、`background-repeat: no-repeat` で繰り返しを止めるのが定番です。",
-      "背景画像は装飾として扱われ、読み上げソフトには伝わりません。内容として意味のある画像は `img` で配置します。"
+      "背景画像は装飾として扱われ、読み上げソフトには伝わりません。内容として意味のある画像は `img` で配置します。",
+      "背景色・背景画像・位置・繰り返しなどは `background` プロパティで1行にまとめても書けます（ショートハンド）。ただし、どの値が何を指しているか読み取りにくく、書かなかった値は初期値に戻るため、`background-color`・`background-image` のように別々に書いたほうが分かりやすくなります。"
     ],
     "values": {
       "label": "一緒に使うプロパティ",
@@ -7376,11 +7771,11 @@
         },
         {
           "key": "background-position",
-          "desc": "表示位置（center など）"
+          "desc": "表示位置（left top・center など）"
         },
         {
           "key": "background-repeat",
-          "desc": "no-repeat で繰り返さない"
+          "desc": "繰り返し（no-repeat で繰り返さない）"
         },
         {
           "key": "background-attachment",
@@ -7397,6 +7792,11 @@
         "title": "画像の上に暗い幕をかけて文字を読みやすくする",
         "desc": "背景画像は複数重ねられます。先に書いたものが手前に表示されます。",
         "css": ".hero {\n  background-image:\n    linear-gradient(rgb(0 0 0 / 40%), rgb(0 0 0 / 40%)),\n    url(\"hero.jpg\");\n  background-size: cover;\n  color: #fff;\n}"
+      },
+      {
+        "title": "background の一括指定と個別指定",
+        "desc": "どちらも同じ結果です。個別に書いたほうが、後から一部だけ変更するときに分かりやすくなります。",
+        "css": "/* 一括指定（ショートハンド） */\n.acthouse {\n  background: #000 url(\"../images/bg_01.jpg\") left top no-repeat;\n}\n\n/* 個別に指定 */\n.acthouse {\n  background-color: #000;\n  background-image: url(\"../images/bg_01.jpg\");\n  background-position: left top;\n  background-repeat: no-repeat;\n}"
       }
     ],
     "notes": [
@@ -7404,10 +7804,177 @@
       "背景画像の上に文字を載せるときは、どんな画像でも読めるコントラストを確保します。"
     ],
     "related": [
+      "css-background-position",
+      "css-background-repeat",
       "css-background-color",
       "html-img",
       "css-aspect-ratio",
       "css-opacity"
+    ]
+  },
+  {
+    "id": "css-background-position",
+    "title": null,
+    "ja": "背景画像の表示位置",
+    "lead": "背景画像を要素のどこに表示するかを指定します。top・center などの位置を示すキーワードのほか、px や % でも指定できます。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "0% 0%（左上）"
+      },
+      {
+        "label": "適用対象",
+        "value": "すべての要素"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"wrap\">\n  <div class=\"box lt\">left top</div>\n  <div class=\"box cc\">center center</div>\n  <div class=\"box lb\">left bottom</div>\n</div>",
+      "css": ".wrap {\n  display: flex;\n  gap: 8px;\n}\n.box {\n  flex: 1;\n  height: 110px;\n  padding: 4px 6px;\n  font-size: 12px;\n  text-align: right;\n  border: 1px solid #ccc;\n  background-color: #f3f2f2;\n  background-image: linear-gradient(#3a9ad9, #3a9ad9);\n  background-size: 32px 32px;\n  background-repeat: no-repeat;\n}\n.lt {\n  background-position: left top;\n}\n.cc {\n  background-position: center center;\n}\n.lb {\n  background-position: left bottom;\n}"
+    },
+    "preview": {
+      "height": 140,
+      "note": "青い四角が背景画像です（例では linear-gradient で画像の代わりにしています）",
+      "fullDocument": false
+    },
+    "explain": [
+      "`background-position` は、背景画像の位置を「横 縦」の順に指定するプロパティです。`left top` なら左上、`center center` なら中央、`left bottom` なら左下に表示されます。",
+      "位置は「位置を示すキーワード」「px 指定」「% 指定」などで指定できます。キーワードは `top`・`left`・`bottom`・`right`・`center` の5つで、値を1つだけ書くと、もう一方は `center` になります。",
+      "px で指定すると、要素の左上からの距離になります。`20px 40px` なら左から20px、上から40pxの位置です。`right 20px bottom 10px` のように書くと、右端・下端からの距離で指定できます。",
+      "% は、画像の同じ割合の点を要素の同じ割合の点に合わせます。`50% 50%` は中央、`100% 100%` は右下にぴったり寄せた位置です。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "top / left / bottom / right / center",
+          "desc": "位置を示すキーワード"
+        },
+        {
+          "key": "left top",
+          "desc": "左上（初期値と同じ）"
+        },
+        {
+          "key": "center center / center",
+          "desc": "中央"
+        },
+        {
+          "key": "20px 40px",
+          "desc": "左から20px、上から40px"
+        },
+        {
+          "key": "right 20px bottom 10px",
+          "desc": "右端から20px、下端から10px"
+        },
+        {
+          "key": "50% 50%",
+          "desc": "% で指定（50% 50% は中央）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "写真を中央基準で要素いっぱいに表示する",
+        "desc": "cover で拡大したとき、どこを基準に切り取るかを center で指定します。",
+        "css": ".hero {\n  background-image: url(\"../images/hero.jpg\");\n  background-size: cover;\n  background-position: center;\n  background-repeat: no-repeat;\n}"
+      },
+      {
+        "title": "右下に飾りの画像を置く",
+        "desc": "端からの距離を指定すると、余白を空けて配置できます。",
+        "css": ".section {\n  background-image: url(\"../images/leaf.png\");\n  background-position: right 16px bottom 16px;\n  background-repeat: no-repeat;\n}"
+      }
+    ],
+    "notes": [
+      "背景画像を繰り返していると位置の違いが分かりにくいため、background-repeat: no-repeat と組み合わせて使うのが一般的です。",
+      "background-image を指定していないと、background-position だけ書いても何も変わりません。"
+    ],
+    "related": [
+      "css-background-image",
+      "css-background-repeat",
+      "css-background-color"
+    ]
+  },
+  {
+    "id": "css-background-repeat",
+    "title": null,
+    "ja": "背景画像の繰り返し",
+    "lead": "背景画像を繰り返して並べるかどうか、どの方向に並べるかを指定します。指定しない場合は、縦・横に繰り返して並びます。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "repeat"
+      },
+      {
+        "label": "適用対象",
+        "value": "すべての要素"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"grid\">\n  <div class=\"box repeat\"><span>repeat</span></div>\n  <div class=\"box x\"><span>repeat-x</span></div>\n  <div class=\"box y\"><span>repeat-y</span></div>\n  <div class=\"box none\"><span>no-repeat</span></div>\n</div>",
+      "css": ".grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr;\n  gap: 8px;\n}\n.box {\n  height: 80px;\n  padding: 4px 6px;\n  font-size: 12px;\n  text-align: right;\n  border: 1px solid #ccc;\n  background-color: #f3f2f2;\n  background-image: radial-gradient(#3a9ad9 45%, transparent 48%);\n  background-size: 24px 24px;\n}\n.box span {\n  padding: 0 4px;\n  background: #fff;\n}\n.repeat {\n  background-repeat: repeat;\n}\n.x {\n  background-repeat: repeat-x;\n}\n.y {\n  background-repeat: repeat-y;\n}\n.none {\n  background-repeat: no-repeat;\n}"
+    },
+    "preview": {
+      "height": 190,
+      "note": "青い丸1つ分が背景画像です（例では radial-gradient で画像の代わりにしています）",
+      "fullDocument": false
+    },
+    "explain": [
+      "`background-repeat` は、背景画像の繰り返し方向を指定するプロパティです。",
+      "初期値は `repeat` で、画像が要素より小さいと縦・横に繰り返して敷き詰められます。写真を1枚だけ表示したいときは `no-repeat` を指定します。",
+      "`repeat-x` は横方向だけ、`repeat-y` は縦方向だけに繰り返します。横に並べた模様や、縦に伸びる線などの装飾に使います。"
+    ],
+    "values": {
+      "label": "繰り返し方向",
+      "head": "値",
+      "rows": [
+        {
+          "key": "repeat",
+          "desc": "初期値。横と縦に繰り返し配置される"
+        },
+        {
+          "key": "repeat-x",
+          "desc": "横に繰り返し配置"
+        },
+        {
+          "key": "repeat-y",
+          "desc": "縦に繰り返し配置"
+        },
+        {
+          "key": "no-repeat",
+          "desc": "繰り返し配置しない"
+        },
+        {
+          "key": "space",
+          "desc": "画像が切れないように、間隔を空けて並べる"
+        },
+        {
+          "key": "round",
+          "desc": "画像が切れないように、大きさを調整して並べる"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "小さな画像を敷き詰めて柄にする",
+        "desc": "小さな模様の画像を repeat で並べると、背景全体を柄にできます。",
+        "css": ".pattern {\n  background-image: url(\"../images/dot.png\");\n  background-size: 16px 16px;\n  background-repeat: repeat;\n}"
+      }
+    ],
+    "notes": [
+      "background-size: contain で画像全体を収めると、余った部分に画像が繰り返し表示されます。1枚だけにしたいときは no-repeat を合わせます。"
+    ],
+    "related": [
+      "css-background-image",
+      "css-background-position",
+      "css-background-color"
     ]
   },
   {
@@ -7510,6 +8077,7 @@
     "explain": [
       "`margin` は要素の枠線（border）より外側の余白です。内側の余白は `padding` で指定します。",
       "値を1〜4つ並べて指定でき、4つの場合は「上・右・下・左」の時計回りになります。1方向だけ指定するときは `margin-top`・`margin-right`・`margin-bottom`・`margin-left` を使います。",
+      "上下に並んだ要素どうしの margin は足し算されず、大きいほうだけが適用されます。これを**マージンの相殺**といいます。たとえば上下に `margin: 100px` を指定した要素を2つ並べると、間隔は 100px + 100px = 200px ではなく 100px になります。左右の margin や、Flexbox・Grid の子要素どうしでは相殺は起こりません。",
       "幅が決まったブロック要素に `margin: 0 auto` を指定すると、左右の余白が均等に計算され、水平方向の中央に配置されます。"
     ],
     "values": {
@@ -7523,6 +8091,10 @@
         {
           "key": "margin: 8px 16px;",
           "desc": "上下に8px、左右に16px"
+        },
+        {
+          "key": "margin: 8px 16px 24px;",
+          "desc": "上に8px、左右に16px、下に24px"
         },
         {
           "key": "margin: 1px 2px 3px 4px;",
@@ -7547,6 +8119,11 @@
         "title": "隣り合うカードの間隔",
         "desc": "隣接セレクタ「+」を使うと、2つ目以降の要素にだけ上の余白をつけられます。",
         "css": ".card + .card {\n  margin-top: 24px;\n}"
+      },
+      {
+        "title": "マージンの相殺を避けて間隔を管理する",
+        "desc": "上下の間隔は margin-bottom（または margin-top）の片方だけで付けるようにすると、相殺を気にせずに済みます。",
+        "css": "/* × 上下両方に付けると相殺されて 100px になる */\n.block {\n  margin: 100px 0;\n}\n\n/* ○ 下方向だけに付ける */\n.block {\n  margin-bottom: 100px;\n}"
       }
     ],
     "notes": [
@@ -7713,7 +8290,8 @@
       "css-height",
       "css-max-width",
       "css-box-sizing",
-      "css-padding"
+      "css-padding",
+      "css-units"
     ]
   },
   {
@@ -8146,7 +8724,8 @@
       "css-box-model",
       "css-width",
       "css-padding",
-      "css-border"
+      "css-border",
+      "css-universal-selector"
     ]
   },
   {
@@ -9193,6 +9772,18 @@
           "desc": "線なし"
         },
         {
+          "key": "hidden",
+          "desc": "線なし。表の枠線が重なったとき（border-collapse: collapse）は最優先で非表示になる"
+        },
+        {
+          "key": "groove",
+          "desc": "窪んだ枠線（溝のように見える）"
+        },
+        {
+          "key": "ridge",
+          "desc": "立体的な枠線（盛り上がって見える）"
+        },
+        {
           "key": "border-width",
           "desc": "線の太さだけを指定（px など）"
         },
@@ -9224,7 +9815,8 @@
     ],
     "notes": [
       "枠線の太さは要素の大きさに加算されます（box-sizing: border-box を指定すると含まれる）。",
-      "線の種類を省略すると表示されません。"
+      "線の種類を省略すると表示されません。",
+      "groove・ridge は線の色の明暗で立体感を出すため、太さが細いと違いが分かりにくくなります。4px 以上を目安にします。"
     ],
     "related": [
       "css-border-radius",
@@ -10410,7 +11002,7 @@
       "fullDocument": false
     },
     "explain": [
-      "CSS変数は `--accent: #b68235;` のように `--` で始まる名前で定義し、`var(--accent)` で値を取り出します。正式には「カスタムプロパティ」と呼びます。",
+      "CSS変数は `--accent: #b68235;` のように `--` で始まる名前で定義し、`var(--accent)` で値を取り出します。正式には「カスタムプロパティ」と呼び、「CSS変数」や「カスケード変数」と呼ばれることもあります。",
       "`:root`（`html` 要素）に定義すると、ページ全体で使えます。色や余白を変数にしておけば、1か所変えるだけでサイト全体のデザインを変更できます。",
       "CSS変数は継承されるため、上の例のように一部の範囲だけ値を上書きすると、その中の部品の色をまとめて変えられます。"
     ],
@@ -10441,6 +11033,11 @@
         "title": "ダークモードを変数で切り替える",
         "desc": "data-theme 属性で変数の値を入れ替えます。このサイトでも使っている方法です。",
         "css": ":root {\n  --bg: #f3f2f2;\n  --text: #201f1d;\n}\n[data-theme=\"dark\"] {\n  --bg: #1a1918;\n  --text: #e4e0da;\n}\nbody {\n  background: var(--bg);\n  color: var(--text);\n}"
+      },
+      {
+        "title": "× プロパティ名は変数にできない",
+        "desc": "変数に入れられるのは値だけです。var() をプロパティ名の位置に書くと、その行は無効になります。",
+        "css": "/* × プロパティ名を変数にしている */\n:root {\n  --bgimage: background-image;\n}\n.kv {\n  var(--bgimage): url(\"../images/image_01.jpg\");\n}\n\n/* ○ 値を変数にする */\n:root {\n  --kv-image: url(\"../images/image_01.jpg\");\n}\n.kv {\n  background-image: var(--kv-image);\n}"
       }
     ],
     "notes": [
