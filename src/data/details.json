@@ -450,9 +450,70 @@
     "related": [
       "html-head",
       "html-title",
-      "html-doctype",
-      "html-link"
-    ]
+      "css-responsive",
+      "css-media"
+    ],
+    "advanced": {
+      "title": "ビューポートの meta タグ",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "`<meta name=\"viewport\">` は、**レスポンシブコーディングを行ううえで必要不可欠** な HTML タグです。ビューポートとは、ブラウザウィンドウの表示領域のことです。"
+        },
+        {
+          "type": "p",
+          "text": "`content` に「`width=device-width`」を記述することで、表示領域の幅を PC やスマホなどの端末画面の幅に合わせています。これがないと、スマホは PC 向けの広い幅（980px など）でページを作ってから縮小して表示するため、文字がとても小さくなります。"
+        },
+        {
+          "type": "callout",
+          "title": "必ず書く1行",
+          "items": [
+            "`<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">`",
+            "**この行がないとメディアクエリが動作しない** ので注意します。スマホでも画面幅が PC と同じ広さとして扱われ、`@media (max-width: …)` の条件に当てはまらなくなります。"
+          ]
+        },
+        {
+          "type": "table",
+          "head": [
+            "content に書ける値",
+            "意味"
+          ],
+          "rows": [
+            [
+              "`width=device-width`",
+              "表示しているデバイスの幅に合わせる"
+            ],
+            [
+              "`initial-scale`",
+              "ページが表示されたときの倍率（`1.0` で等倍）"
+            ],
+            [
+              "`minimum-scale`",
+              "最小縮小倍率の指定"
+            ],
+            [
+              "`maximum-scale`",
+              "最大拡大倍率の指定"
+            ],
+            [
+              "`user-scalable`",
+              "ピンチイン・ピンチアウト（拡大・縮小）を許可するかどうか"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "**ピンチイン** は2本の指で画面を同時に触れて距離を縮める操作（縮小）、**ピンチアウト** は2本の指で画面を同時に触れて距離を広げる操作（拡大）です。"
+        },
+        {
+          "type": "callout",
+          "title": "拡大は禁止しない",
+          "items": [
+            "`user-scalable=no` や `maximum-scale=1` で拡大を禁止すると、文字を大きくして読みたい人がページを読めなくなります。アクセシビリティの観点から、ふつうは `width=device-width, initial-scale=1.0` だけを書きます。"
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "html-link",
@@ -11912,31 +11973,35 @@
       "rows": [
         {
           "key": "animation-name",
-          "desc": "@keyframes の名前"
+          "desc": "アニメーションの名前（@keyframes で付けた名前）"
         },
         {
           "key": "animation-duration",
-          "desc": "1回の再生時間（1s など）"
+          "desc": "始まって終わるまでの時間（2s など）。初期値は 0s でアニメーションしない"
         },
         {
           "key": "animation-timing-function",
-          "desc": "速度の変化（ease / linear など）"
+          "desc": "変化の度合い（ease / linear など）"
         },
         {
           "key": "animation-delay",
-          "desc": "開始までの待ち時間"
+          "desc": "何秒後にアニメーションを始めるか"
         },
         {
           "key": "animation-iteration-count",
-          "desc": "繰り返し回数（infinite で無限）"
+          "desc": "繰り返し回数。初期値は 1（infinite で無限）"
         },
         {
           "key": "animation-direction",
-          "desc": "alternate で往復"
+          "desc": "再生方向（alternate で往復）"
         },
         {
           "key": "animation-fill-mode",
-          "desc": "forwards で終了時の状態を保つ"
+          "desc": "開始前・終了後のスタイル（forwards で終了時の状態を保つ）"
+        },
+        {
+          "key": "animation-play-state",
+          "desc": "再生・停止（マウスオーバーの際に使う）"
         }
       ]
     },
@@ -11956,8 +12021,253 @@
       "css-keyframes",
       "css-transition",
       "css-transform",
-      "css-opacity"
-    ]
+      "css-hover"
+    ],
+    "advanced": {
+      "title": "個別のプロパティを詳しく",
+      "blocks": [
+        {
+          "type": "example",
+          "title": "例：個別のプロパティで1つずつ書く",
+          "desc": "1秒待ってから、2秒かけてフェードインし、フェードアウトと交互に永遠に繰り返します。",
+          "html": "<p class=\"title\">フェードイン</p>",
+          "css": "@keyframes fadeIn {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 1;\n  }\n}\n.title {\n  font-size: 24px;\n  font-weight: bold;\n  color: #b68235;\n  animation-name: fadeIn;\n  animation-duration: 2s; /* 2秒かけてフェードイン */\n  animation-delay: 1s; /* 1秒待ってから */\n  animation-iteration-count: infinite; /* 永遠に繰り返す */\n  animation-direction: alternate;\n}",
+          "height": 90,
+          "points": [
+            {
+              "code": "animation-name: fadeIn;",
+              "text": "`@keyframes fadeIn` で定義した動きを使う"
+            },
+            {
+              "code": "animation-duration: 2s;",
+              "text": "1回の再生に2秒かける"
+            },
+            {
+              "code": "animation-delay: 1s;",
+              "text": "1秒待ってから始める"
+            },
+            {
+              "code": "animation-iteration-count: infinite;",
+              "text": "永遠に繰り返す"
+            },
+            {
+              "code": "animation-direction: alternate;",
+              "text": "行き（フェードイン）と帰り（フェードアウト）を交互に再生する"
+            }
+          ]
+        },
+        {
+          "type": "h",
+          "text": "animation-name"
+        },
+        {
+          "type": "p",
+          "text": "`animation-name` の値には、**英数字、ダッシュ（`-`）、アンダースコア（`_`）** が使えます。`fadeIn` や `slide-up` のように、アニメーションの動きをイメージしやすい名前にするとよいです。"
+        },
+        {
+          "type": "h",
+          "text": "animation-duration"
+        },
+        {
+          "type": "p",
+          "text": "duration は「間隔」という意味で、1回のアニメーションが終了するまでの時間を指定します。**初期値は `0s` となり、アニメーションは起こりません。** `s` は秒（second）を表し、ほかに `ms`（ミリ秒）も指定できます。`2` のように数字だけでは効かないので、**`s` か `ms` を必ず付けます**。"
+        },
+        {
+          "type": "h",
+          "text": "animation-timing-function"
+        },
+        {
+          "type": "p",
+          "text": "アニメーションの変化速度を設定できます。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "値",
+            "動き"
+          ],
+          "rows": [
+            [
+              "`ease`",
+              "初期値。開始時と終了時は緩やかに変化"
+            ],
+            [
+              "`ease-in`",
+              "開始時は緩やかに変化、終了に近づくと早く変化"
+            ],
+            [
+              "`ease-out`",
+              "開始時は早く変化し、終了時は緩やかに変化"
+            ],
+            [
+              "`ease-in-out`",
+              "開始時と終了時は、かなり緩やかに変化"
+            ],
+            [
+              "`linear`",
+              "開始から終了まで一定に変化"
+            ],
+            [
+              "`step-start`",
+              "アニメーションの開始時点で終了状態になる"
+            ],
+            [
+              "`step-end`",
+              "アニメーションが終わる時点で終了状態になる（それまでは開始時の状態のまま）"
+            ],
+            [
+              "`steps(数, start または end)`",
+              "指定した整数の段階で、パラパラ漫画のように変化。`start` を指定すると各段階の始めに、`end` を指定すると各段階の終わりに切り替わる"
+            ],
+            [
+              "`cubic-bezier(x1, y1, x2, y2)`",
+              "変化の度合いを任意で指定"
+            ]
+          ]
+        },
+        {
+          "type": "h",
+          "text": "animation-delay"
+        },
+        {
+          "type": "p",
+          "text": "アニメーションが始まるまでの時間（待ち時間）を指定できます。`animation-delay: 1s;` なら、アニメーションが適用されてから1秒後に始まります。"
+        },
+        {
+          "type": "callout",
+          "title": "「画面に入ってから」ではない点に注意",
+          "items": [
+            "delay の時間は、ページを読み込んで **アニメーションが適用された時点から** 数えます。ページの下のほうにある要素は、スクロールして画面に入る前にアニメーションが終わっていることがあります。",
+            "「スクロールして画面内に入ったら動かす」には、JavaScript（Intersection Observer など）でクラスを付けて、そのクラスに animation を書きます。"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "animation-iteration-count"
+        },
+        {
+          "type": "p",
+          "text": "iteration は「反復」という意味で、**アニメーションを繰り返す回数** を指定できます。初期値は `1` です。数字だけでなく、永遠に繰り返す **`infinite`** もあります。"
+        },
+        {
+          "type": "h",
+          "text": "animation-direction"
+        },
+        {
+          "type": "p",
+          "text": "アニメーションを繰り返すときに、どこから始めるか（再生方向）を指定できます。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "値",
+            "動き"
+          ],
+          "rows": [
+            [
+              "`normal`",
+              "初期値。繰り返す際に最初に戻って開始する"
+            ],
+            [
+              "`reverse`",
+              "最後の状態から逆向きに再生する"
+            ],
+            [
+              "`alternate`",
+              "`normal` と `reverse` を交互に繰り返す（行って戻る）"
+            ],
+            [
+              "`alternate-reverse`",
+              "`reverse` と `normal` を交互に繰り返す。先に `reverse` から始まる"
+            ]
+          ]
+        },
+        {
+          "type": "h",
+          "text": "animation-fill-mode"
+        },
+        {
+          "type": "p",
+          "text": "アニメーションの開始前と終了後に、どのスタイルを適用するかを指定できます。アニメーションが終わった後にどのような状態を保持したいかで値が変わります。**`animation-delay` と組み合わせて使うことが多い** です。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "値",
+            "動き"
+          ],
+          "rows": [
+            [
+              "`none`",
+              "初期値。アニメーションで指定したスタイルは、開始前・終了後には適用されない（終わると元のスタイルに戻る）"
+            ],
+            [
+              "`forwards`",
+              "アニメーション終了時のスタイルが、終了後にも適用される"
+            ],
+            [
+              "`backwards`",
+              "`animation-delay` で待っている間も、アニメーション開始時のスタイルが適用される"
+            ],
+            [
+              "`both`",
+              "`forwards` と `backwards` の両方が適用される"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "たとえば「1秒待ってからフェードインし、そのまま表示しておく」なら `animation-fill-mode: both;` にします。`backwards` で待っている間も透明のままになり、`forwards` で終わった後も表示されたままになります。"
+        },
+        {
+          "type": "h",
+          "text": "animation-play-state"
+        },
+        {
+          "type": "p",
+          "text": "ホバーなどのアクションとともに使われるプロパティです。アニメーションしている要素にカーソルを当てたときに、アニメーションを一時停止するなどの設定ができます。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "値",
+            "動き"
+          ],
+          "rows": [
+            [
+              "`running`",
+              "初期値。アニメーションは継続される"
+            ],
+            [
+              "`paused`",
+              "アニメーションを停止する。`running` に戻すと、止まったところから再開する"
+            ]
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例：マウスを乗せると一時停止する",
+          "desc": "回り続ける四角にマウスを乗せると止まり、離すとその位置から再び回ります。",
+          "html": "<div class=\"box\"></div>",
+          "css": "@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n.box {\n  width: 60px;\n  height: 60px;\n  margin: 16px;\n  background-color: #e1ad66;\n  animation: spin 3s linear infinite;\n}\n.box:hover {\n  animation-play-state: paused;\n}",
+          "height": 110,
+          "points": [
+            {
+              "code": "animation: spin 3s linear infinite;",
+              "text": "3秒で1回転を、一定の速さで永遠に繰り返す"
+            },
+            {
+              "code": ".box:hover",
+              "text": "マウスを乗せている間だけ"
+            },
+            {
+              "code": "animation-play-state: paused;",
+              "text": "アニメーションを一時停止する"
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "css-transform",
@@ -12232,7 +12542,7 @@
     "explain": [
       "`@keyframes 名前 { … }` の中に、アニメーションの各時点でのスタイルを書きます。`0%` が開始時、`100%` が終了時で、その間はブラウザが自動でなめらかにつなぎます。",
       "開始と終了だけなら `from`・`to` と書けます。`0%, 100%` のようにカンマで区切ると、複数の時点に同じスタイルを指定できます。",
-      "定義しただけでは動きません。`animation` プロパティで名前と再生時間を指定して、要素に適用します。"
+      "定義しただけでは動きません（**あくまで定義するだけ**）。`animation` プロパティで名前と再生時間を指定して、要素に適用します。名前を変えれば、`@keyframes` はいくつでも作れます。"
     ],
     "values": {
       "label": "書き方",
@@ -12501,6 +12811,144 @@
     ]
   },
   {
+    "id": "css-responsive",
+    "title": "レスポンシブコーディング",
+    "ja": "スマホ・タブレットに表示を最適化する",
+    "lead": "1つの HTML を、PC・タブレット・スマートフォンなど画面の幅に合わせて見やすく表示させるコーディングの方法です。今のサイト制作では必須の技術といわれています。",
+    "meta": [
+      {
+        "label": "目的",
+        "value": "どの端末でも見やすく表示する"
+      },
+      {
+        "label": "必要なもの",
+        "value": "viewport の meta タグ・@media"
+      },
+      {
+        "label": "覚える言葉",
+        "value": "ビューポート・ブレイクポイント・メディアクエリ"
+      }
+    ],
+    "code": {
+      "html": "<nav class=\"nav\">\n  <a href=\"#\">ホーム</a>\n  <a href=\"#\">サービス</a>\n  <a href=\"#\">お問い合わせ</a>\n</nav>",
+      "css": "/* スマホ向け（基本）：縦に並べる */\n.nav {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.nav a {\n  padding: 10px;\n  background: #b68235;\n  color: #fff;\n  text-align: center;\n  text-decoration: none;\n}\n/* ブレイクポイント：600px以上で横に並べる */\n@media (min-width: 600px) {\n  .nav {\n    flex-direction: row;\n  }\n  .nav a {\n    flex: 1;\n  }\n}"
+    },
+    "preview": {
+      "height": 150,
+      "note": "プレビューの幅が600px以上なら横並び、未満なら縦並びになります",
+      "fullDocument": false
+    },
+    "explain": [
+      "レスポンシブコーディングとは、**スマートフォンやタブレットに対して表示を最適化すること** です。",
+      "**サイト訪問者の約7割がスマホ** といわれており（総務省「情報通信白書」などを参照）、コーディングを行ううえで必須といわれている技術です。",
+      "また、**Google は検索アルゴリズムにおいて、スマホ向けのページを評価対象にすることを公表しています**（モバイルファーストインデックス）。スマホで見づらいページは、検索結果の順位にも影響します。",
+      "上の例では、スマホ向けのスタイル（縦並び）を基本に書き、画面幅が600px以上になったら `@media` で横並びに切り替えています。この「切り替える幅」がブレイクポイントです。"
+    ],
+    "values": {
+      "label": "覚えてほしい3つのキーワード",
+      "head": "キーワード",
+      "rows": [
+        {
+          "key": "ビューポート（viewport）",
+          "desc": "ブラウザウィンドウの表示領域のこと。meta タグで端末の画面幅に合わせる"
+        },
+        {
+          "key": "ブレイクポイント",
+          "desc": "CSS を切り替えるタイミング（画面幅）のこと"
+        },
+        {
+          "key": "メディアクエリ",
+          "desc": "@media で「画面幅が○px以上のとき」などの条件を書き、CSS を切り替える仕組み"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "viewport の meta タグを書く",
+        "desc": "レスポンシブコーディングでは、すべてのページの head に必ず書きます。この行がないと、スマホでメディアクエリが正しく動きません。",
+        "html": "<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>トップページ</title>\n</head>"
+      }
+    ],
+    "notes": [
+      "案件の仕様によっては、レスポンシブにせず PC用ページとスマホ用ページを分けて制作するケースもあります。",
+      "対応するデバイスが増えるほど、レイアウトが複雑になるほど、対応に時間がかかります。デザインを受け取ったら、スマホでどう並ぶかを最初に確認しましょう。",
+      "実機がなくても、ブラウザの開発者ツール（デベロッパーツール）のデバイスモードで、スマホの画面幅を確認できます。"
+    ],
+    "related": [
+      "css-media",
+      "html-meta",
+      "css-clamp",
+      "css-container"
+    ],
+    "advanced": {
+      "title": "レスポンシブコーディングの特徴と3つのキーワード",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "メリットとデメリット"
+        },
+        {
+          "type": "table",
+          "head": [
+            "",
+            "内容"
+          ],
+          "rows": [
+            [
+              "メリット",
+              "**HTML ファイルひとつ** で PC・タブレット・スマホに対応できる"
+            ],
+            [
+              "メリット",
+              "**URL が変わらない** ため、シェアしやすい"
+            ],
+            [
+              "デメリット",
+              "対応するデバイス（タブレットやスマホ）が増えるほど、複雑なレイアウトになるほど、対応に時間がかかる可能性がある"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "案件の仕様によっては、**PC用ページ、スマホ用ページを分けて制作する** ケースもあります。"
+        },
+        {
+          "type": "h",
+          "text": "① ビューポート（viewport）"
+        },
+        {
+          "type": "p",
+          "text": "ビューポートとは、**ブラウザウィンドウの表示領域** のことです。PC ならブラウザの窓の中、スマホなら画面全体がビューポートになります。HTML の head に `<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">` を書いて、表示領域の幅を端末の画面幅に合わせます（詳しくは meta のページ）。"
+        },
+        {
+          "type": "h",
+          "text": "② ブレイクポイント"
+        },
+        {
+          "type": "p",
+          "text": "ブレイクポイントとは、**CSS を切り替えるタイミング（画面幅）** のことです。PC とスマホの表示を切り替える場合、画面幅が何 px になったときに切り替えるかを定義する必要があります。"
+        },
+        {
+          "type": "callout",
+          "title": "ブレイクポイントの決め方",
+          "items": [
+            "制作会社や制作者によって定義は様々です。案件で決まっている場合はそれに従います。",
+            "画面サイズが大きいデバイスもどんどん発売されるため、**一定期間でブレイクポイントの見直しをしたほうがよい** です。",
+            "端末の種類にこだわりすぎず、レイアウトが崩れ始める幅を基準に決めるのも一つの方法です。"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "③ メディアクエリ"
+        },
+        {
+          "type": "p",
+          "text": "`@media (min-width: 600px) { … }` のように、画面幅などの条件を書いて、条件に合うときだけ CSS を適用する仕組みです。ブレイクポイントの幅は、このメディアクエリの条件に書きます（詳しくは @media のページ）。"
+        }
+      ]
+    }
+  },
+  {
     "id": "css-media",
     "title": null,
     "ja": "画面幅に応じた切り替え",
@@ -12531,7 +12979,8 @@
     "explain": [
       "`@media` は、指定した条件を満たすときだけ、中に書いたCSSを適用する仕組みです。条件の部分を「メディアクエリ」と呼びます。",
       "上の例では、表示領域の幅が600px以上のときだけ3列に並べ、それより狭いときは縦に並べています。プレビューの幅や、スマートフォンでこのページを開いて確かめてみましょう。",
-      "スマートフォン向けのスタイルを基本に書き、`min-width` で大きな画面向けのスタイルを追加していく方法を「モバイルファースト」と呼びます。"
+      "スマートフォン向けのスタイルを基本に書き、`min-width` で大きな画面向けのスタイルを追加していく方法を「モバイルファースト」と呼びます。",
+      "CSS を切り替えるタイミング（画面幅）のことを **ブレイクポイント** と呼びます。PC とスマホの表示を切り替える場合、画面幅が何 px になったときに切り替えるかを定義する必要があります。上の例では 600px がブレイクポイントです。"
     ],
     "values": {
       "label": "よく使う条件",
@@ -12572,13 +13021,14 @@
     ],
     "notes": [
       "スマートフォンで正しく判定させるには、HTMLに <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> が必要です。",
-      "ブレークポイント（切り替える幅）は、端末の種類ではなく、レイアウトが崩れ始める幅を基準に決めます。"
+      "ブレークポイント（切り替える幅）は、端末の種類ではなく、レイアウトが崩れ始める幅を基準に決めます。",
+      "ブレイクポイントの定義は、制作会社や制作者によって様々です。画面サイズが大きいデバイスもどんどん発売されるため、一定期間でブレイクポイントの見直しをしたほうがよいです。"
     ],
     "related": [
-      "css-container",
-      "css-clamp",
+      "css-responsive",
       "html-meta",
-      "css-grid-template-columns"
+      "css-container",
+      "css-clamp"
     ]
   },
   {
