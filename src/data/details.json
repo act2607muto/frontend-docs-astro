@@ -7406,30 +7406,42 @@
         },
         {
           "key": "3. Get embed code",
-          "desc": "「Get embed code」をクリックし、表示された link タグをコピーして HTML の head に貼る（使う太さもここで選べる）"
+          "desc": "フォントを選ぶと「1 font family selected」の画面になるので、右側の「Get embed code」をクリックする"
         },
         {
-          "key": "4. font-family で指定",
-          "desc": "同じ画面に出ている font-family の書き方（例：\"Noto Sans JP\", sans-serif）を CSS に書く"
+          "key": "4. link と font-family を貼る",
+          "desc": "「Web」タブで link タグをコピーして HTML の head に貼り、font-family の1行をコピーして CSS ファイルに貼る"
         }
       ]
     },
     "usages": [
       {
         "title": "Google Fonts の link を head に貼る",
-        "desc": "「Get embed code」でコピーしたコードです。preconnect の2行は読み込みを速くするためのものなので、そのまま一緒に貼ります。",
+        "desc": "手順4で「Embed code in the <head> of your html」の欄からコピーしたコードです。preconnect の2行は読み込みを速くするためのものなので、そのまま一緒に貼ります。",
         "html": "<head>\n  <meta charset=\"UTF-8\">\n  <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n  <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap\">\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>"
       },
       {
         "title": "読み込んだフォントを使う",
         "desc": "読み込んだあとは、普通のフォントと同じように font-family に名前を書きます。最後に総称ファミリーも書いておきます。",
         "css": "body {\n  font-family: \"Noto Sans JP\", sans-serif;\n}"
+      },
+      {
+        "title": "太さを範囲で読み込む（Full axis）",
+        "desc": "Full axis のままコピーすると、太さが `wght@100..900` のような範囲で書かれます。`..` は「100から900まで全部」という意味です。使う太さが決まっているなら、One value を選ぶか `wght@400;700` のように `;` 区切りで必要な太さだけにすると軽くなります。",
+        "html": "<!-- 100〜900 の太さを全部読み込む（Full axis） -->\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&amp;display=swap\">\n\n<!-- 400 と 700 だけ読み込む -->\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap\">"
+      },
+      {
+        "title": "@import で CSS ファイルから読み込む",
+        "desc": "Embed code の画面で `<link>` ではなく `@import` を選ぶと、CSS ファイルの先頭に書くコードが表示されます。HTML を触れないときに使えますが、link より読み込みが遅くなりやすいので、基本は講義どおり link を使います。",
+        "css": "@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');\n\nbody {\n  font-family: \"Noto Sans JP\", sans-serif;\n}"
       }
     ],
     "notes": [
       "日本語に対応した Webフォントは、英語のフォントに比べるとまだ少ないです。",
       "日本語のフォントは文字数が多くファイルが大きいため、**表示速度が遅くなる** ことがあります。使う太さ（wght）を必要なものだけに絞って読み込みます。",
       "サービスによっては、PV数・ドメイン数・使える書体数など **利用上の制限** があります。案件で使う前に利用規約を確認します。",
+      "2行目の preconnect に付いている `crossorigin` は消さずにそのまま貼ります。フォントのファイルを別のサーバー（fonts.gstatic.com）から取ってくるために必要な属性です。",
+      "`@import` は CSS ファイルの一番上（ほかのルールより前）に書かないと効きません。",
       "Webフォントが読み込めなかったときのために、font-family の最後には sans-serif などの総称ファミリーを書いておきます。"
     ],
     "related": [
@@ -7439,8 +7451,53 @@
       "css-media"
     ],
     "advanced": {
-      "title": "Webフォントのメリット・デメリットとサービス一覧",
+      "title": "Embed code 画面の見方・メリットとデメリット・サービス一覧",
       "blocks": [
+        {
+          "type": "h",
+          "text": "Embed code 画面の見方"
+        },
+        {
+          "type": "p",
+          "text": "「Get embed code」をクリックすると Embed code の画面になります。たくさん表示されますが、Webサイトで使うのは次の部分だけです。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "画面の表示",
+            "どうするか"
+          ],
+          "rows": [
+            [
+              "Web / Android / iOS / Flutter のタブ",
+              "**Web** を選ぶ（ほかはアプリ用）"
+            ],
+            [
+              "`<link>` / `@import` の選択",
+              "`<link>` を選んだままにする（@import は CSS に書く別の方法）"
+            ],
+            [
+              "Embed code in the <head> of your html",
+              "この欄の link タグ（3行）を **Copy code** でコピーし、HTML の head に貼る"
+            ],
+            [
+              "Weight：Full axis / One value",
+              "Full axis は 100〜900 の太さを全部、One value は1つの太さだけ読み込む。日本語フォントは重いので、使う太さが決まっていれば絞る"
+            ],
+            [
+              "CSS class for a variable style",
+              "見本のうち `font-family: \"Noto Sans JP\", sans-serif;` の1行だけを CSS ファイルに貼る。`<uniquifier>` や `<weight>` は自分で置き換える前提の見本なので、そのまま貼らない"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "太さの書き方（URL の wght）",
+          "items": [
+            "`wght@100..900`：`..` は範囲。100から900までのすべての太さ（可変フォント）",
+            "`wght@400;700`：`;` は区切り。400と700の2つの太さだけ"
+          ]
+        },
         {
           "type": "h",
           "text": "メリットとデメリット"
