@@ -8,6 +8,7 @@ export const url = {
   dict: (type: ItemType) => `${BASE}${type}/`,
   learn: () => `${BASE}learn/`,
   cursor: () => `${BASE}cursor/`,
+  figma: () => `${BASE}figma/`,
   privacy: () => `${BASE}privacy/`,
   terms: () => `${BASE}terms/`,
   item: (item: { type: ItemType; slug: string }) => `${BASE}${item.type}/${item.slug}/`,

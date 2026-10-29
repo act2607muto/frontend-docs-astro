@@ -1,0 +1,47 @@
+---
+// ⑧ Figma のショートカットキー一覧（データは figma-shortcuts.json）
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import SecHead from '../../components/SecHead.astro';
+import ShortcutSections from '../../components/ShortcutSections.astro';
+import { pad2, SITE } from '../../lib/data';
+import shortcuts from '../../data/figma-shortcuts.json';
+
+const total = shortcuts.reduce((n, s) => n + s.items.length, 0);
+---
+<BaseLayout title={`Figma ショートカットキー一覧 | ${SITE}`} description="デザインツール Figma のショートカットキーを、Mac と Windows の両方の表記でまとめた一覧です。">
+  <Header current="figma" />
+  <main class="page page--wide">
+    <div class="kicker">APPENDIX — FIGMA SHORTCUTS</div>
+    <h1 class="page-title">Figma ショートカット</h1>
+    <p class="page-lead">デザインツール Figma でよく使うショートカットキー {total} 個を、Mac と Windows の両方の表記でまとめました。カンプからコーディングするときに使う、選択・計測・書き出しの操作も入れています。</p>
+    <p class="kbd-legend">
+      <span><kbd class="kbd kbd--sym">⌘</kbd> Command</span>
+      <span><kbd class="kbd kbd--sym">⌥</kbd> Option</span>
+      <span><kbd class="kbd kbd--sym">⇧</kbd> Shift</span>
+      <span><kbd class="kbd kbd--sym">⌃</kbd> Control</span>
+    </p>
+    <nav class="chips kbd-jump" aria-label="カテゴリ">
+      {shortcuts.map((s) => <a class="chip" href={`#${s.id}`}>{s.title}</a>)}
+    </nav>
+
+    <ShortcutSections shortcuts={shortcuts} />
+
+    <section class="sec kbd-sec">
+      <SecHead num={pad2(shortcuts.length + 1)} title="覚えておきたいこと" />
+      <ul class="kbd-notes">
+        <li>Figma の中で <kbd class="kbd kbd--sym">⌃</kbd><span class="kbd-plus">+</span><kbd class="kbd kbd--sym">⇧</kbd><span class="kbd-plus">+</span><kbd class="kbd">?</kbd> を押すとショートカット一覧が開きます。使ったことのあるキーには色が付くので、練習にも使えます。</li>
+        <li>ブラウザ版では、ブラウザ自体のショートカット（<kbd class="kbd kbd--sym">⌘</kbd><span class="kbd-plus">+</span><kbd class="kbd">D</kbd> のブックマークなど）と重なることがあります。確実に使いたいときはデスクトップアプリがおすすめです。</li>
+        <li>日本語入力がオンのままだと、1キーのツール切り替えや <kbd class="kbd">&lt;</kbd> <kbd class="kbd">&gt;</kbd> などの記号キーが反応しないことがあります。英数入力に切り替えて使いましょう。</li>
+        <li>Figma の初期設定は US 配列のキーボードが前提です。JIS 配列などでは記号キーの割り当てが変わるので、メニューの「環境設定」→「キーボードレイアウト」で配列を選んでおくと安心です。</li>
+        <li>Mac と Windows はほとんど <kbd class="kbd kbd--sym">⌘</kbd> ↔ <kbd class="kbd">Ctrl</kbd>、<kbd class="kbd kbd--sym">⌥</kbd> ↔ <kbd class="kbd">Alt</kbd> の置き換えですが、重なり順の変更などキー自体が違うものもあります。最新の割り当ては<a href="https://help.figma.com/hc/en-us/articles/360040328653-Keyboard-shortcuts-in-Figma" target="_blank" rel="noopener">公式ヘルプ</a>で確認してください。</li>
+      </ul>
+    </section>
+  </main>
+  <Footer />
+</BaseLayout>
+
+<style is:global>
+  html { scroll-behavior: smooth; }
+</style>
