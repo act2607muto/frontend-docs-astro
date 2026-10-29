@@ -3,7 +3,8 @@
 HTMLタグ・CSSプロパティ・JavaScriptの辞典と学習ロードマップのサイトです。
 素の HTML・CSS・JS で作った [frontend-docs](https://github.com/act2607muto/frontend-docs) を、[Astro](https://astro.build/) で作り直したものです。見た目と動きは同じで、ページの本文をビルド時に HTML として書き出します。
 
-公開URL：https://act2607muto.github.io/frontend-docs-astro/
+公開URL：https://frontend-docs.dev/（Vercel）
+GitHub Pages 版：https://act2607muto.github.io/frontend-docs-astro/
 
 ## 使い方
 
