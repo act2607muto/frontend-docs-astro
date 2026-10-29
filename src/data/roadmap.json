@@ -62,6 +62,7 @@
         "title": "ボックスモデル",
         "desc": "すべての要素は箱。内容・padding・border・marginの関係を理解します。",
         "links": [
+          "css-box-model",
           "css-margin",
           "css-padding",
           "css-border",

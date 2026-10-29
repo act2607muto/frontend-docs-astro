@@ -5302,10 +5302,92 @@
       "詳細度を低く・そろえておくと、CSSが上書きしやすく管理しやすくなります。スタイルは基本的にクラスで指定するのがおすすめです。"
     ],
     "related": [
+      "css-important",
       "css-id-selector",
       "css-class-selector",
-      "css-type-selector",
       "css-inline-style"
+    ]
+  },
+  {
+    "id": "css-important",
+    "title": null,
+    "ja": "詳細度に関係なく最優先にする（なるべく使わない）",
+    "lead": "値の後ろに付けると、セレクタの詳細度とは別の仕組みで、ほかの指定を強制的に上書きします。乱用するとCSSが管理できなくなるため、なるべく使いません。",
+    "meta": [
+      {
+        "label": "書き方",
+        "value": "値の後ろに !important"
+      },
+      {
+        "label": "優先度",
+        "value": "詳細度より上"
+      },
+      {
+        "label": "使いどころ",
+        "value": "最終手段"
+      }
+    ],
+    "code": {
+      "html": "<h1 class=\"title\">見出しの色は？</h1>",
+      "css": "h1 {\n  color: #c0392b !important;\n}\nh1.title {\n  color: blue;\n}\n.title {\n  color: green;\n}"
+    },
+    "preview": {
+      "height": 90,
+      "note": "h1.title のほうが詳細度は高いですが、!important が付いた h1 の赤が優先されます",
+      "fullDocument": false
+    },
+    "explain": [
+      "`!important` は、プロパティの値の後ろ（`;` の前）に書きます。付けた指定は、セレクタの詳細度に関係なく最も優先されます。",
+      "上の例では、詳細度だけで比べれば `h1.title`（0-1-1）が一番強いので青になるはずですが、`h1` の指定に `!important` が付いているため赤になります。",
+      "一度 `!important` を使うと、それを上書きするにはさらに `!important` が必要になります。これを繰り返すと、どの指定が効いているのか分からない、混乱したCSSになってしまいます。",
+      "上書きしたいときは、まずセレクタの書き方や書く順番を見直します。外部のライブラリやインラインスタイルをどうしても上書きできないときの、最終手段にとどめます。"
+    ],
+    "values": {
+      "label": "優先される順番（強い順）",
+      "head": "指定",
+      "rows": [
+        {
+          "key": "!important を付けた指定",
+          "desc": "最優先"
+        },
+        {
+          "key": "インラインスタイル（style 属性）",
+          "desc": "1-0-0-0"
+        },
+        {
+          "key": "id セレクタ",
+          "desc": "1-0-0"
+        },
+        {
+          "key": "クラス・属性・疑似クラス",
+          "desc": "0-1-0"
+        },
+        {
+          "key": "要素・疑似要素",
+          "desc": "0-0-1"
+        },
+        {
+          "key": "同じ強さどうし",
+          "desc": "後に書いたほうが優先"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "!important を使わずに上書きする",
+        "desc": "詳細度を少しだけ上げるか、後に書くことで上書きします。",
+        "css": "/* × 強制的に上書き */\n.button {\n  color: white !important;\n}\n\n/* ○ クラスを1つ足して、後に書く */\n.header .button {\n  color: white;\n}"
+      }
+    ],
+    "notes": [
+      "!important は「詳細度で勝てないから付ける」ものではありません。付ける前に、なぜ上書きできないのかを開発者ツールで確認します。",
+      "セミコロンの前に書きます。color: red; !important のように後ろに書くと効きません。"
+    ],
+    "related": [
+      "css-specificity",
+      "css-inline-style",
+      "css-class-selector",
+      "css-id-selector"
     ]
   },
   {
@@ -5398,6 +5480,185 @@
       "css-descendant-selector",
       "css-specificity",
       "css-color"
+    ]
+  },
+  {
+    "id": "css-box-model",
+    "title": null,
+    "ja": "すべての要素は4層の箱でできている",
+    "lead": "HTMLのすべての要素は、幅と高さを持った四角い箱（ボックス）として表示されます。中心の内容（content）を、padding・border・margin の3つの層が囲んでいます。",
+    "meta": [
+      {
+        "label": "構成",
+        "value": "content・padding・border・margin"
+      },
+      {
+        "label": "幅の計算",
+        "value": "box-sizing で切り替え"
+      },
+      {
+        "label": "対象",
+        "value": "すべての要素"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"area\">\n  <div class=\"box\">\n    <div class=\"content\">内容（content）</div>\n  </div>\n</div>",
+      "css": "/* margin の範囲を見やすくするための色 */\n.area {\n  display: flow-root;\n  background: #fde9cf;\n}\n.box {\n  width: 200px;\n  margin: 20px;\n  padding: 20px;\n  border: 8px solid #b68235;\n  background: #d9ecd5;\n}\n.content {\n  padding: 8px 0;\n  text-align: center;\n  background: #fff;\n}"
+    },
+    "preview": {
+      "height": 170,
+      "note": "黄色が margin、緑が padding、茶色の線が border、内側の白い部分が content です",
+      "fullDocument": false
+    },
+    "explain": [
+      "ボックスモデルは、要素を「箱」として考える、CSSでレイアウトを組むうえで最も大切な考え方です。どの要素も、内側から **content（内容）→ padding（内側の余白）→ border（枠線）→ margin（外側の余白）** の4層でできています。",
+      "`width`・`height` で指定するのは、初期値では一番内側の content の大きさです。そのため `width: 200px` に `padding: 20px` と `border: 8px` を付けると、見た目の幅は 200 ＋ 40 ＋ 16 ＝ 256px になります。",
+      "`box-sizing: border-box` を指定すると、`width` に padding と border が含まれ、見た目の幅がちょうど指定した値になります。すべての要素に指定しておくのが定番です。",
+      "ブラウザの開発者ツール（検証）で要素を選ぶと、4層それぞれの大きさが図で表示されます。思った通りの大きさにならないときは、まずここを確認します。"
+    ],
+    "values": {
+      "label": "4つの層",
+      "head": "層",
+      "rows": [
+        {
+          "key": "content",
+          "desc": "文章や画像などの内容。width・height で大きさを指定"
+        },
+        {
+          "key": "padding",
+          "desc": "内容と枠線の間の余白。背景色が付く"
+        },
+        {
+          "key": "border",
+          "desc": "枠線。太さの分だけ箱が大きくなる"
+        },
+        {
+          "key": "margin",
+          "desc": "枠線の外側の余白。隣の要素との間隔。背景色は付かない"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "border-box で幅をそろえる",
+        "desc": "padding や border を付けても、見た目の幅が width の値のままになります。",
+        "html": "<p class=\"box\">アクトハウス</p>",
+        "css": "*, *::before, *::after {\n  box-sizing: border-box;\n}\n.box {\n  width: 400px;\n  padding: 50px;\n  /* 見た目の幅はちょうど 400px */\n}"
+      }
+    ],
+    "notes": [
+      "margin は箱の大きさ（width）には含まれません。border-box でも同じです。",
+      "上下に並んだ要素の margin は重なり、大きいほうだけが適用されます（マージンの相殺）。",
+      "インライン要素（span・a など）は、width・height や上下の margin が効きません。箱として扱いたいときは display: inline-block や block にします。"
+    ],
+    "related": [
+      "css-box-sizing",
+      "css-margin",
+      "css-padding",
+      "css-border"
+    ]
+  },
+  {
+    "id": "css-shorthand",
+    "title": null,
+    "ja": "複数のプロパティをまとめて書く（一括指定）",
+    "lead": "関係の深い複数のプロパティを、1つのプロパティでまとめて指定する書き方です。コードが短く読みやすくなります。",
+    "meta": [
+      {
+        "label": "別名",
+        "value": "一括指定プロパティ"
+      },
+      {
+        "label": "代表例",
+        "value": "margin・padding・border・background・font"
+      },
+      {
+        "label": "省略した値",
+        "value": "初期値に戻る"
+      }
+    ],
+    "code": {
+      "html": "<p class=\"long\">個別に指定</p>\n<p class=\"short\">ショートハンドで指定</p>",
+      "css": "/* 個別に書く */\n.long {\n  margin-top: 10px;\n  margin-right: 10px;\n  margin-bottom: 10px;\n  margin-left: 10px;\n  background: #f6ead8;\n}\n/* まとめて書く（結果は同じ） */\n.short {\n  margin: 10px;\n  background: #f6ead8;\n}"
+    },
+    "preview": {
+      "height": 120,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "ショートハンド（一括指定）とは、`margin-top`・`margin-right`… のような関係の深いプロパティを、`margin` 1つでまとめて指定する方法です。上の例の2つの段落は、同じ余白になります。",
+      "`margin` と `padding` は、値の数によって意味が変わります。1つなら上下左右、2つなら「上下・左右」、3つなら「上・左右・下」、4つなら「上・右・下・左」の時計回りです。",
+      "`border: 1px solid #333` や `font: bold 16px/1.5 sans-serif` のように、種類の違う値をスペース区切りで並べるものもあります。",
+      "コード量が減って読みやすくなる一方、どの値がどのプロパティに入るか分かりにくくなることもあります。案件によってはショートハンドを使わないルールのこともあるので、コーディング規約を確認します。"
+    ],
+    "values": {
+      "label": "ショートハンドで指定できる主なプロパティ",
+      "head": "プロパティ",
+      "rows": [
+        {
+          "key": "margin / padding",
+          "desc": "上・右・下・左の順に記述する"
+        },
+        {
+          "key": "border",
+          "desc": "太さ・線の種類・色（border-top なども同じ）"
+        },
+        {
+          "key": "outline",
+          "desc": "アウトラインの太さ・種類・色"
+        },
+        {
+          "key": "background",
+          "desc": "背景色・背景画像・表示位置 / サイズ・繰り返し・スクロール方法 など"
+        },
+        {
+          "key": "font",
+          "desc": "スタイル・太さ・サイズ / 行の高さ・書体（サイズと書体は必須）"
+        },
+        {
+          "key": "list-style",
+          "desc": "リストマーカーの種類・位置・画像"
+        },
+        {
+          "key": "border-image",
+          "desc": "枠線に使う画像・切り出し方・太さ・はみ出し・繰り返し"
+        },
+        {
+          "key": "columns",
+          "desc": "段組みの列数・列の幅"
+        },
+        {
+          "key": "transition",
+          "desc": "変化させるプロパティ・時間・速度の変化・開始の遅れ"
+        },
+        {
+          "key": "animation",
+          "desc": "名前・1回の時間・速度の変化・開始の遅れ・回数・方向 など"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "margin・padding の値の数",
+        "desc": "値の数で、どの辺に入るかが変わります。",
+        "css": ".a { margin: 10px; }               /* 上下左右 */\n.b { margin: 10px 20px; }          /* 上下 | 左右 */\n.c { margin: 10px 20px 30px; }     /* 上 | 左右 | 下 */\n.d { margin: 10px 20px 30px 40px; } /* 上 | 右 | 下 | 左 */"
+      },
+      {
+        "title": "一部だけ上書きする",
+        "desc": "ショートハンドで全体を決めてから、変えたい1辺だけ個別のプロパティで上書きします。",
+        "css": ".card {\n  padding: 24px;\n  padding-bottom: 0;\n}"
+      }
+    ],
+    "notes": [
+      "ショートハンドで省略した値は、指定しなかったのではなく「初期値」で上書きされます。例えば background: red と書くと、先に指定した background-image も消えます。",
+      "個別のプロパティとショートハンドを両方書くときは、ショートハンドを先に書きます。後に書くと個別の指定を上書きしてしまいます。"
+    ],
+    "related": [
+      "css-margin",
+      "css-padding",
+      "css-border",
+      "css-background-color"
     ]
   },
   {
@@ -6061,8 +6322,24 @@
       "head": "疑似クラス",
       "rows": [
         {
+          "key": ":link",
+          "desc": "未訪問のリンク"
+        },
+        {
+          "key": ":visited",
+          "desc": "訪問済みのリンク"
+        },
+        {
           "key": ":hover",
           "desc": "マウスが乗っているとき"
+        },
+        {
+          "key": ":active",
+          "desc": "クリックしてから離すまでの間"
+        },
+        {
+          "key": ":focus",
+          "desc": "クリックや Tab キーで選択しているとき"
         },
         {
           "key": ":focus-visible",
@@ -6073,8 +6350,16 @@
           "desc": "最初 / 最後の子要素"
         },
         {
+          "key": ":first-of-type / :last-of-type",
+          "desc": "兄弟要素のうち、その種類で最初 / 最後の要素"
+        },
+        {
           "key": ":nth-child(n)",
           "desc": "n 番目の子要素（odd・even・2n+1 なども可）"
+        },
+        {
+          "key": ":nth-of-type(n)",
+          "desc": "兄弟要素のうち、その種類で n 番目の要素"
         },
         {
           "key": ":not(セレクタ)",
@@ -6096,6 +6381,12 @@
         "title": "3の倍数の項目を指定する",
         "desc": ":nth-child() には計算式も書けます。",
         "css": ".grid > *:nth-child(3n) {\n  margin-right: 0;\n}"
+      },
+      {
+        "title": ":nth-child と :nth-of-type の違い",
+        "desc": ":nth-child は種類に関係なく数え、:nth-of-type は同じ種類の要素だけを数えます。見出しと段落が混ざっているときに違いが出ます。",
+        "html": "<div class=\"post\">\n  <h2>見出し</h2>\n  <p>1つ目の段落</p>\n  <p>2つ目の段落</p>\n</div>",
+        "css": "/* h2 も数えるので「1つ目の段落」が当たる */\n.post p:nth-child(2) { color: red; }\n\n/* p だけを数えるので「1つ目の段落」が当たる */\n.post p:first-of-type { font-weight: bold; }\n\n/* p だけを数えて2番目 →「2つ目の段落」 */\n.post p:nth-of-type(2) { color: blue; }"
       }
     ],
     "notes": [
@@ -6106,7 +6397,7 @@
       "css-hover",
       "css-pseudo-element",
       "css-specificity",
-      "css-general-sibling-selector"
+      "css-child-selector"
     ]
   },
   {
@@ -6729,6 +7020,166 @@
     ]
   },
   {
+    "id": "css-text-shadow",
+    "title": null,
+    "ja": "文字の影",
+    "lead": "文字に影を付けます。横のずれ・縦のずれ・ぼかし・色の順に指定します。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "none"
+      },
+      {
+        "label": "適用対象",
+        "value": "すべての要素"
+      },
+      {
+        "label": "継承",
+        "value": "する"
+      }
+    ],
+    "code": {
+      "html": "<p class=\"shadow\">影を付けた文字</p>\n<p class=\"glow\">ぼかしだけの影</p>",
+      "css": "p {\n  font-size: 28px;\n  font-weight: bold;\n  margin: 8px 0;\n}\n.shadow {\n  text-shadow: 3px 3px 4px rgba(0, 0, 0, .4);\n}\n.glow {\n  color: #fff;\n  text-shadow: 0 0 8px #b68235;\n}"
+    },
+    "preview": {
+      "height": 130,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`text-shadow` は文字の形にそって影を付けるプロパティです。`横のずれ 縦のずれ ぼかし 色` の順にスペース区切りで書きます。",
+      "横・縦はプラスで右・下、マイナスで左・上にずれます。ぼかしは省略でき、0 にするとくっきりした影になります。",
+      "ずれを 0 にしてぼかしだけ付けると、文字の周りが光るような表現になります。カンマで区切ると、複数の影を重ねられます。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "none",
+          "desc": "影なし（初期値）"
+        },
+        {
+          "key": "2px 2px #000",
+          "desc": "横・縦のずれと色"
+        },
+        {
+          "key": "2px 2px 4px #000",
+          "desc": "横・縦のずれ・ぼかし・色"
+        },
+        {
+          "key": "0 0 8px #fff",
+          "desc": "ずれなしで周りをぼかす"
+        },
+        {
+          "key": "1px 1px #000, -1px -1px #fff",
+          "desc": "カンマ区切りで複数の影"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "写真の上の文字を読みやすくする",
+        "desc": "背景画像の上に白い文字を載せるとき、薄い影を付けると読みやすくなります。",
+        "css": ".hero-title {\n  color: #fff;\n  text-shadow: 0 2px 6px rgba(0, 0, 0, .5);\n}"
+      }
+    ],
+    "notes": [
+      "影を強くしすぎると、文字がにじんで読みにくくなります。色は半透明（rgba）にするのがおすすめです。",
+      "要素の箱そのものに影を付けるときは box-shadow を使います。"
+    ],
+    "related": [
+      "css-box-shadow",
+      "css-color",
+      "css-font-weight",
+      "css-background-image"
+    ]
+  },
+  {
+    "id": "css-vertical-align",
+    "title": null,
+    "ja": "縦方向の揃え位置",
+    "lead": "行の中に並ぶインライン要素や、表のセルの中身を、縦方向のどこに揃えるかを指定します。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "baseline"
+      },
+      {
+        "label": "適用対象",
+        "value": "インライン要素・表のセル"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<p>\n  <span class=\"big\">大</span>\n  <span class=\"icon top\"></span>top\n  <span class=\"icon middle\"></span>middle\n  <span class=\"icon bottom\"></span>bottom\n</p>",
+      "css": "p {\n  font-size: 16px;\n  background: #f6ead8;\n  padding: 8px;\n}\n.big {\n  font-size: 48px;\n}\n.icon {\n  display: inline-block;\n  width: 24px;\n  height: 24px;\n  background: #b68235;\n}\n.top {\n  vertical-align: top;\n}\n.middle {\n  vertical-align: middle;\n}\n.bottom {\n  vertical-align: bottom;\n}"
+    },
+    "preview": {
+      "height": 100,
+      "note": "茶色の四角（inline-block）を、大きな文字で高くなった行の上・中央・下に揃えています",
+      "fullDocument": false
+    },
+    "explain": [
+      "`vertical-align` は、同じ行に並んだインライン要素（文字・画像・inline-block の要素など）を、縦方向のどこに揃えるかを指定します。",
+      "上の例では、大きな文字で高くなった行の中で、小さな画像を上（`top`）・中央（`middle`）・下（`bottom`）に揃えています。",
+      "表のセル（`td`・`th`）に指定すると、セルの中身を上・中央・下のどこに置くかを決められます。",
+      "ブロック要素（`div` など）には効きません。ボックスの中身を縦に中央揃えしたいときは、Flexbox の `align-items: center` を使います。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "baseline",
+          "desc": "文字の基準線に揃える（初期値）"
+        },
+        {
+          "key": "top",
+          "desc": "行の一番上に揃える"
+        },
+        {
+          "key": "middle",
+          "desc": "行の中央に揃える"
+        },
+        {
+          "key": "bottom",
+          "desc": "行の一番下に揃える"
+        },
+        {
+          "key": "text-top / text-bottom",
+          "desc": "親の文字の上端 / 下端に揃える"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "画像の下にできるすき間を消す",
+        "desc": "img は文字と同じ基準線に揃うため、下に少しすき間ができます。vertical-align を変えると消えます。",
+        "css": "img {\n  vertical-align: bottom;\n}"
+      },
+      {
+        "title": "表のセルを上揃えにする",
+        "desc": "セルの中身は初期値で縦中央になります。上に揃えたいときに指定します。",
+        "css": "td {\n  vertical-align: top;\n}"
+      }
+    ],
+    "notes": [
+      "div などのブロック要素の中身を縦中央にする目的では効きません（Flexbox・Grid を使います）。",
+      "text-align は横方向、vertical-align は縦方向の揃えです。"
+    ],
+    "related": [
+      "css-text-align",
+      "css-line-height",
+      "css-align-items",
+      "html-td"
+    ]
+  },
+  {
     "id": "css-color",
     "title": null,
     "ja": "文字色",
@@ -7058,7 +7509,7 @@
     },
     "explain": [
       "`margin` は要素の枠線（border）より外側の余白です。内側の余白は `padding` で指定します。",
-      "値を1〜4つ並べて指定でき、4つの場合は「上・右・下・左」の時計回りになります。",
+      "値を1〜4つ並べて指定でき、4つの場合は「上・右・下・左」の時計回りになります。1方向だけ指定するときは `margin-top`・`margin-right`・`margin-bottom`・`margin-left` を使います。",
       "幅が決まったブロック要素に `margin: 0 auto` を指定すると、左右の余白が均等に計算され、水平方向の中央に配置されます。"
     ],
     "values": {
@@ -7076,6 +7527,10 @@
         {
           "key": "margin: 1px 2px 3px 4px;",
           "desc": "上・右・下・左の順（時計回り）"
+        },
+        {
+          "key": "margin-top / -right / -bottom / -left",
+          "desc": "1方向だけ指定（上・右・下・左のマージン）"
         },
         {
           "key": "auto",
@@ -7339,6 +7794,78 @@
     ]
   },
   {
+    "id": "css-max-height",
+    "title": null,
+    "ja": "最大の高さ",
+    "lead": "要素の高さがこれより高くならないように、上限を指定します。overflow と組み合わせて、はみ出した部分をスクロールさせるのに使います。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "none"
+      },
+      {
+        "label": "適用対象",
+        "value": "すべての要素（インラインを除く）"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"box\">\n  <p>1. 利用規約に同意してください。</p>\n  <p>2. 個人情報は適切に管理します。</p>\n  <p>3. 内容は予告なく変更することがあります。</p>\n  <p>4. お問い合わせはフォームから受け付けます。</p>\n</div>",
+      "css": ".box {\n  max-height: 100px;\n  overflow-y: auto;\n  padding: 0 12px;\n  border: 1px solid #b68235;\n}"
+    },
+    "preview": {
+      "height": 125,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`max-height` は、高さの上限を決めるプロパティです。内容が少なければ内容に合わせた高さになり、多くても指定した高さで止まります。",
+      "上限を超えた内容は、そのままでは枠の外にはみ出します。`overflow-y: auto` と組み合わせると、はみ出した部分をスクロールして読めるようになります。",
+      "`height` と両方を指定した場合、小さいほうが使われます。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "none",
+          "desc": "上限なし（初期値）"
+        },
+        {
+          "key": "100px",
+          "desc": "固定の上限"
+        },
+        {
+          "key": "50vh",
+          "desc": "画面の高さの半分まで"
+        },
+        {
+          "key": "50%",
+          "desc": "親要素の高さの50%（親の高さが必要）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "画像の高さをそろえる",
+        "desc": "縦長の画像が大きくなりすぎないよう、高さに上限を付けます。",
+        "css": "img {\n  max-width: 100%;\n  max-height: 300px;\n  object-fit: contain;\n}"
+      }
+    ],
+    "notes": [
+      "スクロールする箱の中に大事な情報を隠さないようにします。スクロールできることに気づかれない場合があります。"
+    ],
+    "related": [
+      "css-height",
+      "css-min-height",
+      "css-overflow",
+      "css-max-width"
+    ]
+  },
+  {
     "id": "css-max-width",
     "title": null,
     "ja": "最大の幅",
@@ -7412,6 +7939,152 @@
     ]
   },
   {
+    "id": "css-min-width",
+    "title": null,
+    "ja": "最小の幅",
+    "lead": "要素の幅がこれより小さくならないように、下限を指定します。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "auto"
+      },
+      {
+        "label": "適用対象",
+        "value": "すべての要素（インラインを除く）"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<button class=\"btn\">OK</button>\n<button class=\"btn\">キャンセルする</button>",
+      "css": ".btn {\n  min-width: 120px;\n  padding: 8px 12px;\n  border: 1px solid #b68235;\n  background: #f6ead8;\n}"
+    },
+    "preview": {
+      "height": 70,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`min-width` は、幅の下限を決めるプロパティです。内容が少なくても、指定した幅より小さくはなりません。",
+      "上の例では、文字の短い「OK」ボタンも 120px の幅になり、ボタンの大きさがそろいます。文字が長い場合は、120px より広がります。",
+      "`width` と両方を指定した場合、`min-width` のほうが優先されます。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "auto",
+          "desc": "自動（初期値）"
+        },
+        {
+          "key": "120px",
+          "desc": "固定の下限"
+        },
+        {
+          "key": "50%",
+          "desc": "親要素の幅に対する割合"
+        },
+        {
+          "key": "0",
+          "desc": "Flexbox のアイテムを内容より小さく縮められるようにする"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "Flexbox で文字がはみ出すのを防ぐ",
+        "desc": "Flexbox のアイテムは内容より小さくならないため、長い英単語などではみ出すことがあります。min-width: 0 で縮められるようになります。",
+        "css": ".item {\n  flex: 1;\n  min-width: 0;\n}"
+      }
+    ],
+    "notes": [
+      "min-width を大きくしすぎると、スマートフォンの画面からはみ出します。",
+      "@media (min-width: 768px) の min-width は、プロパティではなく「画面幅が768px以上のとき」という条件です。"
+    ],
+    "related": [
+      "css-width",
+      "css-max-width",
+      "css-min-height",
+      "css-flex"
+    ]
+  },
+  {
+    "id": "css-min-height",
+    "title": null,
+    "ja": "最小の高さ",
+    "lead": "要素の高さがこれより低くならないように、下限を指定します。内容が多ければ、それ以上に伸びます。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "auto"
+      },
+      {
+        "label": "適用対象",
+        "value": "すべての要素（インラインを除く）"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"row\">\n  <div class=\"card\">短い文</div>\n  <div class=\"card\">内容が多いときは、指定した高さより伸びます。内容が多いときは、指定した高さより伸びます。</div>\n</div>",
+      "css": ".row {\n  display: flex;\n  gap: 10px;\n  align-items: flex-start;\n}\n.card {\n  flex: 1;\n  min-height: 80px;\n  padding: 8px;\n  border: 1px solid #b68235;\n  background: #f6ead8;\n}"
+    },
+    "preview": {
+      "height": 130,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`min-height` は、高さの下限を決めるプロパティです。内容が少なくても指定した高さを保ち、内容が多ければ自動で伸びます。",
+      "`height` で高さを固定すると、文字が増えたときにはみ出してしまいます。「最低でもこのくらいの高さ」としたいときは `min-height` を使います。",
+      "ページの1画面目（ファーストビュー）を画面いっぱいにするときは、`min-height: 100vh`（または `100dvh`）がよく使われます。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "auto",
+          "desc": "自動（初期値）"
+        },
+        {
+          "key": "80px",
+          "desc": "固定の下限"
+        },
+        {
+          "key": "100vh",
+          "desc": "画面の高さ"
+        },
+        {
+          "key": "100dvh",
+          "desc": "スマートフォンのアドレスバーの伸縮に対応した画面の高さ"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "1画面目を画面いっぱいにする",
+        "desc": "内容が多いときは画面より長くなれるよう、height ではなく min-height を使います。",
+        "css": ".hero {\n  min-height: 100vh;\n  min-height: 100dvh;\n}"
+      }
+    ],
+    "notes": [
+      "height と両方を指定した場合、min-height のほうが優先されます。",
+      "% で指定するときは、親要素の高さが決まっている必要があります。"
+    ],
+    "related": [
+      "css-height",
+      "css-max-height",
+      "css-min-width",
+      "css-overflow"
+    ]
+  },
+  {
     "id": "css-box-sizing",
     "title": null,
     "ja": "サイズの計算方法",
@@ -7470,10 +8143,10 @@
       "途中から box-sizing を変えると、既存のレイアウトの寸法がずれます。最初に決めておきます。"
     ],
     "related": [
+      "css-box-model",
       "css-width",
       "css-padding",
-      "css-border",
-      "css-margin"
+      "css-border"
     ]
   },
   {
@@ -7555,6 +8228,75 @@
       "css-justify-content",
       "css-grid-template-columns",
       "css-position"
+    ]
+  },
+  {
+    "id": "css-visibility",
+    "title": null,
+    "ja": "表示・非表示（場所は残る）",
+    "lead": "要素を見えなくします。display: none と違い、見えなくなった要素の場所はそのまま残り、レイアウトは変わりません。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "visible"
+      },
+      {
+        "label": "適用対象",
+        "value": "すべての要素"
+      },
+      {
+        "label": "継承",
+        "value": "する"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"row\">\n  <div class=\"box\">A</div>\n  <div class=\"box hidden\">B</div>\n  <div class=\"box\">C</div>\n</div>\n<div class=\"row\">\n  <div class=\"box\">A</div>\n  <div class=\"box none\">B</div>\n  <div class=\"box\">C</div>\n</div>",
+      "css": ".row {\n  display: flex;\n  gap: 8px;\n  margin-bottom: 10px;\n}\n.box {\n  width: 60px;\n  padding: 10px;\n  text-align: center;\n  background: #f6ead8;\n  border: 1px solid #b68235;\n}\n.hidden {\n  visibility: hidden;\n}\n.none {\n  display: none;\n}"
+    },
+    "preview": {
+      "height": 120,
+      "note": "上の行は B の場所が残り、下の行は B が詰められています",
+      "fullDocument": false
+    },
+    "explain": [
+      "`visibility: hidden` は、要素を見えなくするプロパティです。見えなくなっても、要素の大きさの分の場所はそのまま残ります。",
+      "上の例の1行目は B に `visibility: hidden`、2行目は `display: none` を指定しています。1行目は B の場所が空いたまま、2行目は B がなくなって C が詰まっています。",
+      "`visibility` は継承するため、親を `hidden` にして子だけ `visible` に戻すこともできます。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "visible",
+          "desc": "表示する（初期値）"
+        },
+        {
+          "key": "hidden",
+          "desc": "見えなくする。場所は残る"
+        },
+        {
+          "key": "collapse",
+          "desc": "表の行・列に使うと、その行・列を詰めて非表示にする（ほかの要素では hidden と同じ）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "transition でふわっと表示する",
+        "desc": "display は transition で変化しませんが、visibility と opacity は組み合わせてなめらかに切り替えられます。",
+        "css": ".menu {\n  visibility: hidden;\n  opacity: 0;\n  transition: opacity .3s, visibility .3s;\n}\n.menu.is-open {\n  visibility: visible;\n  opacity: 1;\n}"
+      }
+    ],
+    "notes": [
+      "visibility: hidden の要素はクリックできず、読み上げソフトでも読まれません。",
+      "opacity: 0 は見えないだけで、クリックや読み上げの対象になります。目的に合わせて使い分けます。"
+    ],
+    "related": [
+      "css-display",
+      "css-opacity",
+      "css-transition",
+      "css-overflow"
     ]
   },
   {
@@ -8427,8 +9169,8 @@
       "`border-top`・`border-bottom` などを使うと、1辺だけに線を引けます。見出しの下線や区切り線によく使います。"
     ],
     "values": {
-      "label": "線の種類",
-      "head": "値",
+      "label": "線の種類・個別に指定するプロパティ",
+      "head": "値 / プロパティ",
       "rows": [
         {
           "key": "solid",
@@ -8449,6 +9191,22 @@
         {
           "key": "none",
           "desc": "線なし"
+        },
+        {
+          "key": "border-width",
+          "desc": "線の太さだけを指定（px など）"
+        },
+        {
+          "key": "border-style",
+          "desc": "線の種類だけを指定（solid など）"
+        },
+        {
+          "key": "border-color",
+          "desc": "線の色だけを指定"
+        },
+        {
+          "key": "border-top / -right / -bottom / -left",
+          "desc": "1辺だけに線を引く"
         }
       ]
     },
@@ -8457,6 +9215,11 @@
         "title": "角を丸くした枠線",
         "desc": "border-radius と組み合わせると、角の丸いボックスになります。",
         "css": ".card {\n  border: 1px solid #ddd;\n  border-radius: 8px;\n}"
+      },
+      {
+        "title": "太さ・種類・色を個別に指定する",
+        "desc": "border はショートハンドです。個別のプロパティで書くこともでき、一部だけ変えたいときに便利です。",
+        "css": ".box {\n  border-width: 2px;\n  border-style: solid;\n  border-color: #b68235;\n}\n.box:hover {\n  border-color: #c0392b;\n}"
       }
     ],
     "notes": [
@@ -8690,6 +9453,166 @@
       "html-button",
       "css-hover",
       "css-box-shadow"
+    ]
+  },
+  {
+    "id": "css-list-style",
+    "title": null,
+    "ja": "リストマーカーの種類・位置・画像",
+    "lead": "ul・ol の行頭に付くマーカー（黒丸や番号）の種類・位置・画像を指定します。list-style はその3つをまとめて書くショートハンドです。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "disc outside none"
+      },
+      {
+        "label": "適用対象",
+        "value": "li（display: list-item の要素）"
+      },
+      {
+        "label": "継承",
+        "value": "する"
+      }
+    ],
+    "code": {
+      "html": "<ul class=\"square\">\n  <li>square（四角）</li>\n  <li>outside（外側）</li>\n</ul>\n<ol class=\"inside\">\n  <li>decimal（数字）</li>\n  <li>inside（内側）</li>\n</ol>\n<ul class=\"none\">\n  <li>none（マーカーなし）</li>\n</ul>",
+      "css": "ul, ol {\n  margin: 0 0 8px;\n  background: #f6ead8;\n}\n.square {\n  list-style: square outside;\n}\n.inside {\n  list-style: decimal inside;\n}\n.none {\n  list-style: none;\n  padding-left: 0;\n}"
+    },
+    "preview": {
+      "height": 175,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`list-style` は、`list-style-type`（種類）・`list-style-position`（位置）・`list-style-image`（画像）の3つをまとめて指定するショートハンドです。",
+      "`list-style-type` でマーカーの形を変えます。ナビゲーションメニューなど、マーカーが不要なリストには `none` を指定します。",
+      "`list-style-position` が `outside`（初期値）だとマーカーは文章の外側に、`inside` だと文章の中に入り、2行目以降がマーカーの下まで回り込みます。"
+    ],
+    "values": {
+      "label": "指定できるプロパティと値",
+      "head": "プロパティ / 値",
+      "rows": [
+        {
+          "key": "list-style-type: disc",
+          "desc": "黒丸（ul の初期値）"
+        },
+        {
+          "key": "list-style-type: circle / square",
+          "desc": "白丸 / 四角"
+        },
+        {
+          "key": "list-style-type: decimal",
+          "desc": "数字（ol の初期値）"
+        },
+        {
+          "key": "list-style-type: none",
+          "desc": "マーカーなし"
+        },
+        {
+          "key": "list-style-position: outside / inside",
+          "desc": "マーカーを文章の外側（初期値）/ 内側に置く"
+        },
+        {
+          "key": "list-style-image: url(…)",
+          "desc": "マーカーに画像を使う"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "ナビゲーションのリストを整える",
+        "desc": "マーカーと、ブラウザが付ける左の余白をまとめて消します。",
+        "css": ".nav ul {\n  list-style: none;\n  margin: 0;\n  padding: 0;\n}"
+      },
+      {
+        "title": "マーカーの色だけ変える",
+        "desc": "::marker 疑似要素を使うと、文字はそのままでマーカーの色や大きさを変えられます。",
+        "css": "li::marker {\n  color: #b68235;\n}"
+      }
+    ],
+    "notes": [
+      "list-style: none にしても、ul・ol の左の余白（padding-left）は残ります。必要に応じて 0 にします。",
+      "list-style-image は画像の大きさや位置を細かく調整できません。凝ったマーカーは ::before や ::marker で作るのが一般的です。"
+    ],
+    "related": [
+      "html-ul",
+      "html-ol",
+      "html-li",
+      "css-pseudo-element"
+    ]
+  },
+  {
+    "id": "css-border-collapse",
+    "title": null,
+    "ja": "表の枠線を重ねるか離すか（border-spacing）",
+    "lead": "表（table）のセルの枠線を、1本に重ねるか、離して表示するかを指定します。離す場合の間隔は border-spacing で指定します。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "separate"
+      },
+      {
+        "label": "適用対象",
+        "value": "table"
+      },
+      {
+        "label": "継承",
+        "value": "する"
+      }
+    ],
+    "code": {
+      "html": "<table class=\"separate\">\n  <tr><td>separate</td><td>離す</td></tr>\n</table>\n<table class=\"collapse\">\n  <tr><td>collapse</td><td>重ねる</td></tr>\n</table>",
+      "css": "table {\n  margin-bottom: 10px;\n}\ntd {\n  padding: 6px 12px;\n  border: 1px solid #b68235;\n}\n.separate {\n  border-collapse: separate;\n  border-spacing: 6px;\n}\n.collapse {\n  border-collapse: collapse;\n}"
+    },
+    "preview": {
+      "height": 110,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`border-collapse` は、表の隣り合うセルの枠線をどう表示するかを決めるプロパティです。`table` 要素に指定します。",
+      "初期値の `separate` では、セルごとに枠線が付き、セルとセルの間にすき間ができます。そのすき間の大きさを決めるのが `border-spacing` です。",
+      "`collapse` にすると、隣り合う枠線が1本に重なります。一般的な表は、この `collapse` にして作ります。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "プロパティ / 値",
+      "rows": [
+        {
+          "key": "border-collapse: separate",
+          "desc": "セルの枠線を離す（初期値）"
+        },
+        {
+          "key": "border-collapse: collapse",
+          "desc": "隣り合う枠線を1本に重ねる"
+        },
+        {
+          "key": "border-spacing: 6px",
+          "desc": "セルどうしの間隔（separate のときだけ効く）"
+        },
+        {
+          "key": "border-spacing: 10px 4px",
+          "desc": "横の間隔・縦の間隔"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "基本の表のスタイル",
+        "desc": "枠線を重ね、幅いっぱいに広げた、よく使う形です。",
+        "html": "<table>\n  <tr><th>名前</th><th>価格</th></tr>\n  <tr><td>コーヒー</td><td>400円</td></tr>\n</table>",
+        "css": "table {\n  width: 100%;\n  border-collapse: collapse;\n}\nth, td {\n  padding: 8px 12px;\n  border: 1px solid #ddd;\n}"
+      }
+    ],
+    "notes": [
+      "collapse にすると border-spacing は効きません。",
+      "collapse のとき、table に付けた border-radius は効きません。角を丸くしたいときは separate のまま border-spacing: 0 にします。"
+    ],
+    "related": [
+      "html-table",
+      "html-td",
+      "css-border",
+      "css-list-style"
     ]
   },
   {
@@ -9409,6 +10332,7 @@
     },
     "explain": [
       "`::before` は、要素の中身の先頭に「疑似的な要素」を追加します。`content` プロパティで中身を指定し、これがないと表示されません。",
+      "`content` に文字を入れるときは、`content: \"※ \"` のように文字列を `\"`（ダブルクォーテーション）または `'`（シングルクォーテーション）で囲みます。囲まないと表示されません。",
       "文字だけでなく、`content: \"\"` にして幅・高さ・背景色を指定すれば、線や図形などの装飾もつくれます。",
       "中身の末尾に追加するときは `::after` を使います。どちらもHTMLを書き換えずに装飾を足せるのが利点です。"
     ],

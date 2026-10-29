@@ -844,6 +844,22 @@
     "category": "syntax"
   },
   {
+    "id": "css-important",
+    "type": "css",
+    "slug": "important",
+    "name": "!important",
+    "summary": "詳細度に関係なく最優先にする（なるべく使わない）",
+    "keywords": [
+      "!important",
+      "important",
+      "インポータント",
+      "最優先",
+      "上書き",
+      "強制"
+    ],
+    "category": "syntax"
+  },
+  {
     "id": "css-inheritance",
     "type": "css",
     "slug": "inheritance",
@@ -855,6 +871,42 @@
       "受け継ぐ",
       "親子",
       "引き継ぎ"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-box-model",
+    "type": "css",
+    "slug": "box-model",
+    "name": "ボックスモデル",
+    "summary": "すべての要素は4層の箱でできている",
+    "keywords": [
+      "ボックスモデル",
+      "box model",
+      "content",
+      "padding",
+      "border",
+      "margin",
+      "箱",
+      "コンテンツ"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-shorthand",
+    "type": "css",
+    "slug": "shorthand",
+    "name": "ショートハンド",
+    "summary": "複数のプロパティをまとめて書く（一括指定）",
+    "keywords": [
+      "ショートハンド",
+      "一括指定",
+      "まとめて指定",
+      "shorthand",
+      "省略",
+      "margin",
+      "font",
+      "background"
     ],
     "category": "syntax"
   },
@@ -1091,6 +1143,34 @@
     "category": "font"
   },
   {
+    "id": "css-text-shadow",
+    "type": "css",
+    "slug": "text-shadow",
+    "name": "text-shadow",
+    "summary": "文字の影",
+    "keywords": [
+      "影",
+      "文字の影",
+      "シャドウ"
+    ],
+    "category": "font"
+  },
+  {
+    "id": "css-vertical-align",
+    "type": "css",
+    "slug": "vertical-align",
+    "name": "vertical-align",
+    "summary": "縦方向の揃え位置",
+    "keywords": [
+      "縦位置",
+      "上揃え",
+      "中央揃え",
+      "下揃え",
+      "垂直"
+    ],
+    "category": "font"
+  },
+  {
     "id": "css-color",
     "type": "css",
     "slug": "color",
@@ -1188,6 +1268,20 @@
     "category": "box"
   },
   {
+    "id": "css-max-height",
+    "type": "css",
+    "slug": "max-height",
+    "name": "max-height",
+    "summary": "最大の高さ",
+    "keywords": [
+      "高さ",
+      "最大",
+      "最大高さ",
+      "スクロール"
+    ],
+    "category": "box"
+  },
+  {
     "id": "css-max-width",
     "type": "css",
     "slug": "max-width",
@@ -1196,6 +1290,32 @@
     "keywords": [
       "幅",
       "レスポンシブ"
+    ],
+    "category": "box"
+  },
+  {
+    "id": "css-min-width",
+    "type": "css",
+    "slug": "min-width",
+    "name": "min-width",
+    "summary": "最小の幅",
+    "keywords": [
+      "幅",
+      "最小",
+      "最小幅"
+    ],
+    "category": "box"
+  },
+  {
+    "id": "css-min-height",
+    "type": "css",
+    "slug": "min-height",
+    "name": "min-height",
+    "summary": "最小の高さ",
+    "keywords": [
+      "高さ",
+      "最小",
+      "最小高さ"
     ],
     "category": "box"
   },
@@ -1222,6 +1342,20 @@
       "flex",
       "grid",
       "block"
+    ],
+    "category": "layout"
+  },
+  {
+    "id": "css-visibility",
+    "type": "css",
+    "slug": "visibility",
+    "name": "visibility",
+    "summary": "表示・非表示（場所は残る）",
+    "keywords": [
+      "非表示",
+      "表示",
+      "隠す",
+      "hidden"
     ],
     "category": "layout"
   },
@@ -1409,6 +1543,41 @@
       "フォーカス"
     ],
     "category": "deco"
+  },
+  {
+    "id": "css-list-style",
+    "type": "css",
+    "slug": "list-style",
+    "name": "list-style",
+    "summary": "リストマーカーの種類・位置・画像",
+    "keywords": [
+      "リスト",
+      "行頭記号",
+      "マーカー",
+      "list-style-type",
+      "list-style-position",
+      "list-style-image",
+      "黒丸",
+      "番号"
+    ],
+    "category": "listtable"
+  },
+  {
+    "id": "css-border-collapse",
+    "type": "css",
+    "slug": "border-collapse",
+    "name": "border-collapse",
+    "summary": "表の枠線を重ねるか離すか（border-spacing）",
+    "keywords": [
+      "表",
+      "テーブル",
+      "枠線",
+      "border-spacing",
+      "セルの間隔",
+      "collapse",
+      "separate"
+    ],
+    "category": "listtable"
   },
   {
     "id": "css-transition",
