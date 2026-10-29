@@ -1,0 +1,155 @@
+[
+  {
+    "id": "tools",
+    "title": "ツール",
+    "en": "TOOLS",
+    "desc": "図形やテキストなど、キャンバスで使うツールを1キーで切り替えます。",
+    "items": [
+      { "label": "移動ツール", "mac": "V", "win": "V" },
+      { "label": "フレームツール", "mac": "F / A", "win": "F / A" },
+      { "label": "セクション", "mac": "Shift+S", "win": "Shift+S" },
+      { "label": "長方形", "mac": "R", "win": "R" },
+      { "label": "楕円", "mac": "O", "win": "O" },
+      { "label": "線", "mac": "L", "win": "L" },
+      { "label": "矢印", "mac": "Shift+L", "win": "Shift+L" },
+      { "label": "ペン", "mac": "P", "win": "P" },
+      { "label": "鉛筆", "mac": "Shift+P", "win": "Shift+P" },
+      { "label": "テキスト", "mac": "T", "win": "T" },
+      { "label": "スライス（書き出し範囲）", "mac": "S", "win": "S" },
+      { "label": "スケールツール", "mac": "K", "win": "K", "note": "比率を保ったまま、線の太さや角丸もまとめて拡大縮小します。" },
+      { "label": "手のひら（画面を動かす）", "mac": "H / Space+ドラッグ", "win": "H / Space+ドラッグ" },
+      { "label": "コメント", "mac": "C", "win": "C" },
+      { "label": "スポイト（色を拾う）", "mac": "I / Ctrl+C", "win": "I" }
+    ]
+  },
+  {
+    "id": "edit",
+    "title": "基本編集",
+    "en": "EDIT",
+    "desc": "コピーや複製、プロパティの貼り付けなど、日々の編集で使う操作です。",
+    "items": [
+      { "label": "元に戻す", "mac": "Cmd+Z", "win": "Ctrl+Z" },
+      { "label": "やり直す", "mac": "Cmd+Shift+Z", "win": "Ctrl+Shift+Z / Ctrl+Y" },
+      { "label": "コピー / ペースト", "mac": "Cmd+C / Cmd+V", "win": "Ctrl+C / Ctrl+V" },
+      { "label": "選択したものの上にペースト", "mac": "Cmd+Shift+V", "win": "Ctrl+Shift+V", "note": "フレームの中ではなく、選択中のものと同じ位置の上に貼り付けます。" },
+      { "label": "選択したものと置き換えてペースト", "mac": "Cmd+Shift+R", "win": "Ctrl+Shift+R" },
+      { "label": "複製", "mac": "Cmd+D", "win": "Ctrl+D" },
+      { "label": "PNG としてコピー", "mac": "Cmd+Shift+C", "win": "Ctrl+Shift+C" },
+      { "label": "プロパティ（塗り・線・効果）をコピー", "mac": "Cmd+Opt+C", "win": "Ctrl+Alt+C" },
+      { "label": "プロパティをペースト", "mac": "Cmd+Opt+V", "win": "Ctrl+Alt+V" },
+      { "label": "名前を変更", "mac": "Cmd+R", "win": "Ctrl+R" },
+      { "label": "書き出し", "mac": "Cmd+Shift+E", "win": "Ctrl+Shift+E" },
+      { "label": "クイックアクション（メニューを検索）", "mac": "Cmd+/ / Cmd+P", "win": "Ctrl+/ / Ctrl+P" },
+      { "label": "アクションメニュー", "mac": "Cmd+K", "win": "Ctrl+K" }
+    ]
+  },
+  {
+    "id": "select",
+    "title": "選択・レイヤー",
+    "en": "SELECTION & LAYERS",
+    "desc": "入れ子になったレイヤーの選択や、グループ化・重なり順の変更に使います。",
+    "items": [
+      { "label": "すべて選択", "mac": "Cmd+A", "win": "Ctrl+A" },
+      { "label": "子要素を選択", "mac": "Enter", "win": "Enter" },
+      { "label": "親要素を選択", "mac": "Shift+Enter / \\", "win": "Shift+Enter / \\" },
+      { "label": "次 / 前の要素（兄弟）を選択", "mac": "Tab / Shift+Tab", "win": "Tab / Shift+Tab" },
+      { "label": "グループの中の要素を直接選択", "mac": "Cmd+クリック", "win": "Ctrl+クリック" },
+      { "label": "重なった下の要素を選択", "mac": "右クリック → 「レイヤーを選択」", "win": "右クリック → 「レイヤーを選択」", "note": "カーソルの下にあるレイヤーが一覧で出るので、そこから選びます。" },
+      { "label": "グループ化", "mac": "Cmd+G", "win": "Ctrl+G" },
+      { "label": "グループ解除", "mac": "Cmd+Shift+G", "win": "Ctrl+Shift+G" },
+      { "label": "選択範囲をフレームで囲む", "mac": "Cmd+Opt+G", "win": "Ctrl+Alt+G" },
+      { "label": "表示 / 非表示", "mac": "Cmd+Shift+H", "win": "Ctrl+Shift+H" },
+      { "label": "ロック / ロック解除", "mac": "Cmd+Shift+L", "win": "Ctrl+Shift+L" },
+      { "label": "前面へ / 背面へ", "mac": "Cmd+] / Cmd+[", "win": "Ctrl+] / Ctrl+[" },
+      { "label": "最前面へ / 最背面へ", "mac": "Opt+Cmd+] / Opt+Cmd+[", "win": "Ctrl+Shift+] / Ctrl+Shift+[" }
+    ]
+  },
+  {
+    "id": "transform",
+    "title": "移動・サイズ変更",
+    "en": "TRANSFORM",
+    "desc": "キーボードでの微調整と、ドラッグ中に押すと動きが変わるキーです。",
+    "items": [
+      { "label": "1px ずつ移動", "mac": "矢印キー", "win": "矢印キー" },
+      { "label": "10px ずつ移動", "mac": "Shift+矢印キー", "win": "Shift+矢印キー" },
+      { "label": "縦横比を保って変形", "mac": "Shift+ドラッグ", "win": "Shift+ドラッグ" },
+      { "label": "中心を基準に変形", "mac": "Opt+ドラッグ", "win": "Alt+ドラッグ" },
+      { "label": "ドラッグで複製", "mac": "Opt+ドラッグ", "win": "Alt+ドラッグ", "note": "移動するときに押すと複製、サイズを変えるときに押すと中心基準になります。" },
+      { "label": "要素どうしの距離を表示", "mac": "Opt+ホバー", "win": "Alt+ホバー", "note": "1つ選んだ状態で、別の要素にカーソルを乗せます。" },
+      { "label": "中身を動かさずにフレームだけ変形", "mac": "Cmd+ドラッグ", "win": "Ctrl+ドラッグ" }
+    ]
+  },
+  {
+    "id": "align",
+    "title": "整列",
+    "en": "ALIGN",
+    "desc": "選択したものを揃えます。1つだけ選ぶと親フレームを基準に揃います。",
+    "items": [
+      { "label": "左揃え / 右揃え", "mac": "Opt+A / Opt+D", "win": "Alt+A / Alt+D" },
+      { "label": "上揃え / 下揃え", "mac": "Opt+W / Opt+S", "win": "Alt+W / Alt+S" },
+      { "label": "水平方向の中央揃え", "mac": "Opt+H", "win": "Alt+H" },
+      { "label": "垂直方向の中央揃え", "mac": "Opt+V", "win": "Alt+V" },
+      { "label": "整列して間隔をそろえる（Tidy up）", "mac": "Ctrl+Opt+T", "win": "Ctrl+Alt+T" }
+    ]
+  },
+  {
+    "id": "components",
+    "title": "オートレイアウト・コンポーネント",
+    "en": "AUTO LAYOUT & COMPONENTS",
+    "desc": "CSS の Flexbox に近いオートレイアウトと、使い回し用のコンポーネントの操作です。",
+    "items": [
+      { "label": "オートレイアウトを追加", "mac": "Shift+A", "win": "Shift+A" },
+      { "label": "オートレイアウトを解除", "mac": "Opt+Shift+A", "win": "Alt+Shift+A" },
+      { "label": "コンポーネントを作成", "mac": "Cmd+Opt+K", "win": "Ctrl+Alt+K" },
+      { "label": "インスタンスを切り離す", "mac": "Cmd+Opt+B", "win": "Ctrl+Alt+B" },
+      { "label": "マスクとして使う", "mac": "Ctrl+Cmd+M", "win": "Ctrl+Alt+M" }
+    ]
+  },
+  {
+    "id": "shape",
+    "title": "シェイプ・パス",
+    "en": "SHAPE",
+    "desc": "図形の合体・型抜きや、パスへの変換に使います。",
+    "items": [
+      { "label": "合体（Union）", "mac": "Opt+Shift+U", "win": "Alt+Shift+U" },
+      { "label": "型抜き（Subtract）", "mac": "Opt+Shift+S", "win": "Alt+Shift+S" },
+      { "label": "交差（Intersect）", "mac": "Opt+Shift+I", "win": "Alt+Shift+I" },
+      { "label": "中マド（Exclude）", "mac": "Opt+Shift+E", "win": "Alt+Shift+E" },
+      { "label": "平坦化（Flatten）", "mac": "Opt+Shift+F", "win": "Alt+Shift+F", "note": "以前の Cmd+E（Ctrl+E）も使えます。" },
+      { "label": "線のアウトライン化", "mac": "Opt+Cmd+O", "win": "Ctrl+Alt+O" }
+    ]
+  },
+  {
+    "id": "text",
+    "title": "テキスト",
+    "en": "TEXT",
+    "desc": "文字の装飾と、サイズ・字間・行間をキーで調整する操作です。",
+    "items": [
+      { "label": "太字 / 斜体 / 下線", "mac": "Cmd+B / Cmd+I / Cmd+U", "win": "Ctrl+B / Ctrl+I / Ctrl+U" },
+      { "label": "文字サイズを大きく / 小さく", "mac": "Cmd+Shift+> / Cmd+Shift+<", "win": "Ctrl+Shift+> / Ctrl+Shift+<" },
+      { "label": "字間（letter-spacing）を広げる / 狭める", "mac": "Opt+> / Opt+<", "win": "Alt+> / Alt+<" },
+      { "label": "行間（line-height）を広げる / 狭める", "mac": "Opt+Shift+> / Opt+Shift+<", "win": "Alt+Shift+> / Alt+Shift+<" }
+    ]
+  },
+  {
+    "id": "view",
+    "title": "表示・ズーム",
+    "en": "VIEW",
+    "desc": "ズームや、グリッド・アウトラインなど表示の切り替えです。",
+    "items": [
+      { "label": "ズームイン / ズームアウト", "mac": "Cmd++ / Cmd+-", "win": "Ctrl++ / Ctrl+-" },
+      { "label": "100% で表示", "mac": "Shift+0", "win": "Shift+0" },
+      { "label": "全体を表示", "mac": "Shift+1", "win": "Shift+1" },
+      { "label": "選択範囲にズーム", "mac": "Shift+2", "win": "Shift+2" },
+      { "label": "UI（パネル）を隠す", "mac": "Cmd+\\", "win": "Ctrl+\\" },
+      { "label": "ルーラーの表示切り替え", "mac": "Shift+R", "win": "Shift+R" },
+      { "label": "レイアウトガイドの表示切り替え", "mac": "Shift+G", "win": "Shift+G", "note": "2025 年に「レイアウトグリッド」から名前が変わりました。" },
+      { "label": "ピクセルグリッドの表示切り替え", "mac": "Cmd+'", "win": "Ctrl+'" },
+      { "label": "アウトライン表示", "mac": "Cmd+Shift+O", "win": "Ctrl+Shift+O" },
+      { "label": "レイヤーパネル / アセットパネル", "mac": "Opt+1 / Opt+2", "win": "Alt+1 / Alt+2" },
+      { "label": "Dev Mode の切り替え", "mac": "Shift+D", "win": "Shift+D" },
+      { "label": "プレゼンテーション（プロトタイプを再生）", "mac": "Cmd+Opt+Enter", "win": "Ctrl+Alt+Enter" },
+      { "label": "ショートカット一覧パネルを開く", "mac": "Ctrl+Shift+?", "win": "Ctrl+Shift+?" }
+    ]
+  }
+]

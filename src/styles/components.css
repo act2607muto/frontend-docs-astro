@@ -206,8 +206,8 @@
 }
 .entry__title { font-size: 24px; font-weight: 700; line-height: 1.2; }
 .entry__desc { font-size: 13px; line-height: 1.75; color: var(--muted); }
-/* 付録（辞典とは別枠。入口の下、左寄せのバナーとして置く） */
-.top__appendix { margin-top: 40px; }
+/* 付録（辞典とは別枠。入口の下、左寄せのバナーを横に並べる） */
+.top__appendix { display: grid; grid-template-columns: repeat(2, minmax(0, 480px)); gap: 16px; margin-top: 40px; }
 .appendix-banner {
   position: relative; overflow: hidden;
   display: flex; align-items: center; justify-content: space-between; gap: 24px;
@@ -228,6 +228,7 @@
 .appendix-banner__keys { display: flex; gap: 6px; flex-shrink: 0; transform: rotate(-6deg); }
 .appendix-banner__keys .kbd { min-width: 44px; padding: 8px 10px; font-size: 20px; line-height: 1.2; border-bottom-width: 3px; background: var(--color-bg); }
 @media (max-width: 759px) {
+  .top__appendix { grid-template-columns: 1fr; gap: 12px; }
   .appendix-banner { max-width: none; padding: 18px 18px; }
   .appendix-banner__title { font-size: 18px; }
   .appendix-banner__keys .kbd { min-width: 36px; padding: 6px 8px; font-size: 16px; }
@@ -698,7 +699,7 @@
 }
 
 /* ==========================================================================
-   ⑦ Cursor ショートカット
+   ⑦ Cursor / ⑧ Figma ショートカット
    ========================================================================== */
 .kbd {
   display: inline-block; min-width: 24px; padding: 2px 7px;

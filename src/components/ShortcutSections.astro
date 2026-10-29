@@ -1,0 +1,79 @@
+---
+// ショートカット一覧の表（Cursor / Figma のページで共通）
+import SecHead from './SecHead.astro';
+import { pad2 } from '../lib/data';
+
+interface Item { label: string; mac: string; win: string; note?: string }
+interface Props {
+  shortcuts: { id: string; title: string; desc: string; items: Item[] }[];
+  /** 右の列の見出し */
+  winLabel?: string;
+}
+const { shortcuts, winLabel = 'WINDOWS' } = Astro.props;
+
+/** Mac の修飾キーは記号で表示する（名前は title 属性に入れる） */
+const MAC_SYMBOL: Record<string, string> = { Cmd: '⌘', Opt: '⌥', Shift: '⇧', Ctrl: '⌃' };
+const MAC_NAME: Record<string, string> = { Cmd: 'Command', Opt: 'Option', Shift: 'Shift', Ctrl: 'Control' };
+
+/**
+ * "Cmd+C → Cmd+V / Cmd+Shift+V" のような表記を
+ * 候補（ / ）→ 手順（ → ）→ キー（+）の入れ子に分ける。
+ * 「Emmet: …」や「」で囲んだメニュー名のように、キーではない手順は text として扱う
+ */
+const parse = (s: string) =>
+  s.split(' / ').map((alt) =>
+    alt.split(' → ').map((step) => (/: |^「/.test(step) ? { text: step } : { keys: step.split(/\+(?=.)/) })),
+  );
+
+const sections = shortcuts.map((s, i) => ({
+  ...s,
+  num: pad2(i + 1),
+  items: s.items.map((it) => ({ ...it, mac: parse(it.mac), win: parse(it.win) })),
+}));
+---
+{sections.map((s) => (
+  <section class="sec kbd-sec" id={s.id}>
+    <SecHead num={s.num} title={s.title} />
+    <p class="kbd-sec__desc">{s.desc}</p>
+    <table class="table kbd-table">
+      <thead><tr><th>操作</th><th class="kbd-col--mac">MAC</th><th class="kbd-col--win">{winLabel}</th></tr></thead>
+      <tbody>
+        {s.items.map((it) => (
+          <tr>
+            <td class="kbd-table__label">
+              {it.label}
+              {'note' in it && it.note && <span class="kbd-table__note">{it.note}</span>}
+            </td>
+            {(['mac', 'win'] as const).map((os) => (
+              <td class:list={['kbd-table__keys', `kbd-col--${os}`]} data-os-label={os === 'mac' ? 'Mac' : 'Win'}>
+                {it[os].map((alt, ai) => (
+                  <>
+                    {ai > 0 && <span class="kbd-sep">/</span>}
+                    <span class="kbd-combo">
+                      {alt.map((step, si) => (
+                        <>
+                          {si > 0 && <span class="kbd-sep">→</span>}
+                          {'text' in step
+                            ? <span class="kbd-text">{step.text}</span>
+                            : step.keys.map((k, ki) => (
+                                <>
+                                  {ki > 0 && <span class="kbd-plus">+</span>}
+                                  {os === 'mac' && MAC_SYMBOL[k]
+                                    ? <kbd class="kbd kbd--sym" title={MAC_NAME[k]}>{MAC_SYMBOL[k]}</kbd>
+                                    : <kbd class="kbd">{k}</kbd>}
+                                </>
+                              ))}
+                        </>
+                      ))}
+                    </span>
+                  </>
+                ))}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </section>
+))}
+
