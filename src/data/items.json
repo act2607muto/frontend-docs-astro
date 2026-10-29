@@ -1936,6 +1936,25 @@
     "category": "anim"
   },
   {
+    "id": "css-responsive",
+    "type": "css",
+    "slug": "responsive",
+    "name": "レスポンシブコーディング",
+    "summary": "スマホ・タブレットに表示を最適化する",
+    "keywords": [
+      "レスポンシブ",
+      "レスポンシブデザイン",
+      "responsive",
+      "スマホ対応",
+      "ビューポート",
+      "viewport",
+      "ブレイクポイント",
+      "メディアクエリ",
+      "モバイルファースト"
+    ],
+    "category": "resp"
+  },
+  {
     "id": "css-media",
     "type": "css",
     "slug": "media",
