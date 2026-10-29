@@ -1176,6 +1176,23 @@
     "category": "font"
   },
   {
+    "id": "css-webfont",
+    "type": "css",
+    "slug": "webfont",
+    "name": "Webフォント",
+    "summary": "Webフォントの仕組みと使い方",
+    "keywords": [
+      "Webフォント",
+      "ウェブフォント",
+      "Google Fonts",
+      "グーグルフォント",
+      "Adobe Fonts",
+      "フォント",
+      "Noto Sans JP"
+    ],
+    "category": "font"
+  },
+  {
     "id": "css-line-height",
     "type": "css",
     "slug": "line-height",

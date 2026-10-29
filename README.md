@@ -42,7 +42,7 @@ src/
   lib/           ビルド時の処理（データ整形・URL・シンタックスハイライト・プレビュー文書の生成）
   layouts/       BaseLayout（共通の head・テーマの初期適用）
   components/    Header / Footer / Sidebar / SearchBox / SearchDialog（Ctrl / ⌘ + K）/ CodeBlock / Preview / DictPage など
-  pages/         トップ・辞典一覧・詳細（[type]/[slug].astro で174ページ生成）・ロードマップ・検索用JSON
+  pages/         トップ・辞典一覧・詳細（[type]/[slug].astro で175ページ生成）・ロードマップ・検索用JSON
   scripts/       ブラウザで動く処理（テーマ切替・検索と検索履歴の送信・アコーディオン・コピー・ドロワー・プレビューの高さ調整と JS のコンソール出力）
   styles/        tokens.css / base.css / components.css
 api/             Vercel の API（検索履歴の記録・人気の語句）
