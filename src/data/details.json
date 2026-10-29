@@ -3342,7 +3342,7 @@
       "fullDocument": false
     },
     "explain": [
-      "`label` は、入力欄が何を入力する場所なのかを示す項目名です。読み上げソフトは、入力欄にフォーカスしたときにラベルを読み上げます。",
+      "`label` は、入力ボックスと案内テキスト（項目名）を関連付けるタグです。読み上げソフトは、入力欄にフォーカスしたときにラベルを読み上げます。ユーザビリティ・アクセシビリティの向上につながる重要なタグです。",
       "結びつけ方は2通りです。`for` 属性に入力欄の `id` を書く方法と、`label` で入力欄ごと囲む方法です。",
       "ラベルをクリックしても入力欄が選択されるため、小さなチェックボックスも押しやすくなります。"
     ],
@@ -3361,6 +3361,11 @@
       ]
     },
     "usages": [
+      {
+        "title": "ラジオボタンを label で囲む",
+        "desc": "小さな丸だけでなく、「CSS」などの文字をクリックしても選べるようになります。同じ name を付けたラジオボタンは、1つだけ選べるグループになります。",
+        "html": "<label><input type=\"radio\" name=\"acthouse\" value=\"HTML\"> HTML</label>\n<label><input type=\"radio\" name=\"acthouse\" value=\"CSS\"> CSS</label>\n<label><input type=\"radio\" name=\"acthouse\" value=\"JS\"> JS</label>"
+      },
       {
         "title": "必須項目であることを示す",
         "desc": "ラベルに「必須」を書き、入力欄には required を付けます。",
@@ -7064,7 +7069,10 @@
     "explain": [
       "`font-family` には、使いたいフォント名を優先順にカンマ区切りで並べます。ブラウザは左から順に、利用者の環境にあるフォントを探して使います。",
       "最後には `sans-serif`（ゴシック体）や `serif`（明朝体）などの総称ファミリーを書きます。どのフォントも見つからないときに、それに近い書体が使われます。",
-      "フォント名に空白や日本語が含まれる場合は、`\"Noto Sans JP\"` のように引用符で囲みます。"
+      "フォント名に空白や日本語が含まれる場合は、`\"Noto Sans JP\"` のように引用符で囲みます。",
+      "ページ全体のフォントを決めるときは `body` に書きます。フォントの指定は親要素から子要素へ**継承**されるため、`body` に書けばページ内のすべての文字に効きます。",
+      "フォントは**必ず指定**します。何も指定しないとブラウザの初期値が使われ、閲覧する環境（OS・ブラウザ）によって見た目が変わってしまうためです。",
+      "**英語フォントを先、日本語フォントを後**に書きます。英語フォントには日本語の文字が入っていないので、アルファベットは英語フォント、日本語は後ろの日本語フォントで表示されます。日本語フォントを先に書くと、日本語フォントに入っている英字が使われてしまいます。"
     ],
     "values": {
       "label": "総称ファミリー",
@@ -7098,10 +7106,22 @@
         "desc": "Google Fonts などで読み込んだフォントを、通常のフォント名と同じように指定します。",
         "html": "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap\">",
         "css": "body {\n  font-family: \"Noto Sans JP\", sans-serif;\n}"
+      },
+      {
+        "title": "英語フォント → 日本語フォント → 総称ファミリーの順に書く",
+        "desc": "閲覧している端末に Avenir がなければ Helvetica Neue…と順に探して表示します。どのフォントもインストールされていない場合は、その端末にある sans-serif（ゴシック体）で表示します。",
+        "css": "body {\n  font-family: 'Avenir', 'Helvetica Neue', 'Helvetica', 'Arial', 'Hiragino Sans',\n    'ヒラギノ角ゴシック', 游ゴシック体, YuGothic, 'Yu Gothic', 'メイリオ',\n    Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif;\n}"
+      },
+      {
+        "title": "案件等で使い回せるフォントファミリーの設定テンプレ",
+        "desc": "ゴシック2種・明朝2種のテンプレートです。どのフォントを優先するかはデザインデータをしっかり確認してから決めます。",
+        "css": "/* ヒラギノ角ゴ */\nfont-family: \"ヒラギノ角ゴ Pro\", \"Hiragino Kaku Gothic Pro\", \"メイリオ\", Meiryo, \"MS Pゴシック\", \"MS PGothic\", sans-serif;\n\n/* 游ゴシック体 */\nfont-family: \"游ゴシック体\", \"Yu Gothic\", YuGothic, \"ヒラギノ角ゴ Pro\", \"Hiragino Kaku Gothic Pro\", \"メイリオ\", Meiryo, \"MS Pゴシック\", \"MS PGothic\", sans-serif;\n\n/* ヒラギノ明朝 */\nfont-family: \"ヒラギノ明朝 Pro\", \"Hiragino Mincho Pro\", \"MS P明朝\", \"MS PMincho\", serif;\n\n/* 游明朝体 */\nfont-family: \"游明朝体\", \"Yu Mincho\", YuMincho, \"ヒラギノ明朝 Pro\", \"Hiragino Mincho Pro\", \"MS P明朝\", \"MS PMincho\", serif;"
       }
     ],
     "notes": [
       "利用者の環境にないフォントは表示されません。必ず代わりの候補と総称ファミリーを書きます。",
+      "フォント名に空白や日本語が入るときは、引用符（' または \"）で囲みます。",
+      "フォントの優先順位は、デザインデータをしっかり確認してから決めます。",
       "日本語のWebフォントはファイルが大きいため、使う太さを絞って読み込みます。"
     ],
     "related": [
@@ -7109,7 +7129,53 @@
       "css-font-weight",
       "html-link",
       "css-line-height"
-    ]
+    ],
+    "advanced": {
+      "title": "案件等でよく見かける和文フォント",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "デザインデータでよく指定されている日本語フォントです。名前を見て「ゴシックか明朝か」がわかると、総称ファミリー（`sans-serif`・`serif`）の選び方も迷いません。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "ゴシック",
+            "明朝"
+          ],
+          "rows": [
+            [
+              "Noto Sans（Noto Sans JP）",
+              "Noto Serif（Noto Serif JP）"
+            ],
+            [
+              "ヒラギノ角ゴシック",
+              "ヒラギノ明朝"
+            ],
+            [
+              "源ノ角ゴシック",
+              "源ノ明朝"
+            ],
+            [
+              "メイリオ",
+              "MS P明朝"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "游ゴシック・游明朝の注意",
+          "items": [
+            "近年、特定のブラウザ環境では、端末に入っている（ローカルフォントの）游ゴシックが使えなくなってきています。",
+            "そのため、Noto Sans JP などの Webフォントを読み込んで使う案件が増えています。"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "テンプレートの「ヒラギノ角ゴ Pro」は古い名前で、今の Mac では「ヒラギノ角ゴ ProN」や `\"Hiragino Sans\"` がよく使われます。案件のレギュレーションに合わせて書き換えてください。"
+        }
+      ]
+    }
   },
   {
     "id": "css-line-height",
@@ -8116,6 +8182,11 @@
     },
     "usages": [
       {
+        "title": "要素を水平方向の中央に寄せる",
+        "desc": "手順は2つ。①width を設定する ②margin-right と margin-left に auto を設定する。auto は「状況に応じて自動で値を調整する」という意味で、左右の余白が均等に計算されます。",
+        "css": ".box {\n  width: 400px;\n  margin-right: auto;\n  margin-left: auto;\n  /* margin: 0 auto; と書いても同じ */\n}"
+      },
+      {
         "title": "隣り合うカードの間隔",
         "desc": "隣接セレクタ「+」を使うと、2つ目以降の要素にだけ上の余白をつけられます。",
         "css": ".card + .card {\n  margin-top: 24px;\n}"
@@ -8129,7 +8200,10 @@
     "notes": [
       "上下に隣接する要素の margin は、大きいほうだけが適用されます（マージンの相殺）。",
       "インライン要素には上下の margin が効きません。",
-      "並んだ要素の間隔は、Flexbox・Gridの gap を使うほうが簡潔です。"
+      "並んだ要素の間隔は、Flexbox・Gridの gap を使うほうが簡潔です。",
+      "margin: auto で中央寄せできるのは水平方向だけです。上下の中央配置は Flexbox の align-items などを使います。",
+      "width を指定していないブロック要素は幅いっぱいに広がるため、margin: auto を指定しても中央に寄りません。",
+      "padding では中央配置はできません（内側の余白が増えるだけです）。"
     ],
     "related": [
       "css-padding",
@@ -9176,6 +9250,175 @@
     ]
   },
   {
+    "id": "css-flexbox",
+    "title": null,
+    "ja": "親（コンテナ）と子（アイテム）で横に並べる",
+    "lead": "Flexbox は、要素を横並び（または縦並び）に配置するためのしくみです。親要素に display: flex を書き、並べ方は親と子それぞれのプロパティで調整します。",
+    "meta": [
+      {
+        "label": "始め方",
+        "value": "親要素に display: flex"
+      },
+      {
+        "label": "構成",
+        "value": "コンテナ（親）とアイテム（子）"
+      },
+      {
+        "label": "使う場面",
+        "value": "横並び・中央寄せ・均等配置"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"flex\">\n  <div class=\"flex__item\">1</div>\n  <div class=\"flex__item\">2</div>\n  <div class=\"flex__item\">3</div>\n</div>",
+      "css": ".flex {\n  display: flex;\n  gap: 8px;\n}\n.flex__item {\n  padding: 12px 20px;\n  background: #b68235;\n  color: #fff;\n}"
+    },
+    "preview": {
+      "height": 100,
+      "note": "親の .flex に display: flex を書くだけで、子の .flex__item が横に並びます",
+      "fullDocument": false
+    },
+    "explain": [
+      "Flexbox は、**コンテナ（親要素）** と **アイテム（子要素）** の2つで構成されます。要素を横並びで配置したいときに使い、実際の案件でも見かけないことはまずないほどよく使われます。",
+      "使い方は、並べたい要素を囲む親要素に `display: flex` を指定するだけです。すると直下の子要素が横一列に並びます。",
+      "Flexbox のプロパティには、**親要素に書くもの** と **子要素に書くもの** があります。書く場所を間違えると効かないので、下の一覧で確認しながら使います。"
+    ],
+    "values": {
+      "label": "Flexbox の用語",
+      "head": "用語",
+      "rows": [
+        {
+          "key": "フレックスコンテナ",
+          "desc": "display: flex を指定した親要素"
+        },
+        {
+          "key": "フレックスアイテム",
+          "desc": "コンテナの直下にある子要素（孫要素は含まない）"
+        },
+        {
+          "key": "主軸",
+          "desc": "アイテムが並ぶ方向。初期値は横（左から右）"
+        },
+        {
+          "key": "交差軸",
+          "desc": "主軸と直角の方向。横並びのときは縦"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "ロゴとメニューを左右に分けて並べる",
+        "desc": "親に display: flex と justify-content: space-between を書くと、ヘッダーの定番レイアウトになります。",
+        "html": "<header class=\"header\">\n  <p class=\"logo\">ACT HOUSE</p>\n  <nav>メニュー</nav>\n</header>",
+        "css": ".header {\n  display: flex;\n  justify-content: space-between;\n  align-items: center;\n}"
+      }
+    ],
+    "notes": [
+      "display: flex は並べたい要素そのものではなく、それを囲む親要素に書きます。",
+      "効くのは直下の子要素だけです。孫要素も並べたいときは、子要素にも display: flex を指定します。"
+    ],
+    "related": [
+      "css-display",
+      "css-flex-direction",
+      "css-justify-content",
+      "css-flex"
+    ],
+    "advanced": {
+      "title": "親と子に書くプロパティ一覧",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Flexbox のプロパティを、書く場所ごとにまとめました。まずは **flex-direction・flex-wrap・justify-content・align-items・gap（親）** と **order・flex（子）** を覚えれば、ほとんどのレイアウトが作れます。"
+        },
+        {
+          "type": "h",
+          "text": "親要素（コンテナ）に書くプロパティ"
+        },
+        {
+          "type": "table",
+          "head": [
+            "プロパティ",
+            "役割"
+          ],
+          "rows": [
+            [
+              "`flex-direction`",
+              "子要素を並べる向き（横・縦・逆順）"
+            ],
+            [
+              "`flex-wrap`",
+              "子要素を折り返すかどうか"
+            ],
+            [
+              "`flex-flow`",
+              "flex-direction と flex-wrap をまとめて指定（例：`flex-flow: row wrap;`）"
+            ],
+            [
+              "`justify-content`",
+              "子要素の水平方向（主軸方向）の位置"
+            ],
+            [
+              "`align-items`",
+              "子要素の垂直方向（交差軸方向）の位置"
+            ],
+            [
+              "`align-content`",
+              "折り返して複数行になったときの、行全体の垂直方向の位置"
+            ],
+            [
+              "`gap`（`column-gap`・`row-gap`）",
+              "子要素同士の間隔"
+            ]
+          ]
+        },
+        {
+          "type": "h",
+          "text": "子要素（アイテム）に書くプロパティ"
+        },
+        {
+          "type": "table",
+          "head": [
+            "プロパティ",
+            "役割"
+          ],
+          "rows": [
+            [
+              "`order`",
+              "並び順"
+            ],
+            [
+              "`flex-grow`",
+              "伸び率（余った幅をどの割合でもらうか）"
+            ],
+            [
+              "`flex-shrink`",
+              "縮み率（幅が足りないときにどの割合で縮むか）"
+            ],
+            [
+              "`flex-basis`",
+              "ベースの幅（伸び縮みする前の基本の大きさ）"
+            ],
+            [
+              "`flex`",
+              "flex-grow・flex-shrink・flex-basis をまとめて指定"
+            ],
+            [
+              "`align-self`",
+              "その子要素だけの垂直方向の位置（align-items を個別に上書き）"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "「水平・垂直」と「主軸・交差軸」",
+          "items": [
+            "`justify-content` は水平方向、`align-items` は垂直方向と覚えておけば、横並びのときは十分です。",
+            "正確には「主軸」「交差軸」の向きです。`flex-direction: column` で縦並びにすると、2つの向きが入れ替わります。"
+          ]
+        }
+      ]
+    }
+  },
+  {
     "id": "css-flex-direction",
     "title": null,
     "ja": "アイテムの並ぶ方向",
@@ -9245,6 +9488,79 @@
       "css-display",
       "css-justify-content",
       "css-align-items",
+      "css-flex"
+    ]
+  },
+  {
+    "id": "css-flex-wrap",
+    "title": null,
+    "ja": "アイテムの折り返し",
+    "lead": "Flexbox で、子要素が親の幅に収まらないときに、折り返して次の行に並べるかどうかを指定します。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "nowrap"
+      },
+      {
+        "label": "適用対象",
+        "value": "フレックスコンテナ"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<p>nowrap（初期値）</p>\n<div class=\"flex\">\n  <div class=\"item\">1</div>\n  <div class=\"item\">2</div>\n  <div class=\"item\">3</div>\n  <div class=\"item\">4</div>\n  <div class=\"item\">5</div>\n</div>\n<p>wrap</p>\n<div class=\"flex wrap\">\n  <div class=\"item\">1</div>\n  <div class=\"item\">2</div>\n  <div class=\"item\">3</div>\n  <div class=\"item\">4</div>\n  <div class=\"item\">5</div>\n</div>",
+      "css": "p {\n  margin: 0 0 4px;\n  font-size: 13px;\n}\n.flex {\n  display: flex;\n  gap: 6px;\n  width: 260px;\n  margin-bottom: 12px;\n  padding: 6px;\n  border: 1px dashed #999;\n}\n.wrap {\n  flex-wrap: wrap;\n}\n.item {\n  flex-shrink: 0;\n  width: 70px;\n  padding: 8px 0;\n  text-align: center;\n  background: #b68235;\n  color: #fff;\n}"
+    },
+    "preview": {
+      "height": 250,
+      "note": "nowrap では枠からはみ出し、wrap では収まらない分が次の行に回ります",
+      "fullDocument": false
+    },
+    "explain": [
+      "`flex-wrap` は、`display: flex` を指定した親要素に書き、子要素の折り返しを決めます。",
+      "初期値の `nowrap` では、子要素は折り返さずに一列に並びます。幅が足りなければ子要素が縮み、縮めきれないと親からはみ出します。",
+      "`wrap` にすると、収まらない子要素が次の行に回ります。カード一覧やタグ一覧など、数が増えても複数行で並べたいときに使います。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "nowrap",
+          "desc": "子要素を折り返さずに一列に配置（初期値）"
+        },
+        {
+          "key": "wrap",
+          "desc": "複数行のアイテムを上から下へと配置"
+        },
+        {
+          "key": "wrap-reverse",
+          "desc": "複数行のアイテムを下から上へと配置"
+        },
+        {
+          "key": "flex-flow: row wrap;",
+          "desc": "flex-direction と flex-wrap をまとめて指定する一括指定"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "カードを3列で並べ、4枚目から次の行へ",
+        "desc": "子要素の幅を決めて wrap を指定すると、決まった列数で折り返します。行の間隔は gap で付けます。",
+        "css": ".cards {\n  display: flex;\n  flex-wrap: wrap;\n  gap: 24px;\n}\n.card {\n  width: calc((100% - 48px) / 3);\n}"
+      }
+    ],
+    "notes": [
+      "flex-wrap は子要素ではなく、display: flex を指定した親要素に書きます。",
+      "折り返したときの行どうしの間隔は gap（row-gap）で指定します。複数行全体の位置は align-content で調整できます。"
+    ],
+    "related": [
+      "css-flexbox",
+      "css-flex-direction",
+      "css-gap",
       "css-flex"
     ]
   },
@@ -9516,7 +9832,9 @@
     "explain": [
       "`flex` は、フレックスアイテム（`display: flex` の親の直下の子要素）に指定し、伸び縮みの仕方を決めます。",
       "`flex: 1` を指定すると、空いているスペースを埋めるように伸びます。複数のアイテムに `flex: 1` と `flex: 2` を指定すると、余ったスペースを 1:2 の割合で分け合います。",
-      "`flex` は `flex-grow`（伸びる比率）・`flex-shrink`（縮む比率）・`flex-basis`（基本の大きさ）の3つをまとめて書く一括指定です。"
+      "`flex` は `flex-grow`（伸びる比率）・`flex-shrink`（縮む比率）・`flex-basis`（基本の大きさ）の3つをまとめて書く一括指定です。",
+      "`flex-grow` の grow は「成長」という意味です。親要素の余白を**成長の余地**と考え、その余地を子要素がどういう割合で使うかを指定します。3つ並んだうち2番目だけに `flex-grow: 1` を指定すると、余白をすべて2番目がもらって伸びます。",
+      "迷ったら「`flex: 1` を指定した要素は、**余った幅を割り当てる**」と覚えておけば十分です。"
     ],
     "values": {
       "label": "よく使う値",
@@ -9550,6 +9868,18 @@
         "desc": "入力欄に flex: 1 を指定すると、ボタン以外の幅をすべて使います。",
         "html": "<form class=\"search\">\n  <input type=\"search\">\n  <button>検索</button>\n</form>",
         "css": ".search {\n  display: flex;\n  gap: 8px;\n}\n.search input {\n  flex: 1;\n}"
+      },
+      {
+        "title": "2番目の子要素だけ、余白を埋めるように伸ばす（flex-grow）",
+        "desc": "1と3は中身の幅のまま、2が「成長の余地」をすべて使って広がります。",
+        "html": "<div class=\"flex\">\n  <div class=\"flex__item--01\">1</div>\n  <div class=\"flex__item--02\">2</div>\n  <div class=\"flex__item--03\">3</div>\n</div>",
+        "css": ".flex {\n  display: flex;\n}\n.flex__item--02 {\n  flex-grow: 1;\n}"
+      },
+      {
+        "title": "画像は固定幅、テキストは残りの幅をすべて使う",
+        "desc": "画像を150pxにしたとき、テキストの幅を「親の幅 − 150px − 間隔」と計算するのは面倒です。テキストに flex: 1 を書けば、残りの幅が自動で割り当てられます。",
+        "html": "<div class=\"media\">\n  <img class=\"media__img\" src=\"photo.jpg\" alt=\"\">\n  <p class=\"text\">テキストが入ります。これはダミーテキストです。</p>\n</div>",
+        "css": ".media {\n  display: flex;\n  gap: 16px;\n}\n.media__img {\n  width: 150px;\n}\n.text {\n  flex: 1;\n}"
       }
     ],
     "notes": [
@@ -9557,10 +9887,80 @@
       "flex: 1 の要素に長い単語があると縮まないことがあります。その場合は min-width: 0 を指定します。"
     ],
     "related": [
+      "css-flexbox",
       "css-display",
       "css-flex-direction",
-      "css-gap",
-      "css-width"
+      "css-gap"
+    ]
+  },
+  {
+    "id": "css-order",
+    "title": null,
+    "ja": "アイテムの並び順",
+    "lead": "Flexbox や Grid の子要素に指定し、HTML の記述順に関係なく、表示される並び順を変えます。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "0"
+      },
+      {
+        "label": "適用対象",
+        "value": "フレックスアイテム・グリッドアイテム"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"flex\">\n  <div class=\"flex__item--01\">最初の子要素</div>\n  <div class=\"flex__item--02\">真ん中の子要素</div>\n  <div class=\"flex__item--03\">最後の子要素</div>\n</div>",
+      "css": ".flex {\n  display: flex;\n  gap: 6px;\n}\n.flex > div {\n  padding: 10px 12px;\n  background: #b68235;\n  color: #fff;\n}\n.flex__item--01 {\n  order: 3;\n}\n.flex__item--02 {\n  order: 1;\n}\n.flex__item--03 {\n  order: 2;\n}"
+    },
+    "preview": {
+      "height": 90,
+      "note": "HTML では「最初・真ん中・最後」の順ですが、order の小さい順に「真ん中・最後・最初」と表示されます",
+      "fullDocument": false
+    },
+    "explain": [
+      "`order` は、`display: flex` の親の直下にある子要素1つ1つに指定します。値の小さいものから順に並びます。",
+      "何も指定しない子要素は `0` 扱いです。そのため、1つだけ先頭にしたいときは `order: -1`、最後にしたいときは `order: 1` を指定するだけで済みます。",
+      "スマートフォンとPCで並び順を変えたいときに、HTML を書き換えずにメディアクエリで切り替えられるのが便利な点です。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "0",
+          "desc": "初期値。HTML の記述順に並ぶ"
+        },
+        {
+          "key": "1, 2, 3 …",
+          "desc": "小さい数値から順に並ぶ（同じ値なら HTML の順）"
+        },
+        {
+          "key": "-1",
+          "desc": "負の値も指定可能。指定のない要素（0）より前に来る"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "スマートフォンだけ画像を先頭に表示する",
+        "desc": "PCでは「文章・画像」の順に横並び、スマートフォンでは縦並びにして画像を上に出します。",
+        "html": "<div class=\"media\">\n  <div class=\"media__text\">文章</div>\n  <img class=\"media__img\" src=\"photo.jpg\" alt=\"\">\n</div>",
+        "css": ".media {\n  display: flex;\n  gap: 24px;\n}\n@media (max-width: 767px) {\n  .media {\n    flex-direction: column;\n  }\n  .media__img {\n    order: -1;\n  }\n}"
+      }
+    ],
+    "notes": [
+      "order は親ではなく子要素に書きます。親に display: flex（または grid）がないと効きません。",
+      "変わるのは見た目の順番だけです。読み上げやタブキーでの移動は HTML の順のままなので、意味の順番が大きく変わる入れ替えは避けます。"
+    ],
+    "related": [
+      "css-flexbox",
+      "css-flex-direction",
+      "css-flex",
+      "css-media"
     ]
   },
   {
