@@ -5347,7 +5347,7 @@
       },
       {
         "label": "種類",
-        "value": "ress / destyle.css / normalize.css など"
+        "value": "Normalize.css / A (more) Modern CSS Reset / ress.css / destyle.css など"
       }
     ],
     "code": {
@@ -5399,7 +5399,50 @@
       "css-specificity",
       "css-box-sizing",
       "css-list-style"
-    ]
+    ],
+    "advanced": {
+      "title": "リセットCSSの選び方",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "リセットCSSは、案件によっては使うものが **指定されることもあります**。制作会社や制作者によっても変わってくるため、種類と特徴を把握しておきましょう。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "リセットCSS",
+            "特徴"
+          ],
+          "rows": [
+            [
+              "Normalize.css",
+              "ブラウザ間の一貫性を保ちながら、デフォルトスタイルを整えるためのリセットCSS。初期スタイルは残す「整えるタイプ」"
+            ],
+            [
+              "A (more) Modern CSS Reset",
+              "すべてをリセットすることはしない、モダンブラウザ用に最適化されたリセットCSS"
+            ],
+            [
+              "ress.css",
+              "Normalize.css をカスタマイズしたリセットCSS"
+            ],
+            [
+              "destyle.css",
+              "スタイルをごっそりリセットするCSS。余白や見出しの大きさなどもすべて消す「消すタイプ」"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "迷ったときは",
+          "items": [
+            "「**destyle.css**」か「**A (more) Modern CSS Reset**」がおすすめです。",
+            "自分が使いやすいスタイルだけを集めた、**独自のリセットCSSを作る** のも良い方法です。",
+            "どれを使う場合も、読み込む順番は「リセットCSS → 自分の style.css」です。順番を間違えないようにしましょう。"
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "css-specificity",
@@ -11704,6 +11747,7 @@
       "fullDocument": false
     },
     "explain": [
+      "`transition` は「移り変わり」「変化」「変わり目」という意味で、ホバー時やクリック時の動きを調整できるプロパティです。`animation` プロパティほど細かい設定はできませんが、簡単に扱えるため、ホバー時の動きなどにおすすめです。",
       "`transition` は「どのプロパティを」「何秒かけて」「どんな速度変化で」変えるかを1行で指定する一括指定プロパティです。",
       "変化前の状態（`.btn`）に書くのがポイントです。こうすると、マウスを乗せたときも離したときも、なめらかに変化します。",
       "`ease` は始めと終わりがゆっくりになる動き、`linear` は一定速度の動きです。"
@@ -11746,7 +11790,87 @@
       "css-transform",
       "css-hover",
       "css-keyframes"
-    ]
+    ],
+    "advanced": {
+      "title": "ショートハンドの書き方と、うまく動かないとき",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "ショートハンドと省略なしは同じ意味"
+        },
+        {
+          "type": "example",
+          "title": "例：ショートハンドで書く",
+          "desc": "マウスを乗せると、0.3秒待ってから0.5秒かけて背景色が変わります。",
+          "html": "<div class=\"box\">マウスを乗せてください</div>",
+          "css": ".box {\n  width: 220px;\n  padding: 24px 0;\n  text-align: center;\n  background-color: #e1ad66;\n  transition: background-color .5s ease-in-out .3s;\n}\n.box:hover {\n  background-color: #00f; /* 背景色をアニメーションで変化させる */\n  color: #fff;\n}",
+          "height": 110,
+          "points": [
+            {
+              "code": "background-color",
+              "text": "transition-property：背景色を変化させる"
+            },
+            {
+              "code": ".5s",
+              "text": "transition-duration：0.5秒かけて（1つ目の秒数）"
+            },
+            {
+              "code": "ease-in-out",
+              "text": "transition-timing-function：初速と終速を遅めに"
+            },
+            {
+              "code": ".3s",
+              "text": "transition-delay：0.3秒後に（2つ目の秒数）"
+            }
+          ]
+        },
+        {
+          "type": "p",
+          "text": "上のショートハンドは、次のように4つのプロパティに分けて書いたものと **どちらも同じ** です。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "省略なしの書き方",
+            "意味"
+          ],
+          "rows": [
+            [
+              "`transition-property: background-color;`",
+              "背景色を変化させる"
+            ],
+            [
+              "`transition-duration: .5s;`",
+              "0.5秒かけて"
+            ],
+            [
+              "`transition-timing-function: ease-in-out;`",
+              "初速と終速を遅めに"
+            ],
+            [
+              "`transition-delay: .3s;`",
+              "0.3秒後に"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "案件ベースでもショートハンドで書くことが多く、`transform` や `opacity` とセットで使うことが多いです。"
+        },
+        {
+          "type": "h",
+          "text": "transition がうまく動作しないときは"
+        },
+        {
+          "type": "callout",
+          "title": "確認すること",
+          "items": [
+            "**書く対象が間違えていないか確認する**。transition は「ホバー前」のセレクタ（`.box`）に書きます。`.box:hover` だけに書くのはよく見かけるミスで、戻るときに動きが付きません。",
+            "**display に transition を設定しようとしていないか確認する**。`display: none` から `block` へは、なめらかに変化させられません。`visibility` も同様で、切り替わりはしますがフェードのようにはなりません。表示・非表示をなめらかにしたいときは `opacity` と組み合わせるか、`animation` プロパティを使うようにします。"
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "css-animation",
@@ -11777,6 +11901,7 @@
       "fullDocument": false
     },
     "explain": [
+      "CSSアニメーションは、HTML要素に動きや変化を加えるための CSS の機能です。`animation` プロパティと `@keyframes` を使うことで設定できます。JavaScript などの複雑なプログラム処理を必要としないため手軽に実装できますが、**クリックやドラッグなど、何かしらのアクションに反応してアニメーションを開始することはできません**（その場合は JavaScript を使います）。",
       "`animation` は、`@keyframes` で名前を付けて定義した動きを要素に適用するプロパティです。`transition` と違い、ホバーなどのきっかけがなくても自動で再生できます。",
       "「名前 再生時間 速度の変化 繰り返し回数 方向」のように、スペース区切りでまとめて指定します。`infinite` で無限に繰り返し、`alternate` で行きと帰りを交互に再生します。",
       "動かすプロパティは `transform` と `opacity` にすると、描画の負荷が軽くなめらかに動きます。"
@@ -11823,6 +11948,7 @@
       }
     ],
     "notes": [
+      "ホバー（:hover）に反応させるだけなら、animation より transition のほうが簡単です。",
       "点滅や激しい動きは、利用者によっては気分が悪くなる原因になります。prefers-reduced-motion で止められるようにします。",
       "width や top を動かすと描画の負荷が高くなります。transform と opacity を使います。"
     ],
@@ -11837,7 +11963,7 @@
     "id": "css-transform",
     "title": null,
     "ja": "移動・回転・拡大",
-    "lead": "要素を移動・回転・拡大縮小・傾斜させます。周りのレイアウトには影響せず、見た目だけが変わります。",
+    "lead": "要素を移動・回転・拡大縮小・傾斜させます。周りのレイアウトには影響せず、見た目だけが変わります。ボタンのホバー時のアクションや、バナーなどのアクセントとして盛り込むと効果的です。",
     "meta": [
       {
         "label": "初期値",
@@ -11862,7 +11988,7 @@
       "fullDocument": false
     },
     "explain": [
-      "`transform` は、要素の形や位置を変える（変形する）プロパティです。`translate()` で移動、`rotate()` で回転、`scale()` で拡大縮小します。",
+      "`transform`（「変化」「変身」という意味）は、要素の形や位置を変える（変形する）プロパティです。`translate()` で移動、`rotate()` で回転、`scale()` で拡大縮小、`skew()` で傾斜させます。",
       "変形しても元の場所はそのまま確保されるため、周りの要素は動きません。見た目だけが変わるので、アニメーションに向いています。",
       "スペース区切りで複数の変形を組み合わせられます。書いた順番によって結果が変わる点に注意します。"
     ],
@@ -11906,9 +12032,174 @@
     "related": [
       "css-transition",
       "css-animation",
-      "css-position",
-      "css-keyframes"
-    ]
+      "css-transform-origin",
+      "css-perspective",
+      "css-transform-style",
+      "css-position"
+    ],
+    "advanced": {
+      "title": "translate・rotate・scale・skew の種類",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "translate：移動"
+        },
+        {
+          "type": "table",
+          "head": [
+            "関数",
+            "意味"
+          ],
+          "rows": [
+            [
+              "translate(x, y)",
+              "X軸とY軸をまとめて移動"
+            ],
+            [
+              "translateX()",
+              "X軸（横軸）への移動"
+            ],
+            [
+              "translateY()",
+              "Y軸（縦軸）への移動"
+            ],
+            [
+              "translateZ()",
+              "Z軸（奥行き）への移動"
+            ],
+            [
+              "translate3d(x, y, z)",
+              "X・Y・Z の3方向をまとめて移動。立体的な表現に使う"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "※ `translateZ` を使うには、**親要素に `perspective` プロパティを設定する** 必要があります。設定しないと、奥行き方向に動いても見た目が変わりません。"
+        },
+        {
+          "type": "h",
+          "text": "rotate：回転"
+        },
+        {
+          "type": "table",
+          "head": [
+            "関数",
+            "意味"
+          ],
+          "rows": [
+            [
+              "rotate()",
+              "オブジェクトの中心を軸に回転（rotateZ と同じ）"
+            ],
+            [
+              "rotateX()",
+              "X軸を軸に回転（上下に倒れるように回る）"
+            ],
+            [
+              "rotateY()",
+              "Y軸を軸に回転（左右に回る）"
+            ],
+            [
+              "rotateZ()",
+              "Z軸（中心を基点）に回転"
+            ],
+            [
+              "rotate3d(x, y, z, 角度)",
+              "X軸・Y軸・Z軸を一括で設定して回転"
+            ]
+          ]
+        },
+        {
+          "type": "h",
+          "text": "scale：拡大・縮小"
+        },
+        {
+          "type": "table",
+          "head": [
+            "関数",
+            "意味"
+          ],
+          "rows": [
+            [
+              "scale()",
+              "X・Y 両方向への拡大・縮小（1 が等倍、1.5 で1.5倍）"
+            ],
+            [
+              "scaleX()",
+              "X軸（横方向）への拡大・縮小"
+            ],
+            [
+              "scaleY()",
+              "Y軸（縦方向）への拡大・縮小"
+            ],
+            [
+              "scale3d(x, y, z)",
+              "X軸・Y軸・Z軸のすべての方向への拡大・縮小を一括で設定"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "scale3d について",
+          "items": [
+            "`translate3d` や `rotate3d` と同じく、3D 空間での拡大・縮小を表現できます。x：横方向、y：縦方向、z：奥行き方向のスケールを指定します。",
+            "**scale3d は単体で使わず、rotateX や rotateY と組み合わせて使います。** 通常の HTML の要素には厚みがないため、Z 軸方向の変化が見た目ではわからないからです。"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "skew：傾斜"
+        },
+        {
+          "type": "table",
+          "head": [
+            "関数",
+            "意味"
+          ],
+          "rows": [
+            [
+              "skew(x, y)",
+              "X・Y 両方向に傾斜をつける"
+            ],
+            [
+              "skewX()",
+              "X軸（横方向）に傾斜をつける"
+            ],
+            [
+              "skewY()",
+              "Y軸（縦方向）に傾斜をつける"
+            ]
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例：4種類の変形をホバーで試す",
+          "desc": "スライドと同じ値です。それぞれの箱にマウスを乗せると変形します。",
+          "html": "<div class=\"row\">\n  <div class=\"box t\">translateX</div>\n  <div class=\"box r\">rotate</div>\n  <div class=\"box s\">scale</div>\n  <div class=\"box k\">skewX</div>\n</div>",
+          "css": ".row {\n  display: flex;\n  gap: 40px;\n  padding: 30px 20px;\n}\n.box {\n  width: 80px;\n  padding: 14px 0;\n  text-align: center;\n  background: #b68235;\n  color: #fff;\n  font-size: 12px;\n  transition: transform .3s ease;\n}\n.t:hover {\n  transform: translateX(50px);\n}\n.r:hover {\n  transform: rotate(45deg);\n}\n.s:hover {\n  transform: scale(1.5);\n}\n.k:hover {\n  transform: skewX(45deg);\n}",
+          "height": 120,
+          "points": [
+            {
+              "code": "translateX(50px)",
+              "text": "右に50px移動します。"
+            },
+            {
+              "code": "rotate(45deg)",
+              "text": "中心を軸に45度回転します。"
+            },
+            {
+              "code": "scale(1.5)",
+              "text": "縦横1.5倍に拡大します。"
+            },
+            {
+              "code": "skewX(45deg)",
+              "text": "横方向に45度傾きます。"
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "css-keyframes",
@@ -11982,6 +12273,231 @@
       "css-transform",
       "css-transition",
       "css-opacity"
+    ]
+  },
+  {
+    "id": "css-transform-origin",
+    "title": null,
+    "ja": "変形の基点",
+    "lead": "transform で回転・拡大縮小・傾斜させるときの基点（どこを中心に動かすか）を変えます。初期値は要素の中央です。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "50% 50% 0（中央）"
+      },
+      {
+        "label": "適用対象",
+        "value": "変形可能な要素"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"row\">\n  <div class=\"box center\">中央</div>\n  <div class=\"box left-top\">左上</div>\n</div>",
+      "css": ".row {\n  display: flex;\n  gap: 60px;\n  padding: 30px 40px;\n}\n.box {\n  width: 80px;\n  height: 80px;\n  display: grid;\n  place-items: center;\n  background: #b68235;\n  color: #fff;\n  font-size: 13px;\n  transform: rotate(20deg);\n}\n/* 初期値（書かなくても同じ） */\n.center {\n  transform-origin: center;\n}\n/* 左上を基点に回す */\n.left-top {\n  transform-origin: left top;\n}"
+    },
+    "preview": {
+      "height": 160,
+      "note": "どちらも rotate(20deg) ですが、基点が違うので回ったあとの位置が変わります",
+      "fullDocument": false
+    },
+    "explain": [
+      "`transform-origin` は、`transform` で動かすときの **基点（動きの中心）を変更する** プロパティです。何も書かないと要素の中央が基点になります。",
+      "書き方は `transform-origin: X軸の基点 Y軸の基点 Z軸の基点;` です。X と Y には `left` / `center` / `right`、`top` / `center` / `bottom` などのキーワードか、`%`・`px` を書きます。Z は 3D のときだけ使い、`px` で指定します。",
+      "回転（`rotate`）・拡大縮小（`scale`）・傾斜（`skew`）の見た目が変わります。移動（`translate`）は基点に関係なく同じ距離だけ動きます。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "center",
+          "desc": "中央（初期値。50% 50% と同じ）"
+        },
+        {
+          "key": "left top",
+          "desc": "左上（0 0 と同じ）"
+        },
+        {
+          "key": "right bottom",
+          "desc": "右下（100% 100% と同じ）"
+        },
+        {
+          "key": "50% 100%",
+          "desc": "下の辺の真ん中"
+        },
+        {
+          "key": "0 0 -50px",
+          "desc": "Z軸の基点も指定する（3Dのとき）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "左から右へ線が伸びる下線",
+        "desc": "transform-origin: left を指定すると、scaleX が左端から伸びます。指定しないと中央から左右に伸びます。",
+        "html": "<a class=\"link\" href=\"#\">マウスを乗せてください</a>",
+        "css": ".link {\n  position: relative;\n  color: #7d5411;\n  text-decoration: none;\n}\n.link::after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  bottom: -4px;\n  width: 100%;\n  height: 2px;\n  background: #b68235;\n  transform: scaleX(0);\n  transform-origin: left;\n  transition: transform .3s ease;\n}\n.link:hover::after {\n  transform: scaleX(1);\n}"
+      }
+    ],
+    "notes": [
+      "transform-origin だけを書いても要素は動きません。transform と一緒に使います。",
+      "ホバー時（:hover）ではなく、元の状態のセレクタに書いておくと、戻るときも同じ基点で動きます。"
+    ],
+    "related": [
+      "css-transform",
+      "css-perspective",
+      "css-transition",
+      "css-transform-style"
+    ]
+  },
+  {
+    "id": "css-perspective",
+    "title": null,
+    "ja": "3Dの奥行き（遠近感）",
+    "lead": "3D 変形する要素に、奥行き（遠近感）を付けます。指定するのは変形する要素ではなく、その親要素です。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "none（遠近感なし）"
+      },
+      {
+        "label": "指定する要素",
+        "value": "変形する要素の親要素"
+      },
+      {
+        "label": "単位",
+        "value": "通常は px"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"row\">\n  <div class=\"scene near\">\n    <div class=\"card\">300px</div>\n  </div>\n  <div class=\"scene far\">\n    <div class=\"card\">1500px</div>\n  </div>\n</div>",
+      "css": ".row {\n  display: flex;\n  gap: 40px;\n  padding: 20px 30px;\n}\n/* 親要素に perspective を書く */\n.near {\n  perspective: 300px;\n}\n.far {\n  perspective: 1500px;\n}\n.card {\n  width: 120px;\n  height: 90px;\n  display: grid;\n  place-items: center;\n  background: #b68235;\n  color: #fff;\n  font-size: 13px;\n  transform: rotateY(45deg);\n}"
+    },
+    "preview": {
+      "height": 140,
+      "note": "どちらも rotateY(45deg) で回していますが、数値が小さい左のほうが遠近感が強く見えます",
+      "fullDocument": false
+    },
+    "explain": [
+      "`perspective` は、現在の視点から要素までの距離を指定して、**奥行き（遠近感）** を表現するプロパティです。カメラと被写体の距離をイメージするとわかりやすいです。",
+      "**数値が小さい → カメラが被写体に「近い」→ 遠近感が強くなる**。**数値が大きい → カメラが「遠い」→ 遠近感が弱く、平面的に見える**。",
+      "指定するのは **変形する要素の親要素** です。`translateZ` や `rotateX`・`rotateY` は、親に `perspective` がないと立体的に見えません。",
+      "`perspective-origin` は、3D で表現されるときに **どこから要素の動きを見ているか（視点の位置）** を指定するプロパティです。初期値は中央（`50% 50%`）で、`left top` のように書くと左上からのぞき込んだ見え方になります。"
+    ],
+    "values": {
+      "label": "設定値の目安",
+      "head": "数値",
+      "rows": [
+        {
+          "key": "300px〜600px",
+          "desc": "ガッツリ3D（目立たせたい）"
+        },
+        {
+          "key": "800px〜1200px",
+          "desc": "ほどよい立体感（自然な演出）"
+        },
+        {
+          "key": "1500px〜3000px",
+          "desc": "さりげない奥行きを出す"
+        },
+        {
+          "key": "none",
+          "desc": "遠近感なし（初期値）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "perspective-origin で視点の位置を変える",
+        "desc": "同じ perspective でも、視点を左上に動かすと見え方が変わります。perspective-origin も親要素に書きます。",
+        "html": "<div class=\"row\">\n  <div class=\"scene\">\n    <div class=\"card\">中央から</div>\n  </div>\n  <div class=\"scene from-top\">\n    <div class=\"card\">左上から</div>\n  </div>\n</div>",
+        "css": ".row {\n  display: flex;\n  gap: 40px;\n  padding: 20px 30px;\n}\n.scene {\n  perspective: 400px;\n}\n.from-top {\n  perspective-origin: left top;\n}\n.card {\n  width: 120px;\n  height: 90px;\n  display: grid;\n  place-items: center;\n  background: #b68235;\n  color: #fff;\n  font-size: 13px;\n  transform: rotateX(40deg);\n}"
+      },
+      {
+        "title": "ホバーでカードを奥に傾ける",
+        "desc": "perspective を付けた親の中で、子要素を rotateY と transition で動かします。",
+        "html": "<div class=\"scene\">\n  <div class=\"card\">マウスを乗せてください</div>\n</div>",
+        "css": ".scene {\n  perspective: 1000px;\n  padding: 10px 30px;\n}\n.card {\n  width: 180px;\n  padding: 30px 0;\n  text-align: center;\n  background: #b68235;\n  color: #fff;\n  font-size: 13px;\n  transition: transform .5s ease;\n}\n.card:hover {\n  transform: rotateY(30deg);\n}"
+      }
+    ],
+    "notes": [
+      "変形する要素自身に書いても効きません。親要素に書きます（要素自身に付けたいときは transform: perspective(800px) rotateY(45deg); のように関数で書く方法もあります）。",
+      "数値を小さくしすぎると、要素がゆがんで見づらくなります。迷ったら 800px〜1200px から試します。"
+    ],
+    "related": [
+      "css-transform",
+      "css-transform-style",
+      "css-transform-origin",
+      "css-transition"
+    ]
+  },
+  {
+    "id": "css-transform-style",
+    "title": null,
+    "ja": "子要素を3D空間のまま表示する",
+    "lead": "CSS で 3D を再現するために必要なプロパティです。preserve-3d を指定すると、子要素の 3D 変換が平面に押しつぶされず、立体のまま表示されます。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "flat"
+      },
+      {
+        "label": "指定する要素",
+        "value": "3D 変換する子要素を持つ親要素"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"scene\">\n  <div class=\"cube\">\n    <div class=\"face front\">前</div>\n    <div class=\"face right\">右</div>\n    <div class=\"face top\">上</div>\n  </div>\n</div>",
+      "css": ".scene {\n  perspective: 600px;\n  padding: 40px 60px;\n}\n.cube {\n  position: relative;\n  width: 80px;\n  height: 80px;\n  transform-style: preserve-3d;\n  transform: rotateX(-25deg) rotateY(-35deg);\n}\n.face {\n  position: absolute;\n  inset: 0;\n  display: grid;\n  place-items: center;\n  color: #fff;\n  font-size: 14px;\n}\n.front {\n  background: #b68235;\n  transform: translateZ(40px);\n}\n.right {\n  background: #7d5411;\n  transform: rotateY(90deg) translateZ(40px);\n}\n.top {\n  background: #e1ad66;\n  transform: rotateX(90deg) translateZ(40px);\n}"
+    },
+    "preview": {
+      "height": 180,
+      "note": "3つの面が立体の箱として表示されます。.cube の transform-style を flat にすると、面が平らに重なって箱に見えなくなります",
+      "fullDocument": false
+    },
+    "explain": [
+      "`transform-style` は、子要素の 3D 変換を **3D 空間のまま保つかどうか** を決めるプロパティです。",
+      "初期値の `flat` では、子要素を 3D で回転させても、親要素の平面の上に押しつぶされて表示されます。`preserve-3d` にすると、子要素どうしの前後関係も含めて立体のまま表示されるので、箱やカードの裏表のような表現ができます。",
+      "書くのは **3D 変換する子要素を持つ親要素** です。奥行きを付ける `perspective` は、さらにその外側（祖先の要素）に書きます。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "flat",
+          "desc": "初期値。子要素を平面として表示する"
+        },
+        {
+          "key": "preserve-3d",
+          "desc": "立体を表現できるようになる。子要素の 3D 変換を 3D 空間で保持したいときに使う"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "ホバーでカードを裏返す",
+        "desc": "表と裏の2枚を重ね、親に preserve-3d を指定して rotateY(180deg) で回転させます。backface-visibility: hidden で裏を向いた面を隠します。",
+        "html": "<div class=\"scene\">\n  <div class=\"card\">\n    <div class=\"side front\">表（マウスを乗せる）</div>\n    <div class=\"side back\">裏</div>\n  </div>\n</div>",
+        "css": ".scene {\n  perspective: 800px;\n  padding: 10px 30px;\n}\n.card {\n  position: relative;\n  width: 200px;\n  height: 90px;\n  transform-style: preserve-3d;\n  transition: transform .6s ease;\n}\n.scene:hover .card {\n  transform: rotateY(180deg);\n}\n.side {\n  position: absolute;\n  inset: 0;\n  display: grid;\n  place-items: center;\n  color: #fff;\n  font-size: 13px;\n  backface-visibility: hidden;\n}\n.front {\n  background: #b68235;\n}\n.back {\n  background: #7d5411;\n  transform: rotateY(180deg);\n}"
+      }
+    ],
+    "notes": [
+      "overflow: hidden や opacity（1 未満）を指定した要素では、preserve-3d が効かず flat として扱われます。",
+      "transform-style は継承しません。孫要素まで立体にしたいときは、間の要素にもそれぞれ指定します。"
+    ],
+    "related": [
+      "css-perspective",
+      "css-transform",
+      "css-transform-origin",
+      "css-transition"
     ]
   },
   {

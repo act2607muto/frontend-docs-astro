@@ -1890,6 +1890,52 @@
     "category": "anim"
   },
   {
+    "id": "css-transform-origin",
+    "type": "css",
+    "slug": "transform-origin",
+    "name": "transform-origin",
+    "summary": "変形の基点",
+    "keywords": [
+      "基点",
+      "中心",
+      "回転",
+      "拡大",
+      "transform",
+      "origin"
+    ],
+    "category": "anim"
+  },
+  {
+    "id": "css-perspective",
+    "type": "css",
+    "slug": "perspective",
+    "name": "perspective",
+    "summary": "3Dの奥行き（遠近感）",
+    "keywords": [
+      "遠近感",
+      "奥行き",
+      "3D",
+      "perspective-origin",
+      "視点",
+      "カメラ"
+    ],
+    "category": "anim"
+  },
+  {
+    "id": "css-transform-style",
+    "type": "css",
+    "slug": "transform-style",
+    "name": "transform-style",
+    "summary": "子要素を3D空間のまま表示する",
+    "keywords": [
+      "3D",
+      "preserve-3d",
+      "flat",
+      "立体"
+    ],
+    "category": "anim"
+  },
+  {
     "id": "css-media",
     "type": "css",
     "slug": "media",
