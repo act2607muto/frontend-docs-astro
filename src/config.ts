@@ -9,5 +9,5 @@ export const CONFIG = {
   /** 辞典一覧で初期展開するカテゴリ（例：{ html: ['text'], css: ['flexgrid'] }） */
   dictInitialOpen: { html: [] as string[], css: [] as string[], js: [] as string[] },
   /** トップページの「よく調べるキーワード」（検索履歴が取得できないとき・足りないときに使う既定の語句） */
-  quickWords: ['flex', 'margin', '中央寄せ', '画像', '見出し'],
+  quickWords: ['flex', 'margin', '中央寄せ', '画像', '見出し', 'grid', 'position', 'ボタン', 'フォーム', 'リンク'],
 };

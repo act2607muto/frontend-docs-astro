@@ -9,7 +9,7 @@ import { order, SITE } from '../lib/data';
 import { url } from '../lib/url';
 import { CONFIG } from '../config';
 
-const QUICK_COUNT = 5;
+const QUICK_COUNT = 10;
 
 const entries = [
   { num: '01', sub: 'ROADMAP', title: '学習する', desc: '初心者・中級者・上級者の3段階で、学ぶ順番に沿って進めます。', href: url.learn() },
@@ -80,7 +80,7 @@ const entries = [
   // API がない環境（GitHub Pages など）では取得に失敗するので、既定の語句のままにする
   (async () => {
     try {
-      const count = Number(quick.dataset.count) || 5;
+      const count = Number(quick.dataset.count) || 10;
       const r = await fetch(`${quick.dataset.popularUrl}?limit=${count}`);
       if (!r.ok) return;
       const { keywords } = (await r.json()) as { keywords?: unknown };
