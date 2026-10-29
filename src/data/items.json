@@ -911,6 +911,30 @@
     "category": "syntax"
   },
   {
+    "id": "css-units",
+    "type": "css",
+    "slug": "units",
+    "name": "値と単位",
+    "summary": "色の書き方と px・%・em・rem・vw などの単位",
+    "keywords": [
+      "単位",
+      "px",
+      "%",
+      "em",
+      "rem",
+      "vw",
+      "vh",
+      "vmin",
+      "vmax",
+      "rgb",
+      "rgba",
+      "16進数",
+      "カラーコード",
+      "使い分け"
+    ],
+    "category": "syntax"
+  },
+  {
     "id": "css-id-selector",
     "type": "css",
     "slug": "id-selector",
@@ -952,6 +976,42 @@
       "タイプセレクタ",
       "直接指定",
       "要素名"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-attribute-selector",
+    "type": "css",
+    "slug": "attribute-selector",
+    "name": "[attr]",
+    "summary": "属性の値で指定する（含む・始まる・終わる）",
+    "keywords": [
+      "属性セレクタ",
+      "ワイルドカード",
+      "正規表現",
+      "*=",
+      "^=",
+      "$=",
+      "部分一致",
+      "前方一致",
+      "後方一致",
+      "attribute"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-universal-selector",
+    "type": "css",
+    "slug": "universal-selector",
+    "name": "*",
+    "summary": "すべての要素を指定する",
+    "keywords": [
+      "ユニバーサルセレクタ",
+      "全称セレクタ",
+      "アスタリスク",
+      "全ての要素",
+      "すべての要素",
+      "universal"
     ],
     "category": "syntax"
   },
@@ -1203,6 +1263,38 @@
     "keywords": [
       "背景",
       "画像"
+    ],
+    "category": "color"
+  },
+  {
+    "id": "css-background-position",
+    "type": "css",
+    "slug": "background-position",
+    "name": "background-position",
+    "summary": "背景画像の表示位置",
+    "keywords": [
+      "背景",
+      "位置",
+      "背景画像",
+      "中央",
+      "center"
+    ],
+    "category": "color"
+  },
+  {
+    "id": "css-background-repeat",
+    "type": "css",
+    "slug": "background-repeat",
+    "name": "background-repeat",
+    "summary": "背景画像の繰り返し",
+    "keywords": [
+      "背景",
+      "繰り返し",
+      "背景画像",
+      "no-repeat",
+      "repeat-x",
+      "repeat-y",
+      "タイル"
     ],
     "category": "color"
   },
