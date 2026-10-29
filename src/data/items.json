@@ -828,6 +828,25 @@
     "category": "syntax"
   },
   {
+    "id": "css-reset-css",
+    "type": "css",
+    "slug": "reset-css",
+    "name": "リセットCSS",
+    "summary": "ブラウザごとの初期スタイルの違いをなくす",
+    "keywords": [
+      "リセット",
+      "reset",
+      "user agent stylesheet",
+      "UAスタイルシート",
+      "ブラウザの初期スタイル",
+      "デフォルトスタイル",
+      "ress",
+      "destyle",
+      "normalize"
+    ],
+    "category": "syntax"
+  },
+  {
     "id": "css-specificity",
     "type": "css",
     "slug": "specificity",
@@ -911,6 +930,30 @@
     "category": "syntax"
   },
   {
+    "id": "css-units",
+    "type": "css",
+    "slug": "units",
+    "name": "値と単位",
+    "summary": "色の書き方と px・%・em・rem・vw などの単位",
+    "keywords": [
+      "単位",
+      "px",
+      "%",
+      "em",
+      "rem",
+      "vw",
+      "vh",
+      "vmin",
+      "vmax",
+      "rgb",
+      "rgba",
+      "16進数",
+      "カラーコード",
+      "使い分け"
+    ],
+    "category": "syntax"
+  },
+  {
     "id": "css-id-selector",
     "type": "css",
     "slug": "id-selector",
@@ -952,6 +995,42 @@
       "タイプセレクタ",
       "直接指定",
       "要素名"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-attribute-selector",
+    "type": "css",
+    "slug": "attribute-selector",
+    "name": "[attr]",
+    "summary": "属性の値で指定する（含む・始まる・終わる）",
+    "keywords": [
+      "属性セレクタ",
+      "ワイルドカード",
+      "正規表現",
+      "*=",
+      "^=",
+      "$=",
+      "部分一致",
+      "前方一致",
+      "後方一致",
+      "attribute"
+    ],
+    "category": "syntax"
+  },
+  {
+    "id": "css-universal-selector",
+    "type": "css",
+    "slug": "universal-selector",
+    "name": "*",
+    "summary": "すべての要素を指定する",
+    "keywords": [
+      "ユニバーサルセレクタ",
+      "全称セレクタ",
+      "アスタリスク",
+      "全ての要素",
+      "すべての要素",
+      "universal"
     ],
     "category": "syntax"
   },
@@ -1097,6 +1176,23 @@
     "category": "font"
   },
   {
+    "id": "css-webfont",
+    "type": "css",
+    "slug": "webfont",
+    "name": "Webフォント",
+    "summary": "Webフォントの仕組みと使い方",
+    "keywords": [
+      "Webフォント",
+      "ウェブフォント",
+      "Google Fonts",
+      "グーグルフォント",
+      "Adobe Fonts",
+      "フォント",
+      "Noto Sans JP"
+    ],
+    "category": "font"
+  },
+  {
     "id": "css-line-height",
     "type": "css",
     "slug": "line-height",
@@ -1203,6 +1299,38 @@
     "keywords": [
       "背景",
       "画像"
+    ],
+    "category": "color"
+  },
+  {
+    "id": "css-background-position",
+    "type": "css",
+    "slug": "background-position",
+    "name": "background-position",
+    "summary": "背景画像の表示位置",
+    "keywords": [
+      "背景",
+      "位置",
+      "背景画像",
+      "中央",
+      "center"
+    ],
+    "category": "color"
+  },
+  {
+    "id": "css-background-repeat",
+    "type": "css",
+    "slug": "background-repeat",
+    "name": "background-repeat",
+    "summary": "背景画像の繰り返し",
+    "keywords": [
+      "背景",
+      "繰り返し",
+      "背景画像",
+      "no-repeat",
+      "repeat-x",
+      "repeat-y",
+      "タイル"
     ],
     "category": "color"
   },
@@ -1331,6 +1459,25 @@
     "category": "box"
   },
   {
+    "id": "css-box-types",
+    "type": "css",
+    "slug": "box-types",
+    "name": "ボックスの種類",
+    "summary": "ブロック・インライン・インラインブロック",
+    "keywords": [
+      "ブロック要素",
+      "インライン要素",
+      "インラインブロック",
+      "block",
+      "inline",
+      "inline-block",
+      "ブロックボックス",
+      "インラインボックス",
+      "display"
+    ],
+    "category": "layout"
+  },
+  {
     "id": "css-display",
     "type": "css",
     "slug": "display",
@@ -1407,6 +1554,24 @@
     "category": "layout"
   },
   {
+    "id": "css-flexbox",
+    "type": "css",
+    "slug": "flexbox",
+    "name": "Flexbox",
+    "summary": "親と子に書くプロパティの一覧",
+    "keywords": [
+      "flex",
+      "flexbox",
+      "display: flex",
+      "横並び",
+      "コンテナ",
+      "アイテム",
+      "親要素",
+      "子要素"
+    ],
+    "category": "flexgrid"
+  },
+  {
     "id": "css-flex-direction",
     "type": "css",
     "slug": "flex-direction",
@@ -1416,6 +1581,21 @@
       "flex",
       "縦並び",
       "横並び"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-flex-wrap",
+    "type": "css",
+    "slug": "flex-wrap",
+    "name": "flex-wrap",
+    "summary": "アイテムの折り返し",
+    "keywords": [
+      "flex",
+      "折り返し",
+      "wrap",
+      "nowrap",
+      "flex-flow"
     ],
     "category": "flexgrid"
   },
@@ -1447,6 +1627,22 @@
     "category": "flexgrid"
   },
   {
+    "id": "css-align-self",
+    "type": "css",
+    "slug": "align-self",
+    "name": "align-self",
+    "summary": "1つのアイテムだけの交差軸方向の配置",
+    "keywords": [
+      "flex",
+      "縦",
+      "中央寄せ",
+      "下揃え",
+      "個別",
+      "align-items"
+    ],
+    "category": "flexgrid"
+  },
+  {
     "id": "css-gap",
     "type": "css",
     "slug": "gap",
@@ -1473,6 +1669,41 @@
     "category": "flexgrid"
   },
   {
+    "id": "css-order",
+    "type": "css",
+    "slug": "order",
+    "name": "order",
+    "summary": "アイテムの並び順",
+    "keywords": [
+      "flex",
+      "並び順",
+      "順番",
+      "入れ替え"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-grid",
+    "type": "css",
+    "slug": "grid",
+    "name": "CSS Grid",
+    "summary": "用語とプロパティの一覧",
+    "keywords": [
+      "grid",
+      "グリッド",
+      "display: grid",
+      "グリッドレイアウト",
+      "コンテナ",
+      "アイテム",
+      "ライン",
+      "トラック",
+      "セル",
+      "エリア",
+      "ジェネレーター"
+    ],
+    "category": "flexgrid"
+  },
+  {
     "id": "css-grid-template-columns",
     "type": "css",
     "slug": "grid-template-columns",
@@ -1486,6 +1717,39 @@
     "category": "flexgrid"
   },
   {
+    "id": "css-grid-template-rows",
+    "type": "css",
+    "slug": "grid-template-rows",
+    "name": "grid-template-rows",
+    "summary": "グリッドの行",
+    "keywords": [
+      "grid",
+      "行",
+      "高さ",
+      "fr",
+      "トラック"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-grid-column-row",
+    "type": "css",
+    "slug": "grid-column-row",
+    "name": "grid-column / grid-row",
+    "summary": "アイテムを置く範囲をライン番号で指定",
+    "keywords": [
+      "grid",
+      "grid-column",
+      "grid-row",
+      "ライン番号",
+      "結合",
+      "またぐ",
+      "span",
+      "grid-area"
+    ],
+    "category": "flexgrid"
+  },
+  {
     "id": "css-place-items",
     "type": "css",
     "slug": "place-items",
@@ -1494,6 +1758,22 @@
     "keywords": [
       "grid",
       "中央寄せ"
+    ],
+    "category": "flexgrid"
+  },
+  {
+    "id": "css-grid-vs-flex",
+    "type": "css",
+    "slug": "grid-vs-flex",
+    "name": "Grid と Flexbox の違い",
+    "summary": "線を引いて当てはめるか、子要素ごとに幅を決めるか",
+    "keywords": [
+      "grid",
+      "flex",
+      "flexbox",
+      "違い",
+      "比較",
+      "使い分け"
     ],
     "category": "flexgrid"
   },
@@ -1625,6 +1905,71 @@
       "アニメーション"
     ],
     "category": "anim"
+  },
+  {
+    "id": "css-transform-origin",
+    "type": "css",
+    "slug": "transform-origin",
+    "name": "transform-origin",
+    "summary": "変形の基点",
+    "keywords": [
+      "基点",
+      "中心",
+      "回転",
+      "拡大",
+      "transform",
+      "origin"
+    ],
+    "category": "anim"
+  },
+  {
+    "id": "css-perspective",
+    "type": "css",
+    "slug": "perspective",
+    "name": "perspective",
+    "summary": "3Dの奥行き（遠近感）",
+    "keywords": [
+      "遠近感",
+      "奥行き",
+      "3D",
+      "perspective-origin",
+      "視点",
+      "カメラ"
+    ],
+    "category": "anim"
+  },
+  {
+    "id": "css-transform-style",
+    "type": "css",
+    "slug": "transform-style",
+    "name": "transform-style",
+    "summary": "子要素を3D空間のまま表示する",
+    "keywords": [
+      "3D",
+      "preserve-3d",
+      "flat",
+      "立体"
+    ],
+    "category": "anim"
+  },
+  {
+    "id": "css-responsive",
+    "type": "css",
+    "slug": "responsive",
+    "name": "レスポンシブコーディング",
+    "summary": "スマホ・タブレットに表示を最適化する",
+    "keywords": [
+      "レスポンシブ",
+      "レスポンシブデザイン",
+      "responsive",
+      "スマホ対応",
+      "ビューポート",
+      "viewport",
+      "ブレイクポイント",
+      "メディアクエリ",
+      "モバイルファースト"
+    ],
+    "category": "resp"
   },
   {
     "id": "css-media",

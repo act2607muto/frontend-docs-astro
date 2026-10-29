@@ -45,7 +45,8 @@
         "desc": "セレクタ・プロパティ・値の関係を覚えます。",
         "links": [
           "css-color",
-          "css-font-size"
+          "css-font-size",
+          "css-units"
         ]
       },
       {
