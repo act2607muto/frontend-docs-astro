@@ -450,9 +450,70 @@
     "related": [
       "html-head",
       "html-title",
-      "html-doctype",
-      "html-link"
-    ]
+      "css-responsive",
+      "css-media"
+    ],
+    "advanced": {
+      "title": "ビューポートの meta タグ",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "`<meta name=\"viewport\">` は、**レスポンシブコーディングを行ううえで必要不可欠** な HTML タグです。ビューポートとは、ブラウザウィンドウの表示領域のことです。"
+        },
+        {
+          "type": "p",
+          "text": "`content` に「`width=device-width`」を記述することで、表示領域の幅を PC やスマホなどの端末画面の幅に合わせています。これがないと、スマホは PC 向けの広い幅（980px など）でページを作ってから縮小して表示するため、文字がとても小さくなります。"
+        },
+        {
+          "type": "callout",
+          "title": "必ず書く1行",
+          "items": [
+            "`<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">`",
+            "**この行がないとメディアクエリが動作しない** ので注意します。スマホでも画面幅が PC と同じ広さとして扱われ、`@media (max-width: …)` の条件に当てはまらなくなります。"
+          ]
+        },
+        {
+          "type": "table",
+          "head": [
+            "content に書ける値",
+            "意味"
+          ],
+          "rows": [
+            [
+              "`width=device-width`",
+              "表示しているデバイスの幅に合わせる"
+            ],
+            [
+              "`initial-scale`",
+              "ページが表示されたときの倍率（`1.0` で等倍）"
+            ],
+            [
+              "`minimum-scale`",
+              "最小縮小倍率の指定"
+            ],
+            [
+              "`maximum-scale`",
+              "最大拡大倍率の指定"
+            ],
+            [
+              "`user-scalable`",
+              "ピンチイン・ピンチアウト（拡大・縮小）を許可するかどうか"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "**ピンチイン** は2本の指で画面を同時に触れて距離を縮める操作（縮小）、**ピンチアウト** は2本の指で画面を同時に触れて距離を広げる操作（拡大）です。"
+        },
+        {
+          "type": "callout",
+          "title": "拡大は禁止しない",
+          "items": [
+            "`user-scalable=no` や `maximum-scale=1` で拡大を禁止すると、文字を大きくして読みたい人がページを読めなくなります。アクセシビリティの観点から、ふつうは `width=device-width, initial-scale=1.0` だけを書きます。"
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "html-link",
@@ -485,7 +546,8 @@
     "explain": [
       "`link` は外部ファイルとの関係を示す空要素です。`rel` 属性で関係の種類を、`href` 属性でファイルの場所を指定します。",
       "`rel=\"stylesheet\"` を指定すると、`href` のCSSファイルが読み込まれてページに適用されます。CSSを別ファイルにすると、複数のページで同じデザインを共有できます。",
-      "上の例では、CSS欄の内容を `style.css` として読み込んだ状態を表示しています。"
+      "上の例では、CSS欄の内容を `style.css` として読み込んだ状態を表示しています。",
+      "`media` 属性にメディアクエリを書くと、条件に合うときだけその CSS ファイルを適用できます。画面幅ごとに CSS ファイルを分ける案件では、この書き方を指定されることもあるので、対応できるようにしておきましょう。"
     ],
     "values": {
       "label": "よく使う rel の値",
@@ -519,17 +581,23 @@
         "title": "ファビコンを設定する",
         "desc": "タブやブックマークに表示される小さなアイコンです。",
         "html": "<link rel=\"icon\" href=\"favicon.ico\">\n<link rel=\"apple-touch-icon\" href=\"apple-touch-icon.png\">"
+      },
+      {
+        "title": "画面幅ごとに CSS ファイルを読み分ける（media 属性）",
+        "desc": "`media` 属性に `@media` と同じ条件を書きます。375px以下は sp.css、376px〜1023pxは tablet.css、1024px以上は pc.css が適用されます。",
+        "html": "<!-- 画面サイズが375pxまではこのファイルのスタイルが適用される -->\n<link rel=\"stylesheet\" href=\"sp.css\" media=\"screen and (max-width: 375px)\">\n\n<!-- 画面サイズ376pxから1023pxまではこのファイルのスタイルが適用される -->\n<link rel=\"stylesheet\" href=\"tablet.css\" media=\"screen and (min-width: 376px) and (max-width: 1023px)\">\n\n<!-- 画面サイズが1024pxからはこのファイルのスタイルが適用される -->\n<link rel=\"stylesheet\" href=\"pc.css\" media=\"screen and (min-width: 1024px)\">"
       }
     ],
     "notes": [
       "href のパスはHTMLファイルの場所が基準です。フォルダ構成を変えたときはパスを見直してください。",
-      "CSSの link は head に書きます。body の途中に書くと、表示がちらつく原因になります。"
+      "CSSの link は head に書きます。body の途中に書くと、表示がちらつく原因になります。",
+      "media 属性で読み分けるときは、条件の幅が重ならないようにします。例えば `max-width: 375px` と `min-width: 375px` にすると、ちょうど375pxのときに両方のファイルが適用されます。"
     ],
     "related": [
       "html-head",
       "html-meta",
       "css-font-family",
-      "html-html"
+      "css-webfont"
     ]
   },
   {
@@ -5332,6 +5400,119 @@
     ]
   },
   {
+    "id": "css-reset-css",
+    "title": "リセットCSS",
+    "ja": "ブラウザごとの初期スタイルの違いをなくす",
+    "lead": "ブラウザが最初から持っているスタイル（user agent stylesheet）は、ブラウザごとに少しずつ違います。その差をなくすために、自分の CSS より先に読み込んでおくのがリセットCSSです。",
+    "meta": [
+      {
+        "label": "目的",
+        "value": "ブラウザごとの見た目の差をなくす"
+      },
+      {
+        "label": "書く場所",
+        "value": "ほかのスタイルより前（一番上）"
+      },
+      {
+        "label": "種類",
+        "value": "Normalize.css / A (more) Modern CSS Reset / ress.css / destyle.css など"
+      }
+    ],
+    "code": {
+      "html": "<h1>見出し</h1>\n<p>段落の文章です。</p>\n<ul>\n  <li>リスト1</li>\n  <li>リスト2</li>\n</ul>",
+      "css": "/* とても小さなリセットCSSの例 */\n*,\n*::before,\n*::after {\n  box-sizing: border-box;\n}\nh1, p, ul {\n  margin: 0;\n  padding: 0;\n}\nh1 {\n  font-size: inherit;\n}\nul {\n  list-style: none;\n}"
+    },
+    "preview": {
+      "height": 120,
+      "note": "見出しの大きさ、上下の余白、リストの点と左の余白など、ブラウザが付けていたスタイルが消えます",
+      "fullDocument": false
+    },
+    "explain": [
+      "すべてのブラウザには **user agent stylesheet**（ユーザーエージェントスタイルシート、UAスタイルシート）と呼ばれるデフォルトのスタイルが付属しています。これは表示する Web ページのすべてに適用される仕様で、ネット上に公開されています。CSS を何も書かなくても、`h1` が大きく太字になったり、`ul` に点が付いたりするのはこのためです。",
+      "この仕様から、行間やフォント周りの見た目がブラウザごとに微妙に異なります。**その差異をなくすためにリセットCSSが考案されました。** いくつかの種類があり、有志のエンジニアが作成・公開しています。",
+      "使用方法は、**スタイルの一番上に記述** し、ほかのスタイルより前にページに適用させることです。別ファイルのリセットCSSを使うときは、自分の `style.css` より先に `link` で読み込みます。"
+    ],
+    "values": {
+      "label": "主なブラウザの UA スタイルシート",
+      "head": "ブラウザ",
+      "rows": [
+        {
+          "key": "Chrome, Opera",
+          "desc": "Chromium UA stylesheet（chromium.googlesource.com の html.css）"
+        },
+        {
+          "key": "Firefox",
+          "desc": "Mozilla UA stylesheet（searchfox.org の mozilla-central/source/layout/style/res/html.css）"
+        },
+        {
+          "key": "Safari",
+          "desc": "WebKit UA stylesheet（trac.webkit.org の Source/WebCore/css/html.css）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "リセットCSSを自分の CSS より先に読み込む",
+        "desc": "後から読み込んだ CSS が優先されるので、リセットCSSを先に書き、その上に自分のスタイルを重ねます。",
+        "html": "<head>\n  <meta charset=\"UTF-8\">\n  <title>トップページ</title>\n  <!-- 1. リセットCSS -->\n  <link rel=\"stylesheet\" href=\"css/reset.css\">\n  <!-- 2. 自分のCSS -->\n  <link rel=\"stylesheet\" href=\"css/style.css\">\n</head>"
+      }
+    ],
+    "notes": [
+      "読み込む順番を逆にすると、自分で書いたスタイルがリセットCSSで打ち消されてしまいます。",
+      "リセットCSSには、余白などをすべて消す「消すタイプ」（destyle.css など）と、ブラウザ間の差だけをそろえて初期スタイルは残す「整えるタイプ」（normalize.css など）があります。案件ではどれを使っているか最初に確認しましょう。",
+      "リセットCSSを使うと見出しやリストの見た目も消えるので、必要なスタイルは自分で書き直します。"
+    ],
+    "related": [
+      "css-external-stylesheet",
+      "css-specificity",
+      "css-box-sizing",
+      "css-list-style"
+    ],
+    "advanced": {
+      "title": "リセットCSSの選び方",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "リセットCSSは、案件によっては使うものが **指定されることもあります**。制作会社や制作者によっても変わってくるため、種類と特徴を把握しておきましょう。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "リセットCSS",
+            "特徴"
+          ],
+          "rows": [
+            [
+              "Normalize.css",
+              "ブラウザ間の一貫性を保ちながら、デフォルトスタイルを整えるためのリセットCSS。初期スタイルは残す「整えるタイプ」"
+            ],
+            [
+              "A (more) Modern CSS Reset",
+              "すべてをリセットすることはしない、モダンブラウザ用に最適化されたリセットCSS"
+            ],
+            [
+              "ress.css",
+              "Normalize.css をカスタマイズしたリセットCSS"
+            ],
+            [
+              "destyle.css",
+              "スタイルをごっそりリセットするCSS。余白や見出しの大きさなどもすべて消す「消すタイプ」"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "迷ったときは",
+          "items": [
+            "「**destyle.css**」か「**A (more) Modern CSS Reset**」がおすすめです。",
+            "自分が使いやすいスタイルだけを集めた、**独自のリセットCSSを作る** のも良い方法です。",
+            "どれを使う場合も、読み込む順番は「リセットCSS → 自分の style.css」です。順番を間違えないようにしましょう。"
+          ]
+        }
+      ]
+    }
+  },
+  {
     "id": "css-specificity",
     "title": null,
     "ja": "どの指定が優先されるかの決まり",
@@ -7128,7 +7309,7 @@
       "css-font-size",
       "css-font-weight",
       "html-link",
-      "css-line-height"
+      "css-webfont"
     ],
     "advanced": {
       "title": "案件等でよく見かける和文フォント",
@@ -7173,6 +7354,241 @@
         {
           "type": "p",
           "text": "テンプレートの「ヒラギノ角ゴ Pro」は古い名前で、今の Mac では「ヒラギノ角ゴ ProN」や `\"Hiragino Sans\"` がよく使われます。案件のレギュレーションに合わせて書き換えてください。"
+        }
+      ]
+    }
+  },
+  {
+    "id": "css-webfont",
+    "title": "Webフォント",
+    "ja": "Webフォントの仕組みと使い方",
+    "lead": "Webサイト上で CSS を使って、自由にフォントを表示するための技術です。閲覧している人のパソコンやスマホにそのフォントが入っていなくても、同じ書体で表示できます。",
+    "meta": [
+      {
+        "label": "使い方",
+        "value": "link で読み込み、font-family で指定"
+      },
+      {
+        "label": "代表的なサービス",
+        "value": "Google Fonts（無料）・Adobe Fonts など"
+      },
+      {
+        "label": "種類",
+        "value": "有料Webフォント・無料Webフォント"
+      }
+    ],
+    "code": {
+      "html": "<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap\">\n<p class=\"web\">Webフォント（Noto Sans JP）で表示</p>\n<p class=\"local\">端末のフォント（serif）で表示</p>",
+      "css": ".web {\n  font-family: \"Noto Sans JP\", sans-serif;\n  font-weight: 700;\n}\n.local {\n  font-family: serif;\n}"
+    },
+    "preview": {
+      "height": 120,
+      "note": "Google Fonts から Noto Sans JP を読み込んで表示しています",
+      "fullDocument": false
+    },
+    "explain": [
+      "Webフォントとは、**Webサイト上で CSS を使って自由にフォントを表示するための技術** です。フォントのデータをサーバーから読み込むので、閲覧している人の環境（端末に入っているフォント）に依存しません。",
+      "見出しなどを画像にしなくても、デザイン通りの書体を **文字のまま** 表示できます。文字なので検索エンジンにも内容が伝わり、**SEO 的に有利** になるメリットがあります。",
+      "Webフォントには **有料Webフォントと無料Webフォント** があります。クライアントの予算に合わせて提案します。",
+      "使い方は、`link` タグでフォントを読み込み、`font-family` でそのフォント名を指定するだけです。上の例では Google Fonts から Noto Sans JP を読み込んでいます。"
+    ],
+    "values": {
+      "label": "Google Fonts の実装方法",
+      "head": "手順",
+      "rows": [
+        {
+          "key": "1. フォント名を検索",
+          "desc": "Google Fonts（fonts.google.com）でフォント名を検索し、使いたいフォント（例：Noto Sans Japanese）をクリックする"
+        },
+        {
+          "key": "2. Get font",
+          "desc": "フォントのページ右上の「Get font」をクリックする"
+        },
+        {
+          "key": "3. Get embed code",
+          "desc": "フォントを選ぶと「1 font family selected」の画面になるので、右側の「Get embed code」をクリックする"
+        },
+        {
+          "key": "4. link と font-family を貼る",
+          "desc": "「Web」タブで link タグをコピーして HTML の head に貼り、font-family の1行をコピーして CSS ファイルに貼る"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "Google Fonts の link を head に貼る",
+        "desc": "手順4で「Embed code in the <head> of your html」の欄からコピーしたコードです。preconnect の2行は読み込みを速くするためのものなので、そのまま一緒に貼ります。",
+        "html": "<head>\n  <meta charset=\"UTF-8\">\n  <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n  <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n  <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap\">\n  <link rel=\"stylesheet\" href=\"style.css\">\n</head>"
+      },
+      {
+        "title": "読み込んだフォントを使う",
+        "desc": "読み込んだあとは、普通のフォントと同じように font-family に名前を書きます。最後に総称ファミリーも書いておきます。",
+        "css": "body {\n  font-family: \"Noto Sans JP\", sans-serif;\n}"
+      },
+      {
+        "title": "太さを範囲で読み込む（Full axis）",
+        "desc": "Full axis のままコピーすると、太さが `wght@100..900` のような範囲で書かれます。`..` は「100から900まで全部」という意味です。使う太さが決まっているなら、One value を選ぶか `wght@400;700` のように `;` 区切りで必要な太さだけにすると軽くなります。",
+        "html": "<!-- 100〜900 の太さを全部読み込む（Full axis） -->\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&amp;display=swap\">\n\n<!-- 400 と 700 だけ読み込む -->\n<link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&amp;display=swap\">"
+      },
+      {
+        "title": "@import で CSS ファイルから読み込む",
+        "desc": "Embed code の画面で `<link>` ではなく `@import` を選ぶと、CSS ファイルの先頭に書くコードが表示されます。HTML を触れないときに使えますが、link より読み込みが遅くなりやすいので、基本は講義どおり link を使います。",
+        "css": "@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');\n\nbody {\n  font-family: \"Noto Sans JP\", sans-serif;\n}"
+      }
+    ],
+    "notes": [
+      "日本語に対応した Webフォントは、英語のフォントに比べるとまだ少ないです。",
+      "日本語のフォントは文字数が多くファイルが大きいため、**表示速度が遅くなる** ことがあります。使う太さ（wght）を必要なものだけに絞って読み込みます。",
+      "サービスによっては、PV数・ドメイン数・使える書体数など **利用上の制限** があります。案件で使う前に利用規約を確認します。",
+      "2行目の preconnect に付いている `crossorigin` は消さずにそのまま貼ります。フォントのファイルを別のサーバー（fonts.gstatic.com）から取ってくるために必要な属性です。",
+      "`@import` は CSS ファイルの一番上（ほかのルールより前）に書かないと効きません。",
+      "Webフォントが読み込めなかったときのために、font-family の最後には sans-serif などの総称ファミリーを書いておきます。"
+    ],
+    "related": [
+      "css-font-family",
+      "html-link",
+      "css-font-weight",
+      "css-media"
+    ],
+    "advanced": {
+      "title": "Embed code 画面の見方・メリットとデメリット・サービス一覧",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "Embed code 画面の見方"
+        },
+        {
+          "type": "p",
+          "text": "「Get embed code」をクリックすると Embed code の画面になります。たくさん表示されますが、Webサイトで使うのは次の部分だけです。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "画面の表示",
+            "どうするか"
+          ],
+          "rows": [
+            [
+              "Web / Android / iOS / Flutter のタブ",
+              "**Web** を選ぶ（ほかはアプリ用）"
+            ],
+            [
+              "`<link>` / `@import` の選択",
+              "`<link>` を選んだままにする（@import は CSS に書く別の方法）"
+            ],
+            [
+              "Embed code in the <head> of your html",
+              "この欄の link タグ（3行）を **Copy code** でコピーし、HTML の head に貼る"
+            ],
+            [
+              "Weight：Full axis / One value",
+              "Full axis は 100〜900 の太さを全部、One value は1つの太さだけ読み込む。日本語フォントは重いので、使う太さが決まっていれば絞る"
+            ],
+            [
+              "CSS class for a variable style",
+              "見本のうち `font-family: \"Noto Sans JP\", sans-serif;` の1行だけを CSS ファイルに貼る。`<uniquifier>` や `<weight>` は自分で置き換える前提の見本なので、そのまま貼らない"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "太さの書き方（URL の wght）",
+          "items": [
+            "`wght@100..900`：`..` は範囲。100から900までのすべての太さ（可変フォント）",
+            "`wght@400;700`：`;` は区切り。400と700の2つの太さだけ"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "メリットとデメリット"
+        },
+        {
+          "type": "table",
+          "head": [
+            "",
+            "内容"
+          ],
+          "rows": [
+            [
+              "メリット",
+              "閲覧しているユーザーの **環境に依存しない**（端末にフォントが入っていなくても同じ書体で表示できる）"
+            ],
+            [
+              "メリット",
+              "画像ではなく **文字で記述できる** ため、SEO 的に有利"
+            ],
+            [
+              "デメリット",
+              "**日本語対応の Webフォントがまだ少ない**"
+            ],
+            [
+              "デメリット",
+              "**表示速度が遅くなる** 場合がある"
+            ],
+            [
+              "デメリット",
+              "**利用上の制限** がかかることがある（PV数・ドメイン数など）"
+            ]
+          ]
+        },
+        {
+          "type": "h",
+          "text": "Webフォントサービス一覧"
+        },
+        {
+          "type": "table",
+          "head": [
+            "サービス名",
+            "提供会社",
+            "利用料",
+            "フォントの種類"
+          ],
+          "rows": [
+            [
+              "Google Fonts",
+              "Google",
+              "無料",
+              "1,700種類以上"
+            ],
+            [
+              "Adobe Fonts",
+              "Adobe",
+              "Creative Cloud 製品ユーザーは 0円。※案件で使う場合は、クライアントごとに契約が必要（有料）",
+              "500を超える日本語フォントを含む 20,000以上"
+            ],
+            [
+              "TypeSquare",
+              "モリサワ",
+              "月契約 0円（PV数 1千PV／月・利用可能書体数 1・利用可能ドメイン数 1）。※いくつかプランあり",
+              "2,000種類以上"
+            ],
+            [
+              "FONTPLUS",
+              "SBテクノロジー株式会社",
+              "月額 1,100円〜。PV に応じて変動。半年無料のトライアルあり",
+              "600種類以上"
+            ],
+            [
+              "DynaFont",
+              "ダイナコムウェア株式会社",
+              "11,000円／100万PV",
+              "1,300種類以上"
+            ],
+            [
+              "FontStream",
+              "株式会社コム・クエスト",
+              "1サイトあたり 550円／30日。PV数・フォント使用数の制限はなし。初回30日間無料",
+              "80種類以上"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "料金について",
+          "items": [
+            "料金やフォントの数は講義時点の情報です。最新の内容は各サービスの公式サイトで確認してください。",
+            "無料で始めるなら Google Fonts が定番です。日本語なら Noto Sans JP（ゴシック）や Noto Serif JP（明朝）がよく使われます。"
+          ]
         }
       ]
     }
@@ -8956,7 +9372,8 @@
       "css-flex-direction",
       "css-justify-content",
       "css-grid-template-columns",
-      "css-position"
+      "css-position",
+      "css-grid"
     ]
   },
   {
@@ -9058,8 +9475,8 @@
     },
     "explain": [
       "`position` は、要素をどのように配置するかを決めるプロパティです。`static` 以外を指定すると、`top`・`right`・`bottom`・`left` で位置を調整できます。",
-      "`absolute` は、`position` が指定された直近の祖先要素を基準に配置します。上の例では親の `.card` に `relative` を指定し、その左上を基準にバッジを置いています。",
-      "`sticky` はスクロールしても指定位置に貼り付く配置で、追従するヘッダーや見出しに使います。"
+      "`absolute` は、`static` 以外の `position` が指定された直近の祖先要素（多くは `relative` の親）の左上を基準に配置します。上の例では親の `.card` に `relative` を指定し、その左上を基準にバッジを置いています。基準になる親が見つからないときは、ページの左上が基準になります。",
+      "`fixed` は画面の左上、`sticky` は親要素の左上が基準です。どちらもスクロールしても決まった位置に表示されますが、`fixed` は要素の高さがなくなり、`sticky` はなくならない点が違います（下の応用編を参照）。"
     ],
     "values": {
       "label": "指定できる値",
@@ -9071,19 +9488,19 @@
         },
         {
           "key": "relative",
-          "desc": "本来の位置を基準にずらす。absolute の基準にもなる"
+          "desc": "本来の位置から上下左右にずらす。absolute の基準点にもなる"
         },
         {
           "key": "absolute",
-          "desc": "基準の祖先要素に対して配置。元の場所は詰められる"
+          "desc": "static 以外の親要素の左上を基準に配置。親がなければページの左上。元の場所は詰められる"
         },
         {
           "key": "fixed",
-          "desc": "画面（ビューポート）に対して固定"
+          "desc": "画面（ビューポート）の左上を基準に固定。要素の高さがなくなる"
         },
         {
           "key": "sticky",
-          "desc": "スクロールで指定位置に来たら貼り付く"
+          "desc": "親要素の中で、スクロールして指定位置に来たら貼り付く。高さはなくならない"
         }
       ]
     },
@@ -9092,18 +9509,187 @@
         "title": "スクロールしても上部に残るヘッダー",
         "desc": "sticky を使うと、ヘッダーが画面上部に貼り付きます。",
         "css": ".site-header {\n  position: sticky;\n  top: 0;\n  z-index: 10;\n  background: #fff;\n}"
+      },
+      {
+        "title": "画面の下に固定するバナー",
+        "desc": "fixed で画面の下に固定します。本文の最後が隠れないよう、body の下に余白を空けておきます。",
+        "html": "<a class=\"line-banner\" href=\"#\">LINE で友だち追加する</a>",
+        "css": ".line-banner {\n  position: fixed;\n  left: 0;\n  bottom: 0;\n  width: 100%;\n  padding: 16px;\n  background: #06c755;\n  color: #fff;\n  text-align: center;\n}\nbody {\n  padding-bottom: 56px;\n}"
       }
     ],
     "notes": [
       "absolute の基準になる親に position: relative を付け忘れると、思わぬ位置に表示されます。",
-      "absolute や fixed の要素は通常の流れから外れるため、ほかの要素と重なることがあります。"
+      "absolute や fixed の要素は通常の流れから外れるため、ほかの要素と重なることがあります。",
+      "fixed の要素は高さがなくなるため、下の要素が上に詰まって隠れることがあります。固定ヘッダーなら body に padding-top を付けて、ヘッダーの高さ分を空けておきます。",
+      "sticky は親要素の中でしか貼り付きません。親の高さが sticky の要素と同じだと、動く余地がなく効かないように見えます。"
     ],
     "related": [
       "css-z-index",
       "css-transform",
       "css-overflow",
       "html-header"
-    ]
+    ],
+    "advanced": {
+      "title": "relative・absolute・fixed・sticky のくわしい使い方",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "relative：本来の位置からずらす／absolute の基準点を作る"
+        },
+        {
+          "type": "p",
+          "text": "`relative` は、コンテンツが本来表示される位置から上下左右に移動させます。もう1つの大事な役割が **absolute の起点（基準点）を作る** ことです。親要素に `relative` を指定すると、子要素は親要素を基準に位置を調整できるようになります。"
+        },
+        {
+          "type": "example",
+          "title": "例1：relative で本来の位置からずらす",
+          "desc": "点線の枠が本来の位置です。relative でずらしても、元の場所は空いたまま残ります。",
+          "html": "<div class=\"wrapper\">\n  <div class=\"ghost\"></div>\n  <div class=\"item\">.item</div>\n</div>",
+          "css": ".wrapper {\n  position: relative;\n  height: 110px;\n  padding: 12px;\n  background: #3a93c8;\n}\n.ghost {\n  position: absolute;\n  width: 120px;\n  height: 60px;\n  border: 2px dashed #fff;\n}\n.item {\n  position: relative;\n  top: 20px;\n  left: 40px;\n  width: 120px;\n  height: 60px;\n  padding: 6px;\n  background: #7fb24a;\n  color: #fff;\n  font-size: 12px;\n}",
+          "height": 140,
+          "points": [
+            {
+              "code": "position: relative;",
+              "text": "本来の位置を基準にします。"
+            },
+            {
+              "code": "top: 20px; left: 40px;",
+              "text": "本来の位置から、上を20px・左を40px空けた位置（下と右）にずれます。"
+            }
+          ]
+        },
+        {
+          "type": "h",
+          "text": "absolute：static 以外の親要素を起点に移動する"
+        },
+        {
+          "type": "p",
+          "text": "`absolute` は、`static` 以外（多くは `relative`）を指定した親要素の左上を起点に移動します。**relative を指定した要素が見つからない場合は、ページの左上が基準** になります。"
+        },
+        {
+          "type": "example",
+          "title": "例2：relative の親の左上を基準にする",
+          "desc": "スライドと同じ指定です。.wrapper の左上から、左に100px・上に200px の位置に .item が置かれます。",
+          "html": "<div class=\"wrapper\">\n  .wrapper\n  <div class=\"item\">.item</div>\n</div>",
+          "css": ".wrapper {\n  position: relative;\n  height: 300px;\n  padding: 6px 10px;\n  background: #3a93c8;\n  color: #fff;\n  font-size: 12px;\n}\n.item {\n  position: absolute;\n  left: 100px;\n  top: 200px;\n  width: 140px;\n  height: 70px;\n  padding: 6px;\n  background: #7fb24a;\n}",
+          "height": 320,
+          "points": [
+            {
+              "code": ".wrapper { position: relative; }",
+              "text": "親要素が absolute の基準点になります。"
+            },
+            {
+              "code": "left: 100px; top: 200px;",
+              "text": "親の左端から100px、上端から200pxの位置に、子要素の左上がそろいます。"
+            }
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例3：relative の親がないとき",
+          "desc": "例2から .wrapper の position: relative を消すと、.item はページの左上を基準に配置され、.wrapper の外にはみ出します。",
+          "html": "<div class=\"wrapper\">\n  .wrapper（relative なし）\n  <div class=\"item\">.item</div>\n</div>",
+          "css": "body {\n  margin: 0;\n}\n.wrapper {\n  margin: 60px 0 0 120px;\n  height: 80px;\n  padding: 6px 10px;\n  background: #3a93c8;\n  color: #fff;\n  font-size: 12px;\n}\n.item {\n  position: absolute;\n  left: 0;\n  top: 0;\n  width: 100px;\n  height: 40px;\n  padding: 6px;\n  background: #7fb24a;\n}",
+          "height": 150,
+          "points": [
+            {
+              "code": ".wrapper { margin: 60px 0 0 120px; }",
+              "text": ".wrapper には relative がないので、基準になりません。"
+            },
+            {
+              "code": "left: 0; top: 0;",
+              "text": "基準がページの左上になるため、.item は画面の左上の角に表示されます。"
+            }
+          ]
+        },
+        {
+          "type": "h",
+          "text": "fixed：画面の決まった位置に固定する"
+        },
+        {
+          "type": "p",
+          "text": "`fixed` は、**画面の決まった位置に要素を固定** させたいときに使います。基準は画面（ビューポート）の左上で、スクロールしても同じ場所に表示され続けます。サイト上部に固定されるヘッダーや、スマートフォンで画面の下に出続ける「LINE 友だち追加」のようなバナーがこれにあたります。"
+        },
+        {
+          "type": "h",
+          "text": "sticky：親要素の中で決まった位置に固定する"
+        },
+        {
+          "type": "p",
+          "text": "`sticky` は、**親要素の中で決まった位置に要素を固定** させたいときに使います。`relative`（基準点）の設定は必要ありません。親要素の範囲内でだけ貼り付き、親要素が画面から出ていくと一緒に流れていきます。サイドバー（メニュー）や、追従する広告バナーなどに使うことが多いです。"
+        },
+        {
+          "type": "example",
+          "title": "例4：枠の中でスクロールしてみる",
+          "desc": "枠の中をスクロールすると、左のメニューが上に貼り付いたまま付いてきます。",
+          "html": "<div class=\"scroll\">\n  <div class=\"layout\">\n    <nav class=\"side\">メニュー</nav>\n    <div class=\"main\">本文<br>本文<br>本文<br>本文<br>本文<br>本文<br>本文<br>本文<br>本文<br>本文<br>本文<br>本文</div>\n  </div>\n</div>",
+          "css": ".scroll {\n  height: 160px;\n  overflow: auto;\n  border: 1px solid #aaa;\n}\n.layout {\n  display: flex;\n  align-items: flex-start;\n  gap: 10px;\n  padding: 10px;\n}\n.side {\n  position: sticky;\n  left: 0;\n  top: 0;\n  width: 90px;\n  padding: 10px;\n  background: #b68235;\n  color: #fff;\n  font-size: 12px;\n}\n.main {\n  flex: 1;\n  font-size: 12px;\n  line-height: 1.8;\n}",
+          "height": 180,
+          "points": [
+            {
+              "code": "position: sticky; left: 0; top: 0;",
+              "text": "スクロールして上端に届いたところで貼り付きます。"
+            },
+            {
+              "code": "align-items: flex-start;",
+              "text": "Flexbox の中では子要素が親の高さまで伸びるため、伸びないようにしておきます。伸びると貼り付く余地がなくなり、sticky が効きません。"
+            }
+          ]
+        },
+        {
+          "type": "h",
+          "text": "fixed と sticky の違い"
+        },
+        {
+          "type": "table",
+          "head": [
+            "",
+            "fixed",
+            "sticky"
+          ],
+          "rows": [
+            [
+              "基準",
+              "**画面**の左上",
+              "**親要素**の左上"
+            ],
+            [
+              "要素の高さ",
+              "**なくなる**ため、下にある要素がその分だけ上に詰まって配置される",
+              "**なくならない**（元の場所を占めたまま）"
+            ],
+            [
+              "relative の設定",
+              "不要",
+              "不要"
+            ],
+            [
+              "よく使う場面",
+              "固定ヘッダー、画面下の追従バナー",
+              "サイドバー、追従する広告バナー、表の見出し"
+            ]
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例5：fixed は高さがなくなる",
+          "desc": "fixed のヘッダーは高さがなくなるので、本文の1行目が上に詰まり、ヘッダーの下に潜り込んで隠れています。",
+          "html": "<header class=\"fixed\">fixed のヘッダー</header>\n<p>本文の1行目（ヘッダーに隠れている）</p>\n<p>本文の2行目</p>",
+          "css": "body {\n  margin: 0;\n}\n.fixed {\n  position: fixed;\n  top: 0;\n  left: 0;\n  width: 100%;\n  padding: 12px;\n  background: rgba(182, 130, 53, 0.9);\n  color: #fff;\n  font-size: 13px;\n}\np {\n  margin: 8px 12px;\n  font-size: 13px;\n}",
+          "height": 90,
+          "points": [
+            {
+              "code": "position: fixed;",
+              "text": "ヘッダーの高さがなくなるので、本文の1行目が上に詰まってヘッダーの下に隠れます。"
+            },
+            {
+              "code": "（対策）body { padding-top: ヘッダーの高さ; }",
+              "text": "fixed のヘッダーを使うときは、本文の上にヘッダーの高さ分の余白を空けておきます。sticky ならこの対策は要りません。"
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "css-z-index",
@@ -9539,7 +10125,8 @@
       "css-display",
       "css-flex-direction",
       "css-justify-content",
-      "css-flex"
+      "css-flex",
+      "css-grid-vs-flex"
     ],
     "advanced": {
       "title": "親と子に書くプロパティ一覧",
@@ -10363,6 +10950,159 @@
     ]
   },
   {
+    "id": "css-grid",
+    "title": "CSS Grid",
+    "ja": "線を引いて区切った場所に要素を並べる",
+    "lead": "CSS Grid（グリッドレイアウト）は、縦と横の線で親要素を区切り、その中に子要素を配置するしくみです。親要素に display: grid を書き、行と列の大きさを親で決めます。",
+    "meta": [
+      {
+        "label": "始め方",
+        "value": "親要素に display: grid"
+      },
+      {
+        "label": "構成",
+        "value": "コンテナ（親）とアイテム（子）"
+      },
+      {
+        "label": "使う場面",
+        "value": "行と列がある格子状のレイアウト"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"wrapper\">\n  <div class=\"box_01\">要素1</div>\n  <div class=\"box_02\">要素2</div>\n  <div class=\"box_03\">要素3</div>\n  <div class=\"box_04\">要素4</div>\n  <div class=\"box_05\">要素5</div>\n  <div class=\"box_06\">要素6</div>\n</div>",
+      "css": ".wrapper {\n  height: 200px;\n  background-color: #ddd;\n  border: #aaa 1px solid;\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr; /* 3つのトラック（列）を定義 */\n  grid-template-rows: 1fr 1fr; /* 2つのトラック（行）を定義 */\n}\n.wrapper div {\n  font-size: 12px;\n}\n.box_01 { background-color: red; }\n.box_02 { background-color: green; }\n.box_03 { background-color: blue; }\n.box_04 { background-color: yellow; }\n.box_05 { background-color: cyan; }\n.box_06 { background-color: purple; }"
+    },
+    "preview": {
+      "height": 220,
+      "note": "親に3列×2行の線を引くと、6つの子要素が左上から順にマスへ入ります",
+      "fullDocument": false
+    },
+    "explain": [
+      "グリッドとは、**列と行を決める横の線と縦の線が交差したもの**です。`grid` のプロパティを使うと、要素をグリッド上の行と列の中に配置できます。table のようにマス同士をつなげたり、自由な位置に置いたりできるのが特徴です。",
+      "使い方は、並べたい要素を囲む親要素に `display: grid` を指定し、`grid-template-columns`（列）と `grid-template-rows`（行）で線の引き方を決めます。上の例は「3列×2行」なので、6つの子要素が左上から順に1マスずつ入ります。",
+      "Flexbox は子要素ごとに幅を決めていきますが、Grid は **親要素で先に線を引き**、区切られた場所に子要素を当てはめていきます。違いは「Grid と Flexbox の違い」のページで詳しく比べています。"
+    ],
+    "values": {
+      "label": "Grid レイアウトで使われる用語",
+      "head": "用語",
+      "rows": [
+        {
+          "key": "コンテナ",
+          "desc": "Grid レイアウト全体を囲む要素（display: grid を書いた親要素）"
+        },
+        {
+          "key": "アイテム",
+          "desc": "コンテナの子要素すべて（孫要素は含まない）"
+        },
+        {
+          "key": "ライン",
+          "desc": "グリッドの枠線を作る縦と横の線。左上から 1, 2, 3… と番号が付く"
+        },
+        {
+          "key": "トラック",
+          "desc": "グリッドの行と列のこと。ラインとラインに挟まれた帯"
+        },
+        {
+          "key": "セル",
+          "desc": "トラック内に指定するコンテンツのこと。グリッドの最小単位（1マス）"
+        },
+        {
+          "key": "エリア",
+          "desc": "トラック同士が重なった場所。複数のセルをまとめた範囲"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "複雑なレイアウトはジェネレーターで作る",
+        "desc": "マスをまたぐような複雑なレイアウトは、オンラインで公開されているジェネレーターを使えばOKです。講義では CSS Grid Generator（cssgrid-generator.netlify.app）が紹介されています。列数・行数・間隔を入力し、マスをドラッグして範囲を選ぶと、コードを書き出してくれます。",
+        "css": "/* CSS Grid Generator が書き出すコードの例 */\n.parent {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-template-rows: repeat(2, 1fr);\n  grid-column-gap: 0px;\n  grid-row-gap: 0px;\n}\n.div1 { grid-area: 1 / 1 / 3 / 2; }"
+      }
+    ],
+    "notes": [
+      "display: grid は並べたい要素そのものではなく、それを囲む親要素に書きます。",
+      "効くのは直下の子要素だけです。孫要素も並べたいときは、子要素にも display: grid を指定します。",
+      "ジェネレーターが書き出す grid-area: 1 / 1 / 3 / 2 は「行の開始 / 列の開始 / 行の終了 / 列の終了」のライン番号を1行にまとめた書き方です。"
+    ],
+    "related": [
+      "css-grid-template-columns",
+      "css-grid-template-rows",
+      "css-grid-column-row",
+      "css-grid-vs-flex"
+    ],
+    "advanced": {
+      "title": "Grid で使うプロパティ一覧",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Grid のプロパティも、Flexbox と同じく **親要素（コンテナ）に書くもの** と **子要素（アイテム）に書くもの** があります。まずは下の5つを覚えれば、基本的なレイアウトが作れます。"
+        },
+        {
+          "type": "h",
+          "text": "親要素（コンテナ）に書くプロパティ"
+        },
+        {
+          "type": "table",
+          "head": [
+            "プロパティ",
+            "役割"
+          ],
+          "rows": [
+            [
+              "`display: grid`",
+              "コンテナの役割を担う HTML 要素に指定する"
+            ],
+            [
+              "`grid-template-rows`",
+              "行のトラックの高さを指定"
+            ],
+            [
+              "`grid-template-columns`",
+              "列のトラックの横幅を指定"
+            ],
+            [
+              "`gap`",
+              "トラック同士の間隔"
+            ],
+            [
+              "`place-items`",
+              "セルの中でのアイテムの位置（縦横まとめて）"
+            ]
+          ]
+        },
+        {
+          "type": "h",
+          "text": "子要素（アイテム）に書くプロパティ"
+        },
+        {
+          "type": "table",
+          "head": [
+            "プロパティ",
+            "役割"
+          ],
+          "rows": [
+            [
+              "`grid-row`",
+              "アイテムを配置するときに、行のライン番号を指定"
+            ],
+            [
+              "`grid-column`",
+              "アイテムを配置するときに、列のライン番号を指定"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "単位「fr」",
+          "items": [
+            "`fr` は Grid 専用の単位で、余った幅（高さ）を分け合います。`1fr 1fr 1fr` なら3等分です。",
+            "`fr` を使えば、親要素にぴったり収まるようにトラックが配置されます。"
+          ]
+        }
+      ]
+    }
+  },
+  {
     "id": "css-grid-template-columns",
     "title": null,
     "ja": "グリッドの列",
@@ -10429,11 +11169,212 @@
       "gap は列の幅に含まれず、列と列の間に追加されます。"
     ],
     "related": [
-      "css-gap",
-      "css-display",
-      "css-place-items",
-      "css-media"
+      "css-grid",
+      "css-grid-template-rows",
+      "css-grid-column-row",
+      "css-gap"
     ]
+  },
+  {
+    "id": "css-grid-template-rows",
+    "title": null,
+    "ja": "グリッドの行",
+    "lead": "Gridレイアウトで、行の数と高さ（行のトラックの高さ）を定義します。grid-template-columns と組み合わせて、縦横のマス目を作ります。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "none"
+      },
+      {
+        "label": "適用対象",
+        "value": "Gridコンテナ"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"wrapper\">\n  <div class=\"box_01\">要素1</div>\n  <div class=\"box_02\">要素2</div>\n  <div class=\"box_03\">要素3</div>\n  <div class=\"box_04\">要素4</div>\n  <div class=\"box_05\">要素5</div>\n  <div class=\"box_06\">要素6</div>\n</div>",
+      "css": ".wrapper {\n  height: 240px;\n  background-color: #ddd;\n  border: #aaa 1px solid;\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr; /* 3つのトラック（列）を定義 */\n  grid-template-rows: 1fr 2fr; /* 2つのトラック（行）を定義 */\n}\n.wrapper div {\n  font-size: 12px;\n}\n.box_01 { background-color: red; }\n.box_02 { background-color: green; }\n.box_03 { background-color: blue; }\n.box_04 { background-color: yellow; }\n.box_05 { background-color: cyan; }\n.box_06 { background-color: purple; }"
+    },
+    "preview": {
+      "height": 260,
+      "note": "1fr 2fr なので、親の高さ 240px を 1:2 に分け、上の行が 80px、下の行が 160px になります",
+      "fullDocument": false
+    },
+    "explain": [
+      "`grid-template-rows` に高さを並べると、その数だけ行ができます。`100px 200px` なら「高さ100pxの行」と「高さ200pxの行」の2行です。",
+      "単位 `fr` を使えば、親要素にフィットする形で配置されます。上の例では親の高さが 240px なので、`1fr 2fr` は 80px と 160px に分かれます。`1fr 1fr` にすれば同じ高さの2行です。",
+      "列は `grid-template-columns`、行は `grid-template-rows` で決めます。2つをセットで書くと、何列×何行のマス目かがひと目で分かります。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "1fr 1fr",
+          "desc": "親の高さを2等分した2行"
+        },
+        {
+          "key": "100px 1fr",
+          "desc": "高さ100pxの行と、残りを埋める行"
+        },
+        {
+          "key": "repeat(3, 1fr)",
+          "desc": "同じ高さの行を3つ（1fr 1fr 1fr と同じ）"
+        },
+        {
+          "key": "auto",
+          "desc": "中身の高さに合わせた行"
+        },
+        {
+          "key": "none",
+          "desc": "行を定義しない（初期値。中身に合わせて自動で行ができる）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "ヘッダー・本文・フッターの3段レイアウト",
+        "desc": "上下は中身の高さ、真ん中は残り全部にすると、フッターを画面の下に置けます。",
+        "html": "<body class=\"page\">\n  <header>ヘッダー</header>\n  <main>本文</main>\n  <footer>フッター</footer>\n</body>",
+        "css": ".page {\n  min-height: 100vh;\n  display: grid;\n  grid-template-rows: auto 1fr auto;\n}"
+      }
+    ],
+    "notes": [
+      "親に高さがないと、fr で指定した行は中身の高さになります。fr で分けたいときは、親に height を指定します。",
+      "定義した行より子要素が多いと、足りない行は自動で追加されます（高さは中身に合わせた auto）。"
+    ],
+    "related": [
+      "css-grid",
+      "css-grid-template-columns",
+      "css-grid-column-row",
+      "css-gap"
+    ]
+  },
+  {
+    "id": "css-grid-column-row",
+    "title": "grid-column / grid-row",
+    "ja": "アイテムを置く範囲をライン番号で指定",
+    "lead": "Gridアイテムに書き、「何番目の線から何番目の線まで」を使うかを指定します。grid-column が列（横方向）、grid-row が行（縦方向）です。複数のマスをまたいだ配置ができます。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "auto"
+      },
+      {
+        "label": "適用対象",
+        "value": "Gridアイテム（子要素）"
+      },
+      {
+        "label": "書き方",
+        "value": "開始ライン / 終了ライン"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"wrapper\">\n  <div class=\"box_01\">要素1</div>\n  <div class=\"box_02\">要素2</div>\n  <div class=\"box_03\">要素3</div>\n  <div class=\"box_04\">要素4</div>\n  <div class=\"box_05\">要素5</div>\n</div>",
+      "css": ".wrapper {\n  height: 200px;\n  background-color: #ddd;\n  border: #aaa 1px solid;\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  grid-template-rows: 1fr 1fr;\n}\n.wrapper div {\n  font-size: 12px;\n}\n.box_01 { background-color: red; }\n.box_02 { background-color: green; }\n.box_03 { background-color: blue; }\n.box_04 { background-color: yellow; }\n.box_05 {\n  background-color: cyan;\n  grid-column: 2 / 3;\n  grid-row: 1 / 3;\n}"
+    },
+    "preview": {
+      "height": 220,
+      "note": "要素5が真ん中の列を上から下まで使い、残りの要素は空いているマスに順に入ります",
+      "fullDocument": false
+    },
+    "explain": [
+      "Grid の線には、左上から順に番号が付いています。これを **ライン番号** と呼びます。3列×2行のグリッドなら、縦の線は column1〜column4 の4本、横の線は row1〜row3 の3本です（下の「ライン番号の数え方」の図を参照）。",
+      "`grid-column: 2 / 3;` は「列のライン2からライン3まで」、つまり2列目の1マス分を使います。`grid-row: 1 / 3;` は「行のライン1からライン3まで」なので、1行目と2行目の2マス分の高さになります。",
+      "上の例では要素5（`.box_05`）を真ん中の列に縦長に置いています。位置を指定していない要素1〜4は、空いているマスに左上から順に自動で入ります。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "2 / 3",
+          "desc": "ライン2からライン3まで（1マス分）"
+        },
+        {
+          "key": "1 / 3",
+          "desc": "ライン1からライン3まで（2マス分）"
+        },
+        {
+          "key": "1 / -1",
+          "desc": "最初のラインから最後のラインまで（端から端まで）"
+        },
+        {
+          "key": "1 / span 2",
+          "desc": "ライン1から2マス分（span はマスの数）"
+        },
+        {
+          "key": "auto",
+          "desc": "自動で配置（初期値）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "見出しだけ横いっぱいに広げる",
+        "desc": "3列のカード一覧で、見出しだけを全列にまたがらせます。",
+        "css": ".cards {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n}\n.cards__title {\n  grid-column: 1 / -1;\n}"
+      }
+    ],
+    "notes": [
+      "数字はマスの番号ではなく線（ライン）の番号です。3列のグリッドの右端の線は 3 ではなく 4 になります。",
+      "grid-column・grid-row は子要素（アイテム）に書きます。親に書いても効きません。",
+      "マスが重なるように指定すると、要素同士が重なって表示されます。"
+    ],
+    "related": [
+      "css-grid",
+      "css-grid-template-columns",
+      "css-grid-template-rows",
+      "css-grid-vs-flex"
+    ],
+    "advanced": {
+      "title": "ライン番号の数え方",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "線の番号を見やすくするため、3列×2行のグリッドの各マスに番号を書きました。縦の線（column）は左から 1・2・3・4、横の線（row）は上から 1・2・3 です。"
+        },
+        {
+          "type": "example",
+          "title": "例1：3列×2行のマスとライン番号",
+          "desc": "マスの左上が「そのマスが始まるライン番号」です。たとえば右下のマスは、列がライン3〜4、行がライン2〜3になります。",
+          "html": "<div class=\"grid\">\n  <div>列 1/2・行 1/2</div>\n  <div>列 2/3・行 1/2</div>\n  <div>列 3/4・行 1/2</div>\n  <div>列 1/2・行 2/3</div>\n  <div>列 2/3・行 2/3</div>\n  <div>列 3/4・行 2/3</div>\n</div>",
+          "css": ".grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  grid-template-rows: 60px 60px;\n  gap: 6px;\n}\n.grid div {\n  display: grid;\n  place-items: center;\n  background: #3a93c8;\n  color: #fff;\n  font-size: 12px;\n  border-radius: 4px;\n}",
+          "height": 150,
+          "points": [
+            {
+              "code": "grid-template-columns: 1fr 1fr 1fr;",
+              "text": "列が3つなので、縦の線は **4本**（column1〜column4）できます。"
+            },
+            {
+              "code": "grid-template-rows: 60px 60px;",
+              "text": "行が2つなので、横の線は **3本**（row1〜row3）できます。"
+            }
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例2：grid-column: 2 / 3; grid-row: 1 / 3;",
+          "desc": "スライドと同じ指定です。column2 と column3 の線に挟まれ、row1 から row3 までの範囲を使うので、真ん中の列が縦長の1つのマスになります。",
+          "html": "<div class=\"grid\">\n  <div></div>\n  <div class=\"box_05\">grid-column: 2 / 3;<br>grid-row: 1 / 3;</div>\n  <div></div>\n  <div></div>\n  <div></div>\n</div>",
+          "css": ".grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  grid-template-rows: 60px 60px;\n  gap: 6px;\n}\n.grid div {\n  background: #cfcbd6;\n  border-radius: 4px;\n}\n.grid .box_05 {\n  grid-column: 2 / 3;\n  grid-row: 1 / 3;\n  display: grid;\n  place-items: center;\n  background: #3a93c8;\n  color: #fff;\n  font-size: 12px;\n  text-align: center;\n}",
+          "height": 150,
+          "points": [
+            {
+              "code": "grid-column: 2 / 3;",
+              "text": "列のライン2からライン3まで。真ん中の列の1マス分の幅です。"
+            },
+            {
+              "code": "grid-row: 1 / 3;",
+              "text": "行のライン1からライン3まで。2マス分の高さになります。"
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "css-place-items",
@@ -10510,6 +11451,80 @@
       "css-align-items",
       "css-justify-content",
       "css-grid-template-columns",
+      "css-display"
+    ]
+  },
+  {
+    "id": "css-grid-vs-flex",
+    "title": "Grid と Flexbox の違い",
+    "ja": "線を引いて当てはめるか、子要素ごとに幅を決めるか",
+    "lead": "Grid と Flexbox はどちらも要素を並べるためのしくみですが、考え方が違います。Flexbox は子要素ごとに幅を決め、Grid は親要素で線を引いてから子要素を当てはめます。",
+    "meta": [
+      {
+        "label": "Flexbox",
+        "value": "子要素（アイテム）に幅・高さを書く"
+      },
+      {
+        "label": "Grid",
+        "value": "親要素に幅・高さを書く"
+      },
+      {
+        "label": "結論",
+        "value": "両方使いこなせるようにする"
+      }
+    ],
+    "code": {
+      "html": "<p class=\"label\">grid</p>\n<div class=\"grid\">\n  <div class=\"box_01\"></div>\n  <div class=\"box_02\"></div>\n  <div class=\"box_03\"></div>\n  <div class=\"box_04\"></div>\n  <div class=\"box_05\"></div>\n  <div class=\"box_06\"></div>\n</div>\n<p class=\"label\">flex</p>\n<div class=\"flex\">\n  <div class=\"box_01\"></div>\n  <div class=\"box_02\"></div>\n  <div class=\"box_03\"></div>\n  <div class=\"box_04\"></div>\n  <div class=\"box_05\"></div>\n  <div class=\"box_06\"></div>\n</div>",
+      "css": ".label {\n  margin: 4px 0;\n  font-size: 12px;\n}\n.grid, .flex {\n  height: 80px;\n  background-color: #ddd;\n}\n/* grid：親で線を引く */\n.grid {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  grid-template-rows: 1fr 1fr;\n}\n/* flex：子要素ごとに幅を決める */\n.flex {\n  display: flex;\n  flex-wrap: wrap;\n}\n.flex div {\n  width: 33.333%;\n}\n.box_01 { background-color: red; }\n.box_02 { background-color: green; }\n.box_03 { background-color: blue; }\n.box_04 { background-color: yellow; }\n.box_05 { background-color: cyan; }\n.box_06 { background-color: purple; }"
+    },
+    "preview": {
+      "height": 220,
+      "note": "見た目は同じ3列×2行ですが、grid は親で列と行を決め、flex は子要素それぞれに幅を決めています",
+      "fullDocument": false
+    },
+    "explain": [
+      "**違い1：並べ方の考え方**。Flexbox は、横並びにして子要素の幅や配置を決めていきます。Grid は、どのように配置するか先に線を設定して、区切られた領域に子要素を当てはめていきます。",
+      "**違い2：幅や高さを書く場所**。Flexbox は子要素（アイテム）に横幅や高さを指定します。Grid は親要素に横幅や高さを指定します。上の例でも、flex は `.flex div` に `width` を書き、grid は `.grid` に `grid-template-columns` と `grid-template-rows` を書いています。",
+      "Flexbox は子要素ごとに幅を決める分、柔軟な対応ができます。一方 Grid は、行や列の数や幅が増えるほど実装が複雑になる可能性があります。ただし、マスをまたぐようなレイアウトは Grid を使うと簡単に作れるので、**両方使いこなせるようになっておく**ことが大切です。"
+    ],
+    "values": {
+      "label": "Grid と Flexbox の比較",
+      "head": "比べること",
+      "rows": [
+        {
+          "key": "並べ方",
+          "desc": "flex：横並びにして子要素の幅や配置を決めていく ／ grid：線を設定して、区切られた領域に子要素を当てはめていく"
+        },
+        {
+          "key": "幅・高さを書く場所",
+          "desc": "flex：子要素（アイテム） ／ grid：親要素（コンテナ）"
+        },
+        {
+          "key": "得意なこと",
+          "desc": "flex：1列に並べる・中身に合わせて柔軟に伸び縮み ／ grid：行と列がある格子状・マスをまたぐ配置"
+        },
+        {
+          "key": "注意",
+          "desc": "grid は行と列の数や幅が増えるほど、コードが複雑になりやすい"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "Grid だと簡単に作れるレイアウト",
+        "desc": "大きさの違うパネルを組み合わせたレイアウトは、Flexbox だと入れ子が必要になりますが、Grid ならライン番号を指定するだけで作れます。",
+        "html": "<div class=\"panels\">\n  <div class=\"a\"></div>\n  <div class=\"b\"></div>\n  <div class=\"c\"></div>\n  <div class=\"d\"></div>\n  <div class=\"e\"></div>\n  <div class=\"f\"></div>\n</div>",
+        "css": ".panels {\n  display: grid;\n  grid-template-columns: repeat(3, 1fr);\n  grid-template-rows: repeat(3, 60px);\n  gap: 6px;\n}\n.panels div {\n  background: #3a93c8;\n  border-radius: 6px;\n}\n.b { grid-column: 2 / 3; grid-row: 1 / 3; }\n.d { grid-row: 2 / 4; }\n.f { grid-column: 2 / 4; }"
+      }
+    ],
+    "notes": [
+      "どちらか一方だけを使う必要はありません。ページ全体の枠組みを Grid、その中のボタンやメニューの横並びを Flexbox、のように組み合わせて使えます。",
+      "迷ったら「1方向に並べるだけなら Flexbox、縦と横の両方をそろえたいなら Grid」と考えると選びやすくなります。"
+    ],
+    "related": [
+      "css-flexbox",
+      "css-grid",
+      "css-grid-column-row",
       "css-display"
     ]
   },
@@ -11035,6 +12050,7 @@
       "fullDocument": false
     },
     "explain": [
+      "`transition` は「移り変わり」「変化」「変わり目」という意味で、ホバー時やクリック時の動きを調整できるプロパティです。`animation` プロパティほど細かい設定はできませんが、簡単に扱えるため、ホバー時の動きなどにおすすめです。",
       "`transition` は「どのプロパティを」「何秒かけて」「どんな速度変化で」変えるかを1行で指定する一括指定プロパティです。",
       "変化前の状態（`.btn`）に書くのがポイントです。こうすると、マウスを乗せたときも離したときも、なめらかに変化します。",
       "`ease` は始めと終わりがゆっくりになる動き、`linear` は一定速度の動きです。"
@@ -11077,7 +12093,87 @@
       "css-transform",
       "css-hover",
       "css-keyframes"
-    ]
+    ],
+    "advanced": {
+      "title": "ショートハンドの書き方と、うまく動かないとき",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "ショートハンドと省略なしは同じ意味"
+        },
+        {
+          "type": "example",
+          "title": "例：ショートハンドで書く",
+          "desc": "マウスを乗せると、0.3秒待ってから0.5秒かけて背景色が変わります。",
+          "html": "<div class=\"box\">マウスを乗せてください</div>",
+          "css": ".box {\n  width: 220px;\n  padding: 24px 0;\n  text-align: center;\n  background-color: #e1ad66;\n  transition: background-color .5s ease-in-out .3s;\n}\n.box:hover {\n  background-color: #00f; /* 背景色をアニメーションで変化させる */\n  color: #fff;\n}",
+          "height": 110,
+          "points": [
+            {
+              "code": "background-color",
+              "text": "transition-property：背景色を変化させる"
+            },
+            {
+              "code": ".5s",
+              "text": "transition-duration：0.5秒かけて（1つ目の秒数）"
+            },
+            {
+              "code": "ease-in-out",
+              "text": "transition-timing-function：初速と終速を遅めに"
+            },
+            {
+              "code": ".3s",
+              "text": "transition-delay：0.3秒後に（2つ目の秒数）"
+            }
+          ]
+        },
+        {
+          "type": "p",
+          "text": "上のショートハンドは、次のように4つのプロパティに分けて書いたものと **どちらも同じ** です。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "省略なしの書き方",
+            "意味"
+          ],
+          "rows": [
+            [
+              "`transition-property: background-color;`",
+              "背景色を変化させる"
+            ],
+            [
+              "`transition-duration: .5s;`",
+              "0.5秒かけて"
+            ],
+            [
+              "`transition-timing-function: ease-in-out;`",
+              "初速と終速を遅めに"
+            ],
+            [
+              "`transition-delay: .3s;`",
+              "0.3秒後に"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "案件ベースでもショートハンドで書くことが多く、`transform` や `opacity` とセットで使うことが多いです。"
+        },
+        {
+          "type": "h",
+          "text": "transition がうまく動作しないときは"
+        },
+        {
+          "type": "callout",
+          "title": "確認すること",
+          "items": [
+            "**書く対象が間違えていないか確認する**。transition は「ホバー前」のセレクタ（`.box`）に書きます。`.box:hover` だけに書くのはよく見かけるミスで、戻るときに動きが付きません。",
+            "**display に transition を設定しようとしていないか確認する**。`display: none` から `block` へは、なめらかに変化させられません。`visibility` も同様で、切り替わりはしますがフェードのようにはなりません。表示・非表示をなめらかにしたいときは `opacity` と組み合わせるか、`animation` プロパティを使うようにします。"
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "css-animation",
@@ -11108,6 +12204,7 @@
       "fullDocument": false
     },
     "explain": [
+      "CSSアニメーションは、HTML要素に動きや変化を加えるための CSS の機能です。`animation` プロパティと `@keyframes` を使うことで設定できます。JavaScript などの複雑なプログラム処理を必要としないため手軽に実装できますが、**クリックやドラッグなど、何かしらのアクションに反応してアニメーションを開始することはできません**（その場合は JavaScript を使います）。",
       "`animation` は、`@keyframes` で名前を付けて定義した動きを要素に適用するプロパティです。`transition` と違い、ホバーなどのきっかけがなくても自動で再生できます。",
       "「名前 再生時間 速度の変化 繰り返し回数 方向」のように、スペース区切りでまとめて指定します。`infinite` で無限に繰り返し、`alternate` で行きと帰りを交互に再生します。",
       "動かすプロパティは `transform` と `opacity` にすると、描画の負荷が軽くなめらかに動きます。"
@@ -11118,31 +12215,35 @@
       "rows": [
         {
           "key": "animation-name",
-          "desc": "@keyframes の名前"
+          "desc": "アニメーションの名前（@keyframes で付けた名前）"
         },
         {
           "key": "animation-duration",
-          "desc": "1回の再生時間（1s など）"
+          "desc": "始まって終わるまでの時間（2s など）。初期値は 0s でアニメーションしない"
         },
         {
           "key": "animation-timing-function",
-          "desc": "速度の変化（ease / linear など）"
+          "desc": "変化の度合い（ease / linear など）"
         },
         {
           "key": "animation-delay",
-          "desc": "開始までの待ち時間"
+          "desc": "何秒後にアニメーションを始めるか"
         },
         {
           "key": "animation-iteration-count",
-          "desc": "繰り返し回数（infinite で無限）"
+          "desc": "繰り返し回数。初期値は 1（infinite で無限）"
         },
         {
           "key": "animation-direction",
-          "desc": "alternate で往復"
+          "desc": "再生方向（alternate で往復）"
         },
         {
           "key": "animation-fill-mode",
-          "desc": "forwards で終了時の状態を保つ"
+          "desc": "開始前・終了後のスタイル（forwards で終了時の状態を保つ）"
+        },
+        {
+          "key": "animation-play-state",
+          "desc": "再生・停止（マウスオーバーの際に使う）"
         }
       ]
     },
@@ -11154,6 +12255,7 @@
       }
     ],
     "notes": [
+      "ホバー（:hover）に反応させるだけなら、animation より transition のほうが簡単です。",
       "点滅や激しい動きは、利用者によっては気分が悪くなる原因になります。prefers-reduced-motion で止められるようにします。",
       "width や top を動かすと描画の負荷が高くなります。transform と opacity を使います。"
     ],
@@ -11161,14 +12263,259 @@
       "css-keyframes",
       "css-transition",
       "css-transform",
-      "css-opacity"
-    ]
+      "css-hover"
+    ],
+    "advanced": {
+      "title": "個別のプロパティを詳しく",
+      "blocks": [
+        {
+          "type": "example",
+          "title": "例：個別のプロパティで1つずつ書く",
+          "desc": "1秒待ってから、2秒かけてフェードインし、フェードアウトと交互に永遠に繰り返します。",
+          "html": "<p class=\"title\">フェードイン</p>",
+          "css": "@keyframes fadeIn {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 1;\n  }\n}\n.title {\n  font-size: 24px;\n  font-weight: bold;\n  color: #b68235;\n  animation-name: fadeIn;\n  animation-duration: 2s; /* 2秒かけてフェードイン */\n  animation-delay: 1s; /* 1秒待ってから */\n  animation-iteration-count: infinite; /* 永遠に繰り返す */\n  animation-direction: alternate;\n}",
+          "height": 90,
+          "points": [
+            {
+              "code": "animation-name: fadeIn;",
+              "text": "`@keyframes fadeIn` で定義した動きを使う"
+            },
+            {
+              "code": "animation-duration: 2s;",
+              "text": "1回の再生に2秒かける"
+            },
+            {
+              "code": "animation-delay: 1s;",
+              "text": "1秒待ってから始める"
+            },
+            {
+              "code": "animation-iteration-count: infinite;",
+              "text": "永遠に繰り返す"
+            },
+            {
+              "code": "animation-direction: alternate;",
+              "text": "行き（フェードイン）と帰り（フェードアウト）を交互に再生する"
+            }
+          ]
+        },
+        {
+          "type": "h",
+          "text": "animation-name"
+        },
+        {
+          "type": "p",
+          "text": "`animation-name` の値には、**英数字、ダッシュ（`-`）、アンダースコア（`_`）** が使えます。`fadeIn` や `slide-up` のように、アニメーションの動きをイメージしやすい名前にするとよいです。"
+        },
+        {
+          "type": "h",
+          "text": "animation-duration"
+        },
+        {
+          "type": "p",
+          "text": "duration は「間隔」という意味で、1回のアニメーションが終了するまでの時間を指定します。**初期値は `0s` となり、アニメーションは起こりません。** `s` は秒（second）を表し、ほかに `ms`（ミリ秒）も指定できます。`2` のように数字だけでは効かないので、**`s` か `ms` を必ず付けます**。"
+        },
+        {
+          "type": "h",
+          "text": "animation-timing-function"
+        },
+        {
+          "type": "p",
+          "text": "アニメーションの変化速度を設定できます。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "値",
+            "動き"
+          ],
+          "rows": [
+            [
+              "`ease`",
+              "初期値。開始時と終了時は緩やかに変化"
+            ],
+            [
+              "`ease-in`",
+              "開始時は緩やかに変化、終了に近づくと早く変化"
+            ],
+            [
+              "`ease-out`",
+              "開始時は早く変化し、終了時は緩やかに変化"
+            ],
+            [
+              "`ease-in-out`",
+              "開始時と終了時は、かなり緩やかに変化"
+            ],
+            [
+              "`linear`",
+              "開始から終了まで一定に変化"
+            ],
+            [
+              "`step-start`",
+              "アニメーションの開始時点で終了状態になる"
+            ],
+            [
+              "`step-end`",
+              "アニメーションが終わる時点で終了状態になる（それまでは開始時の状態のまま）"
+            ],
+            [
+              "`steps(数, start または end)`",
+              "指定した整数の段階で、パラパラ漫画のように変化。`start` を指定すると各段階の始めに、`end` を指定すると各段階の終わりに切り替わる"
+            ],
+            [
+              "`cubic-bezier(x1, y1, x2, y2)`",
+              "変化の度合いを任意で指定"
+            ]
+          ]
+        },
+        {
+          "type": "h",
+          "text": "animation-delay"
+        },
+        {
+          "type": "p",
+          "text": "アニメーションが始まるまでの時間（待ち時間）を指定できます。`animation-delay: 1s;` なら、アニメーションが適用されてから1秒後に始まります。"
+        },
+        {
+          "type": "callout",
+          "title": "「画面に入ってから」ではない点に注意",
+          "items": [
+            "delay の時間は、ページを読み込んで **アニメーションが適用された時点から** 数えます。ページの下のほうにある要素は、スクロールして画面に入る前にアニメーションが終わっていることがあります。",
+            "「スクロールして画面内に入ったら動かす」には、JavaScript（Intersection Observer など）でクラスを付けて、そのクラスに animation を書きます。"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "animation-iteration-count"
+        },
+        {
+          "type": "p",
+          "text": "iteration は「反復」という意味で、**アニメーションを繰り返す回数** を指定できます。初期値は `1` です。数字だけでなく、永遠に繰り返す **`infinite`** もあります。"
+        },
+        {
+          "type": "h",
+          "text": "animation-direction"
+        },
+        {
+          "type": "p",
+          "text": "アニメーションを繰り返すときに、どこから始めるか（再生方向）を指定できます。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "値",
+            "動き"
+          ],
+          "rows": [
+            [
+              "`normal`",
+              "初期値。繰り返す際に最初に戻って開始する"
+            ],
+            [
+              "`reverse`",
+              "最後の状態から逆向きに再生する"
+            ],
+            [
+              "`alternate`",
+              "`normal` と `reverse` を交互に繰り返す（行って戻る）"
+            ],
+            [
+              "`alternate-reverse`",
+              "`reverse` と `normal` を交互に繰り返す。先に `reverse` から始まる"
+            ]
+          ]
+        },
+        {
+          "type": "h",
+          "text": "animation-fill-mode"
+        },
+        {
+          "type": "p",
+          "text": "アニメーションの開始前と終了後に、どのスタイルを適用するかを指定できます。アニメーションが終わった後にどのような状態を保持したいかで値が変わります。**`animation-delay` と組み合わせて使うことが多い** です。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "値",
+            "動き"
+          ],
+          "rows": [
+            [
+              "`none`",
+              "初期値。アニメーションで指定したスタイルは、開始前・終了後には適用されない（終わると元のスタイルに戻る）"
+            ],
+            [
+              "`forwards`",
+              "アニメーション終了時のスタイルが、終了後にも適用される"
+            ],
+            [
+              "`backwards`",
+              "`animation-delay` で待っている間も、アニメーション開始時のスタイルが適用される"
+            ],
+            [
+              "`both`",
+              "`forwards` と `backwards` の両方が適用される"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "たとえば「1秒待ってからフェードインし、そのまま表示しておく」なら `animation-fill-mode: both;` にします。`backwards` で待っている間も透明のままになり、`forwards` で終わった後も表示されたままになります。"
+        },
+        {
+          "type": "h",
+          "text": "animation-play-state"
+        },
+        {
+          "type": "p",
+          "text": "ホバーなどのアクションとともに使われるプロパティです。アニメーションしている要素にカーソルを当てたときに、アニメーションを一時停止するなどの設定ができます。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "値",
+            "動き"
+          ],
+          "rows": [
+            [
+              "`running`",
+              "初期値。アニメーションは継続される"
+            ],
+            [
+              "`paused`",
+              "アニメーションを停止する。`running` に戻すと、止まったところから再開する"
+            ]
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例：マウスを乗せると一時停止する",
+          "desc": "回り続ける四角にマウスを乗せると止まり、離すとその位置から再び回ります。",
+          "html": "<div class=\"box\"></div>",
+          "css": "@keyframes spin {\n  to {\n    transform: rotate(360deg);\n  }\n}\n.box {\n  width: 60px;\n  height: 60px;\n  margin: 16px;\n  background-color: #e1ad66;\n  animation: spin 3s linear infinite;\n}\n.box:hover {\n  animation-play-state: paused;\n}",
+          "height": 110,
+          "points": [
+            {
+              "code": "animation: spin 3s linear infinite;",
+              "text": "3秒で1回転を、一定の速さで永遠に繰り返す"
+            },
+            {
+              "code": ".box:hover",
+              "text": "マウスを乗せている間だけ"
+            },
+            {
+              "code": "animation-play-state: paused;",
+              "text": "アニメーションを一時停止する"
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "css-transform",
     "title": null,
     "ja": "移動・回転・拡大",
-    "lead": "要素を移動・回転・拡大縮小・傾斜させます。周りのレイアウトには影響せず、見た目だけが変わります。",
+    "lead": "要素を移動・回転・拡大縮小・傾斜させます。周りのレイアウトには影響せず、見た目だけが変わります。ボタンのホバー時のアクションや、バナーなどのアクセントとして盛り込むと効果的です。",
     "meta": [
       {
         "label": "初期値",
@@ -11193,7 +12540,7 @@
       "fullDocument": false
     },
     "explain": [
-      "`transform` は、要素の形や位置を変える（変形する）プロパティです。`translate()` で移動、`rotate()` で回転、`scale()` で拡大縮小します。",
+      "`transform`（「変化」「変身」という意味）は、要素の形や位置を変える（変形する）プロパティです。`translate()` で移動、`rotate()` で回転、`scale()` で拡大縮小、`skew()` で傾斜させます。",
       "変形しても元の場所はそのまま確保されるため、周りの要素は動きません。見た目だけが変わるので、アニメーションに向いています。",
       "スペース区切りで複数の変形を組み合わせられます。書いた順番によって結果が変わる点に注意します。"
     ],
@@ -11237,9 +12584,174 @@
     "related": [
       "css-transition",
       "css-animation",
-      "css-position",
-      "css-keyframes"
-    ]
+      "css-transform-origin",
+      "css-perspective",
+      "css-transform-style",
+      "css-position"
+    ],
+    "advanced": {
+      "title": "translate・rotate・scale・skew の種類",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "translate：移動"
+        },
+        {
+          "type": "table",
+          "head": [
+            "関数",
+            "意味"
+          ],
+          "rows": [
+            [
+              "translate(x, y)",
+              "X軸とY軸をまとめて移動"
+            ],
+            [
+              "translateX()",
+              "X軸（横軸）への移動"
+            ],
+            [
+              "translateY()",
+              "Y軸（縦軸）への移動"
+            ],
+            [
+              "translateZ()",
+              "Z軸（奥行き）への移動"
+            ],
+            [
+              "translate3d(x, y, z)",
+              "X・Y・Z の3方向をまとめて移動。立体的な表現に使う"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "※ `translateZ` を使うには、**親要素に `perspective` プロパティを設定する** 必要があります。設定しないと、奥行き方向に動いても見た目が変わりません。"
+        },
+        {
+          "type": "h",
+          "text": "rotate：回転"
+        },
+        {
+          "type": "table",
+          "head": [
+            "関数",
+            "意味"
+          ],
+          "rows": [
+            [
+              "rotate()",
+              "オブジェクトの中心を軸に回転（rotateZ と同じ）"
+            ],
+            [
+              "rotateX()",
+              "X軸を軸に回転（上下に倒れるように回る）"
+            ],
+            [
+              "rotateY()",
+              "Y軸を軸に回転（左右に回る）"
+            ],
+            [
+              "rotateZ()",
+              "Z軸（中心を基点）に回転"
+            ],
+            [
+              "rotate3d(x, y, z, 角度)",
+              "X軸・Y軸・Z軸を一括で設定して回転"
+            ]
+          ]
+        },
+        {
+          "type": "h",
+          "text": "scale：拡大・縮小"
+        },
+        {
+          "type": "table",
+          "head": [
+            "関数",
+            "意味"
+          ],
+          "rows": [
+            [
+              "scale()",
+              "X・Y 両方向への拡大・縮小（1 が等倍、1.5 で1.5倍）"
+            ],
+            [
+              "scaleX()",
+              "X軸（横方向）への拡大・縮小"
+            ],
+            [
+              "scaleY()",
+              "Y軸（縦方向）への拡大・縮小"
+            ],
+            [
+              "scale3d(x, y, z)",
+              "X軸・Y軸・Z軸のすべての方向への拡大・縮小を一括で設定"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "scale3d について",
+          "items": [
+            "`translate3d` や `rotate3d` と同じく、3D 空間での拡大・縮小を表現できます。x：横方向、y：縦方向、z：奥行き方向のスケールを指定します。",
+            "**scale3d は単体で使わず、rotateX や rotateY と組み合わせて使います。** 通常の HTML の要素には厚みがないため、Z 軸方向の変化が見た目ではわからないからです。"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "skew：傾斜"
+        },
+        {
+          "type": "table",
+          "head": [
+            "関数",
+            "意味"
+          ],
+          "rows": [
+            [
+              "skew(x, y)",
+              "X・Y 両方向に傾斜をつける"
+            ],
+            [
+              "skewX()",
+              "X軸（横方向）に傾斜をつける"
+            ],
+            [
+              "skewY()",
+              "Y軸（縦方向）に傾斜をつける"
+            ]
+          ]
+        },
+        {
+          "type": "example",
+          "title": "例：4種類の変形をホバーで試す",
+          "desc": "スライドと同じ値です。それぞれの箱にマウスを乗せると変形します。",
+          "html": "<div class=\"row\">\n  <div class=\"box t\">translateX</div>\n  <div class=\"box r\">rotate</div>\n  <div class=\"box s\">scale</div>\n  <div class=\"box k\">skewX</div>\n</div>",
+          "css": ".row {\n  display: flex;\n  gap: 40px;\n  padding: 30px 20px;\n}\n.box {\n  width: 80px;\n  padding: 14px 0;\n  text-align: center;\n  background: #b68235;\n  color: #fff;\n  font-size: 12px;\n  transition: transform .3s ease;\n}\n.t:hover {\n  transform: translateX(50px);\n}\n.r:hover {\n  transform: rotate(45deg);\n}\n.s:hover {\n  transform: scale(1.5);\n}\n.k:hover {\n  transform: skewX(45deg);\n}",
+          "height": 120,
+          "points": [
+            {
+              "code": "translateX(50px)",
+              "text": "右に50px移動します。"
+            },
+            {
+              "code": "rotate(45deg)",
+              "text": "中心を軸に45度回転します。"
+            },
+            {
+              "code": "scale(1.5)",
+              "text": "縦横1.5倍に拡大します。"
+            },
+            {
+              "code": "skewX(45deg)",
+              "text": "横方向に45度傾きます。"
+            }
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "css-keyframes",
@@ -11272,7 +12784,7 @@
     "explain": [
       "`@keyframes 名前 { … }` の中に、アニメーションの各時点でのスタイルを書きます。`0%` が開始時、`100%` が終了時で、その間はブラウザが自動でなめらかにつなぎます。",
       "開始と終了だけなら `from`・`to` と書けます。`0%, 100%` のようにカンマで区切ると、複数の時点に同じスタイルを指定できます。",
-      "定義しただけでは動きません。`animation` プロパティで名前と再生時間を指定して、要素に適用します。"
+      "定義しただけでは動きません（**あくまで定義するだけ**）。`animation` プロパティで名前と再生時間を指定して、要素に適用します。名前を変えれば、`@keyframes` はいくつでも作れます。"
     ],
     "values": {
       "label": "書き方",
@@ -11316,6 +12828,438 @@
     ]
   },
   {
+    "id": "css-transform-origin",
+    "title": null,
+    "ja": "変形の基点",
+    "lead": "transform で回転・拡大縮小・傾斜させるときの基点（どこを中心に動かすか）を変えます。初期値は要素の中央です。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "50% 50% 0（中央）"
+      },
+      {
+        "label": "適用対象",
+        "value": "変形可能な要素"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"row\">\n  <div class=\"box center\">中央</div>\n  <div class=\"box left-top\">左上</div>\n</div>",
+      "css": ".row {\n  display: flex;\n  gap: 60px;\n  padding: 30px 40px;\n}\n.box {\n  width: 80px;\n  height: 80px;\n  display: grid;\n  place-items: center;\n  background: #b68235;\n  color: #fff;\n  font-size: 13px;\n  transform: rotate(20deg);\n}\n/* 初期値（書かなくても同じ） */\n.center {\n  transform-origin: center;\n}\n/* 左上を基点に回す */\n.left-top {\n  transform-origin: left top;\n}"
+    },
+    "preview": {
+      "height": 160,
+      "note": "どちらも rotate(20deg) ですが、基点が違うので回ったあとの位置が変わります",
+      "fullDocument": false
+    },
+    "explain": [
+      "`transform-origin` は、`transform` で動かすときの **基点（動きの中心）を変更する** プロパティです。何も書かないと要素の中央が基点になります。",
+      "書き方は `transform-origin: X軸の基点 Y軸の基点 Z軸の基点;` です。X と Y には `left` / `center` / `right`、`top` / `center` / `bottom` などのキーワードか、`%`・`px` を書きます。Z は 3D のときだけ使い、`px` で指定します。",
+      "回転（`rotate`）・拡大縮小（`scale`）・傾斜（`skew`）の見た目が変わります。移動（`translate`）は基点に関係なく同じ距離だけ動きます。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "center",
+          "desc": "中央（初期値。50% 50% と同じ）"
+        },
+        {
+          "key": "left top",
+          "desc": "左上（0 0 と同じ）"
+        },
+        {
+          "key": "right bottom",
+          "desc": "右下（100% 100% と同じ）"
+        },
+        {
+          "key": "50% 100%",
+          "desc": "下の辺の真ん中"
+        },
+        {
+          "key": "0 0 -50px",
+          "desc": "Z軸の基点も指定する（3Dのとき）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "左から右へ線が伸びる下線",
+        "desc": "transform-origin: left を指定すると、scaleX が左端から伸びます。指定しないと中央から左右に伸びます。",
+        "html": "<a class=\"link\" href=\"#\">マウスを乗せてください</a>",
+        "css": ".link {\n  position: relative;\n  color: #7d5411;\n  text-decoration: none;\n}\n.link::after {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  bottom: -4px;\n  width: 100%;\n  height: 2px;\n  background: #b68235;\n  transform: scaleX(0);\n  transform-origin: left;\n  transition: transform .3s ease;\n}\n.link:hover::after {\n  transform: scaleX(1);\n}"
+      }
+    ],
+    "notes": [
+      "transform-origin だけを書いても要素は動きません。transform と一緒に使います。",
+      "ホバー時（:hover）ではなく、元の状態のセレクタに書いておくと、戻るときも同じ基点で動きます。"
+    ],
+    "related": [
+      "css-transform",
+      "css-perspective",
+      "css-transition",
+      "css-transform-style"
+    ]
+  },
+  {
+    "id": "css-perspective",
+    "title": null,
+    "ja": "3Dの奥行き（遠近感）",
+    "lead": "3D 変形する要素に、奥行き（遠近感）を付けます。指定するのは変形する要素ではなく、その親要素です。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "none（遠近感なし）"
+      },
+      {
+        "label": "指定する要素",
+        "value": "変形する要素の親要素"
+      },
+      {
+        "label": "単位",
+        "value": "通常は px"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"row\">\n  <div class=\"scene near\">\n    <div class=\"card\">300px</div>\n  </div>\n  <div class=\"scene far\">\n    <div class=\"card\">1500px</div>\n  </div>\n</div>",
+      "css": ".row {\n  display: flex;\n  gap: 40px;\n  padding: 20px 30px;\n}\n/* 親要素に perspective を書く */\n.near {\n  perspective: 300px;\n}\n.far {\n  perspective: 1500px;\n}\n.card {\n  width: 120px;\n  height: 90px;\n  display: grid;\n  place-items: center;\n  background: #b68235;\n  color: #fff;\n  font-size: 13px;\n  transform: rotateY(45deg);\n}"
+    },
+    "preview": {
+      "height": 140,
+      "note": "どちらも rotateY(45deg) で回していますが、数値が小さい左のほうが遠近感が強く見えます",
+      "fullDocument": false
+    },
+    "explain": [
+      "`perspective` は、現在の視点から要素までの距離を指定して、**奥行き（遠近感）** を表現するプロパティです。カメラと被写体の距離をイメージするとわかりやすいです。",
+      "**数値が小さい → カメラが被写体に「近い」→ 遠近感が強くなる**。**数値が大きい → カメラが「遠い」→ 遠近感が弱く、平面的に見える**。",
+      "指定するのは **変形する要素の親要素** です。`translateZ` や `rotateX`・`rotateY` は、親に `perspective` がないと立体的に見えません。",
+      "`perspective-origin` は、3D で表現されるときに **どこから要素の動きを見ているか（視点の位置）** を指定するプロパティです。初期値は中央（`50% 50%`）で、`left top` のように書くと左上からのぞき込んだ見え方になります。"
+    ],
+    "values": {
+      "label": "設定値の目安",
+      "head": "数値",
+      "rows": [
+        {
+          "key": "300px〜600px",
+          "desc": "ガッツリ3D（目立たせたい）"
+        },
+        {
+          "key": "800px〜1200px",
+          "desc": "ほどよい立体感（自然な演出）"
+        },
+        {
+          "key": "1500px〜3000px",
+          "desc": "さりげない奥行きを出す"
+        },
+        {
+          "key": "none",
+          "desc": "遠近感なし（初期値）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "perspective-origin で視点の位置を変える",
+        "desc": "同じ perspective でも、視点を左上に動かすと見え方が変わります。perspective-origin も親要素に書きます。",
+        "html": "<div class=\"row\">\n  <div class=\"scene\">\n    <div class=\"card\">中央から</div>\n  </div>\n  <div class=\"scene from-top\">\n    <div class=\"card\">左上から</div>\n  </div>\n</div>",
+        "css": ".row {\n  display: flex;\n  gap: 40px;\n  padding: 20px 30px;\n}\n.scene {\n  perspective: 400px;\n}\n.from-top {\n  perspective-origin: left top;\n}\n.card {\n  width: 120px;\n  height: 90px;\n  display: grid;\n  place-items: center;\n  background: #b68235;\n  color: #fff;\n  font-size: 13px;\n  transform: rotateX(40deg);\n}"
+      },
+      {
+        "title": "ホバーでカードを奥に傾ける",
+        "desc": "perspective を付けた親の中で、子要素を rotateY と transition で動かします。",
+        "html": "<div class=\"scene\">\n  <div class=\"card\">マウスを乗せてください</div>\n</div>",
+        "css": ".scene {\n  perspective: 1000px;\n  padding: 10px 30px;\n}\n.card {\n  width: 180px;\n  padding: 30px 0;\n  text-align: center;\n  background: #b68235;\n  color: #fff;\n  font-size: 13px;\n  transition: transform .5s ease;\n}\n.card:hover {\n  transform: rotateY(30deg);\n}"
+      }
+    ],
+    "notes": [
+      "変形する要素自身に書いても効きません。親要素に書きます（要素自身に付けたいときは transform: perspective(800px) rotateY(45deg); のように関数で書く方法もあります）。",
+      "数値を小さくしすぎると、要素がゆがんで見づらくなります。迷ったら 800px〜1200px から試します。"
+    ],
+    "related": [
+      "css-transform",
+      "css-transform-style",
+      "css-transform-origin",
+      "css-transition"
+    ]
+  },
+  {
+    "id": "css-transform-style",
+    "title": null,
+    "ja": "子要素を3D空間のまま表示する",
+    "lead": "CSS で 3D を再現するために必要なプロパティです。preserve-3d を指定すると、子要素の 3D 変換が平面に押しつぶされず、立体のまま表示されます。",
+    "meta": [
+      {
+        "label": "初期値",
+        "value": "flat"
+      },
+      {
+        "label": "指定する要素",
+        "value": "3D 変換する子要素を持つ親要素"
+      },
+      {
+        "label": "継承",
+        "value": "しない"
+      }
+    ],
+    "code": {
+      "html": "<div class=\"scene\">\n  <div class=\"cube\">\n    <div class=\"face front\">前</div>\n    <div class=\"face right\">右</div>\n    <div class=\"face top\">上</div>\n  </div>\n</div>",
+      "css": ".scene {\n  perspective: 600px;\n  padding: 40px 60px;\n}\n.cube {\n  position: relative;\n  width: 80px;\n  height: 80px;\n  transform-style: preserve-3d;\n  transform: rotateX(-25deg) rotateY(-35deg);\n}\n.face {\n  position: absolute;\n  inset: 0;\n  display: grid;\n  place-items: center;\n  color: #fff;\n  font-size: 14px;\n}\n.front {\n  background: #b68235;\n  transform: translateZ(40px);\n}\n.right {\n  background: #7d5411;\n  transform: rotateY(90deg) translateZ(40px);\n}\n.top {\n  background: #e1ad66;\n  transform: rotateX(90deg) translateZ(40px);\n}"
+    },
+    "preview": {
+      "height": 180,
+      "note": "3つの面が立体の箱として表示されます。.cube の transform-style を flat にすると、面が平らに重なって箱に見えなくなります",
+      "fullDocument": false
+    },
+    "explain": [
+      "`transform-style` は、子要素の 3D 変換を **3D 空間のまま保つかどうか** を決めるプロパティです。",
+      "初期値の `flat` では、子要素を 3D で回転させても、親要素の平面の上に押しつぶされて表示されます。`preserve-3d` にすると、子要素どうしの前後関係も含めて立体のまま表示されるので、箱やカードの裏表のような表現ができます。",
+      "書くのは **3D 変換する子要素を持つ親要素** です。奥行きを付ける `perspective` は、さらにその外側（祖先の要素）に書きます。"
+    ],
+    "values": {
+      "label": "指定できる値",
+      "head": "値",
+      "rows": [
+        {
+          "key": "flat",
+          "desc": "初期値。子要素を平面として表示する"
+        },
+        {
+          "key": "preserve-3d",
+          "desc": "立体を表現できるようになる。子要素の 3D 変換を 3D 空間で保持したいときに使う"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "ホバーでカードを裏返す",
+        "desc": "表と裏の2枚を重ね、親に preserve-3d を指定して rotateY(180deg) で回転させます。backface-visibility: hidden で裏を向いた面を隠します。",
+        "html": "<div class=\"scene\">\n  <div class=\"card\">\n    <div class=\"side front\">表（マウスを乗せる）</div>\n    <div class=\"side back\">裏</div>\n  </div>\n</div>",
+        "css": ".scene {\n  perspective: 800px;\n  padding: 10px 30px;\n}\n.card {\n  position: relative;\n  width: 200px;\n  height: 90px;\n  transform-style: preserve-3d;\n  transition: transform .6s ease;\n}\n.scene:hover .card {\n  transform: rotateY(180deg);\n}\n.side {\n  position: absolute;\n  inset: 0;\n  display: grid;\n  place-items: center;\n  color: #fff;\n  font-size: 13px;\n  backface-visibility: hidden;\n}\n.front {\n  background: #b68235;\n}\n.back {\n  background: #7d5411;\n  transform: rotateY(180deg);\n}"
+      }
+    ],
+    "notes": [
+      "overflow: hidden や opacity（1 未満）を指定した要素では、preserve-3d が効かず flat として扱われます。",
+      "transform-style は継承しません。孫要素まで立体にしたいときは、間の要素にもそれぞれ指定します。"
+    ],
+    "related": [
+      "css-perspective",
+      "css-transform",
+      "css-transform-origin",
+      "css-transition"
+    ]
+  },
+  {
+    "id": "css-responsive",
+    "title": "レスポンシブコーディング",
+    "ja": "スマホ・タブレットに表示を最適化する",
+    "lead": "1つの HTML を、PC・タブレット・スマートフォンなど画面の幅に合わせて見やすく表示させるコーディングの方法です。今のサイト制作では必須の技術といわれています。",
+    "meta": [
+      {
+        "label": "目的",
+        "value": "どの端末でも見やすく表示する"
+      },
+      {
+        "label": "必要なもの",
+        "value": "viewport の meta タグ・@media"
+      },
+      {
+        "label": "覚える言葉",
+        "value": "ビューポート・ブレイクポイント・メディアクエリ"
+      }
+    ],
+    "code": {
+      "html": "<nav class=\"nav\">\n  <a href=\"#\">ホーム</a>\n  <a href=\"#\">サービス</a>\n  <a href=\"#\">お問い合わせ</a>\n</nav>",
+      "css": "/* スマホ向け（基本）：縦に並べる */\n.nav {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n}\n.nav a {\n  padding: 10px;\n  background: #b68235;\n  color: #fff;\n  text-align: center;\n  text-decoration: none;\n}\n/* ブレイクポイント：600px以上で横に並べる */\n@media (min-width: 600px) {\n  .nav {\n    flex-direction: row;\n  }\n  .nav a {\n    flex: 1;\n  }\n}"
+    },
+    "preview": {
+      "height": 150,
+      "note": "プレビューの幅が600px以上なら横並び、未満なら縦並びになります",
+      "fullDocument": false
+    },
+    "explain": [
+      "レスポンシブコーディングとは、**スマートフォンやタブレットに対して表示を最適化すること** です。",
+      "**サイト訪問者の約7割がスマホ** といわれており（総務省「情報通信白書」などを参照）、コーディングを行ううえで必須といわれている技術です。",
+      "また、**Google は検索アルゴリズムにおいて、スマホ向けのページを評価対象にすることを公表しています**（モバイルファーストインデックス）。スマホで見づらいページは、検索結果の順位にも影響します。",
+      "上の例では、スマホ向けのスタイル（縦並び）を基本に書き、画面幅が600px以上になったら `@media` で横並びに切り替えています。この「切り替える幅」がブレイクポイントです。"
+    ],
+    "values": {
+      "label": "覚えてほしい3つのキーワード",
+      "head": "キーワード",
+      "rows": [
+        {
+          "key": "ビューポート（viewport）",
+          "desc": "ブラウザウィンドウの表示領域のこと。meta タグで端末の画面幅に合わせる"
+        },
+        {
+          "key": "ブレイクポイント",
+          "desc": "CSS を切り替えるタイミング（画面幅）のこと"
+        },
+        {
+          "key": "メディアクエリ",
+          "desc": "@media で「画面幅が○px以上のとき」などの条件を書き、CSS を切り替える仕組み"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "viewport の meta タグを書く",
+        "desc": "レスポンシブコーディングでは、すべてのページの head に必ず書きます。この行がないと、スマホでメディアクエリが正しく動きません。",
+        "html": "<head>\n  <meta charset=\"UTF-8\">\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n  <title>トップページ</title>\n</head>"
+      }
+    ],
+    "notes": [
+      "案件の仕様によっては、レスポンシブにせず PC用ページとスマホ用ページを分けて制作するケースもあります。",
+      "対応するデバイスが増えるほど、レイアウトが複雑になるほど、対応に時間がかかります。デザインを受け取ったら、スマホでどう並ぶかを最初に確認しましょう。",
+      "実機がなくても、ブラウザの開発者ツール（デベロッパーツール）のデバイスモードで、スマホの画面幅を確認できます。"
+    ],
+    "related": [
+      "css-media",
+      "html-meta",
+      "css-clamp",
+      "css-container"
+    ],
+    "advanced": {
+      "title": "レスポンシブコーディングの特徴と3つのキーワード",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "メリットとデメリット"
+        },
+        {
+          "type": "table",
+          "head": [
+            "",
+            "内容"
+          ],
+          "rows": [
+            [
+              "メリット",
+              "**HTML ファイルひとつ** で PC・タブレット・スマホに対応できる"
+            ],
+            [
+              "メリット",
+              "**URL が変わらない** ため、シェアしやすい"
+            ],
+            [
+              "デメリット",
+              "対応するデバイス（タブレットやスマホ）が増えるほど、複雑なレイアウトになるほど、対応に時間がかかる可能性がある"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "案件の仕様によっては、**PC用ページ、スマホ用ページを分けて制作する** ケースもあります。"
+        },
+        {
+          "type": "h",
+          "text": "① ビューポート（viewport）"
+        },
+        {
+          "type": "p",
+          "text": "ビューポートとは、**ブラウザウィンドウの表示領域** のことです。PC ならブラウザの窓の中、スマホなら画面全体がビューポートになります。HTML の head に `<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">` を書いて、表示領域の幅を端末の画面幅に合わせます（詳しくは meta のページ）。"
+        },
+        {
+          "type": "h",
+          "text": "② ブレイクポイント"
+        },
+        {
+          "type": "p",
+          "text": "ブレイクポイントとは、**CSS を切り替えるタイミング（画面幅）** のことです。PC とスマホの表示を切り替える場合、画面幅が何 px になったときに切り替えるかを定義する必要があります。"
+        },
+        {
+          "type": "p",
+          "text": "ブレイクポイントを決めるときは、実際によく使われている画面の大きさを参考にします。下の表は日本の画面解像度のシェア（**2025年7月時点**・StatCounter 調べ）です。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "PC",
+            "タブレット",
+            "スマホ"
+          ],
+          "rows": [
+            [
+              "1920×1080（25.71%）",
+              "768×1024（19.4%）",
+              "390×844（17.03%）"
+            ],
+            [
+              "1536×864（8.38%）",
+              "820×1180（13.75%）",
+              "393×852（12.73%）"
+            ],
+            [
+              "2560×1440（6.49%）",
+              "810×1080（12.39%）",
+              "375×667（6.37%）"
+            ],
+            [
+              "1366×768（5.34%）",
+              "834×1194（8.11%）",
+              "375×812（5.83%）"
+            ],
+            [
+              "1280×720（3.61%）",
+              "744×1133（6.84%）",
+              "430×932（5.35%）"
+            ],
+            [
+              "1440×900（2.33%）",
+              "1024×1366（5.86%）",
+              "412×915（5.29%）"
+            ]
+          ]
+        },
+        {
+          "type": "table",
+          "head": [
+            "端末",
+            "よく使われている幅の目安"
+          ],
+          "rows": [
+            [
+              "PC",
+              "幅 **1280px〜1920px** が多くのシェアを占めている"
+            ],
+            [
+              "タブレット",
+              "**768px〜1024px**"
+            ],
+            [
+              "スマホ",
+              "**375px〜414px**"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "ただし PC では、ブラウザのサイズを縮めて Webサイトを見ている人もいます。必ずしも **「画面幅＝ブラウザの幅」とは限らない** ことを覚えておきましょう。"
+        },
+        {
+          "type": "callout",
+          "title": "ブレイクポイントの決め方",
+          "items": [
+            "制作会社や制作者によって定義は様々です。案件で決まっている場合はそれに従います。",
+            "画面サイズが大きいデバイスもどんどん発売されるため、**一定期間でブレイクポイントの見直しをしたほうがよい** です。",
+            "端末の種類にこだわりすぎず、レイアウトが崩れ始める幅を基準に決めるのも一つの方法です。"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "③ メディアクエリ"
+        },
+        {
+          "type": "p",
+          "text": "`@media (min-width: 600px) { … }` のように、画面幅などの条件を書いて、条件に合うときだけ CSS を適用する仕組みです。ブレイクポイントの幅は、このメディアクエリの条件に書きます（詳しくは @media のページ）。"
+        }
+      ]
+    }
+  },
+  {
     "id": "css-media",
     "title": null,
     "ja": "画面幅に応じた切り替え",
@@ -11345,8 +13289,11 @@
     },
     "explain": [
       "`@media` は、指定した条件を満たすときだけ、中に書いたCSSを適用する仕組みです。条件の部分を「メディアクエリ」と呼びます。",
+      "メディアクエリは、**画面の解像度（幅や高さ）・向き・印刷時など、様々な条件によってスタイルの適用範囲を決められる機能** です。例えば「スマホを縦にしているときは文字を赤に、横にすると青に」「画面の幅が768px以下になったときに要素Aを出す」といったことができます。",
+      "昔の CSS（CSS2）では、画面かプリンターかといった **媒体（メディアタイプ）** までしか判断できませんでしたが、CSS3 からは画面の幅などの **媒体の特性（メディア特性）** まで判断できるようになりました。",
       "上の例では、表示領域の幅が600px以上のときだけ3列に並べ、それより狭いときは縦に並べています。プレビューの幅や、スマートフォンでこのページを開いて確かめてみましょう。",
-      "スマートフォン向けのスタイルを基本に書き、`min-width` で大きな画面向けのスタイルを追加していく方法を「モバイルファースト」と呼びます。"
+      "スマートフォン向けのスタイルを基本に書き、`min-width` で大きな画面向けのスタイルを追加していく方法を「モバイルファースト」と呼びます。反対に、PC 向けのスタイルを基本に書き、`max-width` で小さな画面向けのスタイルを追加していく方法を「PCファースト」と呼びます。",
+      "CSS を切り替えるタイミング（画面幅）のことを **ブレイクポイント** と呼びます。PC とスマホの表示を切り替える場合、画面幅が何 px になったときに切り替えるかを定義する必要があります。上の例では 600px がブレイクポイントです。"
     ],
     "values": {
       "label": "よく使う条件",
@@ -11380,6 +13327,21 @@
     },
     "usages": [
       {
+        "title": "基本の書き方（メディアタイプ and メディア特性）",
+        "desc": "「@media メディアタイプ and (メディア特性) { 指定したいCSS }」の形で書きます。この例は、画面幅が768px以下になると .acthouse の文字を赤にします。",
+        "css": "/* @media デバイスの種類 and (メディア特性) { 指定したいCSS } */\n@media screen and (max-width: 768px) {\n  .acthouse {\n    color: #f00;\n  }\n}"
+      },
+      {
+        "title": "複数の条件をすべて満たすとき（and）",
+        "desc": "プリンター以外のデバイス、かつ768px以上の画面に対して適用したい場合です。",
+        "css": "@media screen and (min-width: 768px) {\n  /* 内容 */\n}"
+      },
+      {
+        "title": "どれか1つの条件に当てはまるとき（,）",
+        "desc": "横幅が768px以内、または縦長のデバイスに適用したい場合です。カンマで区切った条件のどれか1つに当てはまれば適用されます。",
+        "css": "@media (max-width: 768px), (orientation: portrait) {\n  .acthouse {\n    color: green;\n  }\n}"
+      },
+      {
         "title": "ダークモードに対応する",
         "desc": "OSの設定に合わせて配色を切り替えます。",
         "css": ":root {\n  --bg: #fff;\n  --text: #222;\n}\n@media (prefers-color-scheme: dark) {\n  :root {\n    --bg: #1a1918;\n    --text: #e4e0da;\n  }\n}"
@@ -11387,14 +13349,249 @@
     ],
     "notes": [
       "スマートフォンで正しく判定させるには、HTMLに <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> が必要です。",
-      "ブレークポイント（切り替える幅）は、端末の種類ではなく、レイアウトが崩れ始める幅を基準に決めます。"
+      "ブレークポイント（切り替える幅）は、端末の種類ではなく、レイアウトが崩れ始める幅を基準に決めます。",
+      "ブレイクポイントの定義は、制作会社や制作者によって様々です。画面サイズが大きいデバイスもどんどん発売されるため、一定期間でブレイクポイントの見直しをしたほうがよいです。",
+      "メディアクエリは HTML の link タグの media 属性にも書けます（詳しくは link のページ）。"
     ],
     "related": [
-      "css-container",
-      "css-clamp",
+      "css-responsive",
       "html-meta",
-      "css-grid-template-columns"
-    ]
+      "css-container",
+      "css-clamp"
+    ],
+    "advanced": {
+      "title": "メディアクエリの書き方とブレイクポイントの指定",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "デバイスの種類（メディアタイプ）"
+        },
+        {
+          "type": "p",
+          "text": "メディアタイプとは、**「どのメディアに CSS を適用させるか」** を指定するものです。以下の3種類があります。省略すると `all` と同じ扱いになります。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "メディアタイプ",
+            "対象"
+          ],
+          "rows": [
+            [
+              "all",
+              "すべてのデバイス"
+            ],
+            [
+              "print",
+              "プリンター（印刷時）"
+            ],
+            [
+              "screen",
+              "プリンター以外のデバイス（PC、スマホや iPad など）"
+            ]
+          ]
+        },
+        {
+          "type": "h",
+          "text": "メディア特性（min-width と max-width）"
+        },
+        {
+          "type": "p",
+          "text": "メディア特性とは、**画面の高さや幅を指定する条件** のことです。まずは次の2パターンを覚えておけば OK です。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "書き方",
+            "意味",
+            "使う場面"
+          ],
+          "rows": [
+            [
+              "(min-width: 768px)",
+              "**768px以上** と条件定義。ブレイクポイントは768pxとなり、768px以上のデバイスに適用される",
+              "**スマホを基準** として、大きいサイズのデバイスのメディアクエリを設定する場合（モバイルファースト）"
+            ],
+            [
+              "(max-width: 768px)",
+              "**768px以下** と条件定義。ブレイクポイントは768pxとなり、768px以下のデバイスに適用される",
+              "**PC サイトを基準** とする場合（PCファースト）"
+            ]
+          ]
+        },
+        {
+          "type": "example",
+          "title": "ブレイクポイント指定の例（モバイルファースト）",
+          "desc": "スマホ用の色を基本に書き、`min-width` で大きい画面用の色に上書きしていきます。767px以下では文字が赤、768px〜1023pxでは黄色、1024px以上では緑になります。",
+          "html": "<p class=\"acthouse\">ACT HOUSE</p>",
+          "css": ".acthouse {\n  color: red;\n}\n\n@media screen and (min-width: 768px) {\n  .acthouse {\n    color: yellow;\n  }\n}\n\n@media screen and (min-width: 1024px) {\n  .acthouse {\n    color: green;\n  }\n}",
+          "height": 70,
+          "points": [
+            {
+              "code": ".acthouse { color: red; }",
+              "text": "メディアクエリの外に書いたスタイルが基本です。どの幅でもまず赤になり、**767px以下** ではそのまま赤です。"
+            },
+            {
+              "code": "@media screen and (min-width: 768px)",
+              "text": "**768px以上** で黄色に上書きします。1024px以上では次の指定がさらに上書きするので、黄色になるのは **768px〜1023px** です。"
+            },
+            {
+              "code": "@media screen and (min-width: 1024px)",
+              "text": "**1024px以上** で緑に上書きします。min-width は小さい値から順に書くのがポイントです。"
+            }
+          ]
+        },
+        {
+          "type": "example",
+          "title": "ブレイクポイント指定の例（PCファースト）",
+          "desc": "PC 用の色を基本に書き、`max-width` で小さい画面用の色に上書きしていきます。1025px以上では文字が赤、769px〜1024pxでは緑、768px以下では黄色になります。",
+          "html": "<p class=\"acthouse\">ACT HOUSE</p>",
+          "css": ".acthouse {\n  color: red;\n}\n\n@media screen and (max-width: 1024px) {\n  .acthouse {\n    color: green;\n  }\n}\n\n@media screen and (max-width: 768px) {\n  .acthouse {\n    color: yellow;\n  }\n}",
+          "height": 70,
+          "points": [
+            {
+              "code": ".acthouse { color: red; }",
+              "text": "基本のスタイルです。**1025px以上** では赤のままです。"
+            },
+            {
+              "code": "@media screen and (max-width: 1024px)",
+              "text": "**1024px以下** で緑に上書きします。768px以下では次の指定がさらに上書きするので、緑になるのは **769px〜1024px** です。"
+            },
+            {
+              "code": "@media screen and (max-width: 768px)",
+              "text": "**768px以下** で黄色に上書きします。max-width は大きい値から順に書くのがポイントです。"
+            }
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "ブレイクポイントとメディアクエリの違い",
+          "items": [
+            "ブレイクポイントは **「境界線」**（768px・1024px などの切り替わる幅）",
+            "メディアクエリは **「範囲」**（768px以上・768px以下など、CSS を当てる幅の範囲）"
+          ]
+        },
+        {
+          "type": "h",
+          "text": "複数条件"
+        },
+        {
+          "type": "p",
+          "text": "複数の条件をすべて満たすときに適用したい場合は **「and」** を使い、いずれかの条件に当てはまる場合は **「,」（カンマ）** で区切ります。その他、**「not」** や **「only」** でも条件を指定できます。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "書き方",
+            "意味",
+            "例"
+          ],
+          "rows": [
+            [
+              "and",
+              "前後の条件を **すべて** 満たすとき",
+              "`screen and (min-width: 768px)`"
+            ],
+            [
+              ",",
+              "区切った条件の **どれか1つ** に当てはまるとき",
+              "`(max-width: 768px), (orientation: portrait)`"
+            ],
+            [
+              "not",
+              "条件全体を **否定** する（当てはまらないとき）",
+              "`not print`（印刷以外）"
+            ],
+            [
+              "only",
+              "古いブラウザにメディアクエリを無視させるための書き方",
+              "`only screen and (min-width: 768px)`"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "`only` は、メディアクエリに対応していない古いブラウザ向けの書き方です。今のブラウザでは書いても書かなくても同じ動きなので、既存のコードで見かけたら意味がわかれば十分です。"
+        },
+        {
+          "type": "h",
+          "text": "その他のメディア特性"
+        },
+        {
+          "type": "p",
+          "text": "幅（width）以外にも、メディア特性には次のような種類があります。`min-` / `max-` を付けて「以上」「以下」を指定できるものもあります（`min-height` など）。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "メディア特性",
+            "意味"
+          ],
+          "rows": [
+            [
+              "width",
+              "ブラウザの表示領域の幅"
+            ],
+            [
+              "height",
+              "ブラウザの表示領域の高さ"
+            ],
+            [
+              "device-width",
+              "デバイス画面の幅"
+            ],
+            [
+              "device-height",
+              "デバイス画面の高さ"
+            ],
+            [
+              "orientation",
+              "ブラウザの表示領域の向き（portrait＝縦長／landscape＝横長）"
+            ],
+            [
+              "aspect-ratio",
+              "ブラウザの表示領域のアスペクト比"
+            ],
+            [
+              "device-aspect-ratio",
+              "デバイスの画面のアスペクト比"
+            ],
+            [
+              "color",
+              "デバイスのビット数（1色あたり）"
+            ],
+            [
+              "color-index",
+              "デバイスのカラールックアップテーブルの項目数"
+            ],
+            [
+              "monochrome",
+              "モノクロデバイスのビット数"
+            ],
+            [
+              "resolution",
+              "デバイスの解像度"
+            ],
+            [
+              "scan",
+              "テレビのスキャン方式"
+            ],
+            [
+              "grid",
+              "グリッドかビットマップかを参照"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "device- で始まる特性は使わない",
+          "items": [
+            "`device-width`・`device-height`・`device-aspect-ratio` は、今は **非推奨** です。ブラウザの表示領域ではなく端末の画面そのものを見るため、ブラウザを縮めたときなどに思った通りに切り替わりません。",
+            "画面幅で切り替えるときは `width`（`min-width`・`max-width`）を使います。"
+          ]
+        }
+      ]
+    }
   },
   {
     "id": "css-clamp",
