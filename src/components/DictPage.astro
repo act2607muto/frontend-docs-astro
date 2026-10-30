@@ -35,14 +35,29 @@ const initial = CONFIG.dictInitialOpen[type];
     <div class="kicker">{TEXT.kicker}</div>
     <h1 class="page-title">{TEXT.title}</h1>
     <p class="page-lead">{TEXT.lead}</p>
+    <div class="dict__filter" role="search">
+      <Icon name="search" class="dict__filter-icon" />
+      <input
+        class="input"
+        type="search"
+        placeholder={`${TEXT.title}の中を絞り込む（名前・説明）`}
+        aria-label={`${TEXT.title}の中を絞り込む`}
+        aria-controls="dict-cats"
+        autocomplete="off"
+        data-dict-filter
+      />
+      <button type="button" class="dict__filter-clear btn btn-icon" aria-label="絞り込みを解除" data-dict-filter-clear hidden>
+        <Icon name="x" />
+      </button>
+    </div>
     <div class="dict__toolbar">
-      <span class="dict__count">{cats[type].length}カテゴリ ・ {order[type].length}項目</span>
+      <span class="dict__count" aria-live="polite" data-dict-count data-default={`${cats[type].length}カテゴリ ・ ${order[type].length}項目`}>{cats[type].length}カテゴリ ・ {order[type].length}項目</span>
       <div class="dict__tools">
         <button type="button" class="btn btn-ghost" data-acc-all="open">すべて開く</button>
         <button type="button" class="btn btn-ghost" data-acc-all="close">すべて閉じる</button>
       </div>
     </div>
-    <div class="dict__cats" data-accordion data-single={CONFIG.accordionSingle ? '' : undefined}>
+    <div class="dict__cats" id="dict-cats" data-accordion data-single={CONFIG.accordionSingle ? '' : undefined}>
       {cats[type].map((c, k) => {
         const open = initial.includes(c.id);
         const pid = `cat-${type}-${c.id}`;
@@ -58,7 +73,7 @@ const initial = CONFIG.dictInitialOpen[type];
             </h2>
             <ul class="dict-cat__list" id={pid} hidden={!open}>
               {c.items.map((it) => (
-                <li>
+                <li data-filter-text={[it.name, it.slug, it.summary, ...it.keywords].join(' ')}>
                   <a class="dict-row" href={url.item(it)}>
                     <code class="dict-row__code">{it.name}</code>
                     <span class="dict-row__desc">{it.summary}</span>
@@ -71,14 +86,17 @@ const initial = CONFIG.dictInitialOpen[type];
         );
       })}
     </div>
+    <p class="dict__empty" data-dict-empty hidden>一致する項目はありません。別のことばで試してみてください。</p>
   </main>
   <Footer />
 </BaseLayout>
 
 <script>
   import { initAccordions, openAll, closeAll } from '../scripts/accordion';
+  import { initDictFilter } from '../scripts/dict-filter';
   initAccordions();
   const cats = document.querySelector('.dict__cats')!;
   document.querySelector('[data-acc-all="open"]')?.addEventListener('click', () => openAll(cats));
   document.querySelector('[data-acc-all="close"]')?.addEventListener('click', () => closeAll(cats));
+  initDictFilter(cats);
 </script>

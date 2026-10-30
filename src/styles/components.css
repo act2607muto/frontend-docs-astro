@@ -252,9 +252,15 @@
 .page { max-width: 880px; margin: 0 auto; padding: 56px 40px 96px; }
 @media (max-width: 759px) { .page { padding: 36px 18px 72px; } }
 
+.dict__filter { position: relative; margin-top: 32px; }
+.dict__filter-icon { position: absolute; left: 14px; top: 13px; width: 18px; height: 18px; color: var(--muted); pointer-events: none; }
+.dict__filter .input { min-height: 44px; padding-left: 42px; padding-right: 44px; font-size: 15px; }
+.dict__filter-clear { position: absolute; right: 4px; top: 4px; color: var(--muted); }
+.dict__empty { padding: 28px 0; font-size: 14px; color: var(--muted); text-align: center; }
+
 .dict__toolbar {
   display: flex; justify-content: space-between; align-items: center; gap: 12px;
-  margin-top: 40px; padding-bottom: 8px; border-bottom: 1px solid var(--color-text);
+  margin-top: 20px; padding-bottom: 8px; border-bottom: 1px solid var(--color-text);
 }
 .dict__count { font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .dict__tools { display: flex; gap: 2px; }
