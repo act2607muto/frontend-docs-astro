@@ -47,9 +47,9 @@ const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ESC[c]!);
 
 let uid = 0;
 
-/** 検索結果から項目を開いたときに、検索語を記録する（Vercel の API。ページ移動を妨げないよう sendBeacon で送る） */
-function logSearch(logUrl: string, query: string) {
-  const keyword = query.trim();
+/** 検索結果から項目を開いたときに、選んだ項目の名前を記録する（Vercel の API。ページ移動を妨げないよう sendBeacon で送る） */
+function logSelect(logUrl: string, item: SearchItem | undefined) {
+  const keyword = item?.name;
   if (!keyword || !logUrl || !navigator.sendBeacon) return;
   try {
     navigator.sendBeacon(logUrl, new Blob([JSON.stringify({ keyword })], { type: 'application/json' }));
@@ -114,13 +114,16 @@ function setup(el: HTMLElement) {
     if (e.isComposing) return; // 日本語変換中のEnterは無視
     if (e.key === 'ArrowDown') { e.preventDefault(); if (drop.hidden) render(); else move(1); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
-    else if (e.key === 'Enter' && !drop.hidden && results[active]) { e.preventDefault(); logSearch(logUrl, input.value); location.href = results[active]!.url; }
+    else if (e.key === 'Enter' && !drop.hidden && results[active]) { e.preventDefault(); logSelect(logUrl, results[active]); location.href = results[active]!.url; }
     else if (e.key === 'Escape') close();
   });
   // クリック時に入力欄のフォーカスを外さない（Safari ではリンクにフォーカスが移らないため）
   drop.addEventListener('mousedown', (e) => e.preventDefault());
-  // 候補をクリックして項目を開いたときも検索語を記録する
-  drop.addEventListener('click', (e) => { if ((e.target as Element).closest('.search__result')) logSearch(logUrl, input.value); });
+  // 候補をクリックして項目を開いたときも、選んだ項目を記録する
+  drop.addEventListener('click', (e) => {
+    const a = (e.target as Element).closest('.search__result');
+    if (a) logSelect(logUrl, results[[...drop.querySelectorAll('.search__result')].indexOf(a)]);
+  });
   el.addEventListener('focusout', (e) => { if (!el.contains(e.relatedTarget as Node | null)) close(); });
 }
 

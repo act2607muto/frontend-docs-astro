@@ -1,7 +1,6 @@
 // Vercel の API から Supabase（REST API）を呼び出すための共通処理
 // 環境変数 SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY は Vercel のプロジェクト設定で登録する（ブラウザには出さない）
 import items from '../../src/data/items.json' with { type: 'json' };
-import categories from '../../src/data/categories.json' with { type: 'json' };
 
 export const isConfigured = () => !!(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY);
 
@@ -20,11 +19,8 @@ export function normalizeKeyword(raw) {
   return s.length >= 1 && s.length <= 40 ? s : '';
 }
 
-// 辞典のどれかの項目にヒットする語句だけを記録する（でたらめな語句で「よく調べるキーワード」が荒らされないように）
-const catName = {};
-for (const [type, list] of Object.entries(categories)) for (const c of list) catName[`${type}:${c.id}`] = c.name;
-const haystacks = items.map((it) =>
-  [it.name, it.slug, it.summary, catName[`${it.type}:${it.category}`] || '', ...it.keywords].join('\n').toLowerCase(),
-);
+// 辞典の項目名だけを記録・表示する（検索結果から選ばれた項目を数える。でたらめな語句で「よく調べるキーワード」が荒らされないように）
+// キーは normalizeKeyword でそろえた名前、値は表示用の元の名前
+const itemNames = new Map(items.map((it) => [normalizeKeyword(it.name), it.name]));
 
-export const matchesDictionary = (keyword) => haystacks.some((h) => h.includes(keyword));
+export const itemName = (keyword) => itemNames.get(keyword);

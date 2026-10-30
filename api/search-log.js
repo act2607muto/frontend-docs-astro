@@ -1,6 +1,6 @@
-// POST /api/search-log  { "keyword": "flex" }
-// 検索結果から項目を開いたときの検索語を記録する
-import { isConfigured, matchesDictionary, normalizeKeyword, supabase } from './_lib/supabase.js';
+// POST /api/search-log  { "keyword": "display" }
+// 検索結果から項目を開いたときに、選ばれた項目の名前を記録する
+import { isConfigured, itemName, normalizeKeyword, supabase } from './_lib/supabase.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     try { body = JSON.parse(body); } catch { body = {}; }
   }
   const keyword = normalizeKeyword(body?.keyword);
-  if (!keyword || !matchesDictionary(keyword)) return res.status(400).json({ error: 'Invalid keyword' });
+  if (!keyword || !itemName(keyword)) return res.status(400).json({ error: 'Invalid keyword' });
 
   const r = await supabase('search_logs', {
     method: 'POST',
