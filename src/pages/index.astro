@@ -20,7 +20,10 @@ const entries = [
 ---
 <BaseLayout title={SITE}>
   <div class="top">
-    <div class="top__bar"><ThemeToggle label /></div>
+    <div class="top__bar">
+      <a class="btn btn-secondary" href={url.favorites()}><Icon name="star" />お気に入り</a>
+      <ThemeToggle label />
+    </div>
     <main class="top__main">
       <div class="top__kicker">学ぶ・調べる・理解する</div>
       <h1 class="top__title">{SITE}</h1>
