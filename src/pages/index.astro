@@ -37,6 +37,32 @@ const entries = [
           {CONFIG.quickWords.slice(0, QUICK_COUNT).map((w) => <button type="button" class="btn btn-ghost" data-word={w}>{w}</button>)}
         </span>
       </div>
+      <script is:inline>
+        // 描画前に実行し、既定の語句が一瞬見えてから入れ替わる「ちらつき」を防ぐ
+        // - 前回取得したキーワードが保存されていれば、それをすぐに表示する
+        // - 保存がなければ（初回訪問など）、取得が終わるまで語句を隠しておく（下のスクリプトで表示）
+        (function () {
+          var quick = document.currentScript.previousElementSibling;
+          var words;
+          try { words = JSON.parse(localStorage.getItem('hcg-popular-keywords') || 'null'); } catch (e) {}
+          if (Array.isArray(words) && words.length) {
+            var el = quick.querySelector('.top__quick-words');
+            el.textContent = '';
+            words.forEach(function (w) {
+              if (typeof w !== 'string') return;
+              var b = document.createElement('button');
+              b.type = 'button';
+              b.className = 'btn btn-ghost';
+              b.dataset.word = w;
+              b.textContent = w;
+              el.appendChild(b);
+            });
+            quick.dataset.cached = '';
+          } else {
+            quick.classList.add('is-loading');
+          }
+        })();
+      </script>
       <nav class="top__entries" aria-label="入口">
         {entries.map((e) => (
           <a class="entry" href={e.href}>
@@ -87,27 +113,44 @@ const entries = [
     if (b) setQuery(box, b.dataset.word ?? '');
   });
 
+  const CACHE_KEY = 'hcg-popular-keywords';
+  const render = (words: string[]) => {
+    wordsEl.replaceChildren(
+      ...words.map((w) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'btn btn-ghost';
+        b.dataset.word = w;
+        b.textContent = w;
+        return b;
+      }),
+    );
+  };
+  const reveal = () => quick.classList.remove('is-loading');
+
   // 実際の検索履歴（Vercel の API → Supabase）からよく調べられている語句を取得し、足りない分は既定の語句で補う
   // API がない環境（GitHub Pages など）では取得に失敗するので、既定の語句のままにする
+  // 取得結果はブラウザに保存し、次回は描画前にそれを表示する（上の is:inline スクリプト）
+  // すでに保存済みの語句を表示している場合は、表示中の語句を入れ替えない（ちらつき防止。次回の表示から反映）
   (async () => {
+    const cached = 'cached' in quick.dataset;
+    const controller = new AbortController();
+    // 取得に時間がかかるときは、隠したままにせず既定の語句を出す
+    const timer = setTimeout(() => { controller.abort(); reveal(); }, 1500);
     try {
       const count = Number(quick.dataset.count) || 10;
-      const r = await fetch(`${quick.dataset.popularUrl}?limit=${count}`);
+      const r = await fetch(`${quick.dataset.popularUrl}?limit=${count}`, { signal: controller.signal });
       if (!r.ok) return;
       const { keywords } = (await r.json()) as { keywords?: unknown };
       const popular = Array.isArray(keywords) ? keywords.filter((k): k is string => typeof k === 'string') : [];
       if (!popular.length) return;
       const defaults = JSON.parse(quick.dataset.defaults ?? '[]') as string[];
-      wordsEl.replaceChildren(
-        ...[...new Set([...popular, ...defaults])].slice(0, count).map((w) => {
-          const b = document.createElement('button');
-          b.type = 'button';
-          b.className = 'btn btn-ghost';
-          b.dataset.word = w;
-          b.textContent = w;
-          return b;
-        }),
-      );
-    } catch { /* 取得できなくても既定の語句のまま */ }
+      const words = [...new Set([...popular, ...defaults])].slice(0, count);
+      try { localStorage.setItem(CACHE_KEY, JSON.stringify(words)); } catch { /* 保存できない環境では無視 */ }
+      if (!cached && quick.classList.contains('is-loading')) render(words);
+    } catch { /* 取得できなくても既定の語句のまま */ } finally {
+      clearTimeout(timer);
+      reveal();
+    }
   })();
 </script>
