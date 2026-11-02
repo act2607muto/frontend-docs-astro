@@ -765,6 +765,8 @@
 .favs__empty p { margin: 12px 0 20px; line-height: 1.9; color: var(--muted); }
 .favs__links { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
 .fav-mark { display: inline-flex; vertical-align: -2px; margin-left: 6px; color: var(--color-accent); }
+.side-item .fav-mark { flex: none; margin-left: -6px; overflow: visible; color: var(--color-accent); align-self: center; }
+.side-item .fav-mark .icon { width: 12px; height: 12px; fill: currentColor; }
 .fav-mark[hidden] { display: none; }
 .dict-row .fav-mark .icon { display: block; width: 14px; height: 14px; color: inherit; fill: currentColor; }
 .favs__item .tag { min-width: 46px; text-align: center; }

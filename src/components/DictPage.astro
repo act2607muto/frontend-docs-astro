@@ -75,8 +75,8 @@ const initial = CONFIG.dictInitialOpen[type];
               {c.items.map((it) => (
                 <li data-filter-text={[it.name, it.slug, it.summary, ...it.keywords].join(' ')}>
                   <a class="dict-row" href={url.item(it)}>
-                    <code class="dict-row__code">{it.name}</code>
-                    <span class="dict-row__desc">{it.summary}<span class="fav-mark" role="img" aria-label="お気に入り登録済み" title="お気に入り登録済み" data-fav-mark={it.id} hidden><Icon name="star" /></span></span>
+                    <span class="dict-row__code"><code>{it.name}</code><span class="fav-mark" role="img" aria-label="お気に入り登録済み" title="お気に入り登録済み" data-fav-mark={it.id} hidden><Icon name="star" /></span></span>
+                    <span class="dict-row__desc">{it.summary}</span>
                     <Icon name="chevron-right" />
                   </a>
                 </li>
