@@ -14347,7 +14347,8 @@
       "ブラウザの中は、ユーザーインターフェース・ブラウザエンジン・レンダリングエンジン・**JavaScriptエンジン**・ネットワーク・データストレージなど、役割ごとの部品に分かれています。このうち **JavaScript を解析して実行する** のが JavaScriptエンジンです。",
       "JavaScriptエンジンはブラウザごとに違います。シェアが高いのは Chrome と Edge が使っている **V8エンジン** です。エンジンが違うと、同じコードでも **挙動やエラーが若干異なる** ことがあるので、複数のブラウザで確認します。",
       "JavaScript で使える機能は、言語そのものの機能（**ECMAScript**）と、ブラウザが用意している機能（**WebAPI**）に分けられます。`const` や `if`、配列などは ECMAScript、`document.querySelector()` のようにページを操作する機能は WebAPI です。",
-      "**API（アプリケーション・プログラミング・インターフェース）** とは、プログラムから OS やブラウザを操作するための仕組みのことです。WebAPI を使えば、JavaScript でブラウザ画面の表示を変更したり、位置情報を取得したりできます。"
+      "**API（アプリケーション・プログラミング・インターフェース）** とは、プログラムから OS やブラウザを操作するための仕組みのことです。WebAPI を使えば、JavaScript でブラウザ画面の表示を変更したり、位置情報を取得したりできます。",
+      "JavaScript が実行される前に、JavaScriptエンジンは **window オブジェクト** と **this** を用意します。WebAPI は window オブジェクトの中にまとめられていて、エンジンはこれらを準備してから JS のコード（ECMAScript）を実行します。詳しくは「window / this」のページで説明しています。"
     ],
     "values": {
       "label": "主な JavaScriptエンジン",
@@ -14471,6 +14472,7 @@
     },
     "related": [
       "js-javascript",
+      "js-window-this",
       "js-query-selector",
       "js-text-content",
       "js-async-await"
@@ -14539,7 +14541,7 @@
       }
     ],
     "notes": [
-      "宣言する前に変数を使うとエラーになります。",
+      "宣言する前に変数を使うとエラーになります。宣言はコードの実行前にメモリに配置されます（ホイスティング）が、let・const は初期値が設定されないためです。var は宣言前に使うとエラーにならず undefined になります。",
       "変数名には、何が入っているか分かる名前を付けます（例：count、userName）。",
       "同じ範囲で同じ名前の変数を2回宣言することはできません。"
     ],
@@ -14547,7 +14549,9 @@
       "js-javascript",
       "js-if",
       "js-template-literal",
-      "js-object"
+      "js-object",
+      "js-hoisting",
+      "js-scope"
     ]
   },
   {
@@ -14743,6 +14747,7 @@
       "関数は **処理のかたまり** のことです。一連の手続き（処理）を実行する文をまとめたもので、`function` というキーワードを見かけたら、それは関数だと思って大丈夫です。関数を定義することを **関数宣言** といいます。",
       "`function 名前(引数) { 処理 }` で関数を宣言し、`名前(値)` で呼び出します。同じ処理を何度も書かずに済み、修正も1か所で済みます。",
       "関数は宣言しただけでは動きません。**`関数名()` と書いて実行するまで、中の処理は実行されない** ことを覚えておきましょう。",
+      "`function` で宣言した関数は、ホイスティング（巻き上げ）によってコードの実行前にメモリに配置されるため、**宣言より前の行で呼び出しても動きます**。また、関数の中からは、関数の外で宣言された変数（**外部変数**）も使えます。",
       "`( )` の中の **引数（ひきすう）** は、関数に渡す値です。`return` で関数の呼び出し元に返す値を **戻り値（もどりち）** といい、**返り値** と呼ぶこともあります。`return` に達するとそこで関数は終了します。",
       "引数には既定値を付けられます。`function greet(name = 'ゲスト')` のように書くと、値が渡されなかったときに既定値が使われます。"
     ],
@@ -14797,7 +14802,9 @@
       "js-arrow-function",
       "js-add-event-listener",
       "js-let-const",
-      "js-map"
+      "js-map",
+      "js-hoisting",
+      "js-execution-context"
     ]
   },
   {
@@ -14871,7 +14878,501 @@
       "js-function",
       "js-map",
       "js-filter",
-      "js-add-event-listener"
+      "js-add-event-listener",
+      "js-window-this"
+    ]
+  },
+  {
+    "id": "js-window-this",
+    "title": "window / this",
+    "ja": "実行前に用意されるグローバルオブジェクトと this",
+    "lead": "JavaScript を実行する前に、JavaScriptエンジンは「window オブジェクト」と「this」というキーワードを用意します。window はどこからでも使えるオブジェクト、this は場面によって指す相手が変わるキーワードです。",
+    "meta": [
+      {
+        "label": "用意するもの",
+        "value": "JavaScriptエンジン（実行前）"
+      },
+      {
+        "label": "window",
+        "value": "グローバルオブジェクト"
+      },
+      {
+        "label": "this",
+        "value": "コンテキストによって値が変わる"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "// 関数の外（グローバル）の this は window を指す\nconsole.log(this === window); // true\n\n// window. は省略できる（console も document も window の中にある）\nwindow.console.log('window. を付けても同じ');\nconsole.log(window.document === document); // true\n\n// オブジェクトのメソッドの中の this は、そのオブジェクトを指す\nconst acthouse = {\n  place: 'cebu',\n  show: function () {\n    console.log(this.place);\n  },\n};\nacthouse.show(); // cebu"
+    },
+    "preview": {
+      "height": 120,
+      "note": "同じ this でも、書いた場所によって指すものが変わります",
+      "fullDocument": false
+    },
+    "explain": [
+      "ブラウザで JavaScript が実行されるとき、JavaScriptエンジンの中には **JS のコード（ECMAScript）** のほかに、**window オブジェクト** と **this** が用意されます。どちらも、私たちが書いたコードが動き出す **前に** エンジンが準備してくれるものです。",
+      "**window オブジェクト（グローバルオブジェクト）** は、JavaScript の実行前に JavaScriptエンジンによって生成され、**スクリプトのどこからでもアクセスできるオブジェクト** です。`document` や `console`、`setTimeout()` などの **WebAPI は window オブジェクトの中にまとめられています**。`window.document` の `window.` は省略できるので、ふだんは `document` とだけ書いています。",
+      "**this** も window オブジェクトと同じく JS の実行前に用意されるキーワードです。Chrome のコンソールに `this` と入力すると `Window {…}` が表示されます。つまり this は **オブジェクトへの参照を保持している** ということです。",
+      "this の値は **「コンテキスト（実行される状況）」によって取得できる値が変わります**。関数の外では window、オブジェクトのメソッドの中ではそのオブジェクトを指します。どんな状況があるかは「実行コンテキスト」のページで説明しています。"
+    ],
+    "values": {
+      "label": "this が指すもの",
+      "head": "書いた場所",
+      "rows": [
+        {
+          "key": "関数の外（グローバル）",
+          "desc": "window オブジェクト"
+        },
+        {
+          "key": "普通の関数 func() の中",
+          "desc": "window（strict モードや type=\"module\" では undefined）"
+        },
+        {
+          "key": "メソッド obj.method() の中",
+          "desc": "そのオブジェクト（obj）"
+        },
+        {
+          "key": "addEventListener の function の中",
+          "desc": "イベントが登録された要素"
+        },
+        {
+          "key": "アロー関数の中",
+          "desc": "外側の this をそのまま使う"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "コンソールで this と window を確かめる",
+        "desc": "Chrome の開発者ツールを開き、Console に `this` と入力して Enter を押すと `Window {window: Window, self: Window, document: document, …}` と表示されます。▶ を開くと、`document` や `alert` など window の中身を一覧で見られます。",
+        "js": "this;          // Window {…}\nwindow;        // Window {…}（同じもの）\nthis === window; // true"
+      },
+      {
+        "title": "イベントの中の this",
+        "desc": "`addEventListener()` に `function` で渡した関数の中では、this はクリックされたボタンなど、イベントを登録した要素を指します。",
+        "html": "<button type=\"button\" id=\"btn\">クリック</button>",
+        "js": "document.querySelector('#btn').addEventListener('click', function () {\n  this.textContent = 'クリックされました';\n});"
+      }
+    ],
+    "notes": [
+      "アロー関数の中の this は、外側の this をそのまま使います。メソッドやイベントで this を使いたいときは `function` で書きます。",
+      "this が何を指しているか分からなくなったら、`console.log(this)` で確かめます。",
+      "window はブラウザだけにあるオブジェクトです。Node.js など、ブラウザ以外の環境のグローバルオブジェクトは別の名前（global など）で、どこでも使える名前として `globalThis` もあります。"
+    ],
+    "related": [
+      "js-runtime",
+      "js-execution-context",
+      "js-object",
+      "js-arrow-function"
+    ]
+  },
+  {
+    "id": "js-execution-context",
+    "title": "実行コンテキスト",
+    "ja": "コードが実行されるときの状況",
+    "lead": "コードを実行する際の状況のことを「実行コンテキスト」といいます。スクリプトの直下で動いているのか、関数の中で動いているのかによって、使えるものや this の値が変わります。",
+    "meta": [
+      {
+        "label": "コンテキストの意味",
+        "value": "背景・文脈・状況"
+      },
+      {
+        "label": "主な種類",
+        "value": "グローバル・関数（eval は非推奨）"
+      },
+      {
+        "label": "作られるタイミング",
+        "value": "スクリプトの開始時・関数を呼び出すたび"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "let acthouse = 'セブ島'; // 関数の外で宣言＝関数から見ると外部変数\n\nfunction philippines() {\n  // ここは関数コンテキスト\n  console.log('留学');\n  console.log(acthouse);  // 外部変数が使える\n  console.log(arguments); // 渡された実引数がすべて入っている\n}\n\n// ここはグローバルコンテキスト\nconsole.log(acthouse);\nphilippines('英語', 'プログラミング');"
+    },
+    "preview": {
+      "height": 120,
+      "note": "1〜3行目と最後の2行はグローバルコンテキスト、関数の { } の中は関数コンテキストで実行されます",
+      "fullDocument": false
+    },
+    "explain": [
+      "**コンテキスト** は「背景」や「文脈」、「状況」という意味です。**実行コンテキスト** は、**コードを実行する際の状況** のことです。JavaScriptエンジンは、コードを実行するたびに「今どういう状況で動いているか」をまとめた実行コンテキストを作り、その中でコードを実行します。",
+      "実行コンテキストには **グローバルコンテキスト**・**関数コンテキスト**・**evalコンテキスト** の3種類があります。eval は非推奨なので、ふだん意識するのはグローバルと関数の2つです。",
+      "**グローバルコンテキスト** は、**スクリプトファイルの直下に書かれているコードが実行される状態** のことです。ここでは、実行中のコンテキスト内の **変数・関数**、**window オブジェクト**、**this** が使えます。",
+      "**関数コンテキスト** は、**関数の中に書かれているコードが実行される状態** のことで、関数を呼び出すたびに作られます。ここでは、コンテキスト内の **変数・関数** に加えて **arguments**・**super**・**this**・**外部変数** が使えます。",
+      "**外部変数** とは、**関数の外で宣言された変数** のことです。サンプルの変数 `acthouse` がそれにあたり、関数 `philippines()` の中からも使えます。",
+      "**this や arguments は、実行される状態によって取り得る値が変わります**。同じ関数でも、どこから・どうやって呼び出されたかで中身が変わる、ということを覚えておきましょう。"
+    ],
+    "values": {
+      "label": "コンテキストごとに使えるもの",
+      "head": "種類",
+      "rows": [
+        {
+          "key": "グローバルコンテキスト",
+          "desc": "変数・関数、window オブジェクト、this"
+        },
+        {
+          "key": "関数コンテキスト",
+          "desc": "変数・関数、arguments、super、this、外部変数"
+        },
+        {
+          "key": "evalコンテキスト",
+          "desc": "eval() に渡した文字列を実行する状態（非推奨）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "this は呼び出し方で変わる",
+        "desc": "同じ関数でも、そのまま呼び出すと this は window、オブジェクトのメソッドとして呼び出すとそのオブジェクトになります。",
+        "js": "function whoAmI() {\n  console.log(this === window ? 'window' : this.name);\n}\n\nconst acthouse = { name: 'ACT HOUSE', whoAmI: whoAmI };\n\nwhoAmI();          // window\nacthouse.whoAmI(); // ACT HOUSE"
+      },
+      {
+        "title": "arguments で渡された値を全部受け取る",
+        "desc": "`arguments` には、関数に渡された実引数がすべて、配列のような形で入っています。仮引数を書いていなくても受け取れます。ES6 以降は `...args`（残余引数）で受け取る書き方がよく使われます。",
+        "js": "function sum() {\n  let total = 0;\n  for (let i = 0; i < arguments.length; i++) {\n    total += arguments[i];\n  }\n  return total;\n}\nconsole.log(sum(1, 2, 3)); // 6\n\n// ES6 以降の書き方\nconst sum2 = (...args) => args.reduce((a, b) => a + b, 0);\nconsole.log(sum2(1, 2, 3)); // 6"
+      }
+    ],
+    "notes": [
+      "アロー関数には自分の arguments と this がありません（外側のものを使います）。",
+      "super は、クラスの継承で親クラスのメソッドやコンストラクタを呼び出すときに使うキーワードです。最初は名前だけ覚えておけば大丈夫です。",
+      "eval() は文字列をコードとして実行する関数です。外から入ってきた文字列を実行してしまう危険があり、処理も遅くなるため使いません。"
+    ],
+    "advanced": {
+      "title": "実行コンテキストと、ほかのしくみのつながり",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "実行コンテキストが分かると、JavaScript の動きを説明するほかの言葉もつながって見えてきます。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "言葉",
+            "実行コンテキストとの関係"
+          ],
+          "rows": [
+            [
+              "**コールスタック**",
+              "作られた実行コンテキストを積み重ねて、どの関数を実行中かを管理する"
+            ],
+            [
+              "**ホイスティング**",
+              "実行コンテキストが作られるたびに、その中の変数や関数の宣言がメモリに配置される"
+            ],
+            [
+              "**スコープ**",
+              "どのコンテキストのどの位置から、変数や関数にアクセスできるか"
+            ],
+            [
+              "**this**",
+              "実行コンテキストが作られるときに、何を指すかが決まる"
+            ]
+          ]
+        }
+      ]
+    },
+    "related": [
+      "js-window-this",
+      "js-call-stack",
+      "js-hoisting",
+      "js-scope"
+    ]
+  },
+  {
+    "id": "js-call-stack",
+    "title": "コールスタック",
+    "ja": "関数の呼び出し順を管理する仕組み",
+    "lead": "どの関数が実行されていて、その関数の中でどの関数が呼び出されたかを記録して、関数の呼び出し順を管理する仕組みです。後から実行されたものが最初に処理されます（LIFO）。",
+    "meta": [
+      {
+        "label": "役割",
+        "value": "関数の呼び出し順を管理する"
+      },
+      {
+        "label": "順番",
+        "value": "LIFO（後入れ先出し）"
+      },
+      {
+        "label": "確認する場所",
+        "value": "検証ツールの Sources → Call Stack"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "function a() {\n  console.log('関数a開始');\n  b();\n  console.log('関数a終了');\n}\n\nfunction b() {\n  console.log('関数b開始');\n  c();\n  console.log('関数b終了');\n}\n\nfunction c() {\n  console.log('関数c実行中');\n}\n\na();"
+    },
+    "preview": {
+      "height": 150,
+      "note": "a の中で b、b の中で c を呼んでいるので、終わるのは c → b → a の順です",
+      "fullDocument": false
+    },
+    "explain": [
+      "**コールスタック** とは、**関数の呼び出し順序を管理する仕組み** のことです。どの関数が実行されていて、その関数の中でどの関数が呼び出されたか等を記録として保存しています。",
+      "JavaScript は基本的に **1回に1つの処理しか実行できません**。コールスタックは、その処理を順序よく管理する役割を担っています。",
+      "コールスタックは **LIFO（Last In, First Out）** です。**後から実行されたものが最初に処理される** ので、関数を呼び出すと上に積まれ、終わると上から取り除かれます。サンプルでは a → b → c の順に積まれ、c → b → a の順に終わります。",
+      "**検証ツール（開発者ツール）** を使うと、コールスタックの中身や処理の流れを確認できます。"
+    ],
+    "values": {
+      "label": "検証ツールで確認する手順（Chrome）",
+      "head": "手順",
+      "rows": [
+        {
+          "key": "① Sources をクリック",
+          "desc": "開発者ツール上部のタブから Sources を開く"
+        },
+        {
+          "key": "② スクリプトファイルをクリック",
+          "desc": "左のファイル一覧から script.js などを開く"
+        },
+        {
+          "key": "③ 行番号をクリック",
+          "desc": "止めたい行の番号をクリックして ブレイクポイント を付け、ページを再読み込みする"
+        },
+        {
+          "key": "④ Call Stack を確認",
+          "desc": "右側の Call Stack に、いま積まれている関数が上から新しい順に表示される"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "ブレイクポイントで止めて見る",
+        "desc": "**ブレイクポイント** は、クリックした行で処理を一時停止できる機能です。下のコードの `c();` の行にブレイクポイントを付けて再読み込みすると、Call Stack に `b`・`a`・`(anonymous)` が積まれているのが分かります。**(anonymous)（匿名）** はグローバルコンテキストのことです。",
+        "js": "function a() {\n  b();\n}\nfunction b() {\n  c(); // ← この行にブレイクポイント\n}\nfunction c() {\n  console.log('c');\n}\na();"
+      }
+    ],
+    "notes": [
+      "止めたあとは、検証ツール上部の ▶（Resume）で続きを実行できます。ブレイクポイントは行番号をもう一度クリックすると外れます。",
+      "関数が自分自身を終わりなく呼び出し続けると、コールスタックがあふれて「Maximum call stack size exceeded」というエラーになります。",
+      "setTimeout() などで後から実行される処理は、コールスタックが空になってから実行されます。"
+    ],
+    "advanced": {
+      "title": "コールスタックが積まれていく様子",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "サンプルのコードを実行したときのコールスタックの中身です。一番右が一番上（いま実行中）です。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "タイミング",
+            "コールスタック（下 → 上）",
+            "コンソール"
+          ],
+          "rows": [
+            [
+              "a() を呼ぶ",
+              "(anonymous) → a",
+              "関数a開始"
+            ],
+            [
+              "a の中で b() を呼ぶ",
+              "(anonymous) → a → b",
+              "関数b開始"
+            ],
+            [
+              "b の中で c() を呼ぶ",
+              "(anonymous) → a → b → c",
+              "関数c実行中"
+            ],
+            [
+              "c が終わる",
+              "(anonymous) → a → b",
+              "関数b終了"
+            ],
+            [
+              "b が終わる",
+              "(anonymous) → a",
+              "関数a終了"
+            ],
+            [
+              "a が終わる",
+              "(anonymous)",
+              "—"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "LIFO と FIFO",
+          "items": [
+            "**LIFO**（Last In, First Out・後入れ先出し）：積み重ねたお皿のように、最後に置いたものから取る。コールスタックはこちら",
+            "**FIFO**（First In, First Out・先入れ先出し）：レジの行列のように、先に並んだものから処理する"
+          ]
+        }
+      ]
+    },
+    "related": [
+      "js-execution-context",
+      "js-function",
+      "js-hoisting",
+      "js-set-timeout"
+    ]
+  },
+  {
+    "id": "js-hoisting",
+    "title": "ホイスティング（巻き上げ）",
+    "ja": "宣言を実行前にメモリに配置する",
+    "lead": "コンテキスト内の変数や関数の定義を、コードの実行前にメモリに配置することです。「宣言の巻き上げ」とも表現します。var は undefined が入り、let・const は初期値が設定されないのでエラーになります。",
+    "meta": [
+      {
+        "label": "読み方",
+        "value": "ホイスティング（ホスティング）"
+      },
+      {
+        "label": "意味",
+        "value": "hoist＝巻き上げ"
+      },
+      {
+        "label": "起きるタイミング",
+        "value": "コンテキストが生成されるたび"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "// var：宣言より前でもエラーにならず undefined\nconsole.log(a); // undefined\nvar a = 1;\n\n// 関数宣言：宣言より前で呼び出しても動く\nhello();\nfunction hello() {\n  console.log('こんにちは');\n}\n\n// let / const：宣言より前で使うとエラー\ntry {\n  console.log(b);\n} catch (e) {\n  console.log(e);\n}\nlet b = 2;"
+    },
+    "preview": {
+      "height": 120,
+      "note": "エラーの内容を表示するため、let の部分は try...catch で囲んでいます",
+      "fullDocument": false
+    },
+    "explain": [
+      "**ホイスティング** とは、**コンテキスト内で変数や関数の定義を、コード実行前にメモリに配置すること** です。実行コンテキストが生成されるたびにホイスティングは発生します。",
+      "hoist は「巻き上げ」という意味で、「**宣言の巻き上げ**」と表現することもあります。宣言が、まるでそのコンテキストの先頭に巻き上げられたかのように扱われるからです。",
+      "ホイスティングされたときの **初期値** は宣言の種類で違います。**var は undefined** が入るので、宣言より前で使ってもエラーにならず undefined になります。**let・const は初期値の設定が行われない** ので、宣言より前で使うと **エラーを出してくれます**。",
+      "`function` で宣言した関数は、中身ごと巻き上げられます。そのため、関数を呼び出す行が宣言より前にあっても動きます。"
+    ],
+    "values": {
+      "label": "ホイスティングの初期値",
+      "head": "宣言",
+      "rows": [
+        {
+          "key": "var",
+          "desc": "undefined（エラーにならないので間違いに気づきにくい）"
+        },
+        {
+          "key": "let / const",
+          "desc": "初期値の設定が行われない → 宣言より前で使うとエラー（ReferenceError）"
+        },
+        {
+          "key": "function 名前() {}",
+          "desc": "関数の中身ごと配置される → 宣言より前で呼び出せる"
+        },
+        {
+          "key": "const 名前 = function() {}",
+          "desc": "const と同じ扱い → 宣言より前で呼び出すとエラー"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "関数宣言と関数式の違い",
+        "desc": "`function` で宣言した関数は前で呼び出せますが、`const` に入れた関数（関数式・アロー関数）は宣言より前では呼び出せません。",
+        "js": "greet(); // OK：関数宣言は巻き上げられる\nfunction greet() {\n  console.log('Hello');\n}\n\n// sayHi(); ← ここで呼ぶとエラー\nconst sayHi = () => {\n  console.log('Hi');\n};\nsayHi(); // OK"
+      }
+    ],
+    "notes": [
+      "let・const が宣言より前で使えない区間は「TDZ（一時的デッドゾーン）」と呼ばれます。",
+      "var は、宣言前に使っても undefined になるだけで気づきにくく、不具合の原因になります。let・const を使い、変数は使う前に宣言します。",
+      "ホイスティングはコンテキストごとに起きるので、関数の中で宣言した変数は、その関数の先頭に巻き上げられます。"
+    ],
+    "related": [
+      "js-let-const",
+      "js-function",
+      "js-execution-context",
+      "js-scope"
+    ]
+  },
+  {
+    "id": "js-scope",
+    "title": "スコープ",
+    "ja": "変数や関数が有効な範囲",
+    "lead": "実行中のコードから値と式がアクセスできる範囲のこと、つまり変数や関数が有効な範囲のことです。どこで宣言したかによって、その変数を使える場所が決まります。",
+    "meta": [
+      {
+        "label": "意味",
+        "value": "変数や関数が有効な範囲"
+      },
+      {
+        "label": "種類",
+        "value": "グローバル・スクリプト・関数・ブロック・モジュール"
+      },
+      {
+        "label": "探す順番",
+        "value": "内側から外側へ"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "const place = 'セブ島'; // スクリプトスコープ（どこからでも使える）\n\nfunction study() {\n  const subject = 'JavaScript'; // 関数スコープ\n\n  if (true) {\n    const time = '3時間'; // ブロックスコープ\n    console.log(place, subject, time); // 外側の変数は使える\n  }\n\n  // console.log(time); ← ブロックの外なのでエラー\n}\n\nstudy();\nconsole.log(typeof subject); // undefined（関数の外からは見えない）"
+    },
+    "preview": {
+      "height": 100,
+      "note": "内側からは外側の変数が見えますが、外側から内側の変数は見えません",
+      "fullDocument": false
+    },
+    "explain": [
+      "**スコープ** とは、**実行中のコードから値と式がアクセスできる範囲** のことです。言いかえると、**変数や関数が有効な範囲** です。",
+      "スコープには **グローバルスコープ**・**スクリプトスコープ**・**関数スコープ**・**ブロックスコープ**・**モジュールスコープ** の5種類があります。",
+      "スコープは入れ子になっていて、**内側のスコープからは外側の変数を使えます** が、**外側から内側の変数は使えません**。変数を使うと、まず今いるスコープを探し、見つからなければ1つ外側…と順番に探していきます。",
+      "変数は、できるだけ使う場所の近く（狭いスコープ）で宣言します。どこからでも使える変数が多いと、別の場所で同じ名前を使ったときに書き換わってしまう原因になります。"
+    ],
+    "values": {
+      "label": "スコープの種類",
+      "head": "スコープ",
+      "rows": [
+        {
+          "key": "グローバルスコープ",
+          "desc": "window オブジェクトのプロパティ。関数の外で var や function で宣言したものもここに入る"
+        },
+        {
+          "key": "スクリプトスコープ",
+          "desc": "関数の外で let・const で宣言したもの。どこからでも使えるが、window のプロパティにはならない"
+        },
+        {
+          "key": "関数スコープ",
+          "desc": "関数の { } の中で宣言したもの。その関数の中でだけ使える"
+        },
+        {
+          "key": "ブロックスコープ",
+          "desc": "if や for などの { } の中で let・const で宣言したもの。その { } の中でだけ使える"
+        },
+        {
+          "key": "モジュールスコープ",
+          "desc": "<script type=\"module\"> のファイルの直下で宣言したもの。そのファイルの中でだけ使える"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "var はブロックスコープを持たない",
+        "desc": "`let`・`const` は `{ }` の中でだけ有効ですが、`var` は `{ }` を無視して外からも使えてしまいます。これも var が非推奨の理由の1つです。",
+        "js": "if (true) {\n  var x = 1;\n  let y = 2;\n}\nconsole.log(x); // 1（外から見えてしまう）\n// console.log(y); ← エラー"
+      },
+      {
+        "title": "グローバルスコープとスクリプトスコープの違い",
+        "desc": "関数の外で `var` で宣言した変数は window のプロパティになりますが、`let`・`const` はなりません（スクリプトスコープに入ります）。",
+        "js": "var a = 'var';\nlet b = 'let';\n\nconsole.log(window.a); // var\nconsole.log(window.b); // undefined"
+      }
+    ],
+    "notes": [
+      "外側と内側で同じ名前の変数を宣言すると、内側では内側の変数が使われます（外側の変数は隠れて見えなくなります）。",
+      "検証ツールでブレイクポイントを付けて止めると、右側の Scope 欄で Block・Local（関数）・Script・Global などのスコープごとの変数を確認できます。",
+      "モジュールスコープの変数をほかのファイルで使うときは、export と import を使います。"
+    ],
+    "related": [
+      "js-let-const",
+      "js-function",
+      "js-execution-context",
+      "js-hoisting"
     ]
   },
   {
@@ -14973,7 +15474,7 @@
       },
       {
         "label": "参照",
-        "value": "obj.key / obj['key']"
+        "value": "ドット記法 obj.key / ブラケット記法 obj[\"key\"]"
       }
     ],
     "code": {
@@ -14988,8 +15489,8 @@
     },
     "explain": [
       "オブジェクトは、**名前（プロパティ または キー）と値（バリュー）をセットで管理する入れ物** です。`{ プロパティ: 値, … }` の形で書きます。値には数値・文字列・配列のほか、**関数や別のオブジェクト** も入れられます。現場での登場機会が多く、JavaScript の仕組みを理解するうえでとても重要です。",
-      "値は `item.name` のように「.（ドット）」で取り出します。キーを変数で指定したいときは `item[key]` と書きます。",
-      "代入すると値を変更でき、存在しないキーに代入するとプロパティが追加されます。",
+      "値を参照する方法は2つあります。`acthouse.place` のようにオブジェクトとプロパティを「.」（ドット）でつなぐ **ドット記法** と、`acthouse[\"place\"]` のようにオブジェクト名のあとにプロパティ名を `[ ]`（ブラケット）で囲む **ブラケット記法** です。ブラケット記法では、プロパティ名をクォーテーションで囲んで文字列にします。ふだんはドット記法を使い、キーを変数で指定したいときなどにブラケット記法を使います。",
+      "代入すると値を変更でき、存在しないキーに代入するとプロパティが追加されます。`acthouse.floor.b = 10;` のように `.` をつなげれば、入れ子のオブジェクトにも値を追加できます。追加できたかは `console.log(acthouse)` で中身を表示して確認します。",
       "オブジェクトの中で定義した関数は **メソッド** と呼びます。`オブジェクト名.メソッド名()` で実行します。いつも使っている `console.log()` も、`console` オブジェクトの `log` メソッドです。"
     ],
     "values": {
@@ -14998,7 +15499,11 @@
       "rows": [
         {
           "key": "obj.key",
-          "desc": "値を取り出す"
+          "desc": "値を取り出す（ドット記法）"
+        },
+        {
+          "key": "obj['key']",
+          "desc": "値を取り出す（ブラケット記法）"
         },
         {
           "key": "obj.key = 値",
@@ -15031,6 +15536,16 @@
         "title": "関数やオブジェクトを入れる（メソッド）",
         "desc": "`study` には関数、`floor` には別のオブジェクトが入っています。入れ子のオブジェクトは `.` をつなげて取り出します。",
         "js": "const acthouse = {\n  place: 'cebu',\n  study: function () {\n    console.log('プログラミング');\n  },\n  floor: {\n    a: 1,\n    c: 2,\n  },\n};\n\nconsole.log(acthouse.place);   // cebu\nacthouse.study();              // プログラミング\nconsole.log(acthouse.floor.a); // 1"
+      },
+      {
+        "title": "入れ子のオブジェクトに値を追加する",
+        "desc": "`floor` の中には `a` と `c` しかありませんが、`acthouse.floor.b` に代入すると `b` が追加されます。`console.log()` で中身を確認できます。",
+        "js": "let acthouse = {\n  place: 'cebu',\n  study: function () {\n    console.log('プログラミング');\n  },\n  floor: {\n    a: 1,\n    c: 2,\n  },\n};\n\n// 値を代入\nacthouse.floor.b = 10;\n\n// オブジェクトの中身を確認\nconsole.log(acthouse.floor); // { a: 1, c: 2, b: 10 }"
+      },
+      {
+        "title": "ブラケット記法を使う場面",
+        "desc": "キーを変数で指定するときと、キーにハイフンなど「.」では書けない文字が入るときはブラケット記法を使います。",
+        "js": "const acthouse = { place: 'cebu', 'open-time': '9:00' };\n\nconsole.log(acthouse.place);       // ドット記法\nconsole.log(acthouse['place']);    // ブラケット記法（同じ結果）\n\nconst key = 'place';\nconsole.log(acthouse[key]);        // 変数でキーを指定\nconsole.log(acthouse['open-time']); // ハイフン入りのキー"
       },
       {
         "title": "同じプロパティ名は後に書いた方で上書き",

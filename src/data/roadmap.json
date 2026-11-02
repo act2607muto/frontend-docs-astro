@@ -153,6 +153,17 @@
           "js-function",
           "js-object"
         ]
+      },
+      {
+        "title": "JavaScriptが動く仕組み",
+        "desc": "this・実行コンテキスト・コールスタック・ホイスティング・スコープなど、コードがどう実行されるかを理解します。",
+        "links": [
+          "js-window-this",
+          "js-execution-context",
+          "js-call-stack",
+          "js-hoisting",
+          "js-scope"
+        ]
       }
     ]
   },
