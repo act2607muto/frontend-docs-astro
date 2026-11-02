@@ -2206,6 +2206,102 @@
     "category": "basic"
   },
   {
+    "id": "js-window-this",
+    "type": "js",
+    "slug": "window-this",
+    "name": "window / this",
+    "summary": "実行前に用意されるグローバルオブジェクトと this",
+    "keywords": [
+      "window",
+      "windowオブジェクト",
+      "グローバルオブジェクト",
+      "this",
+      "参照",
+      "コンテキスト",
+      "メソッド",
+      "ウィンドウ"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-execution-context",
+    "type": "js",
+    "slug": "execution-context",
+    "name": "実行コンテキスト",
+    "summary": "コードが実行されるときの状況",
+    "keywords": [
+      "実行コンテキスト",
+      "コンテキスト",
+      "グローバルコンテキスト",
+      "関数コンテキスト",
+      "evalコンテキスト",
+      "eval",
+      "arguments",
+      "super",
+      "外部変数",
+      "文脈"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-call-stack",
+    "type": "js",
+    "slug": "call-stack",
+    "name": "コールスタック",
+    "summary": "関数の呼び出し順を管理する仕組み",
+    "keywords": [
+      "コールスタック",
+      "Call Stack",
+      "LIFO",
+      "スタック",
+      "ブレイクポイント",
+      "ブレークポイント",
+      "Sources",
+      "anonymous",
+      "デバッグ",
+      "検証ツール"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-hoisting",
+    "type": "js",
+    "slug": "hoisting",
+    "name": "ホイスティング",
+    "summary": "宣言を実行前にメモリに配置する（巻き上げ）",
+    "keywords": [
+      "ホイスティング",
+      "ホスティング",
+      "hoisting",
+      "巻き上げ",
+      "宣言の巻き上げ",
+      "undefined",
+      "ReferenceError",
+      "TDZ",
+      "var"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-scope",
+    "type": "js",
+    "slug": "scope",
+    "name": "スコープ",
+    "summary": "変数や関数が有効な範囲",
+    "keywords": [
+      "スコープ",
+      "scope",
+      "グローバルスコープ",
+      "スクリプトスコープ",
+      "関数スコープ",
+      "ブロックスコープ",
+      "モジュールスコープ",
+      "有効範囲",
+      "type=\"module\""
+    ],
+    "category": "basic"
+  },
+  {
     "id": "js-array",
     "type": "js",
     "slug": "array",
