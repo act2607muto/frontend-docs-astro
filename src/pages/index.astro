@@ -37,6 +37,11 @@ const entries = [
           {CONFIG.quickWords.slice(0, QUICK_COUNT).map((w) => <button type="button" class="btn btn-ghost" data-word={w}>{w}</button>)}
         </span>
       </div>
+      <script is:inline>
+        // 取得が終わるまで語句を隠し、既定の語句が一瞬見えてから入れ替わる「ちらつき」を防ぐ（表示は下のスクリプト）
+        // JavaScript が動かない環境では隠さず、既定の語句をそのまま見せる
+        document.currentScript.previousElementSibling.classList.add('is-loading');
+      </script>
       <nav class="top__entries" aria-label="入口">
         {entries.map((e) => (
           <a class="entry" href={e.href}>
@@ -87,27 +92,40 @@ const entries = [
     if (b) setQuery(box, b.dataset.word ?? '');
   });
 
+  const render = (words: string[]) => {
+    wordsEl.replaceChildren(
+      ...words.map((w) => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'btn btn-ghost';
+        b.dataset.word = w;
+        b.textContent = w;
+        return b;
+      }),
+    );
+  };
+  const reveal = () => quick.classList.remove('is-loading');
+
   // 実際の検索履歴（Vercel の API → Supabase）からよく調べられている語句を取得し、足りない分は既定の語句で補う
   // API がない環境（GitHub Pages など）では取得に失敗するので、既定の語句のままにする
+  // 取得が終わってから語句を表示する（取得中は上の is:inline スクリプトで隠している）
   (async () => {
+    const controller = new AbortController();
+    // 取得に時間がかかるときは、隠したままにせず既定の語句を出す
+    const timer = setTimeout(() => { controller.abort(); reveal(); }, 1500);
     try {
       const count = Number(quick.dataset.count) || 10;
-      const r = await fetch(`${quick.dataset.popularUrl}?limit=${count}`);
+      const r = await fetch(`${quick.dataset.popularUrl}?limit=${count}`, { signal: controller.signal });
       if (!r.ok) return;
       const { keywords } = (await r.json()) as { keywords?: unknown };
       const popular = Array.isArray(keywords) ? keywords.filter((k): k is string => typeof k === 'string') : [];
       if (!popular.length) return;
       const defaults = JSON.parse(quick.dataset.defaults ?? '[]') as string[];
-      wordsEl.replaceChildren(
-        ...[...new Set([...popular, ...defaults])].slice(0, count).map((w) => {
-          const b = document.createElement('button');
-          b.type = 'button';
-          b.className = 'btn btn-ghost';
-          b.dataset.word = w;
-          b.textContent = w;
-          return b;
-        }),
-      );
-    } catch { /* 取得できなくても既定の語句のまま */ }
+      const words = [...new Set([...popular, ...defaults])].slice(0, count);
+      if (quick.classList.contains('is-loading')) render(words);
+    } catch { /* 取得できなくても既定の語句のまま */ } finally {
+      clearTimeout(timer);
+      reveal();
+    }
   })();
 </script>
