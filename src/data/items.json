@@ -87,6 +87,24 @@
     "category": "base"
   },
   {
+    "id": "html-script",
+    "type": "html",
+    "slug": "script",
+    "name": "script",
+    "summary": "JavaScriptの読み込み・記述",
+    "keywords": [
+      "JavaScript",
+      "JS",
+      "読み込み",
+      "外部ファイル",
+      "src",
+      "defer",
+      "スクリプト",
+      "記述場所"
+    ],
+    "category": "base"
+  },
+  {
     "id": "html-h1",
     "type": "html",
     "slug": "h1",
@@ -2064,6 +2082,53 @@
       "マウス"
     ],
     "category": "other"
+  },
+  {
+    "id": "js-javascript",
+    "type": "js",
+    "slug": "javascript",
+    "name": "JavaScriptとは",
+    "summary": "ブラウザで動く言語とECMAScriptの関係",
+    "keywords": [
+      "JavaScript",
+      "JS",
+      "ジャバスクリプト",
+      "ECMAScript",
+      "エクマスクリプト",
+      "ES5",
+      "ES6",
+      "ES2015",
+      "TC39",
+      "JScript",
+      "バージョン",
+      "スクリプト言語",
+      "console.log"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-runtime",
+    "type": "js",
+    "slug": "runtime",
+    "name": "実行環境",
+    "summary": "JavaScriptエンジンとWebAPIのしくみ",
+    "keywords": [
+      "実行環境",
+      "JavaScriptエンジン",
+      "JSエンジン",
+      "V8",
+      "JavaScriptCore",
+      "SpiderMonkey",
+      "Chakra",
+      "WebAPI",
+      "Web API",
+      "API",
+      "DOM API",
+      "Fetch API",
+      "Geolocation",
+      "ブラウザの仕組み"
+    ],
+    "category": "basic"
   },
   {
     "id": "js-let-const",
