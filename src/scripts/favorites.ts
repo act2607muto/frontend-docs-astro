@@ -47,3 +47,17 @@ export function initFavoriteButtons() {
   window.addEventListener('storage', (e) => { if (e.key === KEY) sync(); });
   sync();
 }
+
+/** [data-fav-mark="<id>"]（一覧の ★ 印）を登録状態に合わせて表示 */
+export function initFavoriteMarks() {
+  const sync = () => {
+    const ids = new Set(getFavorites());
+    document.querySelectorAll<HTMLElement>('[data-fav-mark]').forEach((el) => {
+      el.hidden = !ids.has(el.dataset.favMark!);
+    });
+  };
+  document.addEventListener('favorites:change', sync);
+  window.addEventListener('storage', (e) => { if (e.key === KEY) sync(); });
+  window.addEventListener('pageshow', sync);
+  sync();
+}
