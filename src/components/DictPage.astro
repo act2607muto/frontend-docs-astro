@@ -75,7 +75,7 @@ const initial = CONFIG.dictInitialOpen[type];
               {c.items.map((it) => (
                 <li data-filter-text={[it.name, it.slug, it.summary, ...it.keywords].join(' ')}>
                   <a class="dict-row" href={url.item(it)}>
-                    <code class="dict-row__code">{it.name}</code>
+                    <span class="dict-row__code"><code>{it.name}</code><span class="fav-mark" role="img" aria-label="お気に入り登録済み" title="お気に入り登録済み" data-fav-mark={it.id} hidden><Icon name="star" /></span></span>
                     <span class="dict-row__desc">{it.summary}</span>
                     <Icon name="chevron-right" />
                   </a>
@@ -94,9 +94,11 @@ const initial = CONFIG.dictInitialOpen[type];
 <script>
   import { initAccordions, openAll, closeAll } from '../scripts/accordion';
   import { initDictFilter } from '../scripts/dict-filter';
+  import { initFavoriteMarks } from '../scripts/favorites';
   initAccordions();
   const cats = document.querySelector('.dict__cats')!;
   document.querySelector('[data-acc-all="open"]')?.addEventListener('click', () => openAll(cats));
   document.querySelector('[data-acc-all="close"]')?.addEventListener('click', () => closeAll(cats));
   initDictFilter(cats);
+  initFavoriteMarks();
 </script>

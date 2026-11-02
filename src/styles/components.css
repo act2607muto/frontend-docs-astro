@@ -179,7 +179,7 @@
    ① トップ
    ========================================================================== */
 .top { min-height: 100vh; display: flex; flex-direction: column; }
-.top__bar { display: flex; justify-content: flex-end; padding: 16px var(--pad-x); }
+.top__bar { display: flex; justify-content: flex-end; gap: 8px; padding: 16px var(--pad-x); }
 .top__main {
   flex: 1; display: flex; flex-direction: column; justify-content: center;
   width: 100%; max-width: 1024px; margin: 0 auto; padding: 40px 40px 80px;
@@ -747,4 +747,32 @@
     font-size: 11px; letter-spacing: .08em; color: var(--muted);
   }
   :root[data-os] .kbd-table td.kbd-col--mac, :root[data-os] .kbd-table td.kbd-col--win { background: none; }
+}
+
+/* ==========================================================================
+   お気に入り
+   ========================================================================== */
+.article__ja-row { display: flex; align-items: center; justify-content: space-between; gap: 12px 16px; flex-wrap: wrap; margin-bottom: 18px; }
+.article__ja-row .article__ja { margin-bottom: 0; }
+.fav-btn { font-size: 13px; padding: 7px 12px; }
+.fav-btn .icon { width: 16px; height: 16px; }
+.fav-btn[aria-pressed="true"] { color: var(--strong-accent); border-color: currentColor; }
+.fav-btn[aria-pressed="true"] .icon, .favs__empty .icon { fill: currentColor; }
+
+.favs__list { margin-top: 40px; border-top: 1px solid var(--color-divider); }
+.favs__item { display: flex; align-items: center; }
+.favs__item a { flex: 1; min-width: 0; }
+.favs__remove { flex: none; margin-right: 4px; color: var(--muted); }
+.favs__empty { margin-top: 48px; padding: 40px 20px; text-align: center; border: 1px dashed var(--color-divider); border-radius: var(--radius-md); }
+.favs__empty .icon { width: 28px; height: 28px; color: var(--color-accent); }
+.favs__empty p { margin: 12px 0 20px; line-height: 1.9; color: var(--muted); }
+.favs__links { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
+.fav-mark { display: inline-flex; vertical-align: -2px; margin-left: 6px; color: var(--color-accent); }
+.side-item .fav-mark { flex: none; margin-left: -6px; overflow: visible; color: var(--color-accent); align-self: center; }
+.side-item .fav-mark .icon { width: 12px; height: 12px; fill: currentColor; }
+.fav-mark[hidden] { display: none; }
+.dict-row .fav-mark .icon { display: block; width: 14px; height: 14px; color: inherit; fill: currentColor; }
+.favs__item .tag { min-width: 46px; text-align: center; }
+@media (max-width: 759px) {
+  .favs__item a span:last-child { flex-basis: 100%; }
 }

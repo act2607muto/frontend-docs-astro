@@ -37,7 +37,7 @@ const { item } = Astro.props;
               {c.items.map((it) => (
                 <li>
                   <a class="side-item" href={url.item(it)} aria-current={it.id === item.id ? 'page' : undefined}>
-                    <code>{it.name}</code><span>{it.summary}</span>
+                    <code>{it.name}</code><span class="fav-mark" role="img" aria-label="お気に入り登録済み" title="お気に入り登録済み" data-fav-mark={it.id} hidden><Icon name="star" /></span><span>{it.summary}</span>
                   </a>
                 </li>
               ))}
@@ -53,9 +53,11 @@ const { item } = Astro.props;
 <script>
   import { initAccordions } from '../scripts/accordion';
   import { initDrawer } from '../scripts/drawer';
+  import { initFavoriteMarks } from '../scripts/favorites';
 
   initAccordions();
   initDrawer();
+  initFavoriteMarks();
 
   // HTML / CSS の切替
   document.querySelectorAll<HTMLElement>('[data-sidebar]').forEach((aside) => {

@@ -1,0 +1,17 @@
+---
+// 詳細ページのお気に入りボタン。状態（aria-pressed）はブラウザ側で反映する
+import Icon from './Icon.astro';
+
+interface Props {
+  id: string;
+}
+const { id } = Astro.props;
+---
+<button type="button" class="btn btn-secondary fav-btn" data-fav-toggle={id} aria-pressed="false" aria-label="お気に入りに追加">
+  <Icon name="star" /><span data-fav-label>お気に入り</span>
+</button>
+
+<script>
+  import { initFavoriteButtons } from '../scripts/favorites';
+  initFavoriteButtons();
+</script>
