@@ -9,6 +9,7 @@ export const url = {
   learn: () => `${BASE}learn/`,
   cursor: () => `${BASE}cursor/`,
   figma: () => `${BASE}figma/`,
+  favorites: () => `${BASE}favorites/`,
   privacy: () => `${BASE}privacy/`,
   terms: () => `${BASE}terms/`,
   item: (item: { type: ItemType; slug: string }) => `${BASE}${item.type}/${item.slug}/`,

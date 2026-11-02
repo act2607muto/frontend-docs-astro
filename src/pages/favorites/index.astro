@@ -1,0 +1,76 @@
+---
+// お気に入り一覧。登録内容はブラウザ（localStorage）にあるため、一覧はブラウザ側で描画する
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Icon from '../../components/Icon.astro';
+import { items, SITE, TYPES, TYPE_INFO } from '../../lib/data';
+import { url } from '../../lib/url';
+
+const data = Object.fromEntries(
+  items.map((it) => [it.id, { type: it.type, name: it.name, summary: it.summary, cat: it.categoryName, href: url.item(it) }]),
+);
+---
+<BaseLayout title={`お気に入り | ${SITE}`} description="お気に入りに登録した項目の一覧です。">
+  <Header />
+  <main class="page favs" data-favs>
+    <div class="kicker">FAVORITES</div>
+    <h1 class="page-title">お気に入り</h1>
+    <p class="page-lead">詳細ページの「お気に入り」ボタンで登録した項目の一覧です。登録内容はこのブラウザにのみ保存されます。</p>
+
+    <ul class="related favs__list" data-favs-list></ul>
+
+    <div class="favs__empty" data-favs-empty hidden>
+      <Icon name="star" />
+      <p>お気に入りはまだありません。<br />辞典の詳細ページにある「お気に入り」ボタンから登録できます。</p>
+      <div class="favs__links">
+        {TYPES.map((t) => <a class="btn btn-secondary" href={url.dict(t)}>{TYPE_INFO[t].dict}</a>)}
+      </div>
+    </div>
+  </main>
+  <Footer />
+  <script is:inline type="application/json" id="favs-data" set:html={JSON.stringify(data)} />
+</BaseLayout>
+
+<script>
+  import { getFavorites, removeFavorite } from '../../scripts/favorites';
+
+  type Entry = { type: string; name: string; summary: string; cat: string; href: string };
+  const data: Record<string, Entry> = JSON.parse(document.getElementById('favs-data')!.textContent || '{}');
+  const list = document.querySelector<HTMLUListElement>('[data-favs-list]')!;
+  const empty = document.querySelector<HTMLElement>('[data-favs-empty]')!;
+
+  const el = (tag: string, cls?: string, text?: string) => {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text) e.textContent = text;
+    return e;
+  };
+
+  function render() {
+    const ids = getFavorites().filter((id) => data[id]);
+    list.replaceChildren(
+      ...ids.map((id) => {
+        const d = data[id]!;
+        const li = el('li', 'favs__item');
+        const a = el('a') as HTMLAnchorElement;
+        a.href = d.href;
+        a.append(el('span', 'tag', d.type.toUpperCase()), el('code', '', d.name), el('span', '', `${d.summary}（${d.cat}）`));
+        const rm = el('button', 'btn btn-icon favs__remove') as HTMLButtonElement;
+        rm.type = 'button';
+        rm.setAttribute('aria-label', `${d.name} をお気に入りから外す`);
+        rm.title = 'お気に入りから外す';
+        rm.innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>';
+        rm.addEventListener('click', () => removeFavorite(id));
+        li.append(a, rm);
+        return li;
+      }),
+    );
+    list.hidden = ids.length === 0;
+    empty.hidden = ids.length > 0;
+  }
+
+  document.addEventListener('favorites:change', render);
+  window.addEventListener('storage', render);
+  render();
+</script>

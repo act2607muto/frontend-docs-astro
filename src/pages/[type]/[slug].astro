@@ -9,6 +9,7 @@ import Preview from '../../components/Preview.astro';
 import InlineText from '../../components/InlineText.astro';
 import SecHead from '../../components/SecHead.astro';
 import AdvancedSection from '../../components/AdvancedSection.astro';
+import FavoriteButton from '../../components/FavoriteButton.astro';
 import { getDetail, index, items, order, pad2, relatedOf, SITE, titleOf, TYPE_INFO, type Item } from '../../lib/data';
 import { url } from '../../lib/url';
 
@@ -44,7 +45,10 @@ const related = relatedOf(item);
       </nav>
       <div class="kicker article__kicker">{info.kicker} ・ {item.categoryName}</div>
       <h1 class="article__title">{title}</h1>
-      <p class="article__ja">{ja}</p>
+      <div class="article__ja-row">
+        <p class="article__ja">{ja}</p>
+        <FavoriteButton id={item.id} />
+      </div>
       <p class="article__lead">{lead}</p>
       {d && (
         <dl class="meta">
