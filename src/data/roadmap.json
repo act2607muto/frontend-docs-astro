@@ -141,6 +141,18 @@
           "html-footer",
           "css-position"
         ]
+      },
+      {
+        "title": "JavaScriptの基本",
+        "desc": "JavaScript の役割と書く場所、変数・関数・オブジェクトの考え方を押さえます。",
+        "links": [
+          "js-javascript",
+          "js-runtime",
+          "html-script",
+          "js-let-const",
+          "js-function",
+          "js-object"
+        ]
       }
     ]
   },

@@ -601,6 +601,87 @@
     ]
   },
   {
+    "id": "html-script",
+    "title": null,
+    "ja": "JavaScriptの読み込み・記述",
+    "lead": "HTML に JavaScript を組み込むための要素です。外部の JS ファイルを読み込む方法と、HTML の中に直接書く方法の2つがあります。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "スクリプト要素"
+      },
+      {
+        "label": "記述位置",
+        "value": "body の最後（</body> の直前）が推奨"
+      },
+      {
+        "label": "終了タグ",
+        "value": "必要（src で読み込むときも書く）"
+      }
+    ],
+    "code": {
+      "html": "<!DOCTYPE html>\n<html lang=\"ja\">\n<head>\n  <meta charset=\"UTF-8\">\n  <title>JavaScriptの読み込み</title>\n</head>\n<body>\n  <h1>アクトハウス</h1>\n  <p>コンソールにメッセージを表示します。</p>\n\n  <script src=\"./assets/js/script.js\"></script>\n</body>\n</html>",
+      "css": null,
+      "js": "console.log(\"アクトハウス\");"
+    },
+    "preview": {
+      "height": 110,
+      "note": "JS欄の内容を ./assets/js/script.js として読み込んだ状態で表示しています",
+      "fullDocument": true
+    },
+    "explain": [
+      "`script` は、JavaScript を HTML に組み込む要素です。書き方は **① 外部ファイルとして読み込む** と **② HTML 内に直接書く** の2つがあります。",
+      "① は `src` 属性に JS ファイルの場所を書きます。中身は空ですが、終了タグ `</script>` は省略できません。複数のページで同じ JS を使えるので、基本はこちらを使います。",
+      "② は `<script>` と `</script>` の間に JavaScript を直接書きます。そのページだけで使う短い処理を試すときなどに使います。",
+      "JavaScript は **body タグの最後（`</body>` の直前）に書くことが推奨** されています。通常 HTML は上から順番に処理されるため、途中で JavaScript を読み込むと、その行で処理が一旦止まり、**ページの表示が遅れるおそれ** があるからです。また、JS より下にある要素はまだ読み込まれていないので、操作しようとしても見つかりません。"
+    ],
+    "values": {
+      "label": "よく使う属性",
+      "head": "属性",
+      "rows": [
+        {
+          "key": "src",
+          "desc": "読み込む JS ファイルの場所"
+        },
+        {
+          "key": "defer",
+          "desc": "HTML をすべて読み終わってから実行する（head に書いても表示を止めない）"
+        },
+        {
+          "key": "async",
+          "desc": "読み込みが終わり次第すぐ実行する（実行の順番は保証されない）"
+        },
+        {
+          "key": "type=\"module\"",
+          "desc": "モジュール（import / export）として読み込む。defer と同じタイミングで実行される"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "② HTML 内に直接書く",
+        "desc": "`<script>` と `</script>` の間に JavaScript をそのまま書きます。この場合も body の最後に置きます。",
+        "html": "<body>\n  <h1>アクトハウス</h1>\n\n  <script>\n    console.log(\"アクトハウス\");\n  </script>\n</body>"
+      },
+      {
+        "title": "head に書くときは defer を付ける",
+        "desc": "head の中に書きたいときは `defer` を付けます。HTML をすべて読み終えてから実行されるので、body の最後に書いたときと同じように表示を止めません。",
+        "html": "<head>\n  <meta charset=\"UTF-8\">\n  <title>ページ</title>\n  <link rel=\"stylesheet\" href=\"style.css\">\n  <script src=\"./assets/js/script.js\" defer></script>\n</head>"
+      }
+    ],
+    "notes": [
+      "`src` を書いた `script` の中に JavaScript を書いても実行されません。外部ファイルか直接書くか、どちらか一方にします。",
+      "`src` のパスは HTML ファイルの場所が基準です。`./` は「この HTML と同じフォルダ」という意味です。",
+      "JS が動かないときは、開発者ツールのコンソールを確認します。パスが間違っていると、ファイルが見つからない（404）エラーが表示されます。"
+    ],
+    "related": [
+      "html-body",
+      "html-link",
+      "js-javascript",
+      "js-query-selector"
+    ]
+  },
+  {
     "id": "html-h1",
     "title": null,
     "ja": "最上位の見出し",
@@ -14129,6 +14210,273 @@
     ]
   },
   {
+    "id": "js-javascript",
+    "title": "JavaScriptとは",
+    "ja": "Webブラウザ上で動作するスクリプト言語",
+    "lead": "画像を切り替えたり、要素に動きを追加したりして、Webページのコンテンツに味付けができるプログラミング言語です。言語の仕様は ECMAScript（エクマスクリプト）として決められています。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "スクリプト言語"
+      },
+      {
+        "label": "仕様",
+        "value": "ECMAScript（TC39 が策定）"
+      },
+      {
+        "label": "動く場所",
+        "value": "Webブラウザ（JavaScriptエンジン）"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "// ES5 までの書き方\nvar greeting = 'こんにちは';\nconsole.log(greeting + '、JavaScript');\n\n// ES6（ES2015）からの書き方\nconst name = 'ECMAScript';\nconsole.log(`${greeting}、${name}`);"
+    },
+    "preview": {
+      "height": 100,
+      "note": "ES5 の書き方も ES6 の書き方も、今のブラウザではどちらも動きます",
+      "fullDocument": false
+    },
+    "explain": [
+      "JavaScript は **Webブラウザ上で動作するスクリプト言語** です。HTML が文書の構造、CSS が見た目を担当するのに対して、JavaScript は画像を切り替えたり要素に動きを追加したりして、ページに **動き（味付け）** を加えます。",
+      "**ECMAScript（エクマスクリプト）** は、プログラミング言語の **仕様（ルール）** のことです。JavaScript は ECMAScript の仕様をもとに実装されています。",
+      "昔は Netscape の **JavaScript** と Internet Explorer の **JScript** に互換性がなく、ブラウザによって動きが違いました。**仕様を統一するために誕生したのが ECMAScript** です。",
+      "ECMAScript は **TC39** という専門委員会が策定していて、2015年の6版（ES6）からは毎年新しい版が出ています。**5版から6版へのアップデートで様々な機能が追加された** ため、ES5 と ES6 以降では書き方に違いがあります。現在の主要なブラウザは ES6 に対応しています。"
+    ],
+    "values": {
+      "label": "ECMAScript のバージョン",
+      "head": "通称",
+      "rows": [
+        {
+          "key": "ES5",
+          "desc": "2009年（5版）・2011年（5.1版）"
+        },
+        {
+          "key": "ES6（ES2015）",
+          "desc": "2015年（6版）。let・const・アロー関数・テンプレート文字列などが追加された大きな改訂"
+        },
+        {
+          "key": "ES7（ES2016）",
+          "desc": "2016年（7版）"
+        },
+        {
+          "key": "ES8（ES2017）",
+          "desc": "2017年（8版）"
+        },
+        {
+          "key": "ES9（ES2018）",
+          "desc": "2018年（9版）"
+        },
+        {
+          "key": "ES10（ES2019）",
+          "desc": "2019年（10版）"
+        },
+        {
+          "key": "ES11（ES2020）",
+          "desc": "2020年（11版）"
+        },
+        {
+          "key": "ES12（ES2021）",
+          "desc": "2021年（12版）"
+        },
+        {
+          "key": "ES13（ES2022）",
+          "desc": "2022年（13版）"
+        },
+        {
+          "key": "ES14（ES2023）",
+          "desc": "2023年6月（14版）。講義スライド時点の最新版で、以降も毎年6月ごろに新しい版が出ています"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "ES5 と ES6 の書き方の違い",
+        "desc": "調べたコードに `var` や `function` が多いときは ES5 の書き方、`const`・`let`・`=>` が出てくるときは ES6 以降の書き方です。どちらも今のブラウザで動きますが、新しく書くときは ES6 以降の書き方を使います。",
+        "js": "// ES5\nvar double = function (n) {\n  return n * 2;\n};\n\n// ES6 以降\nconst double2 = (n) => n * 2;\n\nconsole.log(double(5), double2(5));"
+      },
+      {
+        "title": "console.log() で結果を確かめる",
+        "desc": "`console.log()` は、( ) の中の値をブラウザの **開発者ツールのコンソール** に表示する命令です。画面には表示されないので、変数の中身や処理の結果を確かめるときに使います。このガイドの JS のサンプルでは、実行結果の欄にコンソールの出力を表示しています。",
+        "js": "const price = 480;\nconsole.log(price);\nconsole.log('2つで', price * 2, '円');"
+      }
+    ],
+    "notes": [
+      "Java と JavaScript は名前が似ていますが、まったく別のプログラミング言語です。",
+      "ES2015 のように年で呼ぶ通称と、ES6 のように版の番号で呼ぶ通称があり、どちらも同じものを指します。",
+      "開発者ツールのコンソールは、Chrome なら Mac は Option + Command + J、Windows は Ctrl + Shift + J で開けます。"
+    ],
+    "related": [
+      "js-runtime",
+      "html-script",
+      "js-let-const",
+      "js-arrow-function"
+    ]
+  },
+  {
+    "id": "js-runtime",
+    "title": "JavaScriptの実行環境",
+    "ja": "JavaScriptエンジンとWebAPI",
+    "lead": "JavaScript は、ブラウザに組み込まれた「JavaScriptエンジン」が解析して実行します。ブラウザが用意している WebAPI を使うと、画面の表示を変えたり位置情報を取得したりできます。",
+    "meta": [
+      {
+        "label": "実行するもの",
+        "value": "JavaScriptエンジン"
+      },
+      {
+        "label": "シェアが高いエンジン",
+        "value": "V8（Chrome・Edge）"
+      },
+      {
+        "label": "ブラウザの機能を使う窓口",
+        "value": "WebAPI"
+      }
+    ],
+    "code": {
+      "html": "<p id=\"message\">ここの文字を JavaScript で書き換えます</p>",
+      "css": null,
+      "js": "// ECMAScript の機能（言語そのものの機能）\nconst a = 100;\nconst b = 200;\nconsole.log('合計：' + (a + b));\n\n// WebAPI（DOM API）の機能：ブラウザの画面を書き換える\ndocument.querySelector('#message').textContent = '合計は ' + (a + b) + ' 円です';"
+    },
+    "preview": {
+      "height": 90,
+      "note": "前半は ECMAScript の機能で計算し、後半は WebAPI（DOM API）で画面の文字を書き換えています",
+      "fullDocument": false
+    },
+    "explain": [
+      "ブラウザの中は、ユーザーインターフェース・ブラウザエンジン・レンダリングエンジン・**JavaScriptエンジン**・ネットワーク・データストレージなど、役割ごとの部品に分かれています。このうち **JavaScript を解析して実行する** のが JavaScriptエンジンです。",
+      "JavaScriptエンジンはブラウザごとに違います。シェアが高いのは Chrome と Edge が使っている **V8エンジン** です。エンジンが違うと、同じコードでも **挙動やエラーが若干異なる** ことがあるので、複数のブラウザで確認します。",
+      "JavaScript で使える機能は、言語そのものの機能（**ECMAScript**）と、ブラウザが用意している機能（**WebAPI**）に分けられます。`const` や `if`、配列などは ECMAScript、`document.querySelector()` のようにページを操作する機能は WebAPI です。",
+      "**API（アプリケーション・プログラミング・インターフェース）** とは、プログラムから OS やブラウザを操作するための仕組みのことです。WebAPI を使えば、JavaScript でブラウザ画面の表示を変更したり、位置情報を取得したりできます。"
+    ],
+    "values": {
+      "label": "主な JavaScriptエンジン",
+      "head": "ブラウザ",
+      "rows": [
+        {
+          "key": "Chrome / Edge",
+          "desc": "V8（シェアが高い）"
+        },
+        {
+          "key": "Safari",
+          "desc": "JavaScriptCore"
+        },
+        {
+          "key": "Firefox",
+          "desc": "SpiderMonkey"
+        },
+        {
+          "key": "旧Edge",
+          "desc": "Chakra（今の Edge は Chrome と同じ V8）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "位置情報を取得する（Geolocation API）",
+        "desc": "WebAPI の1つ、Geolocation API を使うと現在地を取得できます。実行すると、ブラウザが「位置情報の利用を許可するか」を利用者に確認します。",
+        "js": "navigator.geolocation.getCurrentPosition((pos) => {\n  console.log('緯度：' + pos.coords.latitude);\n  console.log('経度：' + pos.coords.longitude);\n});"
+      }
+    ],
+    "notes": [
+      "WebAPI はブラウザの機能なので、ブラウザ以外の環境（Node.js など）では `document` などは使えません。",
+      "位置情報やカメラなどを使う WebAPI は利用者の許可が必要で、https のページでないと動かないものもあります。"
+    ],
+    "advanced": {
+      "title": "ブラウザの部品と WebAPI の種類",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "ブラウザを構成する部品"
+        },
+        {
+          "type": "table",
+          "head": [
+            "部品",
+            "役割"
+          ],
+          "rows": [
+            [
+              "ユーザーインターフェース",
+              "アドレスバーや戻る・進むボタンなど、ページ以外の画面部分"
+            ],
+            [
+              "ブラウザエンジン",
+              "ユーザーインターフェースとレンダリングエンジンの間で指示を受け渡す"
+            ],
+            [
+              "レンダリングエンジン",
+              "HTML と CSS を読み取って、画面に描く"
+            ],
+            [
+              "**JavaScriptエンジン**",
+              "**JavaScript を解析して実行する**"
+            ],
+            [
+              "ネットワーク",
+              "サーバーと通信して、ファイルを取ってくる"
+            ],
+            [
+              "データストレージ",
+              "Cookie や localStorage など、ブラウザにデータを保存する"
+            ],
+            [
+              "UIバックエンド",
+              "ボタンやセレクトボックスなどの部品を、OS の機能を使って描く"
+            ]
+          ]
+        },
+        {
+          "type": "h",
+          "text": "代表的な WebAPI"
+        },
+        {
+          "type": "table",
+          "head": [
+            "WebAPI",
+            "できること"
+          ],
+          "rows": [
+            [
+              "DOM API",
+              "HTML の要素を取得・変更する（`querySelector()`・`textContent` など）"
+            ],
+            [
+              "Fetch API",
+              "サーバーと通信してデータを取得する"
+            ],
+            [
+              "XHR API（XMLHttpRequest）",
+              "Fetch API より前からある通信の仕組み"
+            ],
+            [
+              "WebRTC",
+              "ブラウザ同士で映像や音声をやり取りする（ビデオ通話など）"
+            ],
+            [
+              "Geolocation API",
+              "現在地（位置情報）を取得する"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "ECMAScript と WebAPI の見分け方",
+          "items": [
+            "`const`・`if`・`for`・配列・オブジェクトなど、どこでも使える文法は **ECMAScript**",
+            "`document`・`window`・`navigator`・`fetch()` など、ブラウザの画面や機能を操作するものは **WebAPI**"
+          ]
+        }
+      ]
+    },
+    "related": [
+      "js-javascript",
+      "js-query-selector",
+      "js-text-content",
+      "js-async-await"
+    ]
+  },
+  {
     "id": "js-let-const",
     "title": null,
     "ja": "変数を宣言する",
@@ -14158,7 +14506,10 @@
       "fullDocument": false
     },
     "explain": [
-      "変数は、値を入れておく名前付きの箱のようなものです。`const` や `let` のあとに名前を書き、`=` で値を入れます。",
+      "変数は、**「変」わる可能性がある「数」** のことで、プログラム内で使う値を名前付きで管理する入れ物のようなものです。何度も使う値を変数に格納しておくと、名前で呼び出せます。",
+      "変数を定義することを **変数宣言** といいます。JavaScript では `let`・`const`・`var` というキーワードで変数宣言ができ、宣言して初めて変数名で値を管理できるようになります。変数名は **識別子** と表現することもあります。",
+      "書き方は `let 変数名 = 値;` です。キーワードと変数名の間、`=` の前後は **半角スペース** で区切ります。",
+      "変数宣言における `=` は、**左辺に右辺の値を代入している** 記号です。等しいことを表しているわけではありません。`count = count + 1` は「count に1を足した値を、count に入れ直す」という意味です。等しいかどうかを比べるときは `===` を使います。",
       "`const` で宣言した変数には、あとから別の値を代入できません。`let` は何度でも代入し直せます。まずは `const` で書き、値を変える必要があるときだけ `let` にすると、意図しない書き換えを防げます。",
       "`let` と `const` の変数は、宣言した `{ }`（ブロック）の中でだけ使えます。古い書き方の `var` は範囲の扱いが分かりにくいため、今は使いません。"
     ],
@@ -14168,15 +14519,15 @@
       "rows": [
         {
           "key": "const",
-          "desc": "再代入できない変数（基本はこちら）"
+          "desc": "定数（constant）。再代入できない。ES6 から（基本はこちら）"
         },
         {
           "key": "let",
-          "desc": "再代入できる変数"
+          "desc": "変数。再代入できる。ES6 から"
         },
         {
           "key": "var",
-          "desc": "古い書き方。今は使わない"
+          "desc": "変数（variable）。ES5 までの古い書き方で、今は非推奨"
         }
       ]
     },
@@ -14193,9 +14544,9 @@
       "同じ範囲で同じ名前の変数を2回宣言することはできません。"
     ],
     "related": [
+      "js-javascript",
       "js-if",
       "js-template-literal",
-      "js-array",
       "js-object"
     ]
   },
@@ -14389,8 +14740,10 @@
       "fullDocument": false
     },
     "explain": [
-      "`function 名前(引数) { 処理 }` で関数を定義し、`名前(値)` で呼び出します。同じ処理を何度も書かずに済み、修正も1か所で済みます。",
-      "`( )` の中の引数で値を受け取り、`return` で結果を呼び出し元に返します。`return` に達するとそこで関数は終了します。",
+      "関数は **処理のかたまり** のことです。一連の手続き（処理）を実行する文をまとめたもので、`function` というキーワードを見かけたら、それは関数だと思って大丈夫です。関数を定義することを **関数宣言** といいます。",
+      "`function 名前(引数) { 処理 }` で関数を宣言し、`名前(値)` で呼び出します。同じ処理を何度も書かずに済み、修正も1か所で済みます。",
+      "関数は宣言しただけでは動きません。**`関数名()` と書いて実行するまで、中の処理は実行されない** ことを覚えておきましょう。",
+      "`( )` の中の **引数（ひきすう）** は、関数に渡す値です。`return` で関数の呼び出し元に返す値を **戻り値（もどりち）** といい、**返り値** と呼ぶこともあります。`return` に達するとそこで関数は終了します。",
       "引数には既定値を付けられます。`function greet(name = 'ゲスト')` のように書くと、値が渡されなかったときに既定値が使われます。"
     ],
     "values": {
@@ -14400,6 +14753,10 @@
         {
           "key": "function 名前() {}",
           "desc": "関数宣言"
+        },
+        {
+          "key": "名前()",
+          "desc": "関数を実行する（呼び出す）"
         },
         {
           "key": "const 名前 = function() {}",
@@ -14420,6 +14777,11 @@
       ]
     },
     "usages": [
+      {
+        "title": "仮引数と実引数",
+        "desc": "関数を宣言するときに `( )` に書く、値を受け取る側の引数を **仮引数**、関数を実行するときに `( )` に書く、実際に受け渡す値を **実引数** といいます。実引数は、前から順番に仮引数へ入ります。",
+        "js": "// name と place が仮引数（受け取る側）\nfunction introduce(name, place) {\n  console.log(name + 'は' + place + 'で勉強しています');\n}\n\n// '山田' と 'セブ島' が実引数（渡す側）\nintroduce('山田', 'セブ島');"
+      },
       {
         "title": "ボタンのクリックで関数を呼ぶ",
         "desc": "処理を関数にしておくと、イベントにそのまま渡せます。",
@@ -14625,9 +14987,10 @@
       "fullDocument": false
     },
     "explain": [
-      "オブジェクトは `{ キー: 値, … }` の形で書きます。キーはプロパティ名とも呼ばれ、値には数値・文字列・配列・関数など何でも入れられます。",
+      "オブジェクトは、**名前（プロパティ または キー）と値（バリュー）をセットで管理する入れ物** です。`{ プロパティ: 値, … }` の形で書きます。値には数値・文字列・配列のほか、**関数や別のオブジェクト** も入れられます。現場での登場機会が多く、JavaScript の仕組みを理解するうえでとても重要です。",
       "値は `item.name` のように「.（ドット）」で取り出します。キーを変数で指定したいときは `item[key]` と書きます。",
-      "代入すると値を変更でき、存在しないキーに代入するとプロパティが追加されます。"
+      "代入すると値を変更でき、存在しないキーに代入するとプロパティが追加されます。",
+      "オブジェクトの中で定義した関数は **メソッド** と呼びます。`オブジェクト名.メソッド名()` で実行します。いつも使っている `console.log()` も、`console` オブジェクトの `log` メソッドです。"
     ],
     "values": {
       "label": "よく使う操作",
@@ -14640,6 +15003,10 @@
         {
           "key": "obj.key = 値",
           "desc": "値を変更・追加する"
+        },
+        {
+          "key": "obj.method()",
+          "desc": "メソッド（中の関数）を実行する"
         },
         {
           "key": "delete obj.key",
@@ -14661,12 +15028,23 @@
     },
     "usages": [
       {
+        "title": "関数やオブジェクトを入れる（メソッド）",
+        "desc": "`study` には関数、`floor` には別のオブジェクトが入っています。入れ子のオブジェクトは `.` をつなげて取り出します。",
+        "js": "const acthouse = {\n  place: 'cebu',\n  study: function () {\n    console.log('プログラミング');\n  },\n  floor: {\n    a: 1,\n    c: 2,\n  },\n};\n\nconsole.log(acthouse.place);   // cebu\nacthouse.study();              // プログラミング\nconsole.log(acthouse.floor.a); // 1"
+      },
+      {
+        "title": "同じプロパティ名は後に書いた方で上書き",
+        "desc": "同じ名前のプロパティを2回書いてもエラーにはならず、後に定義した値で上書きされます。思わぬ不具合のもとになるので、名前が重ならないようにします。",
+        "js": "const item = {\n  name: 'ブレンド',\n  price: 480,\n  price: 500,\n};\n\nconsole.log(item.price); // 500"
+      },
+      {
         "title": "オブジェクトの配列",
         "desc": "同じ形のオブジェクトを配列に並べると、一覧データを扱えます。",
         "js": "const menu = [\n  { name: 'ブレンド', price: 480 },\n  { name: 'カフェラテ', price: 550 },\n];\nfor (const m of menu) {\n  console.log(`${m.name}：${m.price}円`);\n}"
       }
     ],
     "notes": [
+      "書き方のルール：プロパティと値は `:`（コロン）で区切り、続けて書くときは `,`（カンマ）で区切ります。最後のプロパティのあとのカンマは省略できます（付けておくと行の追加が楽です）。",
       "存在しないキーを参照すると undefined になります。さらにその先を参照するとエラーになるので、?. （オプショナルチェーン）を使うと安全です。",
       "データを保存・送信するときは JSON.stringify() で文字列に変換します。"
     ],
