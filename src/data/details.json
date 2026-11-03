@@ -672,13 +672,15 @@
     "notes": [
       "`src` を書いた `script` の中に JavaScript を書いても実行されません。外部ファイルか直接書くか、どちらか一方にします。",
       "`src` のパスは HTML ファイルの場所が基準です。`./` は「この HTML と同じフォルダ」という意味です。",
-      "JS が動かないときは、開発者ツールのコンソールを確認します。パスが間違っていると、ファイルが見つからない（404）エラーが表示されます。"
+      "JS が動かないときは、開発者ツールのコンソールを確認します。パスが間違っていると、ファイルが見つからない（404）エラーが表示されます。",
+      "`</body>` の直前に script を書いていれば、DOMContentLoaded イベントで待たなくても要素を操作できます（DOMContentLoaded と load の違いは「イベントの種類」のページ）。"
     ],
     "related": [
       "html-body",
       "html-link",
       "js-javascript",
-      "js-query-selector"
+      "js-query-selector",
+      "js-event-types"
     ]
   },
   {
@@ -18099,14 +18101,15 @@
         "js": "const outer = document.getElementById('outer');\nconst count = document.getElementById('count');\nlet over = 0;\nlet enter = 0;\n\nfunction show() {\n  count.textContent = `mouseover: ${over}回 / mouseenter: ${enter}回`;\n}\nouter.addEventListener('mouseover', () => { over++; show(); });\nouter.addEventListener('mouseenter', () => { enter++; show(); });\nshow();"
       },
       {
-        "title": "DOMContentLoaded と load の違い",
-        "desc": "`DOMContentLoaded` は HTML を読み込んで DOM ができた時点で起き、画像や CSS の読み込みは待ちません。`load` は画像などのリソースもすべて読み込み終わってから起きます。要素を操作するだけなら DOMContentLoaded、画像のサイズを使う処理などは load を使います。",
-        "js": "document.addEventListener('DOMContentLoaded', () => {\n  console.log('1. DOM の読み込み完了（画像はまだかも）');\n});\n\nwindow.addEventListener('load', () => {\n  console.log('2. 画像なども含めてすべて読み込み完了');\n});"
+        "title": "案件でよく使う：DOMContentLoaded と load",
+        "desc": "案件でよく使うのがこの2つです。`DOMContentLoaded` は **DOM の解析が完了した時**（画像や CSS が読み込まれる前）に起きます。`load` は **画像や CSS・JS などの外部ファイルがすべて読み込み完了した時** に起きます。要素を操作するだけなら DOMContentLoaded、画像のサイズを使う処理などは load を使います。",
+        "js": "// 画像や CSS が読み込まれる前（DOM ツリーができた時点）\ndocument.addEventListener('DOMContentLoaded', function() {\n  console.log('DOMツリーの読み込み完了!!');\n});\n\n// 画像や CSS 等の外部ファイルもすべて読み込みが完了してから\nwindow.addEventListener('load', function() {\n  console.log('ページの読み込みが完了!!');\n});"
       }
     ],
     "notes": [
       "イベント名には on を付けません。addEventListener('onclick', …) ではなく addEventListener('click', …) と書きます。",
-      "resize や load はページ全体のイベントなので、window に対して登録します（window.addEventListener('resize', …)）。",
+      "load が window に登録するのは、ページの読み込み自体がブラウザ全体に関係しているからです。DOMContentLoaded は DOM 関連の読み込みだけなので document に登録します。resize もページ全体のイベントなので window に登録します。",
+      "script タグを `</body>` の直前に書いている場合は、その時点で DOM ができているため、DOMContentLoaded の記述は不要です。head に書くときは defer を付けるか、DOMContentLoaded の中に処理を書きます。",
       "mousemove・resize・scroll は短い間に何度も起きるため、重い処理を書くと動作が遅くなることがあります。"
     ],
     "related": [
@@ -18114,7 +18117,8 @@
       "js-event-target",
       "js-prevent-default",
       "html-input",
-      "html-form"
+      "html-form",
+      "html-script"
     ]
   },
   {
