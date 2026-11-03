@@ -2358,7 +2358,29 @@
       "while文",
       "無限ループ",
       "break",
-      "continue"
+      "continue",
+      "初期化",
+      "条件式"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-for-of-in",
+    "type": "js",
+    "slug": "for-of-in",
+    "name": "for...of / for...in",
+    "summary": "配列・オブジェクトを順に処理する",
+    "keywords": [
+      "for...of",
+      "for...in",
+      "for of",
+      "for in",
+      "繰り返し",
+      "ループ",
+      "キー",
+      "プロパティ",
+      "添字",
+      "インデックス"
     ],
     "category": "basic"
   },
@@ -2373,7 +2395,14 @@
       "引数",
       "戻り値",
       "return",
-      "定義"
+      "定義",
+      "メソッド",
+      "関数式",
+      "関数リテラル",
+      "Functionコンストラクタ",
+      "new Function",
+      "ユーザー定義関数",
+      "関数宣言"
     ],
     "category": "basic"
   },
@@ -2389,6 +2418,32 @@
       "関数",
       "=>",
       "コールバック"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-builtin-functions",
+    "type": "js",
+    "slug": "builtin-functions",
+    "name": "ビルトイン関数",
+    "summary": "JavaScriptに予め用意されている関数",
+    "keywords": [
+      "ビルトイン関数",
+      "組み込み関数",
+      "ビルトインオブジェクト",
+      "parseInt",
+      "parseFloat",
+      "Number",
+      "String",
+      "alert",
+      "prompt",
+      "confirm",
+      "Math",
+      "isNaN",
+      "Array.isArray",
+      "setInterval",
+      "Date",
+      "グローバル関数"
     ],
     "category": "basic"
   },
@@ -2505,7 +2560,10 @@
       "リスト",
       "push",
       "length",
-      "要素"
+      "要素",
+      "添字",
+      "インデックス",
+      "要素数"
     ],
     "category": "data"
   },
@@ -2550,7 +2608,11 @@
       "繰り返し",
       "配列",
       "ループ",
-      "各要素"
+      "各要素",
+      "NodeList",
+      "Array.from",
+      "querySelectorAll",
+      "スプレッド構文"
     ],
     "category": "data"
   },
@@ -2565,7 +2627,10 @@
       "変換",
       "配列",
       "加工",
-      "新しい配列"
+      "新しい配列",
+      "非破壊的",
+      "変換",
+      "加工"
     ],
     "category": "data"
   },
@@ -2580,7 +2645,10 @@
       "絞り込み",
       "検索",
       "配列",
-      "条件"
+      "条件",
+      "絞り込み",
+      "テスト関数",
+      "偶数"
     ],
     "category": "data"
   },
