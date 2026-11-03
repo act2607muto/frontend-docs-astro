@@ -2653,6 +2653,24 @@
     "category": "data"
   },
   {
+    "id": "js-dom",
+    "type": "js",
+    "slug": "dom",
+    "name": "DOM",
+    "summary": "HTMLをJavaScriptから操作するためのしくみ",
+    "keywords": [
+      "DOM",
+      "Document Object Model",
+      "DOM API",
+      "DOM操作",
+      "ツリー構造",
+      "ノード",
+      "document",
+      "documentオブジェクト"
+    ],
+    "category": "dom"
+  },
+  {
     "id": "js-query-selector",
     "type": "js",
     "slug": "query-selector",
@@ -2663,6 +2681,40 @@
       "セレクタ",
       "querySelectorAll",
       "getElementById",
+      "DOM"
+    ],
+    "category": "dom"
+  },
+  {
+    "id": "js-get-element",
+    "type": "js",
+    "slug": "get-element",
+    "name": "getElementById() / getElementsBy〜",
+    "summary": "id・class・タグ名・name属性で要素を取得する",
+    "keywords": [
+      "getElementById",
+      "getElementsByClassName",
+      "getElementsByTagName",
+      "getElementsByName",
+      "要素の取得",
+      "DOM"
+    ],
+    "category": "dom"
+  },
+  {
+    "id": "js-html-collection",
+    "type": "js",
+    "slug": "html-collection",
+    "name": "HTMLCollection / NodeList",
+    "summary": "複数取得した要素のまとまり",
+    "keywords": [
+      "HTMLCollection",
+      "NodeList",
+      "配列のようなもの",
+      "添字",
+      "インデックス",
+      "querySelectorAll",
+      "getElementsByClassName",
       "DOM"
     ],
     "category": "dom"
@@ -2724,6 +2776,37 @@
       "click",
       "onclick",
       "操作"
+    ],
+    "category": "event"
+  },
+  {
+    "id": "js-event-types",
+    "type": "js",
+    "slug": "event-types",
+    "name": "イベントの種類",
+    "summary": "click・mouseenter・load などのイベント一覧",
+    "keywords": [
+      "イベント",
+      "click",
+      "keydown",
+      "keyup",
+      "mousedown",
+      "mouseup",
+      "mousemove",
+      "mouseover",
+      "mouseout",
+      "mouseenter",
+      "mouseleave",
+      "DOMContentLoaded",
+      "focus",
+      "blur",
+      "submit",
+      "reset",
+      "change",
+      "resize",
+      "abort",
+      "error",
+      "load"
     ],
     "category": "event"
   },

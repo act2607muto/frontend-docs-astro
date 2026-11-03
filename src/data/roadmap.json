@@ -174,6 +174,21 @@
           "js-hoisting",
           "js-scope"
         ]
+      },
+      {
+        "title": "DOM操作とイベント",
+        "desc": "DOM のしくみを知り、要素の取得・書き換え・追加・削除、class の付け外し、クリックなどのイベントへの反応を組み合わせて画面を動かします。",
+        "links": [
+          "js-dom",
+          "js-query-selector",
+          "js-get-element",
+          "js-html-collection",
+          "js-text-content",
+          "js-create-element",
+          "js-class-list",
+          "js-add-event-listener",
+          "js-event-types"
+        ]
       }
     ]
   },
