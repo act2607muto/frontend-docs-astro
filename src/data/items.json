@@ -2172,7 +2172,7 @@
       "命名規則",
       "変数名"
     ],
-    "category": "basic"
+    "category": "variable"
   },
   {
     "id": "js-reserved-words",
@@ -2188,7 +2188,7 @@
       "変数名",
       "SyntaxError"
     ],
-    "category": "basic"
+    "category": "variable"
   },
   {
     "id": "js-data-types",
@@ -2213,7 +2213,7 @@
       "静的型付け",
       "typeof"
     ],
-    "category": "basic"
+    "category": "variable"
   },
   {
     "id": "js-literal",
@@ -2235,7 +2235,7 @@
       "関数リテラル",
       "関数式"
     ],
-    "category": "basic"
+    "category": "variable"
   },
   {
     "id": "js-operators",
@@ -2283,7 +2283,7 @@
       "厳格な等価性",
       "抽象的な等価性"
     ],
-    "category": "basic"
+    "category": "variable"
   },
   {
     "id": "js-type-conversion",
@@ -2303,7 +2303,7 @@
       "抽象的な等価性",
       "バグ"
     ],
-    "category": "basic"
+    "category": "variable"
   },
   {
     "id": "js-if",
@@ -2325,7 +2325,7 @@
       "AND",
       "OR"
     ],
-    "category": "basic"
+    "category": "control"
   },
   {
     "id": "js-truthy-falsy",
@@ -2346,7 +2346,7 @@
       "空文字",
       "条件式"
     ],
-    "category": "basic"
+    "category": "control"
   },
   {
     "id": "js-switch",
@@ -2363,7 +2363,7 @@
       "フォールスルー",
       "分岐"
     ],
-    "category": "basic"
+    "category": "control"
   },
   {
     "id": "js-for",
@@ -2384,7 +2384,7 @@
       "初期化",
       "条件式"
     ],
-    "category": "basic"
+    "category": "control"
   },
   {
     "id": "js-for-of-in",
@@ -2404,7 +2404,7 @@
       "添字",
       "インデックス"
     ],
-    "category": "basic"
+    "category": "control"
   },
   {
     "id": "js-function",
@@ -2485,7 +2485,7 @@
       "メソッド",
       "ウィンドウ"
     ],
-    "category": "basic"
+    "category": "mechanism"
   },
   {
     "id": "js-execution-context",
@@ -2505,7 +2505,7 @@
       "外部変数",
       "文脈"
     ],
-    "category": "basic"
+    "category": "mechanism"
   },
   {
     "id": "js-call-stack",
@@ -2527,7 +2527,7 @@
       "debugger",
       "デバッガー"
     ],
-    "category": "basic"
+    "category": "mechanism"
   },
   {
     "id": "js-hoisting",
@@ -2546,7 +2546,7 @@
       "TDZ",
       "var"
     ],
-    "category": "basic"
+    "category": "mechanism"
   },
   {
     "id": "js-scope",
@@ -2569,7 +2569,7 @@
       "lexical",
       "外部スコープ"
     ],
-    "category": "basic"
+    "category": "mechanism"
   },
   {
     "id": "js-array",

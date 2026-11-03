@@ -82,11 +82,23 @@
   "js": [
     {
       "id": "basic",
-      "name": "基本構文"
+      "name": "JavaScriptの基本"
+    },
+    {
+      "id": "variable",
+      "name": "変数・データ型"
+    },
+    {
+      "id": "control",
+      "name": "条件分岐・繰り返し"
     },
     {
       "id": "function",
       "name": "関数"
+    },
+    {
+      "id": "mechanism",
+      "name": "JSが動く仕組み"
     },
     {
       "id": "data",
