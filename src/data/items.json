@@ -2107,6 +2107,28 @@
     "category": "basic"
   },
   {
+    "id": "js-console-log",
+    "type": "js",
+    "slug": "console-log",
+    "name": "console.log()",
+    "summary": "値を開発者ツールのコンソールに表示する",
+    "keywords": [
+      "console.log",
+      "console",
+      "コンソール",
+      "ログ",
+      "デバッグ",
+      "開発者ツール",
+      "デベロッパーツール",
+      "検証",
+      "console.warn",
+      "console.error",
+      "console.table",
+      "出力"
+    ],
+    "category": "basic"
+  },
+  {
     "id": "js-runtime",
     "type": "js",
     "slug": "runtime",
