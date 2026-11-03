@@ -14538,12 +14538,18 @@
         "title": "const でも中身は変えられる",
         "desc": "const で宣言した配列やオブジェクトは、変数そのものは差し替えられませんが、中身の追加・変更はできます。",
         "js": "const fruits = ['りんご'];\nfruits.push('みかん');\nconsole.log(fruits);\n\n// fruits = []; ← これはエラー"
+      },
+      {
+        "title": "変数名の書き方（キャメルケースなど）",
+        "desc": "単語をつなげた変数名の書き方には名前が付いています。JavaScript では一般的に **キャメルケース**（2つめ以降の単語の頭を大文字）を使い、**スネークケース**（_ でつなぐ）も見かけます。**ケバブケース**（- でつなぐ）は `-` が引き算と見なされるため、変数名には使えません。",
+        "js": "let cebuActhouse = 0;   // キャメルケース（JavaScript の基本）\nlet cebu_acthouse = 0;  // スネークケース\nlet CebuActhouse = 0;   // パスカルケース（クラス名などに使う）\n// let cebu-acthouse = 0; ← ケバブケースはエラー\n\nconsole.log(cebuActhouse, cebu_acthouse, CebuActhouse);"
       }
     ],
     "notes": [
       "宣言する前に変数を使うとエラーになります。宣言はコードの実行前にメモリに配置されます（ホイスティング）が、let・const は初期値が設定されないためです。var は宣言前に使うとエラーにならず undefined になります。",
       "変数名には、何が入っているか分かる名前を付けます（例：count、userName）。",
-      "同じ範囲で同じ名前の変数を2回宣言することはできません。"
+      "同じ範囲で同じ名前の変数を2回宣言することはできません。",
+      "`if` や `class` などの **予約語** は変数名に使えません。"
     ],
     "related": [
       "js-javascript",
@@ -14551,7 +14557,604 @@
       "js-template-literal",
       "js-object",
       "js-hoisting",
-      "js-scope"
+      "js-scope",
+      "js-reserved-words",
+      "js-data-types"
+    ]
+  },
+  {
+    "id": "js-reserved-words",
+    "title": "予約語",
+    "ja": "変数名や関数名に使えない単語",
+    "lead": "if や function のように、JavaScript が特別な意味で使うために予約している単語です。変数名や関数名には使えません。全部を覚える必要はなく、迷ったら検索すれば一覧が出てきます。",
+    "meta": [
+      {
+        "label": "意味",
+        "value": "JavaScript が使うために予約している単語"
+      },
+      {
+        "label": "使えない場所",
+        "value": "変数名・関数名など"
+      },
+      {
+        "label": "覚え方",
+        "value": "全部覚える必要はない"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "// 予約語をそのまま変数名にするとエラー（SyntaxError）になる\n// let class = 'A組';\n// let new = true;\n\n// 単語を足したり変えたりすれば使える\nlet className = 'A組';\nlet isNew = true;\n\nconsole.log(className, isNew);"
+    },
+    "preview": {
+      "height": 80,
+      "note": "コメントの行のコメントを外すと、ページ全体の JavaScript が動かなくなります",
+      "fullDocument": false
+    },
+    "explain": [
+      "**予約語** は、JavaScript が文法の中で特別な意味を持たせるために予約している単語です。`if`・`for`・`function`・`let`・`const`・`return` など、これまでに使ってきた単語の多くが予約語です。",
+      "予約語は **変数名や関数名（識別子）には使えません**。`let class = 'A組';` のように書くと SyntaxError（文法エラー）になり、そのファイルの JavaScript は1行も実行されません。",
+      "数は多いですが、**全部を覚える必要はありません**。名前を付けるときにエラーが出たら予約語かどうかを疑い、検索して確かめれば十分です。`className`・`isNew` のように単語を組み合わせれば、予約語とぶつかることはほとんどありません。"
+    ],
+    "values": {
+      "label": "よく見る予約語（用途別）",
+      "head": "予約語",
+      "rows": [
+        {
+          "key": "var / let / const",
+          "desc": "変数を宣言する"
+        },
+        {
+          "key": "function / return",
+          "desc": "関数を作る・値を返す"
+        },
+        {
+          "key": "if / else / switch / case / default",
+          "desc": "条件によって処理を分ける"
+        },
+        {
+          "key": "for / while / do / break / continue",
+          "desc": "処理を繰り返す・繰り返しを抜ける"
+        },
+        {
+          "key": "true / false / null",
+          "desc": "決まった値を表す（リテラル）"
+        },
+        {
+          "key": "this / new / class / super / extends",
+          "desc": "オブジェクトやクラスで使う"
+        },
+        {
+          "key": "try / catch / finally / throw",
+          "desc": "エラーを扱う"
+        },
+        {
+          "key": "import / export",
+          "desc": "ほかのファイル（モジュール）とやり取りする"
+        },
+        {
+          "key": "typeof / instanceof / in / delete / void",
+          "desc": "値を調べたり操作したりする演算子"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "予約語ではないけれど避けたい名前",
+        "desc": "`undefined`・`NaN`・`name`・`window`・`document` などは予約語ではないので変数名にできてしまいますが、もともと用意されている値やオブジェクトと紛らわしくなります。使わないようにしましょう。",
+        "js": "// 動くけれど紛らわしい名前\n// let document = 'レポート';\n\n// 何が入っているか分かる名前にする\nlet reportTitle = 'レポート';\nconsole.log(reportTitle);"
+      }
+    ],
+    "notes": [
+      "大文字・小文字は区別されるので、`Class` や `IF` は予約語ではありません。ただし紛らわしいので使わないのが無難です。",
+      "`implements`・`interface`・`package`・`private`・`protected`・`public` などは、strict モード（`<script type=\"module\">` も含む）のときに予約語として扱われます。",
+      "`enum` は、今は使われていないものの将来のために予約されている単語です。"
+    ],
+    "advanced": {
+      "title": "予約語の一覧",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "講義スライドで紹介された予約語の一覧です。**検索すれば出てくるので、全部覚える必要はありません。**"
+        },
+        {
+          "type": "table",
+          "head": [
+            "種類",
+            "予約語"
+          ],
+          "rows": [
+            [
+              "予約語",
+              "`await` `break` `case` `catch` `class` `const` `continue` `debugger` `default` `delete` `do` `else` `export` `extends` `false` `finally` `for` `function` `if` `import` `in` `instanceof` `new` `null` `return` `super` `switch` `this` `throw` `true` `try` `typeof` `var` `void` `while` `with` `yield`"
+            ],
+            [
+              "将来のための予約語",
+              "`enum`"
+            ],
+            [
+              "strict モードで予約語になる",
+              "`let` `static` `implements` `interface` `package` `private` `protected` `public`"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "名前でエラーが出たら",
+          "items": [
+            "Unexpected token や Unexpected strict mode reserved word というエラーが出たら、変数名が予約語になっていないか確かめます。",
+            "変数名の付け方（キャメルケースなど）は「let / const」のページで説明しています。"
+          ]
+        }
+      ]
+    },
+    "related": [
+      "js-let-const",
+      "js-function",
+      "js-data-types",
+      "js-literal"
+    ]
+  },
+  {
+    "id": "js-data-types",
+    "title": "データ型",
+    "ja": "値の種類",
+    "lead": "プログラムで扱うデータには「種類」があり、その種類のことをデータ型（型）と呼びます。JavaScript のデータ型は8種類で、プリミティブ型とオブジェクト型の2つに分けられます。",
+    "meta": [
+      {
+        "label": "意味",
+        "value": "値のカテゴリー分け"
+      },
+      {
+        "label": "種類",
+        "value": "8種類（プリミティブ型7つ＋オブジェクト型）"
+      },
+      {
+        "label": "型付け",
+        "value": "動的型付け言語（型の宣言がいらない）"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "// typeof で値のデータ型を調べられる\nconsole.log(typeof 'こんにちは'); // string\nconsole.log(typeof 100);          // number\nconsole.log(typeof 123n);         // bigint\nconsole.log(typeof true);         // boolean\nconsole.log(typeof undefined);    // undefined\nconsole.log(typeof Symbol('id')); // symbol\nconsole.log(typeof { year: 2024 }); // object\nconsole.log(typeof [1, 2, 3]);    // object（配列もオブジェクト型）"
+    },
+    "preview": {
+      "height": 190,
+      "note": "typeof の結果は小文字の文字列で返ってきます",
+      "fullDocument": false
+    },
+    "explain": [
+      "プログラムで扱うデータには「種類」があります。その種類のことを **データ型（型）** と呼びます。かみ砕いていうと、**値のカテゴリー分け** のことです。",
+      "JavaScript で使えるデータ型は **String（文字列）・Number（数値）・BigInt（巨大な整数）・Boolean（真偽値）・null・undefined・Symbol・Object（オブジェクト）** の8種類です。",
+      "データ型は大きく **プリミティブ型** と **オブジェクト型** の2つに分類されます。**プリミティブ型** は数値や真偽値などの基本的な型で、Object 以外の7つがこれに当たります。**オブジェクト型** は、複数のプリミティブ型の値またはオブジェクトからなる集合体のことで、Object のほか Window・Array・RegExp・Map・Promise などがあります。",
+      "JavaScript は **動的型付け言語** です。変数を宣言するときにデータ型を書く必要がなく、同じ変数に数値を入れたあとで文字列を入れることもできます。"
+    ],
+    "values": {
+      "label": "JavaScriptで使えるデータ型",
+      "head": "データ型",
+      "rows": [
+        {
+          "key": "String",
+          "desc": "文字列。シングルクォート・ダブルクォート・バッククォートで囲んだ文字列"
+        },
+        {
+          "key": "Number",
+          "desc": "数値。整数または浮動小数点数（小数）。整数を正確に扱えるのは -(2の53乗 - 1) 〜 2の53乗 - 1 の範囲"
+        },
+        {
+          "key": "BigInt",
+          "desc": "巨大な整数。任意の大きさの整数値（数字の末尾に n を付ける）"
+        },
+        {
+          "key": "Boolean",
+          "desc": "真偽値。true（真）または false（偽）"
+        },
+        {
+          "key": "null",
+          "desc": "ヌル。値が存在しないことを表す"
+        },
+        {
+          "key": "undefined",
+          "desc": "未定義。値が未定義であることを表す"
+        },
+        {
+          "key": "Symbol",
+          "desc": "シンボル。一意で不変な値"
+        },
+        {
+          "key": "Object",
+          "desc": "オブジェクト。キーと値をペアで格納する入れ物"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "動的型付けなので、あとから別の型を入れられる",
+        "desc": "JavaScript では変数に型が決まっていないので、数値を入れた変数に文字列を入れ直してもエラーになりません。書くのは楽ですが、思わぬ値が入っていても実行するまで気づけないので注意します。",
+        "js": "let value = 100;\nconsole.log(typeof value); // number\n\nvalue = '100円';\nconsole.log(typeof value); // string"
+      },
+      {
+        "title": "数字の文字列と数値は別の型",
+        "desc": "`'100'` は文字列、`100` は数値です。見た目が同じでも型が違うと、`+` の結果が変わります。",
+        "js": "console.log(100 + 1);   // 101（数値の足し算）\nconsole.log('100' + 1); // 1001（文字列の連結）"
+      }
+    ],
+    "notes": [
+      "`typeof null` は `'object'` になります。JavaScript の初期からの仕様のなごりで、null はプリミティブ型です。",
+      "配列（Array）も `typeof` では `'object'` になります。配列かどうかを調べるときは `Array.isArray()` を使います。",
+      "データ型の値をコードに書く書き方は「リテラル」のページで、`+` などの記号は「演算子」のページで説明しています。"
+    ],
+    "advanced": {
+      "title": "プリミティブ型とオブジェクト型・動的型付けと静的型付け",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "データ型は2つに分類される"
+        },
+        {
+          "type": "table",
+          "head": [
+            "プリミティブ型",
+            "オブジェクト型"
+          ],
+          "rows": [
+            [
+              "String",
+              "Object"
+            ],
+            [
+              "Number",
+              "Window"
+            ],
+            [
+              "BigInt",
+              "Array"
+            ],
+            [
+              "Boolean",
+              "RegExp"
+            ],
+            [
+              "null",
+              "Map"
+            ],
+            [
+              "undefined",
+              "Promise"
+            ],
+            [
+              "Symbol",
+              "など"
+            ]
+          ]
+        },
+        {
+          "type": "p",
+          "text": "**プリミティブ型** は、数値や真偽値などの基本的な型です。**オブジェクト型** は、複数のプリミティブ型の値またはオブジェクトからなる集合体です。"
+        },
+        {
+          "type": "h",
+          "text": "動的型付け言語と静的型付け言語"
+        },
+        {
+          "type": "table",
+          "head": [
+            "",
+            "動的型付け言語",
+            "静的型付け言語"
+          ],
+          "rows": [
+            [
+              "型の宣言",
+              "いらない",
+              "必要（必ず型名を書く）"
+            ],
+            [
+              "よいところ",
+              "比較的かんたんに書け、コード量も減る",
+              "プログラムの実行前に、バグやエラーの箇所を特定しやすい"
+            ],
+            [
+              "気をつけること",
+              "プログラムを実行しないとバグが分かりづらい",
+              "コード量が増える可能性がある"
+            ],
+            [
+              "例",
+              "**JavaScript**・PHP・Python・Ruby など",
+              "Java・Go・C・C++・C# など"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "TypeScript",
+          "items": [
+            "JavaScript に型の宣言を足した言語が **TypeScript** です。実行前に型の間違いを見つけられるので、大きな開発でよく使われます。"
+          ]
+        }
+      ]
+    },
+    "related": [
+      "js-literal",
+      "js-operators",
+      "js-let-const",
+      "js-object",
+      "js-array"
+    ]
+  },
+  {
+    "id": "js-literal",
+    "title": "リテラル",
+    "ja": "値をそのままコードに書く書き方",
+    "lead": "データ型の値をコードで記述するための構文のことです。'こんにちは' や 100、true のように、値をそのままコードに書いたものをリテラルといいます。",
+    "meta": [
+      {
+        "label": "意味",
+        "value": "データ型の値をコードで記述するための構文"
+      },
+      {
+        "label": "英語",
+        "value": "literal（文字どおりの）"
+      },
+      {
+        "label": "例",
+        "value": "'こんにちは'・100・true・[1, 2]・{ a: 1 }"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "const message = 'こんにちは';        // 文字列リテラル\nconst price = 1.5;                   // 数値リテラル\nconst isOpen = true;                 // 真偽値リテラル\nconst empty = null;                  // null リテラル\nconst big = 12345678901234567890n;   // BigInt リテラル\nconst school = { name: 'アクトハウス', year: 2024 }; // オブジェクトリテラル\nconst list = [0, 1, 2, 3, 4, 'cebu'];              // 配列リテラル\nconst pattern = /ab+c/;              // 正規表現リテラル\nconst acthouse = function () {       // 関数リテラル（関数式）\n  console.log('セブ島');\n};\n\nconsole.log(message, price, isOpen, empty);\nconsole.log(school);\nconsole.log(list);\nconsole.log(pattern.test('abbbc')); // true\nacthouse();"
+    },
+    "preview": {
+      "height": 150,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "**リテラル** とは、**データ型の値をコードで記述するための構文** のことです。`'こんにちは'`・`100`・`true` のように、値そのものをコードに書いたものがリテラルです。",
+      "`const price = 100;` の場合、`price` は変数、`100` は数値リテラルです。変数は値を入れておく入れ物、リテラルは入れる値そのもの、と考えると区別しやすくなります。",
+      "プリミティブ型の値を書く **文字列・数値・真偽値・null・BigInt** のリテラルのほかに、**オブジェクト・配列・正規表現・関数** を書くためのリテラルもあります。"
+    ],
+    "values": {
+      "label": "リテラルの種類",
+      "head": "書き方",
+      "rows": [
+        {
+          "key": "'こんにちは' \"こんにちは\" `こんにちは`",
+          "desc": "文字列リテラル。シングルクォート・ダブルクォート・バッククォートで囲む"
+        },
+        {
+          "key": "100 / -50 / 1.5",
+          "desc": "数値リテラル。整数も小数も、マイナスの数も書ける"
+        },
+        {
+          "key": "true / false",
+          "desc": "真偽値リテラル"
+        },
+        {
+          "key": "null",
+          "desc": "null リテラル。値が存在しないことを表す"
+        },
+        {
+          "key": "12345678901234567890n",
+          "desc": "BigInt リテラル。整数の末尾に n を付ける"
+        },
+        {
+          "key": "{ name: 'アクトハウス', year: 2024 }",
+          "desc": "オブジェクトリテラル。{ } の中に キー: 値 を並べる"
+        },
+        {
+          "key": "[0, 1, 2, 3, 4, 'cebu']",
+          "desc": "配列リテラル。[ ] の中に値をカンマ区切りで並べる"
+        },
+        {
+          "key": "/ab+c/",
+          "desc": "正規表現リテラル。/ と / で文字のパターンを囲む"
+        },
+        {
+          "key": "function () { … }",
+          "desc": "関数リテラル。変数に入れる関数（関数式）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "関数リテラル（関数式）",
+        "desc": "`function` で作った関数を値として変数に入れる書き方です。変数名に `()` を付けて呼び出します。関数宣言と違い、宣言より前の行では呼び出せません。",
+        "js": "let acthouse = function () {\n  console.log('セブ島');\n};\n\nacthouse(); // セブ島"
+      },
+      {
+        "title": "正規表現リテラルで文字のパターンを調べる",
+        "desc": "`/ab+c/` は「a のあとに b が1つ以上続き、そのあとに c」というパターンです。`test()` で、文字列がパターンに当てはまるかを true / false で調べられます。",
+        "js": "const pattern = /ab+c/;\nconsole.log(pattern.test('abc'));   // true\nconsole.log(pattern.test('abbbc')); // true\nconsole.log(pattern.test('ac'));    // false"
+      }
+    ],
+    "notes": [
+      "バッククォートで囲んだ文字列（テンプレートリテラル）は、`${ }` で変数を埋め込めます。",
+      "`undefined` はリテラルではなく、最初から用意されている値（グローバルなプロパティ）です。",
+      "数値リテラルは `1_000_000` のように `_` で区切って読みやすく書くこともできます。"
+    ],
+    "related": [
+      "js-data-types",
+      "js-template-literal",
+      "js-object",
+      "js-array",
+      "js-function"
+    ]
+  },
+  {
+    "id": "js-operators",
+    "title": "演算子",
+    "ja": "計算や比較をする記号",
+    "lead": "値をもとに何らかの処理を行い、その結果を返す記号のことです。足し算の + や、等しいかを比べる === などがあります。演算子で処理される値をオペランドといいます。",
+    "meta": [
+      {
+        "label": "演算子",
+        "value": "値を処理して結果を返す記号"
+      },
+      {
+        "label": "オペランド",
+        "value": "演算子によって処理される値"
+      },
+      {
+        "label": "主な種類",
+        "value": "算術・インクリメント・グループ化・等価"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "console.log(10 + 20); // 30（加算）\nconsole.log(10 - 5);  // 5（減算）\nconsole.log(3 * 4);   // 12（乗算）\nconsole.log(10 / 5);  // 2（除算）\nconsole.log(7 % 3);   // 1（剰余：7 ÷ 3 の余り）\nconsole.log(3 ** 2);  // 9（べき乗：3 の2乗）\n\n// + は文字列の連結にも使う\nconsole.log('セブ' + '島'); // セブ島"
+    },
+    "preview": {
+      "height": 170,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "**演算子** とは、**値をもとに何らかの処理を行い、その結果を返す記号** のことです。算数や数学で習う「+、-、×、÷」がそれに当たります。",
+      "**オペランド** とは、**演算子によって処理される値** のことです。`10 + 20` なら、`+` が演算子、`10` と `20` がオペランドです。",
+      "**算術演算子** は数値計算に使う演算子です。かけ算は `×` ではなく `*`、割り算は `÷` ではなく `/` と書きます。なお、加算演算子 `+` は **文字列を連結する** ときにも使います。",
+      "`*` と `/` は `+` と `-` より先に計算されます。処理の順番を意図的に変えたいときは、小括弧 `( )` を使ってグループ化します（**グループ化演算子**）。",
+      "値を比べるときは **等価演算子**（`===` など）を使います。結果は Boolean 型の真偽値（true / false）で返ってきます。案件の現場では値の比較を行うことが頻繁にあります。"
+    ],
+    "values": {
+      "label": "算術演算子",
+      "head": "演算子",
+      "rows": [
+        {
+          "key": "+",
+          "desc": "加算（例：1 + 2 → 3）。文字列の連結にも使う"
+        },
+        {
+          "key": "-",
+          "desc": "減算（例：10 - 5 → 5）"
+        },
+        {
+          "key": "*",
+          "desc": "乗算（例：3 * 4 → 12）"
+        },
+        {
+          "key": "/",
+          "desc": "除算（例：10 / 5 → 2）"
+        },
+        {
+          "key": "%",
+          "desc": "剰余＝割り算の余り（例：7 % 3 → 1）"
+        },
+        {
+          "key": "**",
+          "desc": "べき乗（例：3 ** 2 → 9）"
+        },
+        {
+          "key": "++",
+          "desc": "1を加算する（例：x++）インクリメント"
+        },
+        {
+          "key": "--",
+          "desc": "1を減算する（例：y--）デクリメント"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "インクリメント演算子とデクリメント演算子",
+        "desc": "変数が保持している値に +1（**インクリメント**）、または -1（**デクリメント**）した値を設定できます。`for` 文で回数を数えるときによく使います。",
+        "js": "let x = 0;\nx++;\nconsole.log(x); // 1\n\nlet y = 10;\ny--;\nconsole.log(y); // 9"
+      },
+      {
+        "title": "グループ化演算子",
+        "desc": "処理の順番を意図的に変更したい場合は、小括弧を使いグループ化します。グループ化していないと `*` が先に計算されます。",
+        "js": "// グループ化していない場合\nconsole.log(1 + 2 * 3);   // 7\n\n// 1 + 2 を先に処理させたい場合\nconsole.log((1 + 2) * 3); // 9"
+      },
+      {
+        "title": "等価演算子（== と === の違い）",
+        "desc": "`==` は型が違っても値を変換して比べるので、数値の `1` と文字列の `'1'` が等しくなります。`===` は **値と型の両方** を比べます。思わぬ結果を防ぐため、基本は `===` と `!==` を使います。",
+        "js": "console.log(1 == '1');  // true（値だけ比べる）\nconsole.log(1 === '1'); // false（型が違う）\nconsole.log(1 === 1);   // true\nconsole.log(1 !== '1'); // true"
+      }
+    ],
+    "notes": [
+      "数値と文字列を `+` でつなぐと文字列の連結になります（`'100' + 1` は `'1001'`）。数値として足したいときは `Number('100') + 1` のように数値に変換します。",
+      "`x++` と `++x` は、どちらも x に1を足しますが、式の値として使ったときの結果が違います（`x++` は足す前の値、`++x` は足したあとの値）。迷ったら1行で `x++;` とだけ書きます。",
+      "`=` は代入、`===` は比較です。`count += 1` のように、計算と代入をまとめて書く **代入演算子** もあります。",
+      "大小を比べる `<`・`>`・`<=`・`>=` や、かつ・または の `&&`・`||` は「if」のページで説明しています。"
+    ],
+    "advanced": {
+      "title": "等価演算子の一覧と結果",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "**等価演算子** は値を比較する際に使う演算子です。演算の結果は Boolean 型の真偽値（true, false）で戻されます。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "例",
+            "結果",
+            "用途"
+          ],
+          "rows": [
+            [
+              "`1 == \"1\"`",
+              "true",
+              "`==`：値が等しいことを確認"
+            ],
+            [
+              "`1 == 1`",
+              "true",
+              "`==`：値が等しいことを確認"
+            ],
+            [
+              "`1 === \"1\"`",
+              "false",
+              "`===`：値と型が等しいことを確認"
+            ],
+            [
+              "`1 === 1`",
+              "true",
+              "`===`：値と型が等しいことを確認"
+            ],
+            [
+              "`1 != \"1\"`",
+              "false",
+              "`!=`：値が等しくないことを確認"
+            ],
+            [
+              "`1 != 2`",
+              "true",
+              "`!=`：値が等しくないことを確認"
+            ],
+            [
+              "`1 !== \"1\"`",
+              "true",
+              "`!==`：値と型が等しくないことを確認"
+            ],
+            [
+              "`1 !== 1`",
+              "false",
+              "`!==`：値と型が等しくないことを確認"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "演算子とオペランド",
+          "items": [
+            "`10 + 20` の `+` が **演算子**、`10` と `20` が **オペランド** です。",
+            "`x++` のようにオペランドが1つの演算子もあります。"
+          ]
+        }
+      ]
+    },
+    "related": [
+      "js-data-types",
+      "js-if",
+      "js-let-const",
+      "js-for",
+      "js-literal"
     ]
   },
   {
@@ -14627,13 +15230,15 @@
     ],
     "notes": [
       "条件の中で = （代入）と === （比較）を間違えないようにします。",
-      "0、空の文字列 ''、null、undefined は false として扱われます。"
+      "0、空の文字列 ''、null、undefined は false として扱われます。",
+      "`==` と `===` の違いや、`+`・`%` などの算術演算子は「演算子」のページで説明しています。"
     ],
     "related": [
       "js-for",
       "js-let-const",
       "js-function",
-      "js-filter"
+      "js-filter",
+      "js-operators"
     ]
   },
   {
@@ -15143,12 +15748,18 @@
         "title": "ブレイクポイントで止めて見る",
         "desc": "**ブレイクポイント** は、クリックした行で処理を一時停止できる機能です。下のコードの `c();` の行にブレイクポイントを付けて再読み込みすると、Call Stack に `b`・`a`・`(anonymous)` が積まれているのが分かります。**(anonymous)（匿名）** はグローバルコンテキストのことです。",
         "js": "function a() {\n  b();\n}\nfunction b() {\n  c(); // ← この行にブレイクポイント\n}\nfunction c() {\n  console.log('c');\n}\na();"
+      },
+      {
+        "title": "debugger; で止める",
+        "desc": "`debugger;` と書いた行で、コードの処理を一旦止めることができます。行番号をクリックしてブレイクポイントを設定しなくて済みます。下のコードで止めると、右側の Scope 欄の **Script** に let で宣言した `a`、**Global** に var で宣言した `b` と function の `c` が表示され、var や function が window オブジェクトのプロパティとして扱われることが分かります。",
+        "js": "let a = 0;\nvar b = 0;\nfunction c() {\n\n}\n\ndebugger; // 検証ツールを開いた状態で再読み込みすると、ここで止まる"
       }
     ],
     "notes": [
       "止めたあとは、検証ツール上部の ▶（Resume）で続きを実行できます。ブレイクポイントは行番号をもう一度クリックすると外れます。",
       "関数が自分自身を終わりなく呼び出し続けると、コールスタックがあふれて「Maximum call stack size exceeded」というエラーになります。",
-      "setTimeout() などで後から実行される処理は、コールスタックが空になってから実行されます。"
+      "setTimeout() などで後から実行される処理は、コールスタックが空になってから実行されます。",
+      "`debugger;` は検証ツールを開いているときだけ止まります。確認が終わったら、本番のコードからは消しておきます。"
     ],
     "advanced": {
       "title": "コールスタックが積まれていく様子",
@@ -15307,6 +15918,10 @@
       {
         "label": "探す順番",
         "value": "内側から外側へ"
+      },
+      {
+        "label": "決まり方",
+        "value": "レキシカルスコープ（書いた場所で決まる）"
       }
     ],
     "code": {
@@ -15323,6 +15938,7 @@
       "**スコープ** とは、**実行中のコードから値と式がアクセスできる範囲** のことです。言いかえると、**変数や関数が有効な範囲** です。",
       "スコープには **グローバルスコープ**・**スクリプトスコープ**・**関数スコープ**・**ブロックスコープ**・**モジュールスコープ** の5種類があります。",
       "スコープは入れ子になっていて、**内側のスコープからは外側の変数を使えます** が、**外側から内側の変数は使えません**。変数を使うと、まず今いるスコープを探し、見つからなければ1つ外側…と順番に探していきます。",
+      "JavaScript のスコープは **レキシカルスコープ（静的スコープ）** という仕組みで決まります。**関数がどこで定義されたか** によって、その関数が参照できる変数が決まるという JavaScript の仕様です。どこで **呼び出したか** は関係ありません。lexical は「語彙（ごい）的な・辞書の・辞書的な」という意味で、「どこに何を書いているか」で決まる、ということです。",
       "変数は、できるだけ使う場所の近く（狭いスコープ）で宣言します。どこからでも使える変数が多いと、別の場所で同じ名前を使ったときに書き換わってしまう原因になります。"
     ],
     "values": {
@@ -15353,6 +15969,11 @@
     },
     "usages": [
       {
+        "title": "レキシカルスコープ（静的スコープ）",
+        "desc": "`acthouse2` は `acthouse1` の中で定義されているので、外側の `acthouse1` の変数 `b` を参照できます。このように、**実行中のコードから見た外部スコープ** は、関数を書いた場所で決まります。",
+        "js": "let a = 1;\nfunction acthouse1() {\n  let b = 2;\n  function acthouse2() {\n    let c = 3;\n    console.log(b); // 2（定義された場所の外側にある b を参照できる）\n  }\n  acthouse2();\n}\nacthouse1();"
+      },
+      {
         "title": "var はブロックスコープを持たない",
         "desc": "`let`・`const` は `{ }` の中でだけ有効ですが、`var` は `{ }` を無視して外からも使えてしまいます。これも var が非推奨の理由の1つです。",
         "js": "if (true) {\n  var x = 1;\n  let y = 2;\n}\nconsole.log(x); // 1（外から見えてしまう）\n// console.log(y); ← エラー"
@@ -15361,18 +15982,26 @@
         "title": "グローバルスコープとスクリプトスコープの違い",
         "desc": "関数の外で `var` で宣言した変数は window のプロパティになりますが、`let`・`const` はなりません（スクリプトスコープに入ります）。",
         "js": "var a = 'var';\nlet b = 'let';\n\nconsole.log(window.a); // var\nconsole.log(window.b); // undefined"
+      },
+      {
+        "title": "呼び出した場所ではなく、書いた場所で決まる",
+        "desc": "`show` はグローバルに書かれているので、`run` の中で呼び出しても `run` の中の変数 `place` は見えません。見えるのは、`show` を書いた場所の外側にある `place` です。",
+        "js": "const place = 'グローバル';\n\nfunction show() {\n  console.log(place);\n}\n\nfunction run() {\n  const place = 'run の中';\n  show(); // グローバル\n}\n\nrun();"
       }
     ],
     "notes": [
       "外側と内側で同じ名前の変数を宣言すると、内側では内側の変数が使われます（外側の変数は隠れて見えなくなります）。",
+      "関数も `{ }` を使いますが、関数の `{ }` の範囲は **ブロックスコープではなく関数スコープ** と呼びます。",
       "検証ツールでブレイクポイントを付けて止めると、右側の Scope 欄で Block・Local（関数）・Script・Global などのスコープごとの変数を確認できます。",
-      "モジュールスコープの変数をほかのファイルで使うときは、export と import を使います。"
+      "モジュールスコープの変数をほかのファイルで使うときは、export と import を使います。",
+      "コードに `debugger;` と書くと、その行で処理が止まり、Scope 欄でスコープごとの変数を確認できます（検証ツールを開いているときだけ止まります）。"
     ],
     "related": [
       "js-let-const",
       "js-function",
       "js-execution-context",
-      "js-hoisting"
+      "js-hoisting",
+      "js-call-stack"
     ]
   },
   {
@@ -15636,13 +16265,15 @@
     ],
     "notes": [
       "利用者が入力した文字を innerHTML で埋め込むと、悪意のあるスクリプトが実行される危険があります。文字だけなら textContent を使います。",
-      "バッククォートは、日本語キーボードでは Shift + @ で入力できます。"
+      "バッククォートは、日本語キーボードでは Shift + @ で入力できます。",
+      "`'…'`・`\"…\"`・`` `…` `` のように値をそのままコードに書いたものを **リテラル** といいます。テンプレート文字列は文字列リテラルの書き方の1つです。"
     ],
     "related": [
       "js-let-const",
       "js-object",
       "js-text-content",
-      "js-create-element"
+      "js-create-element",
+      "js-literal"
     ]
   },
   {

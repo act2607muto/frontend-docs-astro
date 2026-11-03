@@ -2141,7 +2141,104 @@
       "定数",
       "宣言",
       "var",
-      "代入"
+      "代入",
+      "キャメルケース",
+      "スネークケース",
+      "パスカルケース",
+      "ケバブケース",
+      "camelCase",
+      "命名規則",
+      "変数名"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-reserved-words",
+    "type": "js",
+    "slug": "reserved-words",
+    "name": "予約語",
+    "summary": "変数名や関数名に使えない単語",
+    "keywords": [
+      "予約語",
+      "キーワード",
+      "reserved word",
+      "使えない名前",
+      "変数名",
+      "SyntaxError"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-data-types",
+    "type": "js",
+    "slug": "data-types",
+    "name": "データ型",
+    "summary": "値の種類（プリミティブ型とオブジェクト型）",
+    "keywords": [
+      "データ型",
+      "型",
+      "String",
+      "Number",
+      "BigInt",
+      "Boolean",
+      "null",
+      "undefined",
+      "Symbol",
+      "Object",
+      "プリミティブ型",
+      "オブジェクト型",
+      "動的型付け",
+      "静的型付け",
+      "typeof"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-literal",
+    "type": "js",
+    "slug": "literal",
+    "name": "リテラル",
+    "summary": "値をそのままコードに書く書き方",
+    "keywords": [
+      "リテラル",
+      "literal",
+      "文字列リテラル",
+      "数値リテラル",
+      "真偽値リテラル",
+      "nullリテラル",
+      "BigIntリテラル",
+      "オブジェクトリテラル",
+      "配列リテラル",
+      "正規表現リテラル",
+      "関数リテラル",
+      "関数式"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-operators",
+    "type": "js",
+    "slug": "operators",
+    "name": "演算子",
+    "summary": "計算や比較をする記号",
+    "keywords": [
+      "演算子",
+      "オペランド",
+      "算術演算子",
+      "剰余",
+      "べき乗",
+      "インクリメント",
+      "デクリメント",
+      "++",
+      "--",
+      "グループ化演算子",
+      "等価演算子",
+      "==",
+      "===",
+      "!=",
+      "!==",
+      "比較",
+      "文字列の連結"
     ],
     "category": "basic"
   },
@@ -2259,7 +2356,9 @@
       "Sources",
       "anonymous",
       "デバッグ",
-      "検証ツール"
+      "検証ツール",
+      "debugger",
+      "デバッガー"
     ],
     "category": "basic"
   },
@@ -2297,7 +2396,11 @@
       "ブロックスコープ",
       "モジュールスコープ",
       "有効範囲",
-      "type=\"module\""
+      "type=\"module\"",
+      "レキシカルスコープ",
+      "静的スコープ",
+      "lexical",
+      "外部スコープ"
     ],
     "category": "basic"
   },
