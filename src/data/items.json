@@ -2426,7 +2426,7 @@
       "ユーザー定義関数",
       "関数宣言"
     ],
-    "category": "basic"
+    "category": "function"
   },
   {
     "id": "js-arrow-function",
@@ -2441,7 +2441,7 @@
       "=>",
       "コールバック"
     ],
-    "category": "basic"
+    "category": "function"
   },
   {
     "id": "js-builtin-functions",
@@ -2467,7 +2467,7 @@
       "Date",
       "グローバル関数"
     ],
-    "category": "basic"
+    "category": "function"
   },
   {
     "id": "js-window-this",
