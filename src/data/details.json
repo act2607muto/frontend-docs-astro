@@ -15681,8 +15681,8 @@
       "fullDocument": false
     },
     "explain": [
-      "`for (初期化; 条件; 更新)` の形では、条件が `true` の間だけ処理を繰り返します。上の例では `i` を1から3まで1ずつ増やしながら3回実行しています。",
-      "`for (const 変数 of 配列)` の形（for...of）は、配列の要素を先頭から1つずつ取り出して処理します。番号が必要ないときはこちらが簡潔です。",
+      "`for (①初期化; ②条件式; ③ループ毎の最後に実行される式)` の形で、指定した回数だけ処理を繰り返します。①は最初に1回だけ実行される **初期化処理**、②は **繰り返し処理を継続する条件**、③は **繰り返し処理の最後に毎回実行される式** です。上の例では `i` を1から3まで1ずつ増やしながら3回実行しています。",
+      "`for (const 変数 of 配列)` の形（for...of）は、配列の要素を先頭から1つずつ取り出して処理します。番号が必要ないときはこちらが簡潔です。オブジェクトのキーを取り出す for...in との違いは「for...of / for...in」のページで説明しています。",
       "`while (条件式)` の形（**while 文**）は、条件式が truthy のときに処理を繰り返し行い、falsy になったときに処理を終了します。回数が決まっていない繰り返しに向いています。",
       "`break` で繰り返しを途中で終了し、`continue` でその回の残りを飛ばして次の回に進みます。"
     ],
@@ -15714,6 +15714,11 @@
     },
     "usages": [
       {
+        "title": "for 文の基本の形",
+        "desc": "①`let i = 0` で i を0にし、②`i < 5` が成り立つ間、処理を繰り返し、③1回の処理が終わるたびに `i++` で i を1増やします。",
+        "js": "for (let i = 0; i < 5; i++) {\n  console.log(i);\n}\n// 0 1 2 3 4 と表示される"
+      },
+      {
         "title": "条件に合ったら途中で止める",
         "desc": "break を使うと、見つかった時点で繰り返しを終了できます。",
         "js": "const scores = [62, 85, 91, 40];\nfor (const s of scores) {\n  if (s >= 90) {\n    console.log('90点以上を見つけました：' + s);\n    break;\n  }\n}"
@@ -15729,11 +15734,103 @@
       "配列を加工するだけなら、map() や filter() を使うと短く書けます。"
     ],
     "related": [
+      "js-for-of-in",
       "js-foreach",
       "js-array",
       "js-if",
       "js-truthy-falsy",
       "js-map"
+    ]
+  },
+  {
+    "id": "js-for-of-in",
+    "title": null,
+    "ja": "配列・オブジェクトを順に処理する",
+    "lead": "for...of は配列の要素を、for...in はオブジェクトのプロパティ（キー）を、先頭から1つずつ取り出して繰り返し処理します。原則すべての要素・プロパティに処理が実行されます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "制御構文"
+      },
+      {
+        "label": "for...of",
+        "value": "配列の要素を取り出す"
+      },
+      {
+        "label": "for...in",
+        "value": "オブジェクトのキーを取り出す"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "let acthouse = ['プログラミング', 'デザイン', 'ビジネス'];\n\nfor (const value of acthouse) {\n  console.log(value);\n}\n// プログラミング / デザイン / ビジネス"
+    },
+    "preview": {
+      "height": 100,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "**for...of 文** は、**配列に対して繰り返し処理を行うとき** に使います。`for (const 変数 of 配列)` と書くと、配列の要素が先頭から順に変数に入り、原則すべての要素に処理が実行されます。",
+      "for...of は配列や文字列、NodeList のように「順番に取り出せる（反復可能な）もの」に使えます。**普通のオブジェクトに使うとエラー**（`TypeError: … is not iterable`）になります。",
+      "**for...in 文** は、**オブジェクトの要素に対して繰り返し処理を行うとき** に使います。`for (const key in オブジェクト)` と書くと、プロパティの **キー** が順に変数に入ります。値は `オブジェクト[key]` のようにブラケット記法で取り出します。",
+      "for...in を配列に使うと、要素ではなく **添字（インデックス）** が `'0'`・`'1'` … の文字列で取り出されます。配列には for...of か `forEach()` を使うのが一般的です。"
+    ],
+    "values": {
+      "label": "for...of と for...in の使い分け",
+      "head": "構文",
+      "rows": [
+        {
+          "key": "for (const value of 配列)",
+          "desc": "配列の要素（値）を順に取り出す"
+        },
+        {
+          "key": "for (const key in オブジェクト)",
+          "desc": "オブジェクトのキーを順に取り出す"
+        },
+        {
+          "key": "for...of をオブジェクトに使う",
+          "desc": "エラーになる（反復可能ではないため）"
+        },
+        {
+          "key": "for...in を配列に使う",
+          "desc": "添字（'0'・'1'…の文字列）が取り出される"
+        },
+        {
+          "key": "for (const [key, value] of Object.entries(obj))",
+          "desc": "オブジェクトのキーと値をまとめて取り出す"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "for...in でオブジェクトのキーと値を取り出す",
+        "desc": "キーは変数 `key` に入るので、値は `acthouse[key]` で取り出します。テンプレートリテラル `${}` と組み合わせると読みやすく書けます。",
+        "js": "let acthouse = {\n  programming: 'プログラミング',\n  design: 'デザイン',\n  business: 'ビジネス',\n};\n\nfor (const key in acthouse) {\n  console.log(`キーは${key} 値は${acthouse[key]}です`);\n}\n// キーはprogramming 値はプログラミングです …"
+      },
+      {
+        "title": "for...of をオブジェクトに使うとエラーになる",
+        "desc": "オブジェクトは for...of で順番に取り出せないため、エラーになります。オブジェクトを for...of で回したいときは `Object.keys()`・`Object.values()`・`Object.entries()` で配列にしてから使います。",
+        "js": "const acthouse = { programming: 'プログラミング', design: 'デザイン' };\n\ntry {\n  for (const value of acthouse) {\n    console.log(value);\n  }\n} catch (e) {\n  console.log(e.message); // acthouse is not iterable\n}\n\nfor (const value of Object.values(acthouse)) {\n  console.log(value); // プログラミング / デザイン\n}"
+      },
+      {
+        "title": "for...in を配列に使うと添字が取れる",
+        "desc": "配列に for...in を使うと、変数には要素ではなく添字（文字列）が入ります。",
+        "js": "const acthouse = ['プログラミング', 'デザイン', 'ビジネス'];\n\nfor (const i in acthouse) {\n  console.log(i, acthouse[i]);\n}\n// 0 プログラミング / 1 デザイン / 2 ビジネス"
+      }
+    ],
+    "notes": [
+      "for...in は、継承したプロパティまで取り出すことがあり、順番も配列ほど厳密ではありません。配列には for...of か forEach() を使います。",
+      "for...of・for...in でも、break で途中終了、continue で次の回へ進めます。",
+      "回数を決めて繰り返すときは、通常の for 文（for (let i = 0; i < 5; i++)）を使います。"
+    ],
+    "related": [
+      "js-for",
+      "js-array",
+      "js-object",
+      "js-foreach",
+      "js-template-literal"
     ]
   },
   {
@@ -15766,6 +15863,8 @@
       "fullDocument": false
     },
     "explain": [
+      "関数とは、**入力された内容に基づいて何らかの処理を行い、その結果を返す仕組み** のことです（入力 → 何らかの処理 → 出力）。オブジェクトに属する関数のことを **メソッド** といいますが、役割としては同じものと考えて大丈夫です。",
+      "関数には、JavaScript に予め用意されている **ビルトイン関数** と、ユーザー自身が定義して使い回せる **ユーザー定義関数** の2種類があります。ユーザー定義関数の書き方には、**関数宣言・関数式（関数リテラル）・Function コンストラクタ・アロー関数** の4つがあります。",
       "関数は **処理のかたまり** のことです。一連の手続き（処理）を実行する文をまとめたもので、`function` というキーワードを見かけたら、それは関数だと思って大丈夫です。関数を定義することを **関数宣言** といいます。",
       "`function 名前(引数) { 処理 }` で関数を宣言し、`名前(値)` で呼び出します。同じ処理を何度も書かずに済み、修正も1か所で済みます。",
       "関数は宣言しただけでは動きません。**`関数名()` と書いて実行するまで、中の処理は実行されない** ことを覚えておきましょう。",
@@ -15774,24 +15873,28 @@
       "引数には既定値を付けられます。`function greet(name = 'ゲスト')` のように書くと、値が渡されなかったときに既定値が使われます。"
     ],
     "values": {
-      "label": "関数の書き方",
+      "label": "ユーザー定義関数の4つの書き方",
       "head": "書き方",
       "rows": [
         {
           "key": "function 名前() {}",
-          "desc": "関数宣言"
+          "desc": "1. 関数宣言"
+        },
+        {
+          "key": "const 名前 = function() {}",
+          "desc": "2. 関数式（関数リテラル）"
+        },
+        {
+          "key": "new Function('引数', '処理')",
+          "desc": "3. Function コンストラクタ（基本は使わない）"
+        },
+        {
+          "key": "const 名前 = () => {}",
+          "desc": "4. アロー関数"
         },
         {
           "key": "名前()",
           "desc": "関数を実行する（呼び出す）"
-        },
-        {
-          "key": "const 名前 = function() {}",
-          "desc": "関数式"
-        },
-        {
-          "key": "const 名前 = () => {}",
-          "desc": "アロー関数"
         },
         {
           "key": "(a, b = 1)",
@@ -15804,6 +15907,21 @@
       ]
     },
     "usages": [
+      {
+        "title": "関数が必要な理由",
+        "desc": "3つの円（半径10cm・20cm・30cm）の面積を求める場合、関数を使わないと同じ計算を3回書くことになります。冗長で、計算式を直すときに修正する手間も増えます。そこで、**重複した処理を1か所に集めるための仕組み＝関数** が必要になります。",
+        "js": "// 関数を使わない場合（同じ計算が3回）\nconst PI = 3.14;\nlet areaA = 10 * 10 * PI;\nlet areaB = 20 * 20 * PI;\nlet areaC = 30 * 30 * PI;\n\n// 関数を使う場合（計算は1か所だけ）\nfunction circleArea(radius) {\n  return radius * radius * PI;\n}\n\nconsole.log(`円Aの面積は、${circleArea(10)}平方cmです`);\nconsole.log(`円Bの面積は、${circleArea(20)}平方cmです`);\nconsole.log(`円Cの面積は、${circleArea(30)}平方cmです`);"
+      },
+      {
+        "title": "関数式（関数リテラル）",
+        "desc": "`const 関数名 = function(引数1, 引数2) { return 戻り値; }` のように、関数を変数に代入する書き方です。引数・戻り値は省略できます。関数宣言と違ってホイスティングされないため、**代入より前の行では呼び出せません**。",
+        "js": "const sayHello = function() {\n  console.log('Hello!');\n};\n\nsayHello(); // Hello!\n\nconst add = function(a, b) {\n  return a + b;\n};\nconsole.log(add(2, 3)); // 5"
+      },
+      {
+        "title": "Function コンストラクタ",
+        "desc": "`new Function(仮引数, …, 関数の処理)` のように、**文字列から関数を作る** 書き方です（1行にまとめてもOK）。外部からの不正なコードを実行される可能性があるため **セキュリティリスクが伴い**、実際の開発ではほとんど使いません。",
+        "js": "let calcSum = new Function(\n  'val1',\n  'val2',\n  'return val1 + val2'\n);\n\nconsole.log(calcSum(5, 10)); // 15"
+      },
       {
         "title": "仮引数と実引数",
         "desc": "関数を宣言するときに `( )` に書く、値を受け取る側の引数を **仮引数**、関数を実行するときに `( )` に書く、実際に受け渡す値を **実引数** といいます。実引数は、前から順番に仮引数へ入ります。",
@@ -15826,7 +15944,8 @@
       "js-let-const",
       "js-map",
       "js-hoisting",
-      "js-execution-context"
+      "js-execution-context",
+      "js-builtin-functions"
     ]
   },
   {
@@ -15902,6 +16021,122 @@
       "js-filter",
       "js-add-event-listener",
       "js-window-this"
+    ]
+  },
+  {
+    "id": "js-builtin-functions",
+    "title": null,
+    "ja": "JavaScriptに予め用意されている関数",
+    "lead": "JavaScript に最初から用意されている特別な関数です。組み込み関数やビルトインオブジェクトと表現されることもあります。自分で定義しなくても、すぐに呼び出して使えます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "組み込み関数・ビルトインオブジェクト"
+      },
+      {
+        "label": "定義",
+        "value": "不要（最初から使える）"
+      },
+      {
+        "label": "対になるもの",
+        "value": "ユーザー定義関数"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "console.log(parseInt('42px'));       // 42\nconsole.log(parseFloat('3.14'));     // 3.14\nconsole.log(Number('100') + 1);      // 101\nconsole.log(String(100) + '円');     // 100円\nconsole.log(isNaN(Number('abc')));   // true\nconsole.log(Array.isArray([1, 2]));  // true\nconsole.log(Math.round(4.6));        // 5\nconsole.log(new Date().getFullYear()); // 今年の西暦"
+    },
+    "preview": {
+      "height": 200,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "関数には、JavaScript に予め用意されている **ビルトイン関数**（組み込み関数）と、自分で定義して使い回す **ユーザー定義関数** の2種類があります。",
+      "ビルトイン関数は、定義を書かなくても名前を書くだけで呼び出せます。文字列を数値に変換する、メッセージを表示する、時間をおいて実行する、といったよく使う処理が揃っています。",
+      "`Math`・`Date`・`Number`・`String`・`Array` などは厳密には関数ではなく **ビルトインオブジェクト** で、`Math.round()` や `Array.isArray()` のように、その中のメソッドを呼び出して使います。",
+      "どんなビルトイン関数・オブジェクトがあるかは、MDN の「標準組み込みオブジェクト」（developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects）で一覧を確認できます。"
+    ],
+    "values": {
+      "label": "よく使うビルトイン関数",
+      "head": "関数",
+      "rows": [
+        {
+          "key": "parseInt(文字列)",
+          "desc": "文字列を整数に変換する（'42px' → 42）"
+        },
+        {
+          "key": "parseFloat(文字列)",
+          "desc": "文字列を浮動小数点数に変換する（'3.14' → 3.14）"
+        },
+        {
+          "key": "Number(値) / String(値)",
+          "desc": "他のデータ型を数値型や文字列型に変換する"
+        },
+        {
+          "key": "alert(メッセージ)",
+          "desc": "メッセージを表示する"
+        },
+        {
+          "key": "prompt(メッセージ)",
+          "desc": "ユーザーの入力を受け付ける（入力した文字列を返す）"
+        },
+        {
+          "key": "confirm(メッセージ)",
+          "desc": "確認を求め、OK なら true・キャンセルなら false を返す"
+        },
+        {
+          "key": "Array.isArray(値)",
+          "desc": "引数が配列であるかを判定する"
+        },
+        {
+          "key": "Math",
+          "desc": "数学関数（Math.round・Math.floor・Math.random・Math.max など）"
+        },
+        {
+          "key": "setTimeout / setInterval",
+          "desc": "指定した時間後に1度だけ実行する / 指定した時間間隔で繰り返し実行する"
+        },
+        {
+          "key": "isNaN(値)",
+          "desc": "引数が NaN（数値ではない）かどうかを判定する"
+        },
+        {
+          "key": "Date",
+          "desc": "日付・時刻を扱う（new Date() で現在の日時）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "alert / prompt / confirm でユーザーとやり取りする",
+        "desc": "`prompt()` は入力された文字列を、`confirm()` は OK なら `true`・キャンセルなら `false` を返します。ブラウザのダイアログが表示されるので、ボタンを押して試してください。",
+        "html": "<button type=\"button\" id=\"ask\">質問する</button>\n<p id=\"result\"></p>",
+        "js": "document.querySelector('#ask').addEventListener('click', () => {\n  const name = prompt('お名前は？');\n  if (name === null) return; // キャンセル\n  const ok = confirm(name + 'さんでよろしいですか？');\n  if (ok) {\n    alert('ようこそ、' + name + 'さん');\n    document.querySelector('#result').textContent = name + 'さん、ようこそ';\n  }\n});"
+      },
+      {
+        "title": "Math で計算する",
+        "desc": "`Math` には四捨五入・切り捨て・乱数などの数学関数がまとまっています。",
+        "js": "console.log(Math.round(2.5));  // 3（四捨五入）\nconsole.log(Math.floor(2.9));  // 2（切り捨て）\nconsole.log(Math.ceil(2.1));   // 3（切り上げ）\nconsole.log(Math.max(3, 8, 5)); // 8（最大値）\nconsole.log(Math.PI);          // 3.141592653589793\n\n// 1〜6 のサイコロ\nconsole.log(Math.floor(Math.random() * 6) + 1);"
+      },
+      {
+        "title": "Date で今日の日付を表示する",
+        "desc": "`new Date()` で現在の日時を表すオブジェクトが作られます。月は0から始まるので +1 します。",
+        "js": "const now = new Date();\nconst y = now.getFullYear();\nconst m = now.getMonth() + 1; // 0〜11 なので +1\nconst d = now.getDate();\nconsole.log(`${y}年${m}月${d}日`);"
+      }
+    ],
+    "notes": [
+      "parseInt() は先頭から数字として読める部分だけを変換します（'42px' → 42）。Number() は全体が数値でないと NaN になります（Number('42px') → NaN）。",
+      "alert / prompt / confirm は、表示中はページの操作が止まります。実際のサイトでは、HTML と CSS で作ったモーダルを使うことが多いです。",
+      "setTimeout / setInterval の使い方は「setTimeout()」のページで説明しています。"
+    ],
+    "related": [
+      "js-function",
+      "js-set-timeout",
+      "js-type-conversion",
+      "js-data-types",
+      "js-array"
     ]
   },
   {
@@ -16451,14 +16686,19 @@
       "fullDocument": false
     },
     "explain": [
-      "配列は `[ ]` の中に値をカンマで区切って並べたものです。数値・文字列・オブジェクトなど、どんな値でも入れられます。",
-      "要素は `配列[番号]` で取り出します。番号（インデックス）は0から始まるため、最初の要素は `menu[0]` です。要素の数は `length` で分かります。",
+      "配列は **複数の値を保持できるオブジェクト** です。`let 配列名 = [値1, 値2, 値3];` のように `[ ]` の中に値をカンマで区切って並べます。数値・文字列・オブジェクトなど、どんな値でも入れられます。",
+      "変数は1つの入れ物に対して1つの値を持つものでしたが、配列では **1つの変数に対して複数の値を格納** できます。保持される値にはそれぞれ **0から始まる添字（インデックス）** が付与されます。",
+      "要素は `配列[添字]` で取り出します。添字は0から始まるため、最初の要素は `menu[0]` です。要素の数は `length` で分かります。",
       "`push()` で末尾に追加、`pop()` で末尾を取り出すなど、配列には便利なメソッドがたくさん用意されています。"
     ],
     "values": {
       "label": "よく使うメソッド・プロパティ",
       "head": "名前",
       "rows": [
+        {
+          "key": "配列[添字] = 値",
+          "desc": "指定した位置の値を変更する"
+        },
         {
           "key": "length",
           "desc": "要素の数"
@@ -16487,6 +16727,11 @@
     },
     "usages": [
       {
+        "title": "添字で参照・値を変更する",
+        "desc": "`配列[添字]` で値を参照できます。`配列[添字] = 新しい値` と代入すると、その位置の値を変更できます。",
+        "js": "let acthouse = ['プログラミング', 'デザイン', 'ビジネス'];\n\nconsole.log(acthouse[0]); // プログラミング\nconsole.log(acthouse[2]); // ビジネス\n\nacthouse[0] = 'programming';\nconsole.log(acthouse[0]); // programming\n\nconsole.log(acthouse.length); // 3（要素数）"
+      },
+      {
         "title": "配列からリストを作る",
         "desc": "配列の要素を画面のリストに表示します。",
         "html": "<ul id=\"list\"></ul>",
@@ -16501,7 +16746,8 @@
       "js-foreach",
       "js-map",
       "js-filter",
-      "js-object"
+      "js-object",
+      "js-for-of-in"
     ]
   },
   {
@@ -16723,25 +16969,38 @@
       "fullDocument": false
     },
     "explain": [
-      "`配列.forEach(関数)` は、配列の要素の数だけ関数を呼び出します。関数は1つ目の引数で要素を、2つ目の引数で番号を受け取れます。",
+      "`配列.forEach(関数)` は、配列に含まれる各要素を順番に取り出し、それぞれに対して同じ操作を行います。関数は1つ目の引数で要素を、2つ目の引数で番号（インデックス）を、3つ目の引数で配列そのものを受け取れます。",
+      "案件でも見かけるケースが非常に多く、特に `document.querySelectorAll()` で得られる **NodeList** に対して `forEach()` を使うことがよくあります。",
       "上の例では、配列の手順を1つずつリスト項目にして画面に追加し、番号と内容をコンソールにも出力しています。",
       "`forEach()` は何も返しません。新しい配列を作りたいときは `map()`、絞り込みたいときは `filter()` を使います。"
     ],
     "values": {
-      "label": "関数が受け取る引数",
-      "head": "引数",
+      "label": "NodeList と Array の違い",
+      "head": "できること",
       "rows": [
         {
-          "key": "1つ目",
-          "desc": "要素"
+          "key": "forEach()",
+          "desc": "NodeList：使える／Array：使える"
         },
         {
-          "key": "2つ目",
-          "desc": "番号（インデックス）"
+          "key": "map()・filter()",
+          "desc": "NodeList：使えない／Array：使える"
         },
         {
-          "key": "3つ目",
-          "desc": "配列そのもの"
+          "key": "push()・pop()",
+          "desc": "NodeList：使えない／Array：使える"
+        },
+        {
+          "key": "取得方法",
+          "desc": "NodeList：querySelectorAll() などで取得"
+        },
+        {
+          "key": "Array.from(NodeList)",
+          "desc": "NodeList を配列に変換する"
+        },
+        {
+          "key": "[...NodeList]",
+          "desc": "スプレッド構文で配列に変換する"
         }
       ]
     },
@@ -16751,6 +17010,12 @@
         "desc": "querySelectorAll() の結果にも forEach() が使えます。",
         "html": "<button type=\"button\" class=\"btn\">A</button>\n<button type=\"button\" class=\"btn\">B</button>",
         "js": "document.querySelectorAll('.btn').forEach((btn) => {\n  btn.addEventListener('click', () => {\n    console.log(btn.textContent + ' が押されました');\n  });\n});"
+      },
+      {
+        "title": "NodeList と配列（Array）の違い",
+        "desc": "`querySelectorAll()` が返す **NodeList** は、配列っぽいけれど配列ではありません。`forEach()` は使えますが、`map()`・`filter()`・`push()`・`pop()` などは使えません。配列のメソッドを使いたいときは `Array.from()` または `[...NodeList]`（スプレッド構文）で **配列に変換** します。",
+        "html": "<ul>\n  <li class=\"item\">ブレンド</li>\n  <li class=\"item\">カフェラテ</li>\n  <li class=\"item\">紅茶</li>\n</ul>",
+        "js": "const items = document.querySelectorAll('.item');\n\nconsole.log(Array.isArray(items));   // false（NodeList）\nconsole.log(typeof items.map);       // undefined（map は使えない）\n\nconst arr = Array.from(items);       // または [...items]\nconsole.log(Array.isArray(arr));     // true\nconsole.log(arr.map((li) => li.textContent)); // ['ブレンド', 'カフェラテ', '紅茶']"
       }
     ],
     "notes": [
@@ -16761,7 +17026,8 @@
       "js-map",
       "js-filter",
       "js-for",
-      "js-array"
+      "js-array",
+      "js-query-selector"
     ]
   },
   {
@@ -16795,7 +17061,8 @@
     },
     "explain": [
       "`map()` は「すべての要素を同じルールで変換する」ためのメソッドです。関数が返した値を順に並べた、新しい配列が返ります。",
-      "要素の数は元の配列と同じになります。元の配列は変更されないため、元のデータを残したまま加工できます。",
+      "書き方は `const 新しい配列 = 元の配列.map((要素, インデックス, 配列自体) => { … });` です。関数で **返した値が新しい配列の要素になります**。インデックスと配列自体は使わなければ省略できます。",
+      "要素の数は元の配列と同じになります。元の配列は変更されない（**非破壊的**）ため、元のデータを残したまま「変換」や「加工」ができます。",
       "オブジェクトの配列から特定の値だけを取り出す（例：商品名の一覧を作る）といった使い方もよくします。"
     ],
     "values": {
@@ -16825,6 +17092,11 @@
       ]
     },
     "usages": [
+      {
+        "title": "数値を2倍にした配列を作る",
+        "desc": "アロー関数で `num * 2` を返すと、各要素を2倍にした新しい配列ができます。元の `numbers` は変わりません。",
+        "js": "const numbers = [1, 2, 3];\nconst doubled = numbers.map(num => num * 2);\n\nconsole.log(doubled); // [2, 4, 6]\nconsole.log(numbers); // [1, 2, 3]（元の配列はそのまま）"
+      },
       {
         "title": "オブジェクトの配列から名前だけ取り出す",
         "desc": "必要なプロパティだけを集めた配列を作れます。",
@@ -16872,7 +17144,8 @@
       "fullDocument": false
     },
     "explain": [
-      "`filter()` は、要素ごとに関数を実行し、`true` を返した要素だけを残した新しい配列を返します。",
+      "`filter()` は、配列の各要素に対して **テスト関数** を実行し、「条件を満たす要素」（`true` を返した要素）だけを抽出した新しい配列を返します。元の配列は変更されません。「絞り込み」や「条件による選別」をしたいときに使います。",
+      "書き方は `const 新しい配列 = 元の配列.filter((要素, インデックス, 配列自体) => { return 条件式; });` です。`return` した条件式が `true` になった要素だけが残ります。",
       "上の例では、価格が600円未満の商品だけを取り出し、`map()` で名前の一覧に変換しています。このようにメソッドをつなげて書けるのも配列メソッドの便利な点です。",
       "1件も当てはまらないときは空の配列 `[]` が返ります。最初の1件だけが欲しいときは `find()` を使います。"
     ],
@@ -16903,6 +17176,11 @@
       ]
     },
     "usages": [
+      {
+        "title": "偶数だけを取り出す",
+        "desc": "`num % 2 === 0`（2で割った余りが0）が true になる要素だけが残ります。",
+        "js": "const numbers = [1, 2, 3, 4, 5, 6];\nconst evenNumbers = numbers.filter(num => num % 2 === 0);\n\nconsole.log(evenNumbers); // [2, 4, 6]"
+      },
       {
         "title": "入力した文字で絞り込む",
         "desc": "入力欄の文字を含む項目だけを表示します。",
@@ -17538,7 +17816,8 @@
       "js-async-await",
       "js-function",
       "js-arrow-function",
-      "css-transition"
+      "css-transition",
+      "js-builtin-functions"
     ]
   },
   {

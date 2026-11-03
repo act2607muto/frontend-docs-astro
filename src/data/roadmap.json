@@ -151,6 +151,7 @@
           "html-script",
           "js-let-const",
           "js-function",
+          "js-builtin-functions",
           "js-object",
           "js-data-types",
           "js-literal",
@@ -159,7 +160,8 @@
           "js-if",
           "js-truthy-falsy",
           "js-switch",
-          "js-for"
+          "js-for",
+          "js-for-of-in"
         ]
       },
       {
