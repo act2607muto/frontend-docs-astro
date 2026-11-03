@@ -14300,7 +14300,7 @@
       },
       {
         "title": "console.log() で結果を確かめる",
-        "desc": "`console.log()` は、( ) の中の値をブラウザの **開発者ツールのコンソール** に表示する命令です。画面には表示されないので、変数の中身や処理の結果を確かめるときに使います。このガイドの JS のサンプルでは、実行結果の欄にコンソールの出力を表示しています。",
+        "desc": "`console.log()` は、( ) の中の値をブラウザの **開発者ツールのコンソール** に表示する命令です。画面には表示されないので、変数の中身や処理の結果を確かめるときに使います。このガイドの JS のサンプルでは、実行結果の欄にコンソールの出力を表示しています。詳しくは「console.log()」のページで説明しています。",
         "js": "const price = 480;\nconsole.log(price);\nconsole.log('2つで', price * 2, '円');"
       }
     ],
@@ -14310,10 +14310,127 @@
       "開発者ツールのコンソールは、Chrome なら Mac は Option + Command + J、Windows は Ctrl + Shift + J で開けます。"
     ],
     "related": [
+      "js-console-log",
       "js-runtime",
       "html-script",
       "js-let-const",
       "js-arrow-function"
+    ]
+  },
+  {
+    "id": "js-console-log",
+    "title": "console.log()",
+    "ja": "値をコンソールに表示する",
+    "lead": "( ) の中に書いた値を、ブラウザの開発者ツールのコンソールに表示します。画面には表示されないので、変数の中身や処理の結果を確かめるときに使います。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "ビルトインオブジェクト console のメソッド"
+      },
+      {
+        "label": "表示される場所",
+        "value": "開発者ツールのコンソール"
+      },
+      {
+        "label": "画面への表示",
+        "value": "なし"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "const price = 480;\n\nconsole.log('こんにちは');      // 文字列\nconsole.log(price);             // 変数の中身\nconsole.log(price * 2);         // 計算の結果\nconsole.log('2つで', price * 2, '円'); // カンマで区切って複数"
+    },
+    "preview": {
+      "height": 100,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`console.log()` は、( ) の中に書いた値をブラウザの **開発者ツールのコンソール** に表示する命令です。`console` は JavaScript に最初から用意されているビルトインオブジェクトで、`log()` はその中のメソッドです。",
+      "表示されるのはコンソールの中だけで、Webページの画面には何も出ません。そのため、**変数に何が入っているか**、**計算や処理の結果が思ったとおりか** を確かめる「動作確認」に使います。",
+      "( ) の中は文字列・数値・変数・計算式・配列・オブジェクトなど、どんな値でも書けます。**カンマで区切ると、複数の値を半角スペースでつないで1行に表示** します。",
+      "コンソールは、Chrome なら Mac は **Option + Command + J**、Windows は **Ctrl + Shift + J** で開けます。ページを右クリックして「検証」を選び、「Console」タブを開いても同じです。このガイドの JS のサンプルでは、実行結果の「コンソール」欄に出力を表示しています。"
+    ],
+    "values": {
+      "label": "console のよく使うメソッド",
+      "head": "メソッド",
+      "rows": [
+        {
+          "key": "console.log(値)",
+          "desc": "値をそのまま表示する（いちばんよく使う）"
+        },
+        {
+          "key": "console.info(値)",
+          "desc": "情報として表示する（表示は log とほぼ同じ）"
+        },
+        {
+          "key": "console.warn(値)",
+          "desc": "警告として黄色で表示する"
+        },
+        {
+          "key": "console.error(値)",
+          "desc": "エラーとして赤色で表示する"
+        },
+        {
+          "key": "console.table(配列やオブジェクト)",
+          "desc": "配列やオブジェクトを表の形で表示する"
+        },
+        {
+          "key": "console.dir(値)",
+          "desc": "オブジェクトや要素のプロパティを一覧で表示する"
+        },
+        {
+          "key": "console.clear()",
+          "desc": "コンソールの表示を消す"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "変数の中身を確かめる",
+        "desc": "変数に何が入っているかは画面からは見えません。`console.log()` で表示すると、値が変わっていく様子を確かめられます。",
+        "js": "let count = 0;\nconsole.log(count); // 0\n\ncount = count + 1;\nconsole.log(count); // 1\n\ncount += 5;\nconsole.log(count); // 6"
+      },
+      {
+        "title": "処理がそこまで通ったか確かめる",
+        "desc": "if や関数の中に書いておくと、その部分が実行されたかどうかがわかります。思ったとおりに動かないときに、どこで止まっているかを探すのに便利です。",
+        "js": "const age = 20;\n\nif (age >= 18) {\n  console.log('18歳以上の処理が実行されました');\n} else {\n  console.log('18歳未満の処理が実行されました');\n}\n\nfunction greet(name) {\n  console.log('greet が呼ばれました：', name);\n  return 'こんにちは、' + name;\n}\n\nconsole.log(greet('セブ島'));"
+      },
+      {
+        "title": "クリックしたときに確かめる",
+        "desc": "イベントの中に書くと、ボタンを押したときに処理が実行されたかを確かめられます。ボタンを押すたびにコンソールに1行増えます。",
+        "html": "<button type=\"button\" id=\"btn\">クリック</button>",
+        "js": "let clicks = 0;\n\ndocument.querySelector('#btn').addEventListener('click', () => {\n  clicks++;\n  console.log('クリックされました：', clicks, '回目');\n});"
+      },
+      {
+        "title": "配列・オブジェクトを表示する",
+        "desc": "配列やオブジェクトもそのまま表示できます。中の値を1つだけ見たいときは `[番号]` や `.プロパティ名` で取り出します。",
+        "js": "const fruits = ['りんご', 'みかん', 'ぶどう'];\nconsole.log(fruits);        // 配列全体\nconsole.log(fruits[1]);     // みかん\nconsole.log(fruits.length); // 3\n\nconst user = { name: 'セブ', age: 20 };\nconsole.log(user);      // オブジェクト全体\nconsole.log(user.name); // セブ"
+      },
+      {
+        "title": "ラベルを付けて見分けやすくする",
+        "desc": "値だけを並べると、どの行が何の値かわからなくなります。テンプレート文字列やカンマ区切りで名前を付けておくと見分けやすくなります。",
+        "js": "const width = 375;\nconst height = 667;\n\nconsole.log(width, height);             // 375 667（どっちがどっち？）\nconsole.log('width:', width);           // width: 375\nconsole.log(`height: ${height}`);       // height: 667\nconsole.log({ width, height });         // { width: 375, height: 667 }"
+      },
+      {
+        "title": "warn・error で目立たせる",
+        "desc": "`console.warn()` は警告（黄色）、`console.error()` はエラー（赤色）として表示されます。たくさんのログの中から大事なものを見つけやすくなります。",
+        "js": "const stock = 0;\n\nconsole.log('在庫を確認します');\nif (stock === 0) {\n  console.warn('在庫がありません');\n}\nif (stock < 0) {\n  console.error('在庫の数がおかしいです');\n}\nconsole.error('これはエラーの表示です');"
+      }
+    ],
+    "notes": [
+      "`console.log()` は動作確認のためのものです。確認が終わったら、公開する前に消しておきます。残したままでも動作に問題はありませんが、だれでも開発者ツールで見られます。",
+      "オブジェクトや配列を表示したとき、ブラウザのコンソールでは **▶ を開いた時点の値** が表示されることがあります。あとから値を書き換えると、表示した時点の値と違って見えるので注意します。",
+      "`console.log()` 自体は値を返しません（戻り値は `undefined`）。開発者ツールのコンソールに直接打ち込むと、出力のあとに `undefined` と表示されるのはこのためです。",
+      "コンソールに赤い文字でエラーが出ているときは、そこに書かれたファイル名と行番号を見ると、どこで止まっているかがわかります。"
+    ],
+    "related": [
+      "js-javascript",
+      "js-builtin-functions",
+      "js-template-literal",
+      "js-data-types",
+      "js-add-event-listener"
     ]
   },
   {
@@ -16089,6 +16206,10 @@
           "desc": "他のデータ型を数値型や文字列型に変換する"
         },
         {
+          "key": "console.log(値)",
+          "desc": "値を開発者ツールのコンソールに表示する"
+        },
+        {
           "key": "alert(メッセージ)",
           "desc": "メッセージを表示する"
         },
@@ -16150,7 +16271,8 @@
       "js-set-timeout",
       "js-type-conversion",
       "js-data-types",
-      "js-array"
+      "js-array",
+      "js-console-log"
     ]
   },
   {
