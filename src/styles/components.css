@@ -622,9 +622,25 @@
 }
 .search-dialog__shortcut { margin-left: auto; }
 .top__quick-words { display: contents; }
-/* 「よく調べるキーワード」の取得中は語句を隠す（場所は確保したまま。取得後にふわっと表示） */
-.top__quick.is-loading .top__quick-words .btn { visibility: hidden; opacity: 0; }
-.top__quick-words .btn { transition: opacity .2s; }
+/* 「よく調べるキーワード」の取得中はスケルトン（語句と同じ形の灰色のピル）を見せる
+   既定の語句ボタンの文字を透明にして使うので、取得後に高さや行数がずれない */
+.top__quick-words .btn { transition: color .2s, background-color .2s; }
+.top__quick.is-loading .top__quick-words .btn {
+  color: transparent; pointer-events: none; user-select: none;
+  border-radius: 999px;
+  background:
+    linear-gradient(90deg, transparent 0, color-mix(in srgb, var(--color-bg) 60%, transparent) 50%, transparent 100%) no-repeat,
+    color-mix(in srgb, var(--color-text) 9%, transparent);
+  background-size: 200% 100%, auto;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+@keyframes skeleton-shimmer {
+  from { background-position: 200% 0, 0 0; }
+  to { background-position: -100% 0, 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .top__quick.is-loading .top__quick-words .btn { animation: none; background-image: none; }
+}
 
 /* ==========================================================================
    Astro 版のみ：テーマ・OS に応じた出し分け（サーバーで両方出力し、CSS で切り替える）

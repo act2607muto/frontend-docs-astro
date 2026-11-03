@@ -41,9 +41,13 @@ const entries = [
         </span>
       </div>
       <script is:inline>
-        // 取得が終わるまで語句を隠し、既定の語句が一瞬見えてから入れ替わる「ちらつき」を防ぐ（表示は下のスクリプト）
+        // 取得が終わるまで語句の代わりにスケルトンを見せ、既定の語句が一瞬見えてから入れ替わる「ちらつき」を防ぐ（表示は下のスクリプト）
         // JavaScript が動かない環境では隠さず、既定の語句をそのまま見せる
-        document.currentScript.previousElementSibling.classList.add('is-loading');
+        var quick = document.currentScript.previousElementSibling;
+        quick.classList.add('is-loading');
+        // 取得中のピルは読み上げない
+        quick.querySelector('.top__quick-words').setAttribute('aria-hidden', 'true');
+        quick.setAttribute('aria-busy', 'true');
       </script>
       <nav class="top__entries" aria-label="入口">
         {entries.map((e) => (
@@ -107,11 +111,15 @@ const entries = [
       }),
     );
   };
-  const reveal = () => quick.classList.remove('is-loading');
+  const reveal = () => {
+    quick.classList.remove('is-loading');
+    quick.removeAttribute('aria-busy');
+    wordsEl.removeAttribute('aria-hidden');
+  };
 
   // 実際の検索履歴（Vercel の API → Supabase）からよく調べられている語句を取得し、足りない分は既定の語句で補う
   // API がない環境（GitHub Pages など）では取得に失敗するので、既定の語句のままにする
-  // 取得が終わってから語句を表示する（取得中は上の is:inline スクリプトで隠している）
+  // 取得が終わってから語句を表示する（取得中は上の is:inline スクリプトでスケルトンにしている）
   (async () => {
     const controller = new AbortController();
     // 取得に時間がかかるときは、隠したままにせず既定の語句を出す
