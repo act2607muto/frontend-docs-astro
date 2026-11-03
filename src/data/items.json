@@ -2238,7 +2238,48 @@
       "!=",
       "!==",
       "比較",
-      "文字列の連結"
+      "文字列の連結",
+      "関係演算子",
+      "<",
+      ">",
+      "<=",
+      ">=",
+      "in",
+      "代入演算子",
+      "自己代入演算子",
+      "+=",
+      "-=",
+      "??=",
+      "論理演算子",
+      "&&",
+      "||",
+      "!",
+      "単項演算子",
+      "typeof",
+      "delete",
+      "カンマ",
+      "厳格な等価性",
+      "抽象的な等価性"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-type-conversion",
+    "type": "js",
+    "slug": "type-conversion",
+    "name": "暗黙的な型変換",
+    "summary": "型が自動で変わる仕組み",
+    "keywords": [
+      "暗黙的な型変換",
+      "型変換",
+      "型強制",
+      "文字列の連結",
+      "1 + \"2\"",
+      "Number()",
+      "String()",
+      "==",
+      "抽象的な等価性",
+      "バグ"
     ],
     "category": "basic"
   },
@@ -2253,6 +2294,51 @@
       "else",
       "比較",
       "もし",
+      "分岐",
+      "else if",
+      "truthy",
+      "falsy",
+      "&&",
+      "||",
+      "AND",
+      "OR"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-truthy-falsy",
+    "type": "js",
+    "slug": "truthy-falsy",
+    "name": "truthy / falsy",
+    "summary": "真偽値として扱ったときの true / false",
+    "keywords": [
+      "truthy",
+      "falsy",
+      "真偽値",
+      "Boolean",
+      "false",
+      "null",
+      "0",
+      "undefined",
+      "NaN",
+      "空文字",
+      "条件式"
+    ],
+    "category": "basic"
+  },
+  {
+    "id": "js-switch",
+    "type": "js",
+    "slug": "switch",
+    "name": "switch",
+    "summary": "値に応じて処理を分ける",
+    "keywords": [
+      "switch",
+      "case",
+      "default",
+      "break",
+      "条件分岐",
+      "フォールスルー",
       "分岐"
     ],
     "category": "basic"
@@ -2268,7 +2354,11 @@
       "ループ",
       "for...of",
       "while",
-      "反復"
+      "反復",
+      "while文",
+      "無限ループ",
+      "break",
+      "continue"
     ],
     "category": "basic"
   },
