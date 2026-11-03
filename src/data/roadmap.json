@@ -144,7 +144,7 @@
       },
       {
         "title": "JavaScriptの基本",
-        "desc": "JavaScript の役割と書く場所、変数・関数・オブジェクト、データ型や演算子の考え方を押さえます。",
+        "desc": "JavaScript の役割と書く場所、変数・関数・オブジェクト、データ型や演算子、条件分岐と繰り返しの考え方を押さえます。",
         "links": [
           "js-javascript",
           "js-runtime",
@@ -154,7 +154,12 @@
           "js-object",
           "js-data-types",
           "js-literal",
-          "js-operators"
+          "js-operators",
+          "js-type-conversion",
+          "js-if",
+          "js-truthy-falsy",
+          "js-switch",
+          "js-for"
         ]
       },
       {

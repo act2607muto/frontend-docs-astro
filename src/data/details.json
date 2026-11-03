@@ -15001,7 +15001,7 @@
       },
       {
         "label": "主な種類",
-        "value": "算術・インクリメント・グループ化・等価"
+        "value": "算術・代入・比較（等価・関係）・論理・単項など"
       }
     ],
     "code": {
@@ -15019,7 +15019,8 @@
       "**オペランド** とは、**演算子によって処理される値** のことです。`10 + 20` なら、`+` が演算子、`10` と `20` がオペランドです。",
       "**算術演算子** は数値計算に使う演算子です。かけ算は `×` ではなく `*`、割り算は `÷` ではなく `/` と書きます。なお、加算演算子 `+` は **文字列を連結する** ときにも使います。",
       "`*` と `/` は `+` と `-` より先に計算されます。処理の順番を意図的に変えたいときは、小括弧 `( )` を使ってグループ化します（**グループ化演算子**）。",
-      "値を比べるときは **等価演算子**（`===` など）を使います。結果は Boolean 型の真偽値（true / false）で返ってきます。案件の現場では値の比較を行うことが頻繁にあります。"
+      "値を比べるときは **等価演算子**（`===` など）を使います。結果は Boolean 型の真偽値（true / false）で返ってきます。`==` は **抽象的な等価性**、`===` は **厳格な等価性** と呼ばれます。抽象的な等価性を使うとバグの温床になる可能性があるため、厳格な等価性を使うようにします。",
+      "ほかにも、大小を比べる **関係演算子**、計算と代入をまとめる **自己代入演算子**、条件を組み合わせる **論理演算子**、オペランドが1つの **単項演算子** があります（下の使い方で紹介しています）。"
     ],
     "values": {
       "label": "算術演算子",
@@ -15071,16 +15072,42 @@
         "js": "// グループ化していない場合\nconsole.log(1 + 2 * 3);   // 7\n\n// 1 + 2 を先に処理させたい場合\nconsole.log((1 + 2) * 3); // 9"
       },
       {
-        "title": "等価演算子（== と === の違い）",
-        "desc": "`==` は型が違っても値を変換して比べるので、数値の `1` と文字列の `'1'` が等しくなります。`===` は **値と型の両方** を比べます。思わぬ結果を防ぐため、基本は `===` と `!==` を使います。",
-        "js": "console.log(1 == '1');  // true（値だけ比べる）\nconsole.log(1 === '1'); // false（型が違う）\nconsole.log(1 === 1);   // true\nconsole.log(1 !== '1'); // true"
+        "title": "等価演算子（抽象的な等価性 == と厳格な等価性 ===）",
+        "desc": "`==`（**抽象的な等価性**）は型が違っても値を変換して比べるので、数値の `1` と文字列の `'1'`、さらに `1` と `true` まで等しくなります。`===`（**厳格な等価性**）は **値と型の両方** を比べます。思わぬ結果を防ぐため、基本は `===` と `!==` を使います。",
+        "js": "console.log(1 == 1);      // true\nconsole.log(1 == '1');    // true（値だけ比べる）\nconsole.log(1 == true);   // true（true が 1 に変換される）\n\nconsole.log(1 === 1);     // true\nconsole.log(1 === '1');   // false（型が違う）\nconsole.log(1 === true);  // false\nconsole.log(1 !== '1');   // true"
+      },
+      {
+        "title": "関係演算子",
+        "desc": "オペランドを比較し、真偽値を返します。`in` は、左のプロパティ名が右のオブジェクトに含まれるかを調べます。",
+        "js": "console.log(1 < 2);   // true（A が B より小さい）\nconsole.log(1 < 1);   // false\nconsole.log(2 > 1);   // true（A が B より大きい）\nconsole.log(1 <= 2);  // true（A が B 以下）\nconsole.log(2 <= 2);  // true\nconsole.log(2 >= 1);  // true（A が B 以上）\nconsole.log(2 >= 2);  // true\n\nconsole.log('val' in { val: 1 });   // true\nconsole.log('noVal' in { val: 1 }); // false"
+      },
+      {
+        "title": "自己代入演算子（代入演算子）",
+        "desc": "左のオペランドと右のオペランドを計算した結果を、さらに左のオペランドに代入します。`a += 1` は `a = a + 1` と同じ意味です。",
+        "js": "let a = 0;\na += 1;  // a = a + 1\nconsole.log(a); // 1\n\na *= 10; // a = a * 10\nconsole.log(a); // 10\n\nlet name = null;\nname ??= 'ゲスト'; // null か undefined のときだけ代入\nconsole.log(name); // ゲスト"
+      },
+      {
+        "title": "論理演算子",
+        "desc": "論理積（かつ）・論理和（または）・論理否定を求めます。1つまたは2つの論理値を組み合わせて、全体として1つの論理値を返す演算子で、if 文などの条件式で複数の条件を組み合わせるときに使います。",
+        "js": "const a = true;\nconst b = false;\n\nconsole.log(a && b); // false（A かつ B）\nconsole.log(a || b); // true（A または B）\nconsole.log(!a);     // false（true の場合は false）\nconsole.log(!b);     // true（false の場合は true）"
+      },
+      {
+        "title": "単項演算子",
+        "desc": "オペランドが1つの演算子です。型の確認や変換もできます。オブジェクトで登場した `delete` も単項演算子です。",
+        "js": "const obj = { val: 1 };\ndelete obj.val;          // プロパティを削除\nconsole.log(obj);        // {}\n\nconsole.log(typeof 1);   // number（データ型の確認）\nconsole.log(!true);      // false（真偽値に変換して反対の値）\nconsole.log(+'10');      // 10（Number 型へ変換）\nconsole.log(-'1');       // -1（Number 型へ変換し、正負を入れ替える）"
+      },
+      {
+        "title": "カンマで区切って変数をまとめて宣言する",
+        "desc": "`let` や `const` のあとにカンマで区切って書くと、複数の変数を1行で宣言できます。現場では両方の書き方を見かけるので、どちらも読めるようにしておきます。",
+        "js": "// 通常の変数宣言\nlet a = 0;\nlet b = 1;\nconsole.log(a, b); // 0 1\n\n// カンマで区切った変数宣言\nlet c = 0, d = 1;\nconsole.log(c, d); // 0 1"
       }
     ],
     "notes": [
       "数値と文字列を `+` でつなぐと文字列の連結になります（`'100' + 1` は `'1001'`）。数値として足したいときは `Number('100') + 1` のように数値に変換します。",
       "`x++` と `++x` は、どちらも x に1を足しますが、式の値として使ったときの結果が違います（`x++` は足す前の値、`++x` は足したあとの値）。迷ったら1行で `x++;` とだけ書きます。",
-      "`=` は代入、`===` は比較です。`count += 1` のように、計算と代入をまとめて書く **代入演算子** もあります。",
-      "大小を比べる `<`・`>`・`<=`・`>=` や、かつ・または の `&&`・`||` は「if」のページで説明しています。"
+      "`=` は代入、`===` は比較です。条件の中で書き間違えないようにします。",
+      "**カンマ演算子** は、それぞれのオペランドを左から右に評価し、最後のオペランドの値を返す演算子です（`(1, 2)` の結果は 2）。`let a = 0, b = 1;` のカンマは変数宣言の区切りで、カンマ演算子とは別物ですが、見た目が同じなので一緒に覚えておきます。",
+      "`1 + '2'` が `'12'` になるような、型が自動で変わる仕組みは「暗黙的な型変換」のページで説明しています。"
     ],
     "advanced": {
       "title": "等価演算子の一覧と結果",
@@ -15140,6 +15167,100 @@
           ]
         },
         {
+          "type": "p",
+          "text": "**関係演算子・自己代入演算子・論理演算子・単項演算子** の一覧です。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "演算子",
+            "種類",
+            "用途"
+          ],
+          "rows": [
+            [
+              "`A < B`",
+              "関係",
+              "A が B より小さいことの確認"
+            ],
+            [
+              "`A > B`",
+              "関係",
+              "A が B より大きいことの確認"
+            ],
+            [
+              "`A <= B`",
+              "関係",
+              "A が B 以下であることの確認"
+            ],
+            [
+              "`A >= B`",
+              "関係",
+              "A が B 以上であることの確認"
+            ],
+            [
+              "`A in B`",
+              "関係",
+              "A のプロパティが B のオブジェクトに含まれるかの確認"
+            ],
+            [
+              "`+=` `-=` `*=` `/=`",
+              "自己代入",
+              "加算・減算・乗算・除算の自己代入"
+            ],
+            [
+              "`%=` `**=`",
+              "自己代入",
+              "剰余・べき乗の自己代入"
+            ],
+            [
+              "`&&=` `||=`",
+              "自己代入",
+              "論理積・論理和の自己代入"
+            ],
+            [
+              "`??=`",
+              "自己代入",
+              "Null 合体の自己代入（null か undefined のときだけ代入）"
+            ],
+            [
+              "`&&`",
+              "論理",
+              "A かつ B の条件を表す"
+            ],
+            [
+              "`||`",
+              "論理",
+              "A または B の条件を表す"
+            ],
+            [
+              "`!`",
+              "論理・単項",
+              "true の場合は false、false の場合は true"
+            ],
+            [
+              "`delete`",
+              "単項",
+              "オブジェクトから特定のプロパティを削除"
+            ],
+            [
+              "`typeof`",
+              "単項",
+              "データ型の確認"
+            ],
+            [
+              "`+`（単項）",
+              "単項",
+              "Number 型への変換"
+            ],
+            [
+              "`-`（単項）",
+              "単項",
+              "Number 型へ変換し、正負を入れ替える"
+            ]
+          ]
+        },
+        {
           "type": "callout",
           "title": "演算子とオペランド",
           "items": [
@@ -15151,10 +15272,100 @@
     },
     "related": [
       "js-data-types",
+      "js-type-conversion",
       "js-if",
+      "js-truthy-falsy",
       "js-let-const",
       "js-for",
       "js-literal"
+    ]
+  },
+  {
+    "id": "js-type-conversion",
+    "title": "暗黙的な型変換",
+    "ja": "型が自動で変わる仕組み",
+    "lead": "JavaScript では、値が使われた状況によってデータ型が自動的に変換されます。これを暗黙的な型変換といいます。思わぬ結果になりやすくバグの温床となるため、演算を行う際は型をそろえてから処理します。",
+    "meta": [
+      {
+        "label": "意味",
+        "value": "状況に応じて型が自動で変換されること"
+      },
+      {
+        "label": "起きる場面",
+        "value": "+ - などの演算子・== ・if の条件"
+      },
+      {
+        "label": "対策",
+        "value": "Number() などで型をそろえる・=== を使う"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "console.log(1 + '2'); // 12（数値の1が文字列に変換されて連結）\nconsole.log('2' - 1); // 1（文字列の'2'が数値に変換されて計算）\n\nconsole.log(typeof (1 + '2')); // string\nconsole.log(typeof ('2' - 1)); // number"
+    },
+    "preview": {
+      "height": 130,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "JavaScript では、変数が使われた状況によって **型情報が自動的に変換** されます。これを **暗黙的な型変換** といいます。",
+      "**加算演算子 `+`** は、数値の加算と文字列の結合の両方ができるように定義されており、**文字列の結合を優先する** 仕様です。そのため `1 + \"2\"` では数値の 1 が文字列に変換されて結合され、結果は `\"12\"` になります。",
+      "**減算演算子 `-`** には文字列の意味がないため、対象となる値が **数値に変換** されます。`\"2\" - 1` は文字列の \"2\" が数値の 2 に変換されて計算され、結果は `1` になります。`*`・`/`・`%` も同じです。",
+      "暗黙的な型変換はバグの温床となるため、演算を行う際は `Number()` や `String()` で **型情報を統一してから処理** するようにします。"
+    ],
+    "values": {
+      "label": "暗黙的な型変換の例",
+      "head": "式",
+      "rows": [
+        {
+          "key": "1 + \"2\"",
+          "desc": "\"12\"（文字列に変換して結合）"
+        },
+        {
+          "key": "\"2\" - 1",
+          "desc": "1（数値に変換して計算）"
+        },
+        {
+          "key": "\"3\" * \"4\"",
+          "desc": "12（両方とも数値に変換）"
+        },
+        {
+          "key": "1 == \"1\"",
+          "desc": "true（== は型を変換してから比べる）"
+        },
+        {
+          "key": "1 == true",
+          "desc": "true（true が数値の 1 に変換される）"
+        },
+        {
+          "key": "\"abc\" - 1",
+          "desc": "NaN（数値に変換できない）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "型をそろえてから計算する（明示的な型変換）",
+        "desc": "入力欄の値などは文字列で取得されることが多いので、計算の前に `Number()` で数値に変換します。単項演算子の `+` でも数値に変換できます。",
+        "js": "const input = '100'; // 文字列\n\nconsole.log(input + 1);         // 1001（連結されてしまう）\nconsole.log(Number(input) + 1); // 101\nconsole.log(+input + 1);        // 101（単項 + で数値に変換）\n\nconsole.log(String(100) + '円'); // 100円"
+      },
+      {
+        "title": "== でも暗黙的な型変換が起きる",
+        "desc": "抽象的な等価性 `==` は、型が違うと変換してから比べるため、意図しない値も等しいと判定されます。比較は厳格な等価性 `===` を使います。",
+        "js": "console.log(1 == '1');   // true\nconsole.log(1 == true);  // true\nconsole.log(0 == '');    // true\n\nconsole.log(1 === '1');  // false\nconsole.log(1 === true); // false"
+      }
+    ],
+    "notes": [
+      "if 文の条件も、値が真偽値に暗黙的に変換されて判定されます（truthy / falsy）。",
+      "`Number('abc')` のように数値に変換できない文字列は NaN になります。"
+    ],
+    "related": [
+      "js-operators",
+      "js-data-types",
+      "js-truthy-falsy",
+      "js-if"
     ]
   },
   {
@@ -15187,9 +15398,12 @@
       "fullDocument": false
     },
     "explain": [
-      "`if (条件) { 処理 }` と書くと、条件が `true` のときだけ `{ }` の中が実行されます。",
+      "`if (条件) { 処理 }` と書くと、小括弧内の条件式が **真（truthy）** の場合だけ、それに続く中括弧 `{ }` 内の処理が実行されます。**偽（falsy）** の場合は中括弧内の処理は行いません。",
+      "条件分岐は、様々なプログラミング言語にも存在する構文で、現場でも頻繁に登場する制御構文です。何らかの条件をもとに、処理の流れを分岐します。",
       "`else if` で条件を追加でき、上から順に調べて最初に当てはまったものだけが実行されます。どれにも当てはまらないときは `else` の処理が実行されます。",
-      "条件には `===`（等しい）や `<`（より小さい）などの比較演算子を使います。等しいかどうかは `==` ではなく `===` で比べるのが基本です。"
+      "`else` を続けると、条件式が偽（falsy）の場合に else ブロック内のコードが実行されます。",
+      "条件には `===`（等しい）や `<`（より小さい）などの比較演算子を使います。等しいかどうかは `==` ではなく `===` で比べるのが基本です。",
+      "条件式は true / false だけでなく、`if (acthouse)` のように変数だけを書くこともできます。このとき値は真偽値に変換され、truthy なら実行されます（「truthy / falsy」のページを参照）。"
     ],
     "values": {
       "label": "よく使う比較・論理演算子",
@@ -15223,6 +15437,26 @@
     },
     "usages": [
       {
+        "title": "if 文の基本",
+        "desc": "条件式が真（truthy）なら中括弧内の処理が実行され、偽（falsy）なら実行されません。",
+        "js": "let acthouse = 'セブ島';\n\nif (acthouse) {\n  console.log('アクトハウスはセブ島にあります');\n}\n\nif (acthouse === 'セブ島') {\n  console.log('アクトハウスはセブ島にあります');\n}\n\nif (acthouse === 'アメリカ') {\n  // ここに書いたコードは処理されない\n}"
+      },
+      {
+        "title": "if else 文",
+        "desc": "条件式が偽（falsy）の場合は else ブロックの処理が実行されます。",
+        "js": "let acthouse = 'フィリピン';\n\nif (acthouse === 'フィリピン') {\n  console.log('アクトハウスはセブ島にあります');\n} else {\n  console.log('アクトハウスはフィリピンのセブ島にあります');\n}"
+      },
+      {
+        "title": "if else 文のチェーン（else if）",
+        "desc": "if else 文をつなげて記述することで、複数の条件分岐ができます。else if の処理は「条件式1が偽、かつ条件式2が真」の場合に実行されます。",
+        "js": "let acthouse = 'シンガポール';\n\nif (acthouse === 'フィリピン') {\n  console.log('アクトハウスはセブ島にあります');\n} else if (acthouse === 'シンガポール') {\n  console.log('アクトハウスはシンガポールではなく、フィリピンのセブ島にあります');\n}"
+      },
+      {
+        "title": "if 文と論理演算子（AND・OR）",
+        "desc": "`&&`（AND 演算）は条件をすべて満たすとき、`||`（OR 演算）はいずれかの条件を満たすときに処理されます。",
+        "js": "// AND 演算\nlet num = 5;\n\nif (num >= 0 && num < 10) {\n  console.log('0以上10未満です');\n} else {\n  console.log('それ以外です');\n}\n\n// OR 演算\nlet acthouse = 'プログラミング';\n\nif (acthouse === 'プログラミング' || acthouse === 'デザイン') {\n  console.log('アクトハウスのカリキュラムです');\n} else {\n  console.log('アクトハウスのカリキュラムではありません');\n}"
+      },
+      {
         "title": "条件演算子で短く書く",
         "desc": "値を2択で決めるだけなら、条件 ? 値1 : 値2 の形で1行に書けます。",
         "js": "const stock = 0;\nconst label = stock > 0 ? '在庫あり' : '売り切れ';\nconsole.log(label);"
@@ -15230,15 +15464,191 @@
     ],
     "notes": [
       "条件の中で = （代入）と === （比較）を間違えないようにします。",
-      "0、空の文字列 ''、null、undefined は false として扱われます。",
-      "`==` と `===` の違いや、`+`・`%` などの算術演算子は「演算子」のページで説明しています。"
+      "0、空の文字列 ''、null、undefined、NaN などの falsy な値は false として扱われます（一覧は「truthy / falsy」のページ）。",
+      "`==` と `===` の違いや、`+`・`%` などの算術演算子は「演算子」のページで説明しています。",
+      "1つの値をいくつもの候補と比べるときは switch 文も使えます。"
     ],
     "related": [
+      "js-truthy-falsy",
+      "js-switch",
+      "js-operators",
       "js-for",
       "js-let-const",
       "js-function",
-      "js-filter",
-      "js-operators"
+      "js-filter"
+    ]
+  },
+  {
+    "id": "js-truthy-falsy",
+    "title": "truthy / falsy",
+    "ja": "真偽値として扱ったときの true / false",
+    "lead": "if 文などの条件では、true / false 以外の値も真偽値として扱われます。Boolean に変換したとき false になる値を falsy、true になる値を truthy といいます。",
+    "meta": [
+      {
+        "label": "falsy",
+        "value": "Boolean に変換すると false になる値"
+      },
+      {
+        "label": "truthy",
+        "value": "falsy 以外のすべての値"
+      },
+      {
+        "label": "使われる場所",
+        "value": "if・while・論理演算子・!"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "console.log(Boolean(false));     // false\nconsole.log(Boolean(null));      // false\nconsole.log(Boolean(0));         // false\nconsole.log(Boolean(undefined)); // false\nconsole.log(Boolean(0n));        // false\nconsole.log(Boolean(NaN));       // false\nconsole.log(Boolean(''));        // false\n\nconsole.log(Boolean('セブ島'));  // true\nconsole.log(Boolean('0'));       // true（中身のある文字列）\nconsole.log(Boolean([]));        // true（空の配列）"
+    },
+    "preview": {
+      "height": 220,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "**falsy な値** とは、Boolean で真偽値に変換した場合に **false になる値** のことです。`false`・`null`・`0`・`undefined`・`0n`・`NaN`・`\"\"`（空の文字列）がこれに当たります。",
+      "**truthy な値** とは、Boolean で真偽値に変換した場合に **true になる値** のことです。falsy な値 **以外のすべて** が truthy です。",
+      "if 文の小括弧の中は、条件式が **真（truthy）** なら中括弧の処理を実行し、**偽（falsy）** なら実行しません。そのため `if (acthouse)` のように変数だけを書くと、「値が入っているか」を判定できます。",
+      "falsy は数が少ないので、falsy の一覧を覚えておき「それ以外は truthy」と考えるのが簡単です。"
+    ],
+    "values": {
+      "label": "falsy な値の一覧",
+      "head": "値",
+      "rows": [
+        {
+          "key": "false",
+          "desc": "真偽値の false"
+        },
+        {
+          "key": "null",
+          "desc": "値が存在しない"
+        },
+        {
+          "key": "0",
+          "desc": "数値のゼロ（-0 も同じ）"
+        },
+        {
+          "key": "undefined",
+          "desc": "未定義"
+        },
+        {
+          "key": "0n",
+          "desc": "BigInt のゼロ"
+        },
+        {
+          "key": "NaN",
+          "desc": "数値ではない（Not a Number）"
+        },
+        {
+          "key": "\"\"",
+          "desc": "空の文字列（'' や `` も同じ）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "変数に値が入っているかを if で判定する",
+        "desc": "`acthouse` には中身のある文字列が入っているので truthy となり、処理が実行されます。空の文字列なら falsy なので実行されません。",
+        "js": "let acthouse = 'セブ島';\n\nif (acthouse) {\n  console.log('アクトハウスはセブ島にあります');\n}\n\nlet empty = '';\n\nif (empty) {\n  console.log('ここは実行されない');\n}"
+      },
+      {
+        "title": "! で真偽値を反転する",
+        "desc": "単項演算子の `!` は値を真偽値に変換してから反対の値を返します。`!!` と2回付けると、元の値の truthy / falsy をそのまま true / false で確認できます。",
+        "js": "console.log(!0);       // true（0 は falsy）\nconsole.log(!'セブ島'); // false（truthy の反対）\nconsole.log(!!'セブ島'); // true"
+      }
+    ],
+    "notes": [
+      "`'0'`（文字列のゼロ）・`'false'`（文字列）・`[]`（空の配列）・`{}`（空のオブジェクト）は truthy です。見た目に惑わされないようにします。",
+      "数値の 0 も falsy なので、`if (count)` と書くと 0 個のときも「値がない」と判定されます。0 を区別したいときは `count !== undefined` のように明示的に比べます。"
+    ],
+    "related": [
+      "js-if",
+      "js-operators",
+      "js-type-conversion",
+      "js-data-types",
+      "js-for"
+    ]
+  },
+  {
+    "id": "js-switch",
+    "title": null,
+    "ja": "値に応じて処理を分ける",
+    "lead": "条件式に渡した値が case 節と一致したとき、そこから処理を実行する制御構文です。どの case にも一致しないときは default 節の処理が実行されます。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "制御構文"
+      },
+      {
+        "label": "比較",
+        "value": "=== と同じ（値と型）"
+      },
+      {
+        "label": "必須",
+        "value": "各 case の最後に break"
+      }
+    ],
+    "code": {
+      "html": null,
+      "css": null,
+      "js": "let acthouse = 'case1';\n\nswitch (acthouse) {\n  case 'case1':\n    console.log('case1の処理');\n    break;\n  case 'case2':\n    console.log('case2の処理');\n    break;\n  default:\n    console.log('default節の処理');\n}"
+    },
+    "preview": {
+      "height": 100,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`switch (条件式) { … }` と書くと、条件式の値と **case 節** の値を上から順に比べ、一致した case から処理を実行します。比べ方は `===` と同じで、値と型の両方が一致する必要があります。",
+      "case 節は何個でも追加できます。それぞれの case 節の最後には **break** というキーワードを書き、そこで switch 文を抜けます。",
+      "どの case 節にも一致しないときは **default 節** に続く処理が実行されます。default 節は省略もできますが、想定外の値に備えて書いておくと安心です。",
+      "1つの値をいくつもの候補と比べるときは、`if ... else if` を何段も重ねるより switch 文のほうが読みやすくなります。"
+    ],
+    "values": {
+      "label": "switch文の書き方",
+      "head": "キーワード",
+      "rows": [
+        {
+          "key": "switch (条件式)",
+          "desc": "比べたい値を渡す"
+        },
+        {
+          "key": "case 値:",
+          "desc": "条件式がこの値と一致したら、ここから実行する"
+        },
+        {
+          "key": "break;",
+          "desc": "switch 文を抜ける。各 case の最後に書く"
+        },
+        {
+          "key": "default:",
+          "desc": "どの case にも一致しないときの処理"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "break を書き忘れると次の case まで実行される",
+        "desc": "break がないと、一致した case のあとも **次の case の処理まで続けて実行** されます（フォールスルー）。バグの温床になるので、switch 文を書くときは break を忘れないように注意します。",
+        "js": "let acthouse = 'case1';\n\nswitch (acthouse) {\n  case 'case1':\n    console.log('case1の処理');\n    // break を書き忘れた！\n  case 'case2':\n    console.log('case2の処理'); // これも実行されてしまう\n    break;\n  default:\n    console.log('default節の処理');\n}"
+      },
+      {
+        "title": "複数の値で同じ処理をする",
+        "desc": "case を続けて書くと、どれかに一致したときに同じ処理を実行できます。break をわざと省略する、数少ない使い方です。",
+        "js": "const day = '土';\n\nswitch (day) {\n  case '土':\n  case '日':\n    console.log('お休みです');\n    break;\n  default:\n    console.log('授業があります');\n}"
+      }
+    ],
+    "notes": [
+      "case の値は `===` で比べるので、`switch (1)` に対して `case '1':` は一致しません。",
+      "「10以上なら」のような範囲の判定は if 文のほうが向いています。"
+    ],
+    "related": [
+      "js-if",
+      "js-truthy-falsy",
+      "js-operators",
+      "js-for"
     ]
   },
   {
@@ -15273,6 +15683,7 @@
     "explain": [
       "`for (初期化; 条件; 更新)` の形では、条件が `true` の間だけ処理を繰り返します。上の例では `i` を1から3まで1ずつ増やしながら3回実行しています。",
       "`for (const 変数 of 配列)` の形（for...of）は、配列の要素を先頭から1つずつ取り出して処理します。番号が必要ないときはこちらが簡潔です。",
+      "`while (条件式)` の形（**while 文**）は、条件式が truthy のときに処理を繰り返し行い、falsy になったときに処理を終了します。回数が決まっていない繰り返しに向いています。",
       "`break` で繰り返しを途中で終了し、`continue` でその回の残りを飛ばして次の回に進みます。"
     ],
     "values": {
@@ -15306,6 +15717,11 @@
         "title": "条件に合ったら途中で止める",
         "desc": "break を使うと、見つかった時点で繰り返しを終了できます。",
         "js": "const scores = [62, 85, 91, 40];\nfor (const s of scores) {\n  if (s >= 90) {\n    console.log('90点以上を見つけました：' + s);\n    break;\n  }\n}"
+      },
+      {
+        "title": "while 文で繰り返す",
+        "desc": "条件式 `i < 5` が truthy の間、処理を繰り返します。`i++` で i を増やさないと条件がずっと truthy のままになり、**無限ループ** になります。while 文を記述する際は、無限ループにならないように注意します。",
+        "js": "let i = 0;\n\nwhile (i < 5) {\n  console.log(i);\n  i++;\n}\n// 0 1 2 3 4 と表示される"
       }
     ],
     "notes": [
@@ -15316,6 +15732,7 @@
       "js-foreach",
       "js-array",
       "js-if",
+      "js-truthy-falsy",
       "js-map"
     ]
   },
