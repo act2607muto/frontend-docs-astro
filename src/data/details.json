@@ -14475,7 +14475,8 @@
       "js-window-this",
       "js-query-selector",
       "js-text-content",
-      "js-async-await"
+      "js-async-await",
+      "js-dom"
     ]
   },
   {
@@ -15928,6 +15929,11 @@
         "js": "// name と place が仮引数（受け取る側）\nfunction introduce(name, place) {\n  console.log(name + 'は' + place + 'で勉強しています');\n}\n\n// '山田' と 'セブ島' が実引数（渡す側）\nintroduce('山田', 'セブ島');"
       },
       {
+        "title": "デフォルト引数（初期値）",
+        "desc": "関数を宣言するときに、引数のデフォルト値（初期値）を設定できます。構文は `function 関数名(仮引数1 = 初期値1, 仮引数2 = 初期値2) { 処理 }` です。実引数が渡されなかった引数には初期値が使われ、渡されたときはその値が使われます。",
+        "js": "function calc(a, b = 5) {\n  return a + b;\n}\n\n// 実引数を1つしか渡さない場合（b は初期値の 5）\nconsole.log(calc(10));     // 15\n\n// 実引数を2つ渡した場合（b は 20）\nconsole.log(calc(10, 20)); // 30\n\n// アロー関数でも使える\nconst greet = (name = 'ゲスト') => `${name}さん、こんにちは`;\nconsole.log(greet()); // ゲストさん、こんにちは"
+      },
+      {
         "title": "ボタンのクリックで関数を呼ぶ",
         "desc": "処理を関数にしておくと、イベントにそのまま渡せます。",
         "html": "<button type=\"button\" id=\"hello\">あいさつ</button>",
@@ -15978,6 +15984,7 @@
       "fullDocument": false
     },
     "explain": [
+      "アロー関数は **ES2015 で登場した記法** で、関数式をシンプルに記述できます。これまで `function()` と書いていたものを `() =>` に置き換えるだけです（引数なし・1つ・複数の対応は下の表）。",
       "`(引数) => { 処理 }` の形で関数を作ります。`function` と書くより短く、配列のメソッドなどに渡す関数を簡潔に書けます。",
       "処理が1つの式だけなら、`{ }` と `return` を省略できます。`(n) => n * 2` は「n を受け取って n * 2 を返す」という意味です。",
       "引数が1つなら `( )` も省略できます（`n => n * 2`）。引数がないときは `() =>` と書きます。"
@@ -16005,6 +16012,11 @@
       ]
     },
     "usages": [
+      {
+        "title": "これまでの書き方とアロー関数の対応",
+        "desc": "引数がないときは `() =>`、引数が1つなら `引数 =>`（( ) を省略できる）、複数なら `(引数1, 引数2) =>` と書きます。アロー関数は変数に代入するので、最後の `}` の後ろに `;` が付きます。",
+        "js": "// 引数がない場合\nconst hello = function() { console.log('Hello'); };\nconst hello2 = () => { console.log('Hello'); };\n\n// 引数が1つの場合\nconst double = function(n) { return n * 2; };\nconst double2 = n => { return n * 2; };\n\n// 引数が複数の場合\nconst add = function(a, b) { return a + b; };\nconst add2 = (a, b) => { return a + b; };\n\nhello2();\nconsole.log(double2(5), add2(2, 3)); // 10 5"
+      },
       {
         "title": "配列の処理に渡す",
         "desc": "アロー関数は map() や filter() と組み合わせて使うことが多いです。",
@@ -17027,7 +17039,8 @@
       "js-filter",
       "js-for",
       "js-array",
-      "js-query-selector"
+      "js-query-selector",
+      "js-html-collection"
     ]
   },
   {
@@ -17200,6 +17213,143 @@
     ]
   },
   {
+    "id": "js-dom",
+    "title": null,
+    "ja": "HTMLをJavaScriptから操作するためのしくみ",
+    "lead": "DOM（Document Object Model）は、HTML 文書のタグを階層構造を持つオブジェクトとして表したものです。JavaScript はこの DOM を通して、ページの文字や要素を読み書きします。",
+    "meta": [
+      {
+        "label": "正式名",
+        "value": "Document Object Model"
+      },
+      {
+        "label": "形",
+        "value": "ツリー構造（階層構造）"
+      },
+      {
+        "label": "入口",
+        "value": "document オブジェクト"
+      }
+    ],
+    "code": {
+      "html": "<div id=\"page\">\n  <h1>セブ島</h1>\n  <p>アクトハウス</p>\n</div>\n<pre id=\"tree\"></pre>",
+      "css": "#tree {\n  margin-top: 12px;\n  padding: 10px 14px;\n  background: #f6f1e9;\n  border-radius: 6px;\n  font-size: 13px;\n  line-height: 1.6;\n}",
+      "js": "// DOM ツリーをたどって、階層を文字で表示する\nfunction walk(node, depth) {\n  let text = '  '.repeat(depth) + node.tagName.toLowerCase() + '\\n';\n  for (const child of node.children) {\n    text += walk(child, depth + 1);\n  }\n  return text;\n}\n\nconst page = document.getElementById('page');\ndocument.getElementById('tree').textContent = walk(page, 0);\n\n// document（HTML 文書全体）から、body などの要素をたどれる\nconsole.log(document.body.tagName); // BODY"
+    },
+    "preview": {
+      "height": 200,
+      "note": "div の中に h1 と p がぶら下がっている階層が表示されます",
+      "fullDocument": false
+    },
+    "explain": [
+      "JavaScript と Web ページは、それぞれ **独立した存在** です。JavaScript から HTML を直接扱うことはできないため、ブラウザが用意している **DOM API** を通して HTML を操作します。",
+      "**DOM は、HTML 文書のタグを階層構造を持つオブジェクトとして表現したもの** です。ディレクトリやフォルダのような **ツリー構造** をしていて、`html` の下に `head` と `body`、`head` の下に `title`、`body` の下に `h1`…のように枝分かれしています。",
+      "ブラウザは HTML を読み込むと DOM を作り、それをもとに画面を描画します。JavaScript で DOM を書き換えると、その変更がすぐ画面に反映されます（HTML → 読み込み → DOM → 描画）。",
+      "**document オブジェクト** は、HTML 文書（画面に表示されている Web サイト）を表すオブジェクトで、DOM 操作のためのメソッドが含まれています。そこから id 名を指定して要素を取得したり、該当する class 名の要素を一括で取得して処理を行ったりします。",
+      "`console.log(document)` を実行すると、デベロッパーツールのコンソールに `#document` として HTML 全体が表示され、`<head>` や `<body>` を開いて中身を確認できます。"
+    ],
+    "values": {
+      "label": "DOM 操作でよく使うもの",
+      "head": "やりたいこと",
+      "rows": [
+        {
+          "key": "要素を取得する",
+          "desc": "querySelector()・getElementById() など"
+        },
+        {
+          "key": "中身を書き換える",
+          "desc": "textContent・innerHTML・innerText"
+        },
+        {
+          "key": "要素を作って追加する",
+          "desc": "createElement()・append() など"
+        },
+        {
+          "key": "要素を削除する",
+          "desc": "remove()"
+        },
+        {
+          "key": "class を付け外しする",
+          "desc": "classList.add() / remove() / toggle()"
+        },
+        {
+          "key": "操作に反応する",
+          "desc": "addEventListener()"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "document オブジェクトを見てみる",
+        "desc": "document を変数に入れてコンソールに出力すると、HTML 文書全体がツリーの形で表示されます。ブラウザのデベロッパーツール（Console タブ）で確認してみましょう。",
+        "js": "const acthouse = document;\nconsole.log(acthouse);\n\n// よく使うプロパティ\nconsole.log(document.title);           // <title> の文字\nconsole.log(document.body);            // <body> 要素\nconsole.log(document.documentElement); // <html> 要素"
+      }
+    ],
+    "notes": [
+      "DOM を書き換えても、元の HTML ファイルは変わりません。ページを再読み込みすると元に戻ります。",
+      "script を head に書くと、DOM ができる前に実行されて要素が見つかりません。body の最後に書くか、defer を付けます。"
+    ],
+    "advanced": {
+      "title": "DOM ツリーの見方",
+      "blocks": [
+        {
+          "type": "h",
+          "text": "HTML と DOM ツリーの対応"
+        },
+        {
+          "type": "p",
+          "text": "次の HTML は、下の表のようなツリー（親子関係）になります。ツリーの1つ1つの要素や文字を **ノード** と呼びます。"
+        },
+        {
+          "type": "table",
+          "head": [
+            "HTML",
+            "DOM ツリーでの位置"
+          ],
+          "rows": [
+            [
+              "`<html lang=\"ja\">`",
+              "いちばん上（ルート）"
+            ],
+            [
+              "`<head>`",
+              "html の子"
+            ],
+            [
+              "`<title>アクトハウス</title>`",
+              "head の子。中の「アクトハウス」は title の子（テキストノード）"
+            ],
+            [
+              "`<body>`",
+              "html の子（head とは兄弟）"
+            ],
+            [
+              "`<h1>セブ島</h1>`",
+              "body の子。中の「セブ島」は h1 の子（テキストノード）"
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "title": "親・子・兄弟の呼び方",
+          "items": [
+            "ある要素の1つ上の階層を **親**、1つ下の階層を **子** と呼びます。",
+            "同じ親を持つ要素どうしを **兄弟** と呼びます（head と body は兄弟）。",
+            "`append()` は子の最後に、`after()` は兄弟として直後に追加する、のように、DOM 操作のメソッドはこの関係を使って説明されます。"
+          ]
+        }
+      ]
+    },
+    "related": [
+      "js-runtime",
+      "js-query-selector",
+      "js-get-element",
+      "js-text-content",
+      "js-create-element",
+      "js-add-event-listener"
+    ]
+  },
+  {
     "id": "js-query-selector",
     "title": null,
     "ja": "CSSセレクタで要素を取得する",
@@ -17229,8 +17379,8 @@
       "fullDocument": false
     },
     "explain": [
-      "`document.querySelector('セレクタ')` は、CSSと同じ書き方で要素を探し、最初に見つかった1つを返します。id なら `#title`、クラスなら `.item` のように書きます。",
-      "当てはまる要素をすべて取得するには `querySelectorAll()` を使います。結果は配列に似た NodeList で、`length` や `forEach()` が使えます。",
+      "`document.querySelector('セレクタ')` は、CSSと同じ書き方（id・class・タグ）で要素を探し、一致する最初の1つを返します。id なら `#title`、クラスなら `.item` のように書きます。**合致する要素が文書中に複数ある場合は、マークアップの一番上に書かれている要素** を取得します。",
+      "当てはまる要素をすべて取得するには `querySelectorAll()` を使います。結果は配列に似た **NodeList** で、`length` や `forEach()` が使えます（詳しくは「HTMLCollection / NodeList」のページ）。",
       "見つからなかったときは `null` が返ります。そのまま操作するとエラーになるため、要素があるか確認してから使うと安全です。"
     ],
     "values": {
@@ -17250,12 +17400,20 @@
           "desc": "id で取得（# は付けない）"
         },
         {
+          "key": "要素.matches(セレクタ)",
+          "desc": "要素がセレクタに一致するか（true / false）"
+        },
+        {
           "key": "要素.closest(セレクタ)",
           "desc": "自分または祖先で最も近い要素"
         },
         {
           "key": "要素.querySelector()",
           "desc": "その要素の中だけを探す"
+        },
+        {
+          "key": "getElementsByClassName() など",
+          "desc": "class・タグ名・name 属性で取得（getElementsBy〜 のページ）"
         }
       ]
     },
@@ -17264,6 +17422,12 @@
         "title": "要素があるときだけ処理する",
         "desc": "?. （オプショナルチェーン）を使うと、要素がないときにエラーになりません。",
         "js": "document.querySelector('#banner')?.remove();"
+      },
+      {
+        "title": "matches() と closest()",
+        "desc": "`要素.matches('セレクタ')` は、その要素が指定したセレクタに **一致するかを true / false で返します**。`要素.closest('セレクタ')` は、CSS セレクタを指定して **自分から祖先をさかのぼり、一番近くにある要素** を取得します（見つからなければ null）。",
+        "html": "<ul id=\"list\" class=\"menu\">\n  <li><a href=\"#\" id=\"link\">ブレンド</a></li>\n</ul>",
+        "js": "const element = document.getElementById('list');\nconsole.log(element.matches('ul'));    // true\nconsole.log(element.matches('.menu')); // true\nconsole.log(element.matches('ol'));    // false\n\nconst link = document.getElementById('link');\nconst ul = link.closest('ul');         // a → li → ul とさかのぼる\nconsole.log(ul.id);                    // list"
       }
     ],
     "notes": [
@@ -17271,10 +17435,184 @@
       "querySelectorAll() の結果は配列そのものではないため、map() などを使うときは Array.from() で配列に変換します。"
     ],
     "related": [
+      "js-dom",
       "js-text-content",
+      "js-html-collection",
+      "js-get-element",
       "js-class-list",
       "js-add-event-listener",
       "css-hover"
+    ]
+  },
+  {
+    "id": "js-get-element",
+    "title": null,
+    "ja": "id・class・タグ名・name属性で要素を取得する",
+    "lead": "querySelector() より前からある、要素を取得するメソッドです。id で1つ取得する getElementById() と、class 名・タグ名・name 属性で一致するものをすべて取得する getElementsBy〜 があります。",
+    "meta": [
+      {
+        "label": "種類",
+        "value": "Document のメソッド"
+      },
+      {
+        "label": "1つ取得",
+        "value": "getElementById()"
+      },
+      {
+        "label": "すべて取得",
+        "value": "HTMLCollection などで返す"
+      }
+    ],
+    "code": {
+      "html": "<h1 id=\"acthouse\">アクトハウス</h1>\n<ul>\n  <li class=\"item\">HTML</li>\n  <li class=\"item\">CSS</li>\n  <li class=\"item\">JavaScript</li>\n</ul>\n<input type=\"radio\" name=\"course\" value=\"web\"> Web\n<input type=\"radio\" name=\"course\" value=\"design\"> デザイン",
+      "css": null,
+      "js": "const title = document.getElementById('acthouse');\ntitle.style.color = '#b68235';\n\nconst items = document.getElementsByClassName('item');\nconsole.log(items.length);       // 3\nconsole.log(items[0].textContent); // HTML\n\nconst lis = document.getElementsByTagName('li');\nconsole.log(lis.length);         // 3\n\nconst radios = document.getElementsByName('course');\nconsole.log(radios.length);      // 2"
+    },
+    "preview": {
+      "height": 200,
+      "note": null,
+      "fullDocument": false
+    },
+    "explain": [
+      "`document.getElementById('id名')` は、**指定された id 属性を持つ要素を DOM 全体から検索して取得** します。id はページに1つだけなので、戻り値は要素1つです（見つからないと `null`）。",
+      "`getElementsByClassName('class名')` は **class 名を指定して一致するすべての要素**、`getElementsByTagName('タグ名')` は **タグ名を指定して一致するすべての要素**、`getElementsByName('name')` は **name 属性を指定して一致するすべての要素** を取得します。",
+      "Elements と複数形になっているメソッドは、要素1つではなく **HTMLCollection**（getElementsByName は NodeList）という「まとまり」を返します。中の要素を使うときは `items[0]` のように番号（添字）で取り出します。",
+      "引数には `#` や `.` を付けません。`getElementById('#acthouse')` や `getElementsByClassName('.item')` は誤りです（querySelector() とは書き方が違います）。"
+    ],
+    "values": {
+      "label": "取得メソッドの比較",
+      "head": "メソッド",
+      "rows": [
+        {
+          "key": "getElementById('acthouse')",
+          "desc": "id で1つ取得（querySelector('#acthouse') と同じ）"
+        },
+        {
+          "key": "getElementsByClassName('item')",
+          "desc": "class で全部取得（HTMLCollection）"
+        },
+        {
+          "key": "getElementsByTagName('img')",
+          "desc": "タグ名で全部取得（HTMLCollection）"
+        },
+        {
+          "key": "getElementsByName('course')",
+          "desc": "name 属性で全部取得（NodeList）"
+        },
+        {
+          "key": "querySelector('.item')",
+          "desc": "CSS セレクタで最初の1つを取得"
+        },
+        {
+          "key": "querySelectorAll('.item')",
+          "desc": "CSS セレクタで全部取得（NodeList）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "取得した要素をまとめて書き換える",
+        "desc": "getElementsBy〜 の結果は配列ではないため、for 文や for...of で1つずつ取り出して処理します。",
+        "html": "<p class=\"price\">480</p>\n<p class=\"price\">550</p>",
+        "js": "const prices = document.getElementsByClassName('price');\n\nfor (const p of prices) {\n  p.textContent = p.textContent + '円';\n}"
+      }
+    ],
+    "notes": [
+      "getElementsByClassName() の結果に、そのまま textContent や append() を使うことはできません。必ず [0] などで要素を1つ取り出します。",
+      "HTMLCollection は forEach() が使えません。forEach() を使いたいときは querySelectorAll() を使うか、Array.from() で配列に変換します。",
+      "新しく書くコードでは querySelector() / querySelectorAll() にそろえることが多いですが、既存のコードでは getElementsBy〜 もよく見かけます。"
+    ],
+    "related": [
+      "js-query-selector",
+      "js-html-collection",
+      "js-dom",
+      "js-for-of-in",
+      "js-foreach"
+    ]
+  },
+  {
+    "id": "js-html-collection",
+    "title": null,
+    "ja": "複数取得した要素のまとまり",
+    "lead": "getElementsBy〜 や querySelectorAll() で複数の要素を取得すると、HTMLCollection や NodeList という「配列のようなもの」が返ってきます。添字で取り出せますが、厳密には配列ではありません。",
+    "meta": [
+      {
+        "label": "HTMLCollection",
+        "value": "getElementsBy〜 で取得"
+      },
+      {
+        "label": "NodeList",
+        "value": "querySelectorAll() で取得"
+      },
+      {
+        "label": "取り出し方",
+        "value": "添字（[0] など）"
+      }
+    ],
+    "code": {
+      "html": "<ul id=\"list\">\n  <li class=\"li\">1つ目</li>\n  <li class=\"li\">2つ目</li>\n</ul>\n<button type=\"button\" id=\"add\">li を追加</button>\n<p id=\"out\"></p>",
+      "css": "button {\n  padding: 6px 16px;\n  border: 1px solid #b68235;\n  border-radius: 4px;\n  background: #fff;\n  color: #7d5411;\n  font: inherit;\n  cursor: pointer;\n}",
+      "js": "const collection = document.getElementsByClassName('li'); // HTMLCollection\nconst nodeList = document.querySelectorAll('.li');          // NodeList\nconst out = document.getElementById('out');\n\nfunction show() {\n  out.textContent =\n    `HTMLCollection: ${collection.length}個 / NodeList: ${nodeList.length}個`;\n}\nshow();\n\ndocument.getElementById('add').addEventListener('click', () => {\n  const li = document.createElement('li');\n  li.className = 'li';\n  li.textContent = '追加した li';\n  document.getElementById('list').append(li);\n  show();\n  console.log(collection, nodeList);\n});"
+    },
+    "preview": {
+      "height": 170,
+      "note": "ボタンを押すと、HTMLCollection の数だけ増え、NodeList の数は変わりません",
+      "fullDocument": false
+    },
+    "explain": [
+      "**HTMLCollection** は、`getElementsByClassName()` や `getElementsByTagName()` など **getElementsBy〜 で取得した要素のまとまり** です。配列と同様に、インデックス番号（添字）で `collection[0]` のように取り出せます。",
+      "**NodeList** は、`querySelectorAll()` で取得した要素のまとまりです。CSS セレクタと同じ書き方で要素を取得でき、これも配列と同様にインデックス番号（添字）で取り出せます。",
+      "どちらも `length` で個数が分かり、添字で取り出せますが、**厳密には配列ではない** ので注意します。`map()` や `filter()`、`push()` などの配列のメソッドは使えません。",
+      "大きな違いは、HTMLCollection は **ライブ**（後から要素が増えると自動で中身が増える）、querySelectorAll() の NodeList は **静的**（取得した時点のまま）という点です。上の例でボタンを押すと、その違いが分かります。"
+    ],
+    "values": {
+      "label": "HTMLCollection と NodeList の違い",
+      "head": "項目",
+      "rows": [
+        {
+          "key": "取得するメソッド",
+          "desc": "HTMLCollection：getElementsByClassName / TagName ／ NodeList：querySelectorAll"
+        },
+        {
+          "key": "添字・length",
+          "desc": "どちらも使える"
+        },
+        {
+          "key": "forEach()",
+          "desc": "HTMLCollection：使えない ／ NodeList：使える"
+        },
+        {
+          "key": "map()・filter()",
+          "desc": "どちらも使えない（配列に変換すると使える）"
+        },
+        {
+          "key": "中身の更新",
+          "desc": "HTMLCollection：ライブ（自動で増減） ／ NodeList：静的（取得時のまま）"
+        },
+        {
+          "key": "for...of",
+          "desc": "どちらも使える"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "配列に変換してから配列のメソッドを使う",
+        "desc": "`Array.from()` やスプレッド構文 `[...]` で配列に変換すると、map() や filter() が使えるようになります。",
+        "html": "<ul>\n  <li class=\"item\">ブレンド</li>\n  <li class=\"item\">カフェラテ</li>\n</ul>",
+        "js": "const collection = document.getElementsByClassName('item');\n\nconsole.log(Array.isArray(collection)); // false\n\nconst names = Array.from(collection).map((li) => li.textContent);\nconsole.log(names); // ['ブレンド', 'カフェラテ']"
+      }
+    ],
+    "notes": [
+      "デベロッパーツールのコンソールで出力すると、HTMLCollection [h1.title] のように表示され、0: や length: が並びます。0 が添字です。",
+      "HTMLCollection はライブなので、for 文で回しながら要素を削除すると、途中で数が変わって一部が飛ばされることがあります。"
+    ],
+    "related": [
+      "js-get-element",
+      "js-query-selector",
+      "js-foreach",
+      "js-array",
+      "js-for-of-in"
     ]
   },
   {
@@ -17339,11 +17677,19 @@
         "desc": "input の value を読み取り、textContent で表示します。",
         "html": "<input id=\"name\" placeholder=\"お名前\">\n<p>こんにちは、<span id=\"out\">ゲスト</span>さん</p>",
         "js": "const out = document.querySelector('#out');\ndocument.querySelector('#name').addEventListener('input', (e) => {\n  out.textContent = e.target.value || 'ゲスト';\n});"
+      },
+      {
+        "title": "innerHTML と innerText で書き換える",
+        "desc": "`innerHTML` は **DOM の中身を HTML ごとすべて書き換え**、`innerText` は **DOM の中身のテキストを書き換えます**。getElementsByClassName() で取得したときは、`element[0]` のように1つ取り出してから使います。",
+        "html": "<h2 class=\"title\">タイトル1</h2>\n<h2 class=\"title\">タイトル2</h2>",
+        "css": "span {\n  color: #b68235;\n}",
+        "js": "const element = document.getElementsByClassName('title');\n\n// タグとして解釈される（span で色が付く）\nelement[0].innerHTML = '<span>ACTHOUSE</span>';\n\n// 文字として入る（タグは解釈されない）\nelement[1].innerText = '<span>ACTHOUSE</span>';"
       }
     ],
     "notes": [
       "textContent に代入すると、要素の中にあった子要素はすべて消えます。",
-      "入力欄の文字は textContent ではなく value で読み取ります。"
+      "入力欄の文字は textContent ではなく value で読み取ります。",
+      "利用者が入力した文字や外部から取得した文字を innerHTML に入れると、悪意のあるスクリプトを実行される危険があります（XSS）。文字だけなら textContent か innerText を使います。"
     ],
     "related": [
       "js-query-selector",
@@ -17419,6 +17765,12 @@
         "html": "<button type=\"button\" id=\"theme\">テーマ切替</button>",
         "css": ":root.dark {\n  --bg: #1a1918;\n}\nbody {\n  background: var(--bg, #fff);\n}",
         "js": "document.querySelector('#theme').addEventListener('click', () => {\n  document.documentElement.classList.toggle('dark');\n});"
+      },
+      {
+        "title": "クラスが付いているか判定する（contains）",
+        "desc": "`classList.contains('名前')` は、そのクラスが付いていれば true、なければ false を返します。if 文と組み合わせて、状態によって処理を分けるときに使います。",
+        "html": "<h2 class=\"title philippines\">セブ島</h2>",
+        "js": "const element = document.querySelector('.title');\nconst hasClass = element.classList.contains('philippines');\nconsole.log(hasClass); // true\n\nelement.classList.remove('philippines');\nconsole.log(element.classList.contains('philippines')); // false"
       }
     ],
     "notes": [
@@ -17462,7 +17814,7 @@
       "fullDocument": false
     },
     "explain": [
-      "`document.createElement('タグ名')` で新しい要素を作ります。作っただけではページに表示されず、`append()` などで既存の要素の中に追加する必要があります。",
+      "`document.createElement('タグ名')` で新しい要素（DOM）を作ります。**作成するだけなので、この時点では表示は変わりません**。`append()` などで既存の要素に追加して、初めて画面に表示されます。",
       "作った要素には `textContent` で文字を入れたり、`classList` でクラスを付けたりしてから追加します。",
       "上の例は、入力した文字をリスト項目として追加していく、簡単なやることリストです。"
     ],
@@ -17472,23 +17824,23 @@
       "rows": [
         {
           "key": "親.append(要素)",
-          "desc": "親の中の最後に追加"
+          "desc": "1つ下の階層（子）の一番後ろに追加"
         },
         {
           "key": "親.prepend(要素)",
-          "desc": "親の中の最初に追加"
+          "desc": "1つ下の階層（子）の一番前に追加"
         },
         {
           "key": "要素.before(新要素)",
-          "desc": "要素の直前に追加"
+          "desc": "同じ階層（兄弟）の一番前＝直前に追加"
         },
         {
           "key": "要素.after(新要素)",
-          "desc": "要素の直後に追加"
+          "desc": "同じ階層（兄弟）の一番後ろ＝直後に追加"
         },
         {
           "key": "要素.remove()",
-          "desc": "要素を削除"
+          "desc": "要素を子要素も含めて削除"
         }
       ]
     },
@@ -17498,6 +17850,25 @@
         "desc": "href などの属性はプロパティや setAttribute() で設定します。",
         "html": "<p id=\"area\"></p>",
         "js": "const a = document.createElement('a');\na.href = 'https://example.com';\na.textContent = '公式サイト';\na.target = '_blank';\ndocument.querySelector('#area').append(a);"
+      },
+      {
+        "title": "append・prepend・before・after の位置",
+        "desc": "4つのメソッドで、作った要素が入る場所を比べます。append / prepend は **1つ下の階層（中）**、before / after は **同じ階層（外）** に追加されます。",
+        "html": "<div class=\"title\">基準の要素</div>",
+        "css": ".title {\n  padding: 8px;\n  border: 2px solid #b68235;\n}\n.new {\n  margin: 4px 0;\n  padding: 4px 8px;\n  background: #f6f1e9;\n}",
+        "js": "const element = document.querySelector('.title');\n\nfunction make(text) {\n  const div = document.createElement('div');\n  div.className = 'new';\n  div.textContent = text;\n  return div;\n}\n\nelement.append(make('append：中の一番後ろ'));\nelement.prepend(make('prepend：中の一番前'));\nelement.before(make('before：外の直前'));\nelement.after(make('after：外の直後'));"
+      },
+      {
+        "title": "HTMLCollection と NodeList（querySelector）で取得したときの違い",
+        "desc": "getElementsByClassName() で取得した HTMLCollection には、そのまま append() を使えません。`element[0]` のように1つ取り出します。querySelector() で取得した場合は要素そのものなので、そのまま使えます。",
+        "js": "// HTMLCollection で取得した場合\nconst element = document.getElementsByClassName('title');\nconst div = document.createElement('div');\nelement[0].append(div);\n\n// querySelector で取得した場合\nconst element2 = document.querySelector('.title');\nconst div2 = document.createElement('div');\nelement2.append(div2);"
+      },
+      {
+        "title": "要素を削除する（remove）",
+        "desc": "`要素.remove()` は、指定したノード（要素）を **子要素も含めて削除** します。ボタンを押すと、after() で追加した要素が消えます。",
+        "html": "<p class=\"title\">基準の要素</p>\n<button type=\"button\" id=\"del\">追加した要素を削除</button>",
+        "css": "button {\n  padding: 6px 16px;\n  border: 1px solid #b68235;\n  border-radius: 4px;\n  background: #fff;\n  color: #7d5411;\n  font: inherit;\n  cursor: pointer;\n}",
+        "js": "const element = document.querySelector('.title');\nconst div = document.createElement('div');\ndiv.textContent = 'after で追加した div';\nelement.after(div);\n\ndocument.getElementById('del').addEventListener('click', () => {\n  div.remove();\n  console.log('削除しました');\n});"
       }
     ],
     "notes": [
@@ -17508,7 +17879,9 @@
       "js-text-content",
       "js-query-selector",
       "js-foreach",
-      "html-li"
+      "html-li",
+      "js-dom",
+      "js-html-collection"
     ]
   },
   {
@@ -17541,12 +17914,13 @@
       "fullDocument": false
     },
     "explain": [
+      "**イベントリスナー** とは、イベント（クリックやスクロールなど）が発生した際に実行する関数を紐付けるための方法です。",
       "`要素.addEventListener('イベント名', 関数)` で、そのイベントが起きたときに関数が呼ばれるようになります。上の例では、ボタンがクリックされるたびに数を増やしています。",
       "関数は引数でイベントの情報（イベントオブジェクト）を受け取れます。押された要素は `event.target`、押されたキーは `event.key` で分かります。",
       "同じ要素に何個でも関数を登録できます。登録を解除するには `removeEventListener()` を使います。"
     ],
     "values": {
-      "label": "よく使うイベント",
+      "label": "よく使うイベント（全体の一覧は「イベントの種類」のページ）",
       "head": "イベント名",
       "rows": [
         {
@@ -17588,10 +17962,159 @@
       "addEventListener('click', fn()) のように ( ) を付けると、登録した瞬間に実行されてしまいます。関数そのもの（fn）を渡します。"
     ],
     "related": [
+      "js-event-types",
       "js-prevent-default",
       "js-event-target",
       "js-function",
       "html-button"
+    ]
+  },
+  {
+    "id": "js-event-types",
+    "title": null,
+    "ja": "click・mouseenter・load などのイベント一覧",
+    "lead": "addEventListener() の1つ目の引数に指定する「イベントの種類」の一覧です。マウス・キーボード・フォーム・ページの読み込みなど、反応させたいタイミングに合わせて選びます。",
+    "meta": [
+      {
+        "label": "使う場所",
+        "value": "addEventListener('イベント名', 関数)"
+      },
+      {
+        "label": "主な分類",
+        "value": "マウス・キーボード・フォーム・読み込み"
+      },
+      {
+        "label": "書き方",
+        "value": "すべて小文字（DOMContentLoaded を除く）"
+      }
+    ],
+    "code": {
+      "html": "<div id=\"box\">ここにマウスを乗せる</div>\n<input id=\"name\" placeholder=\"ここをクリックして入力\">\n<p id=\"log\">イベント：</p>",
+      "css": "#box {\n  padding: 16px;\n  border: 1px solid #b68235;\n  border-radius: 6px;\n  text-align: center;\n}\ninput {\n  margin-top: 10px;\n  padding: 6px 10px;\n  border: 1px solid #bbb;\n  border-radius: 4px;\n  font: inherit;\n}",
+      "js": "const box = document.getElementById('box');\nconst input = document.getElementById('name');\nconst log = document.getElementById('log');\n\nfunction show(type) {\n  log.textContent = 'イベント：' + type;\n  console.log(type);\n}\n\n['mouseenter', 'mouseleave', 'mousedown', 'mouseup', 'click'].forEach((type) => {\n  box.addEventListener(type, () => show(type));\n});\n['focus', 'blur', 'keydown', 'keyup', 'change'].forEach((type) => {\n  input.addEventListener(type, () => show(type));\n});"
+    },
+    "preview": {
+      "height": 170,
+      "note": "マウスを乗せたり、入力欄を操作したりすると、起きたイベントの名前が表示されます",
+      "fullDocument": false
+    },
+    "explain": [
+      "イベントとは、クリックやスクロール、キー入力、ページの読み込みなど、**ブラウザの中で起きる出来事** のことです。`addEventListener('click', 関数)` のように、1つ目の引数でどのイベントに反応するかを指定します。",
+      "マウスのイベントは、押した瞬間（`mousedown`）・離した瞬間（`mouseup`）・クリック（`click`）・カーソルの移動（`mousemove`）・乗った／離れた（`mouseover` / `mouseout`、`mouseenter` / `mouseleave`）に分かれます。",
+      "フォームでは、選択された（`focus`）・フォーカスを失った（`blur`）・内容が変わった（`change`）・送信（`submit`）・リセット（`reset`）がよく使われます。キーボードは `keydown` / `keyup` です。",
+      "ページ全体では、DOM の読み込み完了（`DOMContentLoaded`）、画像なども含めた読み込み完了（`load`）、ウインドウのサイズ変更（`resize`）などがあります。"
+    ],
+    "values": {
+      "label": "イベントの種類と内容",
+      "head": "イベントの種類",
+      "rows": [
+        {
+          "key": "click",
+          "desc": "マウスがクリックされた場合"
+        },
+        {
+          "key": "keydown",
+          "desc": "キーボードが押された場合"
+        },
+        {
+          "key": "keyup",
+          "desc": "キーボードが離された場合"
+        },
+        {
+          "key": "mousedown",
+          "desc": "マウスボタンが押された場合"
+        },
+        {
+          "key": "mouseup",
+          "desc": "マウスボタンが離された場合"
+        },
+        {
+          "key": "mousemove",
+          "desc": "マウスカーソルが移動した場合"
+        },
+        {
+          "key": "mouseover",
+          "desc": "マウスカーソルがオブジェクトに重なった場合"
+        },
+        {
+          "key": "mouseout",
+          "desc": "マウスカーソルがオブジェクトから離れた場合"
+        },
+        {
+          "key": "mouseenter",
+          "desc": "マウスカーソルがオブジェクトに侵入した場合"
+        },
+        {
+          "key": "mouseleave",
+          "desc": "マウスカーソルがオブジェクトから脱出した場合"
+        },
+        {
+          "key": "DOMContentLoaded",
+          "desc": "DOM の読み込みが完了した時（画像や CSS を含まない）"
+        },
+        {
+          "key": "focus",
+          "desc": "選択された状態になった場合"
+        },
+        {
+          "key": "blur",
+          "desc": "フォーカスを失った場合"
+        },
+        {
+          "key": "submit",
+          "desc": "フォームが送信された場合"
+        },
+        {
+          "key": "reset",
+          "desc": "フォームがリセットされた場合"
+        },
+        {
+          "key": "change",
+          "desc": "フォームの内容が変更された場合"
+        },
+        {
+          "key": "resize",
+          "desc": "ウインドウがリサイズされた場合"
+        },
+        {
+          "key": "abort",
+          "desc": "イメージの読み込みが中断された場合"
+        },
+        {
+          "key": "error",
+          "desc": "読み込みが失敗した場合"
+        },
+        {
+          "key": "load",
+          "desc": "Web ページの読み込みが完了した時（画像などのリソースすべて含む）"
+        }
+      ]
+    },
+    "usages": [
+      {
+        "title": "mouseover と mouseenter の違い",
+        "desc": "どちらもカーソルが乗ったときに起きますが、`mouseover` は **子要素に乗ったときにも** もう一度起きます。`mouseenter` は要素に入ったときに1回だけ起きます。外側の枠の中で子要素の上を動かして、回数の違いを確かめてみましょう。",
+        "html": "<div id=\"outer\">外側\n  <span id=\"inner\">子要素</span>\n</div>\n<p id=\"count\"></p>",
+        "css": "#outer {\n  padding: 16px;\n  border: 1px solid #b68235;\n}\n#inner {\n  display: inline-block;\n  margin-left: 12px;\n  padding: 6px 12px;\n  background: #f6f1e9;\n}",
+        "js": "const outer = document.getElementById('outer');\nconst count = document.getElementById('count');\nlet over = 0;\nlet enter = 0;\n\nfunction show() {\n  count.textContent = `mouseover: ${over}回 / mouseenter: ${enter}回`;\n}\nouter.addEventListener('mouseover', () => { over++; show(); });\nouter.addEventListener('mouseenter', () => { enter++; show(); });\nshow();"
+      },
+      {
+        "title": "DOMContentLoaded と load の違い",
+        "desc": "`DOMContentLoaded` は HTML を読み込んで DOM ができた時点で起き、画像や CSS の読み込みは待ちません。`load` は画像などのリソースもすべて読み込み終わってから起きます。要素を操作するだけなら DOMContentLoaded、画像のサイズを使う処理などは load を使います。",
+        "js": "document.addEventListener('DOMContentLoaded', () => {\n  console.log('1. DOM の読み込み完了（画像はまだかも）');\n});\n\nwindow.addEventListener('load', () => {\n  console.log('2. 画像なども含めてすべて読み込み完了');\n});"
+      }
+    ],
+    "notes": [
+      "イベント名には on を付けません。addEventListener('onclick', …) ではなく addEventListener('click', …) と書きます。",
+      "resize や load はページ全体のイベントなので、window に対して登録します（window.addEventListener('resize', …)）。",
+      "mousemove・resize・scroll は短い間に何度も起きるため、重い処理を書くと動作が遅くなることがあります。"
+    ],
+    "related": [
+      "js-add-event-listener",
+      "js-event-target",
+      "js-prevent-default",
+      "html-input",
+      "html-form"
     ]
   },
   {
@@ -17662,7 +18185,8 @@
       "js-add-event-listener",
       "js-event-target",
       "html-form",
-      "html-a"
+      "html-a",
+      "js-event-types"
     ]
   },
   {
@@ -17741,7 +18265,8 @@
       "js-add-event-listener",
       "js-class-list",
       "js-prevent-default",
-      "js-query-selector"
+      "js-query-selector",
+      "js-event-types"
     ]
   },
   {
