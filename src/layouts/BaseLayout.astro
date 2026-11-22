@@ -32,6 +32,14 @@ const gaMeasurementId = 'G-5PD9T9SNKN';
           gtag('js', new Date());
 
           gtag('config', gaMeasurementId);
+
+          // 回遊の計測：この訪問（タブ）で何ページ目かを送る（1ページ目 = depth 1）
+          // GA4 側ではカスタムディメンション「ページ深度」（イベント範囲・パラメータ depth）で集計する
+          try {
+            var n = Number(sessionStorage.getItem('pv_count') || 0) + 1;
+            sessionStorage.setItem('pv_count', String(n));
+            gtag('event', 'page_depth', { depth: n });
+          } catch (e) {}
         </script>
       </>
     )}
